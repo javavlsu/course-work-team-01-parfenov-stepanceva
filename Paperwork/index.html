@@ -1,0 +1,326 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Мои доски</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Inter', Arial, sans-serif;
+        }
+        
+        :root {
+            --bg-primary: #121212;
+            --bg-secondary: #1e1e1e;
+            --bg-tertiary: #2d2d2d;
+            --text-primary: #e0e0e0;
+            --text-secondary: #a0a0a0;
+            --accent: #4a6fa5;
+            --accent-dark: #166088;
+            --success: #4CAF50;
+            --border: #3a3a3a;
+        }
+        
+        body {
+            background-color: var(--bg-primary);
+            color: var(--text-primary);
+            height: 100vh;
+            line-height: 1.6;
+        }
+        
+        .container {
+            display: flex;
+            min-height: 100vh;
+        }
+        
+        /* Левая панель */
+        .sidebar {
+            width: 240px;
+            background-color: var(--bg-secondary);
+            padding: 20px;
+            border-right: 1px solid var(--border);
+            transition: all 0.3s ease;
+        }
+        
+        .auth-buttons {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 25px;
+            padding-bottom: 15px;
+            border-bottom: 1px solid var(--border);
+        }
+        
+        .btn {
+            padding: 10px 15px;
+            border-radius: 6px;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.2s;
+            border: none;
+            font-size: 14px;
+        }
+        
+        .btn-primary {
+            background-color: var(--accent);
+            color: white;
+        }
+        
+        .btn-primary:hover {
+            background-color: var(--accent-dark);
+        }
+        
+        .btn-outline {
+            background-color: transparent;
+            border: 1px solid var(--accent);
+            color: var(--accent);
+        }
+        
+        .btn-outline:hover {
+            background-color: var(--accent);
+            color: white;
+        }
+        
+        .sidebar-section {
+            margin-bottom: 25px;
+        }
+        
+        .create-btn {
+            width: 100%;
+            padding: 12px;
+            margin-bottom: 15px;
+            background-color: var(--accent);
+            color: white;
+            border: none;
+            border-radius: 6px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.2s;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+        }
+        
+        .create-btn:hover {
+            background-color: var(--accent-dark);
+        }
+        
+        .create-btn::before {
+            content: "+";
+            font-size: 20px;
+        }
+        
+        /* Выпадающий список "Мои доски" */
+        .boards-dropdown {
+            width: 100%;
+        }
+        
+        .dropdown-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 12px 15px;
+            background-color: var(--bg-tertiary);
+            border-radius: 6px;
+            cursor: pointer;
+            margin-bottom: 8px;
+            font-weight: 600;
+            transition: all 0.2s;
+        }
+        
+        .dropdown-header:hover {
+            background-color: var(--accent);
+            color: white;
+        }
+        
+        .boards-list {
+            display: none;
+            background-color: var(--bg-tertiary);
+            border-radius: 6px;
+            padding: 8px 0;
+            border: 1px solid var(--border);
+        }
+        
+        .boards-dropdown.open .boards-list {
+            display: block;
+        }
+        
+        .board-item {
+            padding: 10px 15px;
+            border-bottom: 1px solid var(--border);
+            transition: all 0.2s;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        
+        .board-item:last-child {
+            border-bottom: none;
+        }
+        
+        .board-item:hover {
+            background-color: var(--accent);
+            color: white;
+        }
+        
+        .board-item::before {
+            content: "•";
+            font-size: 20px;
+            color: var(--accent);
+        }
+        
+        .board-item:hover::before {
+            color: white;
+        }
+        
+        /* Основное содержимое */
+        .main-content {
+            flex: 1;
+            padding: 25px;
+            background-color: var(--bg-primary);
+            display: flex;
+            flex-direction: column;
+        }
+        
+        .logo {
+            min-height: 80px;
+            margin-bottom: 25px;
+            background-color: var(--bg-tertiary);
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.2);
+            font-weight: 700;
+            font-size: 24px;
+            color: var(--accent);
+        }
+        
+        .image-row {
+            display: flex;
+            gap: 25px;
+            margin-bottom: 25px;
+        }
+        
+        .image {
+            flex: 1;
+            min-height: 200px;
+            background: linear-gradient(135deg, var(--accent-dark), var(--accent));
+            border-radius: 10px;
+            color: white;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 600;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.2);
+        }
+        
+        .text {
+            flex-grow: 1;
+            background-color: var(--bg-tertiary);
+            margin-bottom: 25px;
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 2px 15px rgba(0,0,0,0.2);
+            font-size: 28px;
+            font-weight: 600;
+            color: var(--accent);
+        }
+        
+        .footer {
+            min-height: 70px;
+            background: linear-gradient(135deg, var(--accent-dark), var(--accent));
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-weight: 600;
+            box-shadow: 0 -2px 10px rgba(0,0,0,0.2);
+        }
+        
+        /* Адаптивность */
+        @media (max-width: 768px) {
+            .image-row {
+                flex-direction: column;
+            }
+            
+            .image {
+                min-height: 150px;
+            }
+            
+            .sidebar {
+                width: 200px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <!-- Левая панель -->
+        <aside class="sidebar">
+            <div class="auth-buttons">
+                <!-- Ссылка на страницу входа -->
+                <a href="login.html" class="btn btn-primary"style="text-decoration: none">Вход</a>
+                <button class="btn btn-outline">Регистрация</button>
+            </div>
+            
+            <div class="sidebar-section">
+                <button class="create-btn">Создать доску</button>
+                
+                <!-- Выпадающий список "Мои доски" -->
+                <div class="boards-dropdown open">
+                    <div class="dropdown-header">
+                        <span>Мои доски</span>
+                        <span>▲</span>
+                    </div>
+                    <div class="boards-list">
+                        <div class="board-item">Доска 1</div>
+                        <div class="board-item">Доска 2</div>
+                        <div class="board-item">Доска 3</div>
+                        <div class="board-item">Доска 4</div>
+                    </div>
+                </div>
+            </div>
+        </aside>
+        
+        <!-- Основное содержимое -->
+        <main class="main-content">
+            <div class="logo">Логотип</div>
+            
+            <div class="image-row">
+                <div class="image">Картинка</div>
+                <div class="image">Картинка</div>
+                <div class="image">Картинка</div>
+            </div>
+            
+            <div class="text">Текст</div>
+            
+            <div class="footer">Футер</div>
+        </main>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const dropdownHeaders = document.querySelectorAll('.dropdown-header');
+            
+            dropdownHeaders.forEach(header => {
+                header.addEventListener('click', function() {
+                    const dropdown = this.parentElement;
+                    const isOpen = dropdown.classList.toggle('open');
+                    const arrow = this.querySelector('span:last-child');
+                    
+                    // Меняем символ стрелки в зависимости от состояния
+                    arrow.textContent = isOpen ? '▲' : '▼';
+                });
+            });
+        });
+    </script>
+</body>
+</html>
