@@ -1,0 +1,137 @@
+[
+    {
+        "id": 1,
+        "task_id": 2,
+        "user_id": 1,
+        "changed_at": "2024-02-05T11:00:00Z",
+        "changed_attribute": "status",
+        "old_value": null,
+        "new_value": "in_progress"
+    },
+    {
+        "id": 2,
+        "task_id": 2,
+        "user_id": 1,
+        "changed_at": "2024-02-05T11:05:00Z",
+        "changed_attribute": "assignee_id",
+        "old_value": null,
+        "new_value": "8"
+    },
+    {
+        "id": 3,
+        "task_id": 6,
+        "user_id": 2,
+        "changed_at": "2024-02-05T11:00:00Z",
+        "changed_attribute": "status",
+        "old_value": "todo",
+        "new_value": "in_progress"
+    },
+    {
+        "id": 4,
+        "task_id": 10,
+        "user_id": 3,
+        "changed_at": "2024-02-05T11:00:00Z",
+        "changed_attribute": "status",
+        "old_value": "todo",
+        "new_value": "in_progress"
+    },
+    {
+        "id": 5,
+        "task_id": 4,
+        "user_id": 1,
+        "changed_at": "2024-02-01T18:00:00Z",
+        "changed_attribute": "status",
+        "old_value": "review",
+        "new_value": "done"
+    },
+    {
+        "id": 6,
+        "task_id": 8,
+        "user_id": 2,
+        "changed_at": "2024-02-10T16:00:00Z",
+        "changed_attribute": "status",
+        "old_value": "in_progress",
+        "new_value": "done"
+    },
+    {
+        "id": 7,
+        "task_id": 12,
+        "user_id": 3,
+        "changed_at": "2024-02-08T17:00:00Z",
+        "changed_attribute": "status",
+        "old_value": "in_progress",
+        "new_value": "done"
+    },
+    {
+        "id": 8,
+        "task_id": 14,
+        "user_id": 4,
+        "changed_at": "2024-02-10T11:00:00Z",
+        "changed_attribute": "status",
+        "old_value": "todo",
+        "new_value": "in_progress"
+    },
+    {
+        "id": 9,
+        "task_id": 17,
+        "user_id": 5,
+        "changed_at": "2024-02-01T11:00:00Z",
+        "changed_attribute": "status",
+        "old_value": "todo",
+        "new_value": "in_progress"
+    },
+    {
+        "id": 10,
+        "task_id": 18,
+        "user_id": 1,
+        "changed_at": "2024-02-05T14:00:00Z",
+        "changed_attribute": "status",
+        "old_value": "in_progress",
+        "new_value": "done"
+    },
+    {
+        "id": 11,
+        "task_id": 21,
+        "user_id": 5,
+        "changed_at": "2024-02-20T16:00:00Z",
+        "changed_attribute": "status",
+        "old_value": "in_progress",
+        "new_value": "done"
+    },
+    {
+        "id": 12,
+        "task_id": 25,
+        "user_id": 6,
+        "changed_at": "2024-02-28T18:00:00Z",
+        "changed_attribute": "status",
+        "old_value": "in_progress",
+        "new_value": "done"
+    },
+    {
+        "id": 13,
+        "task_id": 23,
+        "user_id": 6,
+        "changed_at": "2024-02-15T11:00:00Z",
+        "changed_attribute": "status",
+        "old_value": "todo",
+        "new_value": "in_progress"
+    },
+    {
+        "id": 14,
+        "task_id": 27,
+        "user_id": 1,
+        "changed_at": "2024-02-20T11:00:00Z",
+        "changed_attribute": "status",
+        "old_value": "todo",
+        "new_value": "in_progress"
+    },
+    {
+        "id": 15,
+        "task_id": 27,
+        "user_id": 1,
+        "changed_at": "2024-02-20T11:05:00Z",
+        "changed_attribute": "assignee_id",
+        "old_value": null,
+        "new_value": "8"
+    }
+]

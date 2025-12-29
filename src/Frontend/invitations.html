@@ -1,0 +1,273 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Приглашения</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="css/common.css">
+    <link rel="stylesheet" href="css/sidebar.css">
+    <style>
+        body {
+            height: 100vh;
+        }
+        
+        .container {
+            display: flex;
+            min-height: 100vh;
+        }
+        
+        .sidebar {
+            display: flex;
+            flex-direction: column;
+        }
+        
+        .main-content {
+            flex: 1;
+            padding: 25px;
+            background-color: var(--bg-primary);
+        }
+        
+        .page-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 30px;
+        }
+        
+        .page-title {
+            font-size: 32px;
+            font-weight: 700;
+            color: var(--accent);
+        }
+        
+        .invitations-section {
+            background-color: var(--bg-tertiary);
+            border-radius: 10px;
+            padding: 25px;
+            margin-bottom: 25px;
+        }
+        
+        .invitations-section h3 {
+            color: var(--accent);
+            margin-bottom: 20px;
+        }
+        
+        .invitation-item {
+            background-color: var(--bg-secondary);
+            border-radius: 8px;
+            padding: 20px;
+            margin-bottom: 15px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .invitation-info {
+            flex: 1;
+        }
+        
+        .invitation-info h4 {
+            color: var(--text-primary);
+            margin-bottom: 8px;
+        }
+        
+        .invitation-info p {
+            color: var(--text-secondary);
+            font-size: 14px;
+            margin-bottom: 5px;
+        }
+        
+        .invitation-meta {
+            display: flex;
+            gap: 15px;
+            font-size: 12px;
+            color: var(--text-secondary);
+        }
+        
+        .invitation-status {
+            padding: 4px 12px;
+            border-radius: 12px;
+            font-size: 11px;
+            font-weight: 600;
+        }
+        
+        .status-pending {
+            background-color: var(--warning);
+            color: white;
+        }
+        
+        .status-used {
+            background-color: var(--success);
+            color: white;
+        }
+        
+        .status-expired {
+            background-color: var(--error);
+            color: white;
+        }
+        
+        .invitation-actions {
+            display: flex;
+            gap: 10px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <aside class="sidebar">
+            <a href="profile.html" class="profile-section" id="profileSection">
+                <div class="profile-avatar-small" id="profileAvatarSmall">А</div>
+                <span class="profile-name" id="profileNameSmall">Профиль</span>
+            </a>
+            
+            <div class="sidebar-section">
+                <button class="create-btn" onclick="createInvitation()">Создать приглашение</button>
+                
+                <ul class="sidebar-nav">
+                    <li><a href="index.html">Главная</a></li>
+                    <li><a href="groups.html">Мои группы</a></li>
+                    <li><a href="invitations.html">Приглашения</a></li>
+                </ul>
+            </div>
+            
+            <div style="margin-top: auto; padding-top: 20px;">
+                <button class="btn btn-outline" style="width: 100%;" onclick="logout()">Выйти</button>
+            </div>
+        </aside>
+        
+        <main class="main-content">
+            <div class="page-header">
+                <h1 class="page-title">Приглашения</h1>
+                <button class="btn btn-primary" onclick="createInvitation()">+ Создать приглашение</button>
+            </div>
+            
+            <div class="invitations-section">
+                <h3>Отправленные приглашения</h3>
+                <div id="sentInvitations">
+                    <!-- Загружается из JSON -->
+                </div>
+            </div>
+            
+            <div class="invitations-section">
+                <h3>Входящие приглашения</h3>
+                <div id="receivedInvitations">
+                    <p style="color: var(--text-secondary);">Нет входящих приглашений</p>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <script>
+        async function loadProfile() {
+            try {
+                const response = await fetch('./data/users.json');
+                if (!response.ok) throw new Error('Не удалось загрузить данные');
+                const users = await response.json();
+                const currentUser = users[0];
+                
+                if (currentUser) {
+                    document.getElementById('profileAvatarSmall').textContent = currentUser.name.charAt(0).toUpperCase();
+                    document.getElementById('profileNameSmall').textContent = currentUser.name;
+                }
+            } catch (error) {
+                console.error('Ошибка загрузки профиля:', error);
+            }
+        }
+        
+        async function loadInvitations() {
+            try {
+                const [invitationsRes, groupsRes, boardsRes, usersRes] = await Promise.all([
+                    fetch('./data/invitations.json'),
+                    fetch('./data/groups.json'),
+                    fetch('./data/boards.json'),
+                    fetch('./data/users.json')
+                ]);
+                
+                if (!invitationsRes.ok || !groupsRes.ok || !boardsRes.ok || !usersRes.ok) {
+                    throw new Error('Не удалось загрузить данные');
+                }
+                
+                const invitations = await invitationsRes.json();
+                const groups = await groupsRes.json();
+                const boards = await boardsRes.json();
+                const users = await usersRes.json();
+                
+                const currentUserId = 1; // В реальном приложении из сессии
+                const sentInvitations = invitations.filter(i => i.created_by === currentUserId);
+                
+                const groupMap = {};
+                groups.forEach(g => groupMap[g.id] = g);
+                
+                const boardMap = {};
+                boards.forEach(b => boardMap[b.id] = b);
+                
+                const sentInvitationsDiv = document.getElementById('sentInvitations');
+                sentInvitationsDiv.innerHTML = sentInvitations.length > 0 ? sentInvitations.map(inv => {
+                    const group = groupMap[inv.group_id];
+                    const board = inv.board_id ? boardMap[inv.board_id] : null;
+                    const expiresAt = new Date(inv.expires_at);
+                    const isExpired = expiresAt < new Date();
+                    const status = inv.used ? 'used' : isExpired ? 'expired' : 'pending';
+                    const statusText = inv.used ? 'Использовано' : isExpired ? 'Истекло' : 'Ожидает';
+                    
+                    return `
+                        <div class="invitation-item">
+                            <div class="invitation-info">
+                                <h4>Приглашение в группу: ${group ? group.name : 'Неизвестно'}</h4>
+                                <p>Email: ${inv.email}</p>
+                                <div class="invitation-meta">
+                                    <span>Создано: ${new Date(inv.created_at).toLocaleDateString('ru-RU')}</span>
+                                    <span>Истекает: ${expiresAt.toLocaleDateString('ru-RU')}</span>
+                                    ${board ? `<span>Доска: ${board.title}</span>` : ''}
+                                </div>
+                            </div>
+                            <div class="invitation-actions">
+                                <span class="invitation-status status-${status}">${statusText}</span>
+                                <button class="btn btn-outline" onclick="copyInviteLink('${inv.invite_token}')" style="padding: 6px 12px; font-size: 12px;">Копировать ссылку</button>
+                                ${!inv.used && !isExpired ? `<button class="btn btn-danger" onclick="cancelInvitation(${inv.id})" style="padding: 6px 12px; font-size: 12px;">Отменить</button>` : ''}
+                            </div>
+                        </div>
+                    `;
+                }).join('') : '<p style="color: var(--text-secondary);">Нет отправленных приглашений</p>';
+            } catch (error) {
+                console.error('Ошибка загрузки приглашений:', error);
+            }
+        }
+        
+        function createInvitation() {
+            const email = prompt('Введите email для приглашения:');
+            if (email) {
+                alert('Приглашение создано (заглушка)');
+                loadInvitations();
+            }
+        }
+        
+        function copyInviteLink(token) {
+            const link = `${window.location.origin}/invite?token=${token}`;
+            navigator.clipboard.writeText(link).then(() => {
+                alert('Ссылка скопирована в буфер обмена');
+            });
+        }
+        
+        function cancelInvitation(invitationId) {
+            if (confirm('Отменить приглашение?')) {
+                alert('Приглашение отменено (заглушка)');
+                loadInvitations();
+            }
+        }
+        
+        function logout() {
+            if (confirm('Вы уверены, что хотите выйти?')) {
+                window.location.href = 'login.html';
+            }
+        }
+        
+        document.addEventListener('DOMContentLoaded', function() {
+            loadProfile();
+            loadInvitations();
+        });
+    </script>
+</body>
+</html>
+

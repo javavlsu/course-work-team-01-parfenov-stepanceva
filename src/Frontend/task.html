@@ -1,0 +1,456 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Задача</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="css/common.css">
+    <link rel="stylesheet" href="css/sidebar.css">
+    <style>
+        body {
+            height: 100vh;
+        }
+        
+        .container {
+            display: flex;
+            min-height: 100vh;
+        }
+        
+        .sidebar {
+            display: flex;
+            flex-direction: column;
+        }
+        
+        .main-content {
+            flex: 1;
+            padding: 25px;
+            background-color: var(--bg-primary);
+            overflow-y: auto;
+        }
+        
+        .task-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: start;
+            margin-bottom: 30px;
+        }
+        
+        .task-title-section {
+            flex: 1;
+        }
+        
+        .task-title {
+            font-size: 32px;
+            font-weight: 700;
+            color: var(--text-primary);
+            margin-bottom: 10px;
+        }
+        
+        .task-meta-info {
+            display: flex;
+            gap: 20px;
+            flex-wrap: wrap;
+            margin-top: 15px;
+        }
+        
+        .meta-item {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            color: var(--text-secondary);
+            font-size: 14px;
+        }
+        
+        .task-content {
+            display: grid;
+            grid-template-columns: 2fr 1fr;
+            gap: 25px;
+            margin-bottom: 30px;
+        }
+        
+        .task-description {
+            background-color: var(--bg-tertiary);
+            border-radius: 10px;
+            padding: 20px;
+            margin-bottom: 25px;
+        }
+        
+        .task-description h3 {
+            color: var(--accent);
+            margin-bottom: 15px;
+        }
+        
+        .task-description p {
+            color: var(--text-primary);
+            line-height: 1.8;
+        }
+        
+        .task-sidebar {
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+        }
+        
+        .task-info-card {
+            background-color: var(--bg-tertiary);
+            border-radius: 10px;
+            padding: 20px;
+        }
+        
+        .task-info-card h3 {
+            color: var(--accent);
+            margin-bottom: 15px;
+            font-size: 16px;
+        }
+        
+        .info-item {
+            margin-bottom: 15px;
+        }
+        
+        .info-item label {
+            display: block;
+            color: var(--text-secondary);
+            font-size: 12px;
+            margin-bottom: 5px;
+        }
+        
+        .info-item span {
+            color: var(--text-primary);
+            font-weight: 500;
+        }
+        
+        .priority-badge {
+            display: inline-block;
+            padding: 4px 12px;
+            border-radius: 12px;
+            font-size: 12px;
+            font-weight: 600;
+        }
+        
+        .priority-high {
+            background-color: var(--error);
+            color: white;
+        }
+        
+        .priority-medium {
+            background-color: var(--warning);
+            color: white;
+        }
+        
+        .priority-low {
+            background-color: var(--success);
+            color: white;
+        }
+        
+        .comments-section {
+            background-color: var(--bg-tertiary);
+            border-radius: 10px;
+            padding: 20px;
+            margin-bottom: 25px;
+        }
+        
+        .comments-section h3 {
+            color: var(--accent);
+            margin-bottom: 15px;
+        }
+        
+        .comment {
+            background-color: var(--bg-secondary);
+            border-radius: 8px;
+            padding: 15px;
+            margin-bottom: 15px;
+        }
+        
+        .comment-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 10px;
+        }
+        
+        .comment-author {
+            font-weight: 600;
+            color: var(--accent);
+        }
+        
+        .comment-date {
+            font-size: 12px;
+            color: var(--text-secondary);
+        }
+        
+        .comment-text {
+            color: var(--text-primary);
+            line-height: 1.6;
+        }
+        
+        .attachments-section {
+            background-color: var(--bg-tertiary);
+            border-radius: 10px;
+            padding: 20px;
+        }
+        
+        .attachments-section h3 {
+            color: var(--accent);
+            margin-bottom: 15px;
+        }
+        
+        .attachment-item {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            padding: 10px;
+            background-color: var(--bg-secondary);
+            border-radius: 6px;
+            margin-bottom: 10px;
+        }
+        
+        .attachment-icon {
+            font-size: 24px;
+        }
+        
+        .attachment-name {
+            flex: 1;
+            color: var(--text-primary);
+        }
+        
+        @media (max-width: 768px) {
+            .task-content {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <aside class="sidebar">
+            <a href="profile.html" class="profile-section" id="profileSection">
+                <div class="profile-avatar-small" id="profileAvatarSmall">А</div>
+                <span class="profile-name" id="profileNameSmall">Профиль</span>
+            </a>
+            
+            <div class="sidebar-section">
+                <ul class="sidebar-nav">
+                    <li><a href="index.html">Главная</a></li>
+                </ul>
+                
+                <!-- Выпадающий список "Группы" -->
+                <div class="boards-dropdown open" style="margin-top: 10px;">
+                    <div class="dropdown-header">
+                        <span>Группы</span>
+                        <span>▲</span>
+                    </div>
+                    <div class="boards-list" id="groupsList">
+                        <!-- Загружается из JSON -->
+                    </div>
+                </div>
+                
+                <button class="create-btn" style="margin-top: 10px;" onclick="createGroup()">Создать группу</button>
+            </div>
+            
+            <div style="margin-top: auto; padding-top: 20px;">
+                <button class="btn btn-outline" style="width: 100%;" onclick="logout()">Выйти</button>
+            </div>
+        </aside>
+        
+        <main class="main-content">
+            <div class="task-header">
+                <div class="task-title-section">
+                    <h1 class="task-title" id="taskTitle">Загрузка...</h1>
+                    <div class="task-meta-info" id="taskMetaInfo"></div>
+                </div>
+                <div>
+                    <button class="btn btn-outline" onclick="history.back()">Назад</button>
+                </div>
+            </div>
+            
+            <div class="task-content">
+                <div>
+                    <div class="task-description">
+                        <h3>Описание</h3>
+                        <p id="taskDescription">Загрузка...</p>
+                    </div>
+                    
+                    <div class="comments-section">
+                        <h3>Комментарии</h3>
+                        <div id="commentsList">
+                            <!-- Загружается из JSON -->
+                        </div>
+                        <div class="form-group" style="margin-top: 15px;">
+                            <textarea class="form-control" id="newComment" rows="3" placeholder="Добавить комментарий..."></textarea>
+                            <button class="btn btn-primary" style="margin-top: 10px;" onclick="addComment()">Добавить комментарий</button>
+                        </div>
+                    </div>
+                    
+                    <div class="attachments-section">
+                        <h3>Вложения</h3>
+                        <div id="attachmentsList">
+                            <!-- Загружается из JSON -->
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="task-sidebar">
+                    <div class="task-info-card">
+                        <h3>Информация</h3>
+                        <div class="info-item">
+                            <label>Статус</label>
+                            <span id="taskStatus">-</span>
+                        </div>
+                        <div class="info-item">
+                            <label>Приоритет</label>
+                            <span id="taskPriority">-</span>
+                        </div>
+                        <div class="info-item">
+                            <label>Исполнитель</label>
+                            <span id="taskAssignee">-</span>
+                        </div>
+                        <div class="info-item">
+                            <label>Дедлайн</label>
+                            <span id="taskDeadline">-</span>
+                        </div>
+                        <div class="info-item">
+                            <label>Создано</label>
+                            <span id="taskCreated">-</span>
+                        </div>
+                    </div>
+                    
+                    <div class="task-info-card">
+                        <h3>Действия</h3>
+                        <button class="btn btn-primary" style="width: 100%; margin-bottom: 10px;">Изменить задачу</button>
+                        <button class="btn btn-danger" style="width: 100%;">Удалить задачу</button>
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <script>
+        async function loadProfile() {
+            try {
+                const response = await fetch('./data/users.json');
+                if (!response.ok) throw new Error('Не удалось загрузить данные');
+                const users = await response.json();
+                const currentUser = users[0];
+                
+                if (currentUser) {
+                    document.getElementById('profileAvatarSmall').textContent = currentUser.name.charAt(0).toUpperCase();
+                    document.getElementById('profileNameSmall').textContent = currentUser.name;
+                }
+            } catch (error) {
+                console.error('Ошибка загрузки профиля:', error);
+            }
+        }
+        
+        async function loadTask() {
+            try {
+                const taskId = new URLSearchParams(window.location.search).get('id') || 1;
+                
+                const [tasksRes, commentsRes, attachmentsRes, usersRes] = await Promise.all([
+                    fetch('./data/tasks.json'),
+                    fetch('./data/comments.json'),
+                    fetch('./data/attachments.json'),
+                    fetch('./data/users.json')
+                ]);
+                
+                if (!tasksRes.ok || !commentsRes.ok || !attachmentsRes.ok || !usersRes.ok) {
+                    throw new Error('Не удалось загрузить данные');
+                }
+                
+                const tasks = await tasksRes.json();
+                const comments = await commentsRes.json();
+                const attachments = await attachmentsRes.json();
+                const users = await usersRes.json();
+                
+                const task = tasks.find(t => t.id == taskId);
+                if (!task) {
+                    document.getElementById('taskTitle').textContent = 'Задача не найдена';
+                    return;
+                }
+                
+                const userMap = {};
+                users.forEach(u => userMap[u.id] = u.name);
+                
+                document.getElementById('taskTitle').textContent = task.title;
+                document.getElementById('taskDescription').textContent = task.description || 'Нет описания';
+                document.getElementById('taskStatus').textContent = getStatusText(task.status);
+                document.getElementById('taskPriority').innerHTML = `<span class="priority-badge priority-${task.priority || 'medium'}">${getPriorityText(task.priority)}</span>`;
+                document.getElementById('taskAssignee').textContent = userMap[task.assignee_id] || 'Не назначен';
+                document.getElementById('taskDeadline').textContent = task.deadline ? new Date(task.deadline).toLocaleDateString('ru-RU') : 'Не установлен';
+                document.getElementById('taskCreated').textContent = new Date(task.created_at).toLocaleDateString('ru-RU');
+                
+                const taskMetaInfo = document.getElementById('taskMetaInfo');
+                taskMetaInfo.innerHTML = `
+                    <span class="meta-item">📋 ${getStatusText(task.status)}</span>
+                    <span class="meta-item">⭐ ${getPriorityText(task.priority)}</span>
+                    <span class="meta-item">👤 ${userMap[task.assignee_id] || 'Не назначен'}</span>
+                    ${task.deadline ? `<span class="meta-item">📅 ${new Date(task.deadline).toLocaleDateString('ru-RU')}</span>` : ''}
+                `;
+                
+                const taskComments = comments.filter(c => c.task_id == taskId);
+                const commentsList = document.getElementById('commentsList');
+                commentsList.innerHTML = taskComments.length > 0 ? taskComments.map(comment => `
+                    <div class="comment">
+                        <div class="comment-header">
+                            <span class="comment-author">${userMap[comment.user_id] || 'Неизвестно'}</span>
+                            <span class="comment-date">${new Date(comment.created_at).toLocaleString('ru-RU')}</span>
+                        </div>
+                        <div class="comment-text">${comment.text}</div>
+                    </div>
+                `).join('') : '<p style="color: var(--text-secondary);">Нет комментариев</p>';
+                
+                const taskAttachments = attachments.filter(a => a.task_id == taskId);
+                const attachmentsList = document.getElementById('attachmentsList');
+                attachmentsList.innerHTML = taskAttachments.length > 0 ? taskAttachments.map(attachment => `
+                    <div class="attachment-item">
+                        <span class="attachment-icon">📎</span>
+                        <span class="attachment-name">${attachment.file_name}</span>
+                        <span style="color: var(--text-secondary); font-size: 12px;">${new Date(attachment.uploaded_at).toLocaleDateString('ru-RU')}</span>
+                    </div>
+                `).join('') : '<p style="color: var(--text-secondary);">Нет вложений</p>';
+            } catch (error) {
+                console.error('Ошибка загрузки задачи:', error);
+            }
+        }
+        
+        function getStatusText(status) {
+            const statusMap = {
+                'todo': 'К выполнению',
+                'in_progress': 'В работе',
+                'review': 'На проверке',
+                'done': 'Готово'
+            };
+            return statusMap[status] || status;
+        }
+        
+        function getPriorityText(priority) {
+            const priorityMap = {
+                'high': 'Высокий',
+                'medium': 'Средний',
+                'low': 'Низкий'
+            };
+            return priorityMap[priority] || 'Средний';
+        }
+        
+        function addComment() {
+            const text = document.getElementById('newComment').value;
+            if (text.trim()) {
+                alert('Комментарий добавлен (заглушка)');
+                document.getElementById('newComment').value = '';
+            }
+        }
+        
+        function logout() {
+            if (confirm('Вы уверены, что хотите выйти?')) {
+                window.location.href = 'login.html';
+            }
+        }
+        
+        document.addEventListener('DOMContentLoaded', function() {
+            loadProfile();
+            loadTask();
+        });
+    </script>
+</body>
+</html>
+

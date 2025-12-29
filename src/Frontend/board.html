@@ -1,0 +1,218 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Доска</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="css/common.css">
+    <link rel="stylesheet" href="css/sidebar.css">
+    <link rel="stylesheet" href="css/kanban.css">
+    <style>
+        body {
+            height: 100vh;
+            overflow: hidden;
+        }
+        
+        .container {
+            display: flex;
+            min-height: 100vh;
+        }
+        
+        .sidebar {
+            display: flex;
+            flex-direction: column;
+        }
+        
+        .main-content {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            background-color: var(--bg-primary);
+        }
+        
+        .board-header {
+            padding: 20px 25px;
+            background-color: var(--bg-secondary);
+            border-bottom: 1px solid var(--border);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .board-title {
+            font-size: 24px;
+            font-weight: 700;
+            color: var(--accent);
+        }
+        
+        .board-description {
+            color: var(--text-secondary);
+            font-size: 14px;
+            margin-top: 5px;
+        }
+        
+        .board-actions {
+            display: flex;
+            gap: 10px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <aside class="sidebar">
+            <a href="profile.html" class="profile-section" id="profileSection">
+                <div class="profile-avatar-small" id="profileAvatarSmall">А</div>
+                <span class="profile-name" id="profileNameSmall">Профиль</span>
+            </a>
+            
+            <div class="sidebar-section">
+                <ul class="sidebar-nav">
+                    <li><a href="index.html">Главная</a></li>
+                </ul>
+                
+                <!-- Выпадающий список "Группы" -->
+                <div class="boards-dropdown open" style="margin-top: 10px;">
+                    <div class="dropdown-header">
+                        <span>Группы</span>
+                        <span>▲</span>
+                    </div>
+                    <div class="boards-list" id="groupsList">
+                        <!-- Загружается из JSON -->
+                    </div>
+                </div>
+                
+                <button class="create-btn" style="margin-top: 10px;" onclick="createGroup()">Создать группу</button>
+            </div>
+            
+            <div style="margin-top: auto; padding-top: 20px;">
+                <button class="btn btn-outline" style="width: 100%;" onclick="logout()">Выйти</button>
+            </div>
+        </aside>
+        
+        <main class="main-content">
+            <div class="board-header">
+                <div>
+                    <div class="board-title" id="boardTitle">Загрузка...</div>
+                    <div class="board-description" id="boardDescription"></div>
+                </div>
+                <div class="board-actions">
+                    <button class="btn btn-outline" onclick="location.href='index.html'">Назад</button>
+                    <button class="btn btn-primary" onclick="createTask()">+ Задача</button>
+                </div>
+            </div>
+            
+            <div class="kanban-board" id="kanbanBoard">
+                <!-- Загружается из JSON -->
+            </div>
+        </main>
+    </div>
+
+    <script>
+        // Загрузка профиля пользователя
+        async function loadProfile() {
+            try {
+                const response = await fetch('./data/users.json');
+                if (!response.ok) throw new Error('Не удалось загрузить данные');
+                const users = await response.json();
+                const currentUser = users[0]; // В реальном приложении из сессии
+                
+                if (currentUser) {
+                    document.getElementById('profileAvatarSmall').textContent = currentUser.name.charAt(0).toUpperCase();
+                    document.getElementById('profileNameSmall').textContent = currentUser.name;
+                }
+            } catch (error) {
+                console.error('Ошибка загрузки профиля:', error);
+            }
+        }
+        
+        async function loadBoard() {
+            try {
+                const boardId = new URLSearchParams(window.location.search).get('id') || 1;
+                
+                const [boardsRes, columnsRes, tasksRes, usersRes] = await Promise.all([
+                    fetch('./data/boards.json'),
+                    fetch('./data/columns.json'),
+                    fetch('./data/tasks.json'),
+                    fetch('./data/users.json')
+                ]);
+                
+                if (!boardsRes.ok || !columnsRes.ok || !tasksRes.ok || !usersRes.ok) {
+                    throw new Error('Не удалось загрузить данные');
+                }
+                
+                const boards = await boardsRes.json();
+                const columns = await columnsRes.json();
+                const tasks = await tasksRes.json();
+                const users = await usersRes.json();
+                
+                const board = boards.find(b => b.id == boardId);
+                if (!board) {
+                    document.getElementById('boardTitle').textContent = 'Доска не найдена';
+                    return;
+                }
+                
+                document.getElementById('boardTitle').textContent = board.title;
+                document.getElementById('boardDescription').textContent = board.description || '';
+                
+                const boardColumns = columns
+                    .filter(c => c.board_id == boardId)
+                    .sort((a, b) => a.position - b.position);
+                
+                const kanbanBoard = document.getElementById('kanbanBoard');
+                kanbanBoard.innerHTML = boardColumns.map(column => {
+                    const columnTasks = tasks.filter(t => t.column_id === column.id);
+                    const assigneeMap = {};
+                    users.forEach(u => assigneeMap[u.id] = u.name);
+                    
+                    return `
+                        <div class="kanban-column">
+                            <div class="column-header">
+                                <span class="column-title">${column.title}</span>
+                                <span class="column-count">${columnTasks.length}</span>
+                            </div>
+                            ${columnTasks.map(task => {
+                                const assignee = assigneeMap[task.assignee_id] || 'Не назначен';
+                                const deadline = task.deadline ? new Date(task.deadline) : null;
+                                const isOverdue = deadline && deadline < new Date();
+                                const priorityClass = task.priority || 'medium';
+                                
+                                return `
+                                    <div class="task-card ${priorityClass}-priority" onclick="location.href='task.html?id=${task.id}'">
+                                        <div class="task-title">${task.title}</div>
+                                        <div class="task-description">${task.description || ''}</div>
+                                        <div class="task-meta">
+                                            <span class="task-assignee">👤 ${assignee}</span>
+                                            ${deadline ? `<span class="task-deadline ${isOverdue ? 'overdue' : ''}">📅 ${deadline.toLocaleDateString('ru-RU')}</span>` : ''}
+                                        </div>
+                                    </div>
+                                `;
+                            }).join('')}
+                            <button class="add-task-btn" onclick="createTask(${column.id})">+ Добавить задачу</button>
+                        </div>
+                    `;
+                }).join('');
+            } catch (error) {
+                console.error('Ошибка загрузки доски:', error);
+                document.getElementById('boardTitle').textContent = 'Ошибка загрузки доски';
+            }
+        }
+        
+        function createTask(columnId = null) {
+            alert('Создание задачи (заглушка)');
+        }
+        
+        function logout() {
+            if (confirm('Вы уверены, что хотите выйти?')) {
+                window.location.href = 'login.html';
+            }
+        }
+        
+        document.addEventListener('DOMContentLoaded', function() {
+            loadProfile();
+            loadBoard();
+        });
+    </script>
+</body>
+</html>
+

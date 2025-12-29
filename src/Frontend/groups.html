@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Мои доски</title>
+    <title>Мои группы</title>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="css/common.css">
     <link rel="stylesheet" href="css/sidebar.css">
@@ -26,83 +26,96 @@
             flex: 1;
             padding: 25px;
             background-color: var(--bg-primary);
-            display: flex;
-            flex-direction: column;
         }
         
-        .logo {
-            min-height: 80px;
-            margin-bottom: 25px;
-            background-color: var(--bg-tertiary);
-            border-radius: 10px;
+        .page-header {
             display: flex;
+            justify-content: space-between;
             align-items: center;
-            justify-content: center;
-            box-shadow: 0 2px 10px rgba(0,0,0,0.2);
+            margin-bottom: 30px;
+        }
+        
+        .page-title {
+            font-size: 32px;
             font-weight: 700;
-            font-size: 24px;
             color: var(--accent);
         }
         
-        .image-row {
-            display: flex;
-            gap: 25px;
-            margin-bottom: 25px;
+        .groups-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 20px;
         }
         
-        .image {
-            flex: 1;
-            min-height: 200px;
-            background: linear-gradient(135deg, var(--accent-dark), var(--accent));
-            border-radius: 10px;
-            color: white;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-weight: 600;
-            box-shadow: 0 2px 10px rgba(0,0,0,0.2);
-        }
-        
-        .text {
-            flex-grow: 1;
+        .group-card {
             background-color: var(--bg-tertiary);
-            margin-bottom: 25px;
             border-radius: 10px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            box-shadow: 0 2px 15px rgba(0,0,0,0.2);
-            font-size: 28px;
-            font-weight: 600;
-            color: var(--accent);
+            padding: 20px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.2);
+            transition: all 0.2s;
+            cursor: pointer;
         }
         
-        .footer {
-            min-height: 70px;
-            background: linear-gradient(135deg, var(--accent-dark), var(--accent));
-            border-radius: 10px;
+        .group-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 4px 15px rgba(0,0,0,0.3);
+        }
+        
+        .group-card-header {
             display: flex;
+            justify-content: space-between;
+            align-items: start;
+            margin-bottom: 15px;
+        }
+        
+        .group-name {
+            font-size: 20px;
+            font-weight: 600;
+            color: var(--text-primary);
+            margin-bottom: 5px;
+        }
+        
+        .group-description {
+            color: var(--text-secondary);
+            font-size: 14px;
+            margin-bottom: 15px;
+        }
+        
+        .group-meta {
+            display: flex;
+            justify-content: space-between;
             align-items: center;
-            justify-content: center;
+            font-size: 12px;
+            color: var(--text-secondary);
+            padding-top: 15px;
+            border-top: 1px solid var(--border);
+        }
+        
+        .group-role {
+            padding: 4px 10px;
+            border-radius: 12px;
+            font-size: 11px;
+            font-weight: 600;
+        }
+        
+        .role-owner {
+            background-color: var(--accent);
             color: white;
-            font-weight: 600;
-            box-shadow: 0 -2px 10px rgba(0,0,0,0.2);
         }
         
-        @media (max-width: 768px) {
-            .image-row {
-                flex-direction: column;
-            }
-            
-            .image {
-                min-height: 150px;
-            }
+        .role-admin {
+            background-color: var(--success);
+            color: white;
+        }
+        
+        .role-member {
+            background-color: var(--bg-secondary);
+            color: var(--text-secondary);
         }
     </style>
 </head>
 <body>
     <div class="container">
-        <!-- Левая панель -->
         <aside class="sidebar">
             <a href="profile.html" class="profile-section" id="profileSection">
                 <div class="profile-avatar-small" id="profileAvatarSmall">А</div>
@@ -133,30 +146,25 @@
             </div>
         </aside>
         
-        <!-- Основное содержимое -->
         <main class="main-content">
-            <div class="logo">Логотип</div>
-            
-            <div class="image-row">
-                <div class="image">Картинка</div>
-                <div class="image">Картинка</div>
-                <div class="image">Картинка</div>
+            <div class="page-header">
+                <h1 class="page-title">Мои группы</h1>
+                <button class="btn btn-primary" onclick="createGroup()">+ Создать группу</button>
             </div>
             
-            <div class="text">Текст</div>
-            
-            <div class="footer">Футер</div>
+            <div class="groups-grid" id="groupsGrid">
+                <!-- Загружается из JSON -->
+            </div>
         </main>
     </div>
 
     <script>
-        // Загрузка профиля пользователя
         async function loadProfile() {
             try {
                 const response = await fetch('./data/users.json');
                 if (!response.ok) throw new Error('Не удалось загрузить данные');
                 const users = await response.json();
-                const currentUser = users[0]; // В реальном приложении из сессии
+                const currentUser = users[0];
                 
                 if (currentUser) {
                     document.getElementById('profileAvatarSmall').textContent = currentUser.name.charAt(0).toUpperCase();
@@ -167,70 +175,54 @@
             }
         }
         
-        // Загрузка групп с досками
         async function loadGroups() {
             try {
-                const currentUserId = 1; // В реальном приложении из сессии
-                
-                const [groupsRes, membersRes, boardsRes] = await Promise.all([
+                const [groupsRes, membersRes, usersRes] = await Promise.all([
                     fetch('./data/groups.json'),
                     fetch('./data/group-members.json'),
-                    fetch('./data/boards.json')
+                    fetch('./data/users.json')
                 ]);
                 
-                if (!groupsRes.ok || !membersRes.ok || !boardsRes.ok) {
+                if (!groupsRes.ok || !membersRes.ok || !usersRes.ok) {
                     throw new Error('Не удалось загрузить данные');
                 }
                 
                 const groups = await groupsRes.json();
                 const members = await membersRes.json();
-                const boards = await boardsRes.json();
+                const users = await usersRes.json();
                 
-                // Фильтруем группы, в которых состоит пользователь
+                const currentUserId = 1; // В реальном приложении из сессии
                 const userGroups = members
                     .filter(m => m.user_id === currentUserId)
                     .map(m => {
                         const group = groups.find(g => g.id === m.group_id);
-                        return group ? { ...group, role: m.role } : null;
-                    })
-                    .filter(g => g !== null);
+                        const owner = users.find(u => u.id === group.owner_id);
+                        return {
+                            ...group,
+                            role: m.role,
+                            ownerName: owner ? owner.name : 'Неизвестно'
+                        };
+                    });
                 
-                const groupsList = document.getElementById('groupsList');
-                
-                if (userGroups.length === 0) {
-                    groupsList.innerHTML = '<div style="padding: 10px 15px; color: var(--text-secondary);">Нет групп</div>';
-                } else {
-                    groupsList.innerHTML = userGroups.map(group => {
-                        // Получаем доски этой группы
-                        const groupBoards = boards.filter(b => b.group_id === group.id);
-                        
-                        return `
-                            <div class="group-item">
-                                <div class="group-header" onclick="toggleGroup(this)">
-                                    <span>${group.name}</span>
-                                    <span class="group-arrow">▼</span>
-                                </div>
-                                <div class="group-boards">
-                                    ${groupBoards.length > 0 
-                                        ? groupBoards.map(board => 
-                                            `<a href="board.html?id=${board.id}" class="group-board-item">${board.title}</a>`
-                                        ).join('')
-                                        : '<div style="padding: 8px 15px; color: var(--text-secondary); font-size: 12px;">Нет досок</div>'
-                                    }
-                                </div>
+                const groupsGrid = document.getElementById('groupsGrid');
+                groupsGrid.innerHTML = userGroups.map(group => `
+                    <div class="group-card" onclick="location.href='group-settings.html?id=${group.id}'">
+                        <div class="group-card-header">
+                            <div>
+                                <div class="group-name">${group.name}</div>
+                                <div class="group-description">${group.description || 'Нет описания'}</div>
                             </div>
-                        `;
-                    }).join('');
-                }
+                            <span class="group-role role-${group.role}">${group.role === 'owner' ? 'Владелец' : group.role === 'admin' ? 'Админ' : 'Участник'}</span>
+                        </div>
+                        <div class="group-meta">
+                            <span>Создатель: ${group.ownerName}</span>
+                            <span>${new Date(group.created_at).toLocaleDateString('ru-RU')}</span>
+                        </div>
+                    </div>
+                `).join('');
             } catch (error) {
                 console.error('Ошибка загрузки групп:', error);
-                document.getElementById('groupsList').innerHTML = '<div style="padding: 10px 15px; color: var(--error);">Ошибка загрузки</div>';
             }
-        }
-        
-        function toggleGroup(header) {
-            const groupItem = header.parentElement;
-            groupItem.classList.toggle('open');
         }
         
         function createGroup() {
@@ -246,20 +238,17 @@
                 window.location.href = 'login.html';
             }
         }
-
+        
         document.addEventListener('DOMContentLoaded', function() {
             loadProfile();
             loadGroups();
             
-            // Обработчик для главного заголовка "Группы"
             const dropdownHeaders = document.querySelectorAll('.dropdown-header');
-            
             dropdownHeaders.forEach(header => {
                 header.addEventListener('click', function() {
                     const dropdown = this.parentElement;
                     const isOpen = dropdown.classList.toggle('open');
                     const arrow = this.querySelector('span:last-child');
-                    
                     arrow.textContent = isOpen ? '▲' : '▼';
                 });
             });
@@ -267,3 +256,4 @@
     </script>
 </body>
 </html>
+

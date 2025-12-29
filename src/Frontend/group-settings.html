@@ -1,0 +1,324 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Настройки группы</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="css/common.css">
+    <link rel="stylesheet" href="css/sidebar.css">
+    <style>
+        body {
+            height: 100vh;
+        }
+        
+        .container {
+            display: flex;
+            min-height: 100vh;
+        }
+        
+        .sidebar {
+            display: flex;
+            flex-direction: column;
+        }
+        
+        .main-content {
+            flex: 1;
+            padding: 25px;
+            background-color: var(--bg-primary);
+        }
+        
+        .page-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 30px;
+        }
+        
+        .page-title {
+            font-size: 32px;
+            font-weight: 700;
+            color: var(--accent);
+        }
+        
+        .settings-section {
+            background-color: var(--bg-tertiary);
+            border-radius: 10px;
+            padding: 25px;
+            margin-bottom: 25px;
+        }
+        
+        .settings-section h3 {
+            color: var(--accent);
+            margin-bottom: 20px;
+        }
+        
+        .members-list {
+            margin-top: 20px;
+        }
+        
+        .member-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 15px;
+            background-color: var(--bg-secondary);
+            border-radius: 8px;
+            margin-bottom: 10px;
+        }
+        
+        .member-info {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+        
+        .member-avatar {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, var(--accent-dark), var(--accent));
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 700;
+            color: white;
+        }
+        
+        .member-details h4 {
+            color: var(--text-primary);
+            margin-bottom: 5px;
+        }
+        
+        .member-details p {
+            color: var(--text-secondary);
+            font-size: 12px;
+        }
+        
+        .member-actions {
+            display: flex;
+            gap: 10px;
+            align-items: center;
+        }
+        
+        .role-select {
+            padding: 6px 12px;
+            background-color: var(--bg-primary);
+            border: 1px solid var(--border);
+            border-radius: 6px;
+            color: var(--text-primary);
+            font-size: 14px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <aside class="sidebar">
+            <a href="profile.html" class="profile-section" id="profileSection">
+                <div class="profile-avatar-small" id="profileAvatarSmall">А</div>
+                <span class="profile-name" id="profileNameSmall">Профиль</span>
+            </a>
+            
+            <div class="sidebar-section">
+                <ul class="sidebar-nav">
+                    <li><a href="index.html">Главная</a></li>
+                </ul>
+                
+                <!-- Выпадающий список "Группы" -->
+                <div class="boards-dropdown open" style="margin-top: 10px;">
+                    <div class="dropdown-header">
+                        <span>Группы</span>
+                        <span>▲</span>
+                    </div>
+                    <div class="boards-list" id="groupsList">
+                        <!-- Загружается из JSON -->
+                    </div>
+                </div>
+                
+                <button class="create-btn" style="margin-top: 10px;" onclick="createGroup()">Создать группу</button>
+            </div>
+            
+            <div style="margin-top: auto; padding-top: 20px;">
+                <button class="btn btn-outline" style="width: 100%;" onclick="logout()">Выйти</button>
+            </div>
+        </aside>
+        
+        <main class="main-content">
+            <div class="page-header">
+                <h1 class="page-title" id="groupTitle">Настройки группы</h1>
+                <button class="btn btn-outline" onclick="location.href='groups.html'">Назад</button>
+            </div>
+            
+            <div class="settings-section">
+                <h3>Информация о группе</h3>
+                <form id="groupForm">
+                    <div class="form-group">
+                        <label for="groupName">Название группы</label>
+                        <input type="text" id="groupName" class="form-control" required>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="groupDescription">Описание</label>
+                        <textarea id="groupDescription" class="form-control" rows="4"></textarea>
+                    </div>
+                    
+                    <button type="submit" class="btn btn-primary">Сохранить изменения</button>
+                </form>
+            </div>
+            
+            <div class="settings-section">
+                <h3>Участники группы</h3>
+                <div class="members-list" id="membersList">
+                    <!-- Загружается из JSON -->
+                </div>
+            </div>
+            
+            <div class="settings-section">
+                <h3>Доски группы</h3>
+                <div id="boardsList">
+                    <!-- Загружается из JSON -->
+                </div>
+            </div>
+            
+            <div class="settings-section">
+                <h3>Опасная зона</h3>
+                <button class="btn btn-danger" onclick="deleteGroup()">Удалить группу</button>
+            </div>
+        </main>
+    </div>
+
+    <script>
+        async function loadProfile() {
+            try {
+                const response = await fetch('./data/users.json');
+                if (!response.ok) throw new Error('Не удалось загрузить данные');
+                const users = await response.json();
+                const currentUser = users[0];
+                
+                if (currentUser) {
+                    document.getElementById('profileAvatarSmall').textContent = currentUser.name.charAt(0).toUpperCase();
+                    document.getElementById('profileNameSmall').textContent = currentUser.name;
+                }
+            } catch (error) {
+                console.error('Ошибка загрузки профиля:', error);
+            }
+        }
+        
+        async function loadGroupSettings() {
+            try {
+                const groupId = new URLSearchParams(window.location.search).get('id') || 1;
+                
+                const [groupsRes, membersRes, usersRes, boardsRes] = await Promise.all([
+                    fetch('./data/groups.json'),
+                    fetch('./data/group-members.json'),
+                    fetch('./data/users.json'),
+                    fetch('./data/boards.json')
+                ]);
+                
+                if (!groupsRes.ok || !membersRes.ok || !usersRes.ok || !boardsRes.ok) {
+                    throw new Error('Не удалось загрузить данные');
+                }
+                
+                const groups = await groupsRes.json();
+                const members = await membersRes.json();
+                const users = await usersRes.json();
+                const boards = await boardsRes.json();
+                
+                const group = groups.find(g => g.id == groupId);
+                if (!group) return;
+                
+                document.getElementById('groupTitle').textContent = `Настройки: ${group.name}`;
+                document.getElementById('groupName').value = group.name;
+                document.getElementById('groupDescription').value = group.description || '';
+                
+                const groupMembers = members.filter(m => m.group_id == groupId);
+                const userMap = {};
+                users.forEach(u => userMap[u.id] = u);
+                
+                const membersList = document.getElementById('membersList');
+                membersList.innerHTML = groupMembers.map(member => {
+                    const user = userMap[member.user_id];
+                    if (!user) return '';
+                    
+                    return `
+                        <div class="member-item">
+                            <div class="member-info">
+                                <div class="member-avatar">${user.name.charAt(0).toUpperCase()}</div>
+                                <div class="member-details">
+                                    <h4>${user.name}</h4>
+                                    <p>${user.email}</p>
+                                </div>
+                            </div>
+                            <div class="member-actions">
+                                <select class="role-select" onchange="changeRole(${member.user_id}, this.value)">
+                                    <option value="member" ${member.role === 'member' ? 'selected' : ''}>Участник</option>
+                                    <option value="admin" ${member.role === 'admin' ? 'selected' : ''}>Админ</option>
+                                    <option value="owner" ${member.role === 'owner' ? 'selected' : ''} ${member.role !== 'owner' ? 'disabled' : ''}>Владелец</option>
+                                </select>
+                                ${member.role !== 'owner' ? `<button class="btn btn-danger" style="padding: 6px 12px; font-size: 12px;" onclick="removeMember(${member.user_id})">Удалить</button>` : ''}
+                            </div>
+                        </div>
+                    `;
+                }).join('');
+                
+                const groupBoards = boards.filter(b => b.group_id == groupId);
+                const boardsList = document.getElementById('boardsList');
+                boardsList.innerHTML = groupBoards.length > 0 ? groupBoards.map(board => `
+                    <div class="card" style="margin-bottom: 10px;">
+                        <h4 style="color: var(--text-primary); margin-bottom: 5px;">${board.title}</h4>
+                        <p style="color: var(--text-secondary); font-size: 14px; margin-bottom: 10px;">${board.description || ''}</p>
+                        <a href="board.html?id=${board.id}" class="btn btn-outline" style="padding: 6px 12px; font-size: 12px;">Открыть доску</a>
+                    </div>
+                `).join('') : '<p style="color: var(--text-secondary);">Нет досок</p>';
+            } catch (error) {
+                console.error('Ошибка загрузки настроек группы:', error);
+            }
+        }
+        
+        function changeRole(userId, newRole) {
+            alert(`Роль изменена (заглушка): пользователь ${userId}, роль ${newRole}`);
+        }
+        
+        function removeMember(userId) {
+            if (confirm('Удалить участника из группы?')) {
+                alert('Участник удален (заглушка)');
+            }
+        }
+        
+        function deleteGroup() {
+            if (confirm('Вы уверены, что хотите удалить группу? Это действие нельзя отменить.')) {
+                alert('Группа удалена (заглушка)');
+                location.href = 'groups.html';
+            }
+        }
+        
+        function logout() {
+            if (confirm('Вы уверены, что хотите выйти?')) {
+                window.location.href = 'login.html';
+            }
+        }
+        
+        document.getElementById('groupForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            alert('Изменения сохранены (заглушка)');
+        });
+        
+        document.addEventListener('DOMContentLoaded', function() {
+            loadProfile();
+            loadGroups();
+            loadGroupSettings();
+            
+            const dropdownHeaders = document.querySelectorAll('.dropdown-header');
+            dropdownHeaders.forEach(header => {
+                header.addEventListener('click', function() {
+                    const dropdown = this.parentElement;
+                    const isOpen = dropdown.classList.toggle('open');
+                    const arrow = this.querySelector('span:last-child');
+                    arrow.textContent = isOpen ? '▲' : '▼';
+                });
+            });
+        });
+    </script>
+</body>
+</html>
+

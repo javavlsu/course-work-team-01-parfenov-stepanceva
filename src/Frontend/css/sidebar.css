@@ -1,0 +1,250 @@
+.sidebar {
+    width: 240px;
+    background-color: var(--bg-secondary);
+    padding: 20px;
+    border-right: 1px solid var(--border);
+    transition: all 0.3s ease;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+}
+
+.auth-buttons {
+    display: flex;
+    gap: 10px;
+    margin-bottom: 25px;
+    padding-bottom: 15px;
+    border-bottom: 1px solid var(--border);
+}
+
+.profile-section {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin-bottom: 25px;
+    padding-bottom: 15px;
+    border-bottom: 1px solid var(--border);
+    cursor: pointer;
+    text-decoration: none;
+    color: var(--text-primary);
+    transition: all 0.2s;
+}
+
+.profile-section:hover {
+    opacity: 0.8;
+}
+
+.profile-avatar-small {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    background: linear-gradient(135deg, var(--accent-dark), var(--accent));
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: 700;
+    color: white;
+    flex-shrink: 0;
+}
+
+.profile-name {
+    font-weight: 500;
+    color: var(--text-primary);
+}
+
+.sidebar-section {
+    margin-bottom: 25px;
+}
+
+.create-btn {
+    width: 100%;
+    padding: 12px;
+    margin-bottom: 15px;
+    background-color: var(--accent);
+    color: white;
+    border: none;
+    border-radius: 6px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.2s;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+}
+
+.create-btn:hover {
+    background-color: var(--accent-dark);
+}
+
+.create-btn::before {
+    content: "+";
+    font-size: 20px;
+}
+
+.boards-dropdown {
+    width: 100%;
+}
+
+.dropdown-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 12px 15px;
+    background-color: var(--bg-tertiary);
+    border-radius: 6px;
+    cursor: pointer;
+    margin-bottom: 8px;
+    font-weight: 600;
+    transition: all 0.2s;
+}
+
+.dropdown-header:hover {
+    background-color: var(--accent);
+    color: white;
+}
+
+.boards-list {
+    display: none;
+    background-color: var(--bg-tertiary);
+    border-radius: 6px;
+    padding: 8px 0;
+    border: 1px solid var(--border);
+}
+
+.boards-dropdown.open .boards-list {
+    display: block;
+}
+
+.board-item {
+    padding: 10px 15px;
+    border-bottom: 1px solid var(--border);
+    transition: all 0.2s;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    cursor: pointer;
+    text-decoration: none;
+    color: var(--text-primary);
+}
+
+.board-item:last-child {
+    border-bottom: none;
+}
+
+.board-item:hover {
+    background-color: var(--accent);
+    color: white;
+}
+
+.board-item::before {
+    content: "•";
+    font-size: 20px;
+    color: var(--accent);
+}
+
+.board-item:hover::before {
+    color: white;
+}
+
+.group-item {
+    margin-bottom: 8px;
+}
+
+.group-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px 15px;
+    background-color: var(--bg-secondary);
+    border-radius: 6px;
+    cursor: pointer;
+    font-weight: 600;
+    transition: all 0.2s;
+    border: 1px solid var(--border);
+}
+
+.group-header:hover {
+    background-color: var(--accent);
+    color: white;
+}
+
+.group-header .group-arrow {
+    font-size: 12px;
+    transition: transform 0.2s;
+}
+
+.group-item.open .group-header .group-arrow {
+    transform: rotate(180deg);
+}
+
+.group-boards {
+    display: none;
+    margin-top: 4px;
+    margin-left: 10px;
+    padding-left: 10px;
+    border-left: 2px solid var(--border);
+}
+
+.group-item.open .group-boards {
+    display: block;
+}
+
+.group-board-item {
+    padding: 8px 15px;
+    margin-bottom: 4px;
+    border-radius: 4px;
+    transition: all 0.2s;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    cursor: pointer;
+    text-decoration: none;
+    color: var(--text-secondary);
+    font-size: 14px;
+}
+
+.group-board-item:hover {
+    background-color: var(--accent);
+    color: white;
+}
+
+.group-board-item::before {
+    content: "▸";
+    font-size: 12px;
+    color: var(--accent);
+}
+
+.group-board-item:hover::before {
+    color: white;
+}
+
+.sidebar-nav {
+    list-style: none;
+}
+
+.sidebar-nav li {
+    margin-bottom: 10px;
+}
+
+.sidebar-nav a {
+    display: block;
+    padding: 12px 15px;
+    background-color: var(--bg-tertiary);
+    border-radius: 6px;
+    text-decoration: none;
+    color: var(--text-primary);
+    transition: all 0.2s;
+}
+
+.sidebar-nav a:hover {
+    background-color: var(--accent);
+    color: white;
+}
+
+@media (max-width: 768px) {
+    .sidebar {
+        width: 200px;
+    }
+}
+
