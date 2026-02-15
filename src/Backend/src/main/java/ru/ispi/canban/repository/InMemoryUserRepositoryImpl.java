@@ -1,0 +1,55 @@
+package ru.ispi.canban.repository;
+
+import org.springframework.stereotype.Repository;
+import ru.ispi.canban.entity.User;
+
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Optional;
+import java.util.concurrent.atomic.AtomicInteger;
+
+/**
+ * InMemory реализация репозитория пользователей.
+ */
+@Repository
+public class InMemoryUserRepositoryImpl implements UserRepository {
+
+    private final List<User> users = new ArrayList<>();
+    private final AtomicInteger idGenerator = new AtomicInteger(1);
+
+    @Override
+    public User save(User user) {
+        if (user.getId() == null) {
+            user.setId(idGenerator.getAndIncrement());
+            users.add(user);
+        } else {
+            deleteById(user.getId());
+            users.add(user);
+        }
+        return user;
+    }
+
+    @Override
+    public Optional<User> FindById(Integer id) {
+        return users.stream()
+                .filter(u -> u.getId().equals(id))
+                .findFirst();
+    }
+
+    @Override
+    public Optional<User> FindByEmail(String email) {
+        return users.stream()
+                .filter(u -> u.getEmail().equals(email))
+                .findFirst();
+    }
+
+    @Override
+    public List<User> findAll() {
+        return new ArrayList<>(users);
+    }
+
+    @Override
+    public void deleteById(Integer id) {
+        users.removeIf(u -> u.getId().equals(id));
+    }
+}
