@@ -1,0 +1,7 @@
+spring:
+  application:
+    name: canban
+
+  profiles:
+    active: local
+    #dev - ??????
