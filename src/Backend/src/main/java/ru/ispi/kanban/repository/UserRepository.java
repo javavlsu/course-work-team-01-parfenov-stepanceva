@@ -9,9 +9,9 @@ public interface UserRepository {
 
     User save (User user);
 
-    Optional<User> FindById (Integer id);
+    Optional<User> findById (Integer id);
 
-    Optional<User> FindByEmail (String email);
+    Optional<User> findByEmail (String email);
 
     List<User> findAll();
 

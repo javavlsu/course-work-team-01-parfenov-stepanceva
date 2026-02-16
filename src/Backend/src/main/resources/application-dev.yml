@@ -1,7 +1,7 @@
 #Пример заполнения
 spring:
   datasource:
-    url: jdbc:mysql://localhost:3306/kanban01
+    url: jdbc:mysql://localhost:3306/Kanban
     username: kanban_user
     password: kanban_password
     driver-class-name: com.mysql.cj.jdbc.Driver

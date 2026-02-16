@@ -21,7 +21,7 @@ public class UserService {
 
     public UserDTO create(UserPayload payload) {
         // Проверяем, не существует ли уже пользователь с таким email
-        if (userRepository.FindByEmail(payload.email()).isPresent()) {
+        if (userRepository.findByEmail(payload.email()).isPresent()) {
             throw new IllegalArgumentException("User with email " + payload.email() + " already exists");
         }
 
@@ -44,21 +44,21 @@ public class UserService {
     }
 
     public Optional<UserDTO> getById(Integer id) {
-        return userRepository.FindById(id)
+        return userRepository.findById(id)
                 .map(this::convertToDTO);
     }
 
     public Optional<UserDTO> getByEmail(String email) {
-        return userRepository.FindByEmail(email)
+        return userRepository.findByEmail(email)
                 .map(this::convertToDTO);
     }
 
     public UserDTO update(Integer id, UserPayload payload) {
-        User user = userRepository.FindById(id)
+        User user = userRepository.findById(id)
                 .orElseThrow(() -> new IllegalArgumentException("User with id " + id + " not found"));
 
         // Проверяем, не занят ли email другим пользователем
-        Optional<User> existingUser = userRepository.FindByEmail(payload.email());
+        Optional<User> existingUser = userRepository.findByEmail(payload.email());
         if (existingUser.isPresent() && !existingUser.get().getId().equals(id)) {
             throw new IllegalArgumentException("User with email " + payload.email() + " already exists");
         }
@@ -76,7 +76,7 @@ public class UserService {
     }
 
     public void deleteById(Integer id) {
-        if (userRepository.FindById(id).isEmpty()) {
+        if (userRepository.findById(id).isEmpty()) {
             throw new IllegalArgumentException("User with id " + id + " not found");
         }
         userRepository.deleteById(id);
