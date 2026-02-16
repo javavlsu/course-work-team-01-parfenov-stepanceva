@@ -1,10 +1,10 @@
-package ru.ispi.canban;
+package ru.ispi.kanban;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
 
 @SpringBootTest
-class CanbanApplicationTests {
+class KanbanApplicationTests {
 
 	@Test
 	void contextLoads() {

@@ -9,10 +9,10 @@
 		<relativePath/> <!-- lookup parent from repository -->
 	</parent>
 	<groupId>ru.ispi</groupId>
-	<artifactId>canban</artifactId>
+	<artifactId>kanban</artifactId>
 	<version>0.0.1</version>
-	<name>canban</name>
-	<description>Demo Spring Boot project of canban board</description>
+	<name>kanban</name>
+	<description>Demo Spring Boot project of kanban board</description>
 	<url/>
 	<licenses>
 		<license/>

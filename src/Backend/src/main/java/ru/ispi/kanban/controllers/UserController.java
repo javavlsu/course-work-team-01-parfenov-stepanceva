@@ -1,19 +1,18 @@
-package ru.ispi.canban.controllers;
+package ru.ispi.kanban.controllers;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import ru.ispi.canban.dto.UserDTO;
-import ru.ispi.canban.payload.UserPayload;
-import ru.ispi.canban.services.UserService;
+import ru.ispi.kanban.dto.UserDTO;
+import ru.ispi.kanban.payload.UserPayload;
+import ru.ispi.kanban.services.UserService;
 
-import java.util.List;
 import java.util.Optional;
 
 @RestController
 @RequiredArgsConstructor
-@RequestMapping("/api/canban/user/")
+@RequestMapping("/api/kanban/user/")
 public class UserController {
 
     private final UserService userService;

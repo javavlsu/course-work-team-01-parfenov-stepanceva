@@ -1,4 +1,4 @@
-package ru.ispi.canban.payload;
+package ru.ispi.kanban.payload;
 
 public record UserPayload(
         String email,

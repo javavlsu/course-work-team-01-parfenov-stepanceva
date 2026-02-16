@@ -1,4 +1,4 @@
-package ru.ispi.canban.entity;
+package ru.ispi.kanban.entity;
 
 import jakarta.persistence.*;
 import lombok.Getter;

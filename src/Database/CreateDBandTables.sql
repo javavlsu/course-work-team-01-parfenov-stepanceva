@@ -1,8 +1,8 @@
-CREATE DATABASE Canban01
+CREATE DATABASE Kanban
 CHARACTER SET utf8mb4
 COLLATE utf8mb4_unicode_ci;
 
-USE Canban01;
+USE Kanban;
 
 -- USERS
 CREATE TABLE users (

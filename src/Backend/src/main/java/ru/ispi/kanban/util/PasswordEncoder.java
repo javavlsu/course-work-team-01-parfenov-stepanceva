@@ -1,4 +1,4 @@
-package ru.ispi.canban.util;
+package ru.ispi.kanban.util;
 
 import java.nio.charset.StandardCharsets;
 import java.security.MessageDigest;

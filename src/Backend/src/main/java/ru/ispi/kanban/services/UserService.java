@@ -1,12 +1,12 @@
-package ru.ispi.canban.services;
+package ru.ispi.kanban.services;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
-import ru.ispi.canban.dto.UserDTO;
-import ru.ispi.canban.entity.User;
-import ru.ispi.canban.payload.UserPayload;
-import ru.ispi.canban.repository.UserRepository;
-import ru.ispi.canban.util.PasswordEncoder;
+import ru.ispi.kanban.dto.UserDTO;
+import ru.ispi.kanban.entity.User;
+import ru.ispi.kanban.payload.UserPayload;
+import ru.ispi.kanban.repository.UserRepository;
+import ru.ispi.kanban.util.PasswordEncoder;
 
 import java.time.LocalDateTime;
 import java.util.List;

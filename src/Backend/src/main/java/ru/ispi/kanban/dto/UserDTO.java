@@ -1,4 +1,4 @@
-package ru.ispi.canban.dto;
+package ru.ispi.kanban.dto;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;

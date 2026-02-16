@@ -1,13 +1,13 @@
-package ru.ispi.canban;
+package ru.ispi.kanban;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 @SpringBootApplication
-public class CanbanApplication {
+public class KanbanApplication {
 
 	public static void main(String[] args) {
-		SpringApplication.run(CanbanApplication.class, args);
+		SpringApplication.run(KanbanApplication.class, args);
 	}
 
 }

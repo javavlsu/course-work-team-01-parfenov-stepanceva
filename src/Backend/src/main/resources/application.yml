@@ -1,6 +1,6 @@
 spring:
   application:
-    name: canban
+    name: kanban
 
   profiles:
     active: local

@@ -1,7 +1,7 @@
-package ru.ispi.canban.repository;
+package ru.ispi.kanban.repository;
 
 import org.springframework.stereotype.Repository;
-import ru.ispi.canban.entity.User;
+import ru.ispi.kanban.entity.User;
 
 import java.util.ArrayList;
 import java.util.List;
