@@ -18,6 +18,12 @@ spring:
     init:
       mode: never
 
+  security:
+    jwt:
+      secret-key: "SECRET"
+      access-time: 0
+      refresh-time: 0
+
 logging:
   level:
     org.hibernate.SQL: DEBUG
