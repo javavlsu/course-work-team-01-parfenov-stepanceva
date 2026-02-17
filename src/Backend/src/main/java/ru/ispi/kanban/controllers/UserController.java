@@ -8,7 +8,7 @@ import ru.ispi.kanban.dto.UserDTO;
 import ru.ispi.kanban.payload.UserPayload;
 import ru.ispi.kanban.services.UserService;
 
-import java.util.Optional;
+import java.util.List;
 
 @RestController
 @RequiredArgsConstructor
@@ -23,26 +23,22 @@ public class UserController {
     }
 
     @GetMapping()
-    public ResponseEntity<?> getUsers(
-            @RequestParam(required = false) Integer id,
-            @RequestParam(required = false) String email) {
-        
-        // Если передан id, ищем по id
-        if (id != null) {
-            Optional<UserDTO> user = userService.getById(id);
-            return user.map(ResponseEntity::ok)
-                    .orElse(ResponseEntity.notFound().build());
-        }
-        
-        // Если передан email, ищем по email
-        if (email != null) {
-            Optional<UserDTO> user = userService.getByEmail(email);
-            return user.map(ResponseEntity::ok)
-                    .orElse(ResponseEntity.notFound().build());
-        }
-        
-        // Если параметры не переданы, возвращаем всех пользователей
+    public ResponseEntity<List<UserDTO>> getUsers() {
         return ResponseEntity.ok(userService.getAll());
+    }
+
+    @GetMapping("{id}")
+    public ResponseEntity<UserDTO> getUserById(@PathVariable Integer id) {
+        return userService.getById(id)
+                .map(u -> ResponseEntity.ok(u))
+                .orElse(ResponseEntity.notFound().build());
+    }
+
+    @GetMapping("email/{email}")
+    public ResponseEntity<UserDTO> getUserByEmail(@PathVariable String email) {
+        return userService.getByEmail(email)
+                .map(u -> ResponseEntity.ok(u))
+                .orElse(ResponseEntity.notFound().build());
     }
 
     @PostMapping()
