@@ -17,11 +17,6 @@ public class UserController {
 
     private final UserService userService;
 
-    @GetMapping("hel")
-    public String helloworld(){
-        return "hello world!";
-    }
-
     @GetMapping()
     public ResponseEntity<List<UserDTO>> getUsers() {
         return ResponseEntity.ok(userService.getAll());

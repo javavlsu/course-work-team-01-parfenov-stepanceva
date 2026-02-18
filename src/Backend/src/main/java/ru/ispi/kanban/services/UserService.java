@@ -1,12 +1,12 @@
 package ru.ispi.kanban.services;
 
 import lombok.RequiredArgsConstructor;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import ru.ispi.kanban.dto.UserDTO;
 import ru.ispi.kanban.entity.User;
 import ru.ispi.kanban.payload.UserPayload;
 import ru.ispi.kanban.repository.UserRepository;
-import ru.ispi.kanban.util.PasswordEncoder;
 
 import java.time.LocalDateTime;
 import java.util.List;
@@ -19,6 +19,8 @@ public class UserService {
 
     private final UserRepository userRepository;
 
+    private final PasswordEncoder passwordEncoder;
+
     public UserDTO create(UserPayload payload) {
         // Проверяем, не существует ли уже пользователь с таким email
         if (userRepository.findByEmail(payload.email()).isPresent()) {
@@ -29,7 +31,7 @@ public class UserService {
         user.setEmail(payload.email());
         user.setName(payload.name());
         // Хеш
-        user.setPasswordHash(PasswordEncoder.hashPassword(payload.password()));
+        user.setPasswordHash(passwordEncoder.encode(payload.password()));
         user.setAvatarUrl(payload.avatarUrl());
         user.setCreatedAt(LocalDateTime.now());
         
@@ -67,7 +69,7 @@ public class UserService {
         user.setName(payload.name());
         // Хешируем пароль только если он был передан
         if (payload.password() != null && !payload.password().isEmpty()) {
-            user.setPasswordHash(PasswordEncoder.hashPassword(payload.password()));
+            user.setPasswordHash(passwordEncoder.encode(payload.password()));
         }
         user.setAvatarUrl(payload.avatarUrl());
 
