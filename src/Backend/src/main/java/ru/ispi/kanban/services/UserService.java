@@ -5,6 +5,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import ru.ispi.kanban.dto.UserDTO;
 import ru.ispi.kanban.entity.User;
+import ru.ispi.kanban.payload.RegistrationPayload;
 import ru.ispi.kanban.payload.UserPayload;
 import ru.ispi.kanban.repository.UserRepository;
 
@@ -21,7 +22,7 @@ public class UserService {
 
     private final PasswordEncoder passwordEncoder;
 
-    public UserDTO create(UserPayload payload) {
+    public UserDTO create(RegistrationPayload payload) {
         // Проверяем, не существует ли уже пользователь с таким email
         if (userRepository.findByEmail(payload.email()).isPresent()) {
             throw new IllegalArgumentException("User with email " + payload.email() + " already exists");
@@ -32,7 +33,7 @@ public class UserService {
         user.setName(payload.name());
         // Хеш
         user.setPasswordHash(passwordEncoder.encode(payload.password()));
-        user.setAvatarUrl(payload.avatarUrl());
+        user.setAvatarUrl(null);
         user.setCreatedAt(LocalDateTime.now());
         
         User savedUser = userRepository.save(user);

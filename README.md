@@ -16,3 +16,4 @@ Backend
  * Mysql driver
  * Validation
  * Spring boot devtools
+ * JJWT

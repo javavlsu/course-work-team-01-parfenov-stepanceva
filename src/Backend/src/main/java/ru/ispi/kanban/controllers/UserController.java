@@ -36,34 +36,33 @@ public class UserController {
                 .orElse(ResponseEntity.notFound().build());
     }
 
-    @PostMapping()
-    public ResponseEntity<UserDTO> create(@RequestBody UserPayload userPayload) {
-        try {
-            UserDTO createdUser = userService.create(userPayload);
-            return ResponseEntity.status(HttpStatus.CREATED).body(createdUser);
-        } catch (IllegalArgumentException e) {
-            return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
-        }
-    }
-
-    @PutMapping()
-    public ResponseEntity<UserDTO> update(@RequestParam Integer id, @RequestBody UserPayload userPayload) {
-        try {
-            UserDTO updatedUser = userService.update(id, userPayload);
-            return ResponseEntity.ok(updatedUser);
-        } catch (IllegalArgumentException e) {
-            return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
-        }
-    }
-
-    @DeleteMapping()
-    public ResponseEntity<Void> delete(@RequestParam Integer id) {
-        try {
-            userService.deleteById(id);
-            return ResponseEntity.noContent().build();
-        } catch (IllegalArgumentException e) {
-            return ResponseEntity.notFound().build();
-        }
-    }
-
+//    @PostMapping()
+//    public ResponseEntity<UserDTO> create(@RequestBody UserPayload userPayload) {
+//        try {
+//            UserDTO createdUser = userService.create(userPayload);
+//            return ResponseEntity.status(HttpStatus.CREATED).body(createdUser);
+//        } catch (IllegalArgumentException e) {
+//            return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
+//        }
+//    }
+//
+//    @PutMapping()
+//    public ResponseEntity<UserDTO> update(@RequestParam Integer id, @RequestBody UserPayload userPayload) {
+//        try {
+//            UserDTO updatedUser = userService.update(id, userPayload);
+//            return ResponseEntity.ok(updatedUser);
+//        } catch (IllegalArgumentException e) {
+//            return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
+//        }
+//    }
+//
+//    @DeleteMapping()
+//    public ResponseEntity<Void> delete(@RequestParam Integer id) {
+//        try {
+//            userService.deleteById(id);
+//            return ResponseEntity.noContent().build();
+//        } catch (IllegalArgumentException e) {
+//            return ResponseEntity.notFound().build();
+//        }
+//    }
 }

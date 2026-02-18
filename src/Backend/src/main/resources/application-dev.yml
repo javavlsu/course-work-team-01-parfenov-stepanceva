@@ -21,8 +21,8 @@ spring:
   security:
     jwt:
       secret-key: "SECRET"
-      access-time: 0
-      refresh-time: 0
+      access-time: 0 # Время жизни Access токена (в мс)
+      refresh-time: 0 # Время жизни Refresh токена (в мс)
 
 logging:
   level:
