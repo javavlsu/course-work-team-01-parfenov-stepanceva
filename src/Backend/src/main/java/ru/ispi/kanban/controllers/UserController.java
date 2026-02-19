@@ -1,11 +1,9 @@
 package ru.ispi.kanban.controllers;
 
 import lombok.RequiredArgsConstructor;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import ru.ispi.kanban.dto.UserDTO;
-import ru.ispi.kanban.payload.UserPayload;
 import ru.ispi.kanban.services.UserService;
 
 import java.util.List;

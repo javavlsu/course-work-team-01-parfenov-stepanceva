@@ -1,18 +1,18 @@
 package ru.ispi.kanban.services;
 
-
 import lombok.RequiredArgsConstructor;
-import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.stereotype.Service;
 import ru.ispi.kanban.dto.AuthTokensDTO;
+import ru.ispi.kanban.dto.UserDTO;
+import ru.ispi.kanban.exceptions.AuthException;
 import ru.ispi.kanban.payload.LoginPayload;
 import ru.ispi.kanban.payload.RegistrationPayload;
 import ru.ispi.kanban.security.jwt.JwtService;
-import ru.ispi.kanban.util.CookiesHelper;
+
 
 @Service
 @RequiredArgsConstructor
@@ -49,5 +49,42 @@ public class AuthService {
                 payload.email(),
                 payload.password()
         ));
+    }
+
+    public UserDTO checkAuth(String accessToken) {
+        if (accessToken == null) {
+            throw new RuntimeException("Cookie not found");
+        }
+
+        String email = jwtService.extractUsername(accessToken);
+
+        UserDetails userDetails =
+                userDetailsService.loadUserByUsername(email);
+
+        if (!jwtService.isTokenValid(accessToken, userDetails)) {
+            throw new RuntimeException("Token expired");
+        }
+
+        return userService.getByEmail(email)
+                    .orElseThrow(() -> new AuthException("User not found"));
+
+    }
+
+    public String refresh(String refreshToken) {
+        if (refreshToken == null ||
+                !jwtService.isTokenSignatureValid(refreshToken)) {
+            throw new RuntimeException("Invalid refresh token");
+        }
+
+        String email = jwtService.extractUsername(refreshToken);
+
+        UserDetails userDetails =
+                userDetailsService.loadUserByUsername(email);
+
+        if (!jwtService.isTokenValid(refreshToken, userDetails)) {
+            throw new RuntimeException("Token expired");
+        }
+
+        return jwtService.generateAccessToken(userDetails);
     }
 }

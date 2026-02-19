@@ -4,9 +4,6 @@ import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.authentication.AuthenticationManager;
-import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
-import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.web.bind.annotation.*;
 import ru.ispi.kanban.dto.AuthTokensDTO;
 import ru.ispi.kanban.dto.UserDTO;
@@ -16,14 +13,13 @@ import ru.ispi.kanban.security.CustomUserDetailsService;
 import ru.ispi.kanban.security.jwt.JwtService;
 import ru.ispi.kanban.services.AuthService;
 import ru.ispi.kanban.services.UserService;
+import ru.ispi.kanban.util.ApiResponses;
 import ru.ispi.kanban.util.CookiesHelper;
 
 @RestController
 @RequestMapping("/api/auth/")
 @RequiredArgsConstructor
 public class AuthController {
-
-    private final AuthenticationManager authenticationManager;
 
     private final CustomUserDetailsService userDetailsService;
 
@@ -34,6 +30,7 @@ public class AuthController {
     private final UserService userService;
 
     private final CookiesHelper cookies;
+
     private final AuthService authService;
 
     @PostMapping("login")
@@ -44,7 +41,12 @@ public class AuthController {
         cookies.setCookie(httpServletResponse, "accessTokenKanban", tokens.getAccessToken(), 15 * 60);
         cookies.setCookie(httpServletResponse, "refreshTokenKanban", tokens.getRefreshToken(), 60 * 60);
 
-        return ResponseEntity.ok("Login successful");
+        return ResponseEntity
+                .status(200)
+                .body(ApiResponses.ok(
+                        "Login successful",
+                        userService.getByEmail(loginPayload.email())
+                ));
     }
 
     @PostMapping("registration")
@@ -58,45 +60,36 @@ public class AuthController {
         cookies.setCookie(response, "refreshTokenKanban",
                 tokens.getRefreshToken(), 60 * 60);
 
-        return ResponseEntity.status(HttpStatus.CREATED).body("Создан пользователь!");
+        return ResponseEntity
+                .status(HttpStatus.CREATED)
+                .body(ApiResponses.ok(
+                        "The user has been registered",
+                        userService.getByEmail(registrationPayload.email())
+                ));
     }
 
     @GetMapping("checkAuth")
     public ResponseEntity<?> checkAuth(@CookieValue(value = "accessTokenKanban", required = false) String accessToken){
-        if(accessToken != null){
-            String email = jwtService.extractUsername(accessToken);
 
-            UserDetails userDetails = userDetailsService.loadUserByUsername(email);
+        UserDTO user = authService.checkAuth(accessToken);
 
-            if (jwtService.isTokenValid(accessToken, userDetails)){
-                return ResponseEntity.ok("Ты авторизован " + email);
-            }
-            else {
-                return ResponseEntity.status(403).body("token dead");
-            }
-        }
-        else{
-            return ResponseEntity.status(403).body("Cookie was not found!");
-        }
+        return ResponseEntity.ok(
+                    ApiResponses.ok("Authorized", user)
+            );
     }
 
     @PostMapping("refresh")
     public ResponseEntity<?> refresh(@CookieValue(value = "refreshTokenKanban", required = false) String refreshToken){
-        if( refreshToken == null || !jwtService.isTokenSignatureValid(refreshToken)){
-            return  ResponseEntity.status(403).body("Invalid refresh token");
-        }
+        String newAccessToken = authService.refresh(refreshToken);
 
-        String email = jwtService.extractUsername(refreshToken);
+        cookies.setCookie(httpServletResponse,
+                "accessTokenKanban",
+                newAccessToken,
+                15 * 60);
 
-        UserDetails userDetails = userDetailsService.loadUserByUsername(email);
-
-        if (jwtService.isTokenValid(refreshToken, userDetails)){
-            String newAccessToken = jwtService.generateAccessToken(userDetails);
-            cookies.setCookie(httpServletResponse, "accessTokenKanban", newAccessToken, 15 * 60);
-            return ResponseEntity.ok("Token refreshed");
-        }
-
-        return ResponseEntity.status(403).body("Token expired");
+        return ResponseEntity.ok(
+                ApiResponses.ok("Token refreshed", null)
+        );
     }
 
     @PostMapping("logout")
@@ -104,6 +97,7 @@ public class AuthController {
         //стираем куки
         cookies.setCookie(httpServletResponse, "accessTokenKanban", "", 0);
         cookies.setCookie(httpServletResponse, "refreshTokenKanban", "", 0);
-        return ResponseEntity.ok("Logged out");
+        return ResponseEntity.status(200)
+                .body(ApiResponses.ok("Logged out", null));
     }
 }
