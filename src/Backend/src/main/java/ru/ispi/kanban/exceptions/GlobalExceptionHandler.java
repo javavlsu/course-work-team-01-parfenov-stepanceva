@@ -18,4 +18,12 @@ public class GlobalExceptionHandler implements ErrorController {
         return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
                 .body(ApiResponses.error(ex.getMessage()));
     }
+
+    @ExceptionHandler(ApiException.class)
+    public ResponseEntity<ApiResponse<?>> handleApiException(ApiException ex) {
+        return ResponseEntity
+                .status(ex.getStatus())
+                .body(ApiResponses.error(ex.getMessage()));
+    }
+
 }

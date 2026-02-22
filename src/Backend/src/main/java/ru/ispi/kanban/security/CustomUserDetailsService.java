@@ -8,6 +8,7 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 import ru.ispi.kanban.entity.User;
+import ru.ispi.kanban.exceptions.NoSuchUserByEmailException;
 import ru.ispi.kanban.repository.UserRepository;
 
 import java.util.List;
@@ -22,7 +23,7 @@ public class CustomUserDetailsService implements UserDetailsService {
     public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
 
         User user = userRepository.findByEmail(email)
-                .orElseThrow( () -> new UsernameNotFoundException(String.format("Пользователь с %d не найден!", email)));
+                .orElseThrow( () -> new NoSuchUserByEmailException(String.format("Пользователь с %s не найден!", email)));
 
         return new org.springframework.security.core.userdetails.User(
             user.getEmail(),

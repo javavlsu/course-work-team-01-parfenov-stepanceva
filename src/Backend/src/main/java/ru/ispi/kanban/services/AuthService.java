@@ -8,7 +8,7 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.stereotype.Service;
 import ru.ispi.kanban.dto.AuthTokensDTO;
 import ru.ispi.kanban.dto.UserDTO;
-import ru.ispi.kanban.exceptions.AuthException;
+import ru.ispi.kanban.exceptions.NoSuchUserByEmailException;
 import ru.ispi.kanban.payload.LoginPayload;
 import ru.ispi.kanban.payload.RegistrationPayload;
 import ru.ispi.kanban.security.jwt.JwtService;
@@ -66,7 +66,7 @@ public class AuthService {
         }
 
         return userService.getByEmail(email)
-                    .orElseThrow(() -> new AuthException("User not found"));
+                    .orElseThrow(() -> new NoSuchUserByEmailException(String.format("User by %s not found", email)));
 
     }
 

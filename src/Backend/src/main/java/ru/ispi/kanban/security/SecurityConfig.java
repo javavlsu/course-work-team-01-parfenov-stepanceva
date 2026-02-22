@@ -14,8 +14,11 @@ import org.springframework.security.config.annotation.web.configurers.AbstractHt
 import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.security.web.AuthenticationEntryPoint;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
+import ru.ispi.kanban.exceptions.security.CustomAccessDeniedHandler;
+import ru.ispi.kanban.exceptions.security.CustomAuthenticationEntryPoint;
 import ru.ispi.kanban.security.jwt.JwtAuthenticationFilter;
 
 @RequiredArgsConstructor
@@ -27,10 +30,18 @@ public class SecurityConfig {
 
     private final CustomUserDetailsService userDetailsService;
 
+    private final CustomAuthenticationEntryPoint customAuthenticationEntryPoint;
+
+    private final CustomAccessDeniedHandler customAccessDeniedHandler;
+
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception{
         return http
                         .csrf(AbstractHttpConfigurer :: disable)  //отключаем CSRF
+                        .exceptionHandling(ex -> ex
+                                .authenticationEntryPoint(customAuthenticationEntryPoint)
+                                .accessDeniedHandler(customAccessDeniedHandler)
+                        )
                         .authorizeHttpRequests(auth ->
                                 auth
                                         .requestMatchers("/api/auth/**").permitAll() //всем можно авторизоваться

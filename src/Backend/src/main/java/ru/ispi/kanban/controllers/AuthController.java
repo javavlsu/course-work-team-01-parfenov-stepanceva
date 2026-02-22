@@ -2,6 +2,7 @@ package ru.ispi.kanban.controllers;
 
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -20,11 +21,6 @@ import ru.ispi.kanban.util.CookiesHelper;
 @RequestMapping("/api/auth/")
 @RequiredArgsConstructor
 public class AuthController {
-
-    private final CustomUserDetailsService userDetailsService;
-
-    private final JwtService jwtService;
-
     private final HttpServletResponse httpServletResponse;
 
     private final UserService userService;
@@ -33,13 +29,19 @@ public class AuthController {
 
     private final AuthService authService;
 
+    @Value("${spring.security.jwt.access-time}")
+    private int ACCESS_TOKEN_EXPIRATION;
+
+    @Value("${spring.security.jwt.refresh-time}")
+    private int REFRESH_TOKEN_EXPIRATION;
+
     @PostMapping("login")
     public ResponseEntity<?> login(@RequestBody LoginPayload loginPayload, HttpServletResponse httpServletResponse){
 
         AuthTokensDTO tokens = authService.login(loginPayload);
 
-        cookies.setCookie(httpServletResponse, "accessTokenKanban", tokens.getAccessToken(), 15 * 60);
-        cookies.setCookie(httpServletResponse, "refreshTokenKanban", tokens.getRefreshToken(), 60 * 60);
+        cookies.setCookie(httpServletResponse, "accessTokenKanban", tokens.getAccessToken(), ACCESS_TOKEN_EXPIRATION);
+        cookies.setCookie(httpServletResponse, "refreshTokenKanban", tokens.getRefreshToken(), REFRESH_TOKEN_EXPIRATION);
 
         return ResponseEntity
                 .status(200)
@@ -55,10 +57,10 @@ public class AuthController {
         AuthTokensDTO tokens = authService.register(registrationPayload);
 
         cookies.setCookie(response, "accessTokenKanban",
-                tokens.getAccessToken(), 15 * 60);
+                tokens.getAccessToken(), ACCESS_TOKEN_EXPIRATION);
 
         cookies.setCookie(response, "refreshTokenKanban",
-                tokens.getRefreshToken(), 60 * 60);
+                tokens.getRefreshToken(), REFRESH_TOKEN_EXPIRATION);
 
         return ResponseEntity
                 .status(HttpStatus.CREATED)
@@ -85,7 +87,7 @@ public class AuthController {
         cookies.setCookie(httpServletResponse,
                 "accessTokenKanban",
                 newAccessToken,
-                15 * 60);
+                ACCESS_TOKEN_EXPIRATION);
 
         return ResponseEntity.ok(
                 ApiResponses.ok("Token refreshed", null)
