@@ -10,8 +10,6 @@ import ru.ispi.kanban.dto.AuthTokensDTO;
 import ru.ispi.kanban.dto.UserDTO;
 import ru.ispi.kanban.payload.LoginPayload;
 import ru.ispi.kanban.payload.RegistrationPayload;
-import ru.ispi.kanban.security.CustomUserDetailsService;
-import ru.ispi.kanban.security.jwt.JwtService;
 import ru.ispi.kanban.services.AuthService;
 import ru.ispi.kanban.services.UserService;
 import ru.ispi.kanban.util.ApiResponses;

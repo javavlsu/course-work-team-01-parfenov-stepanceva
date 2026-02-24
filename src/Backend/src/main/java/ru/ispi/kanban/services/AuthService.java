@@ -87,4 +87,21 @@ public class AuthService {
 
         return jwtService.generateAccessToken(userDetails);
     }
+
+    public Integer getUserIdFromToken(String accessToken) {
+
+        if (accessToken == null) {
+            throw new RuntimeException("Cookie not found");
+        }
+
+        String email = jwtService.extractUsername(accessToken);
+
+        UserDTO user = userService.getByEmail(email)
+                .orElseThrow(() ->
+                        new NoSuchUserByEmailException(
+                                "User not found: " + email
+                        ));
+
+        return user.getId();
+    }
 }

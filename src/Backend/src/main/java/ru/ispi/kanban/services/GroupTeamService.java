@@ -17,37 +17,61 @@ public class GroupTeamService {
 
     private final MySqlGroupTeamRepository mySqlGroupTeamRepository;
 
+    private final GroupMemberService groupMemberService;
+
     public List<GroupTeam> getGroupTeams() {
         return mySqlGroupTeamRepository.findAll();
     }
 
-    public GroupTeam get(Integer id) {
+    public List<GroupTeamDTO> getUserGroups(Integer userId) {
+
+        return groupMemberService.getUserGroups(userId);
+    }
+
+    public GroupTeam get(Integer id, Integer userId) {
+
+        groupMemberService.checkMember(id, userId);
+
         return mySqlGroupTeamRepository.getReferenceById(id);
     }
 
-    public GroupTeamDTO create(GroupTeamPayload payload) {
+    public GroupTeamDTO create(GroupTeamPayload payload, Integer creatorId) {
         GroupTeam groupTeam = new GroupTeam();
         groupTeam.setName(payload.name());
         groupTeam.setDescription(payload.description());
         groupTeam.setCreatedAt(LocalDateTime.now());
 
         GroupTeam savedGroupTeam = mySqlGroupTeamRepository.save(groupTeam);
+
+        groupMemberService.createOwner(
+                savedGroupTeam.getId(),
+                creatorId
+        );
+
         return convertToDto(savedGroupTeam);
     }
 
-    public GroupTeamDTO update(Integer id, GroupTeamPayload payload) {
-        GroupTeam groupTeam = get(id);
+    public GroupTeamDTO update(Integer id,
+                               Integer userId,
+                               GroupTeamPayload payload) {
+
+        groupMemberService.checkMember(id, userId);
+
+        GroupTeam groupTeam = get(id, userId);
 
         groupTeam.setName(payload.name());
         groupTeam.setDescription(payload.description());
 
-        GroupTeam updatedGroupTeam = mySqlGroupTeamRepository.save(groupTeam);
-        return convertToDto(updatedGroupTeam);
+        return convertToDto(
+                mySqlGroupTeamRepository.save(groupTeam)
+        );
     }
 
-    public void delete(Integer id) {
-        GroupTeam groupTeam = get(id);
-        mySqlGroupTeamRepository.delete(groupTeam);
+    public void delete(Integer id, Integer userId) {
+
+        groupMemberService.checkMember(id, userId);
+
+        mySqlGroupTeamRepository.deleteById(id);
     }
 
     private GroupTeamDTO convertToDto(GroupTeam savedGroupTeam) {
