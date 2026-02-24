@@ -10,6 +10,7 @@ import ru.ispi.kanban.entity.GroupTeam;
 import ru.ispi.kanban.payload.GroupTeamPayload;
 import ru.ispi.kanban.services.AuthService;
 import ru.ispi.kanban.services.GroupTeamService;
+import ru.ispi.kanban.services.UserService;
 import ru.ispi.kanban.util.ApiResponses;
 
 import java.util.List;
@@ -22,6 +23,8 @@ public class GroupTeamController {
     private final GroupTeamService groupTeamService;
 
     private final AuthService authService;
+
+    private final UserService userService;
 
 //    @GetMapping("all")
 //    public ResponseEntity<ApiResponse<List<GroupTeam>>> getAllGroupTeams()
@@ -41,14 +44,14 @@ public class GroupTeamController {
 
         return ResponseEntity.ok(
                 ApiResponses.ok(
-                        "User groups",
+                        String.format("User %s groups", userService.getById(userId).orElseThrow().getEmail() ),
                         groupTeamService.getUserGroups(userId)
                 )
         );
     }
 
     @GetMapping("{id}")
-    public ResponseEntity<ApiResponse<GroupTeam>> getGroupTeamById(
+    public ResponseEntity<ApiResponse<GroupTeamDTO>> getGroupTeamById(
             @PathVariable Integer id,
             @CookieValue(value = "accessTokenKanban", required = false)
             String accessToken
@@ -56,11 +59,14 @@ public class GroupTeamController {
 
         Integer userId = authService.getUserIdFromToken(accessToken);
 
-        GroupTeam groupTeam = groupTeamService.get(id, userId);
+        GroupTeamDTO groupTeam = groupTeamService.get(id, userId);
 
-        return ResponseEntity.ok(
-                ApiResponses.ok("Group team found", groupTeam)
-        );
+        return ResponseEntity.
+                status(200)
+                .body(
+                        ApiResponses.ok("Group team found", groupTeam)
+                        );
+
     }
 
     @PostMapping()

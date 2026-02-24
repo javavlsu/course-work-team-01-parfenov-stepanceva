@@ -31,7 +31,7 @@ public class GroupMemberService {
 
     private final UserRepository userRepository;
 
-    private void checkAdmin(Integer groupId, Integer userId) {
+    public void checkAdmin(Integer groupId, Integer userId) {
 
         GroupMember groupMember = memberRepository.findByGroupIdAndUserId(
                 groupId, userId
@@ -83,7 +83,7 @@ public class GroupMemberService {
         GroupRole role = GroupRole.valueOf(payload.role());
         GroupMember member = createGroupMember(groupTeam, user, role);
 
-        return toDTO(memberRepository.save(member));
+        return convertToDto(memberRepository.save(member));
     }
 
     public GroupMemberDTO updateRole(Integer adminId, Integer groupId, Integer userId, UpdateMemberRoleInGroupTeamPayload payload) {
@@ -95,7 +95,7 @@ public class GroupMemberService {
 
         groupMember.setRole(GroupRole.valueOf(payload.role()));
 
-        return toDTO(memberRepository.save(groupMember));
+        return convertToDto(memberRepository.save(groupMember));
     }
 
     public void deleteMember(Integer adminId, Integer groupId, Integer userId) {
@@ -109,7 +109,7 @@ public class GroupMemberService {
 
         return memberRepository.findAllByGroupId(groupId)
                 .stream()
-                .map(this :: toDTO)
+                .map(this ::convertToDto)
                 .collect(Collectors.toUnmodifiableList());
     }
 
@@ -158,11 +158,12 @@ public class GroupMemberService {
         return member;
     }
 
-    private GroupMemberDTO toDTO(GroupMember member) {
+    private GroupMemberDTO convertToDto(GroupMember member) {
         GroupMemberDTO dto = new GroupMemberDTO();
         dto.setGroupId(member.getGroup().getId());
         dto.setUserId(member.getUser().getId());
         dto.setRole(member.getRole());
+        dto.setJoinedAt(member.getJoinedAt());
 
         return dto;
     }

@@ -28,11 +28,11 @@ public class GroupTeamService {
         return groupMemberService.getUserGroups(userId);
     }
 
-    public GroupTeam get(Integer id, Integer userId) {
+    public GroupTeamDTO get(Integer groupId, Integer userId) {
 
-        groupMemberService.checkMember(id, userId);
+        groupMemberService.checkMember(groupId, userId);
 
-        return mySqlGroupTeamRepository.getReferenceById(id);
+        return convertToDto(mySqlGroupTeamRepository.getReferenceById(groupId));
     }
 
     public GroupTeamDTO create(GroupTeamPayload payload, Integer creatorId) {
@@ -51,13 +51,13 @@ public class GroupTeamService {
         return convertToDto(savedGroupTeam);
     }
 
-    public GroupTeamDTO update(Integer id,
+    public GroupTeamDTO update(Integer groupId,
                                Integer userId,
                                GroupTeamPayload payload) {
 
-        groupMemberService.checkMember(id, userId);
+        groupMemberService.checkAdmin(groupId, userId);
 
-        GroupTeam groupTeam = get(id, userId);
+        GroupTeam groupTeam = mySqlGroupTeamRepository.getReferenceById(groupId);
 
         groupTeam.setName(payload.name());
         groupTeam.setDescription(payload.description());
@@ -67,11 +67,11 @@ public class GroupTeamService {
         );
     }
 
-    public void delete(Integer id, Integer userId) {
+    public void delete(Integer groupId, Integer userId) {
 
-        groupMemberService.checkMember(id, userId);
+        groupMemberService.checkAdmin(groupId, userId);
 
-        mySqlGroupTeamRepository.deleteById(id);
+        mySqlGroupTeamRepository.deleteById(groupId);
     }
 
     private GroupTeamDTO convertToDto(GroupTeam savedGroupTeam) {

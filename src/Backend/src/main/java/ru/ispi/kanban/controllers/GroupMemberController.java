@@ -11,6 +11,7 @@ import ru.ispi.kanban.payload.AddMemberToGroupTeamPayload;
 import ru.ispi.kanban.payload.UpdateMemberRoleInGroupTeamPayload;
 import ru.ispi.kanban.services.AuthService;
 import ru.ispi.kanban.services.GroupMemberService;
+import ru.ispi.kanban.services.GroupTeamService;
 import ru.ispi.kanban.util.ApiResponses;
 
 import java.util.List;
@@ -18,9 +19,11 @@ import java.util.List;
 @RestController
 @RequestMapping("/api/kanban/group-member/")
 @RequiredArgsConstructor
-public class GroupMemberController {
+public class  GroupMemberController {
 
     private final GroupMemberService memberService;
+
+    private final GroupTeamService groupTeamService;
 
     private final AuthService authService;
 
@@ -36,7 +39,7 @@ public class GroupMemberController {
         memberService.checkMember(groupId, userId);
 
         return ResponseEntity.ok(
-                ApiResponses.ok("Group members",
+                ApiResponses.ok(String.format("Group members of %s", groupTeamService.get(groupId, userId).getName()),
                         memberService.getGroupMembers(groupId))
         );
     }
