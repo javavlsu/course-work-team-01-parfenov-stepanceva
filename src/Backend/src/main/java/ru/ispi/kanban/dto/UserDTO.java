@@ -1,8 +1,10 @@
 package ru.ispi.kanban.dto;
 
+import jakarta.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.NonNull;
 import lombok.Setter;
 
 import java.time.LocalDateTime;
@@ -12,10 +14,16 @@ import java.time.LocalDateTime;
 @NoArgsConstructor
 @AllArgsConstructor
 public class UserDTO {
+
     private Integer id;
+
     private String email;
+
     private String name;
+
     private String avatarUrl;
+
     private LocalDateTime createdAt;
+
 }
 

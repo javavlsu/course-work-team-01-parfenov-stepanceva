@@ -5,6 +5,8 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import ru.ispi.kanban.dto.UserDTO;
 import ru.ispi.kanban.entity.User;
+import ru.ispi.kanban.exceptions.NoSuchUserByEmailException;
+import ru.ispi.kanban.exceptions.NoSuchUserByIdException;
 import ru.ispi.kanban.payload.RegistrationPayload;
 import ru.ispi.kanban.payload.UserPayload;
 import ru.ispi.kanban.repository.UserRepository;
@@ -46,14 +48,16 @@ public class UserService {
                 .collect(Collectors.toList());
     }
 
-    public Optional<UserDTO> getById(Integer id) {
+    public UserDTO getById(Integer id) {
         return userRepository.findById(id)
-                .map(this::convertToDTO);
+                .map(this::convertToDTO)
+                .orElseThrow(() -> new NoSuchUserByIdException(String.format("User with id %s does not exist", id)));
     }
 
-    public Optional<UserDTO> getByEmail(String email) {
+    public UserDTO getByEmail(String email) {
         return userRepository.findByEmail(email)
-                .map(this::convertToDTO);
+                .map(this::convertToDTO)
+                .orElseThrow(() -> new NoSuchUserByEmailException(String.format("User by %s not found", email)));
     }
 
     public UserDTO update(Integer id, UserPayload payload) {

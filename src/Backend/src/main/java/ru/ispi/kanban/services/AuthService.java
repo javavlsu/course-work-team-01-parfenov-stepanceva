@@ -65,8 +65,7 @@ public class AuthService {
             throw new RuntimeException("Token expired");
         }
 
-        return userService.getByEmail(email)
-                    .orElseThrow(() -> new NoSuchUserByEmailException(String.format("User by %s not found", email)));
+        return userService.getByEmail(email);
 
     }
 
@@ -96,11 +95,7 @@ public class AuthService {
 
         String email = jwtService.extractUsername(accessToken);
 
-        UserDTO user = userService.getByEmail(email)
-                .orElseThrow(() ->
-                        new NoSuchUserByEmailException(
-                                "User not found: " + email
-                        ));
+        UserDTO user = userService.getByEmail(email);
 
         return user.getId();
     }

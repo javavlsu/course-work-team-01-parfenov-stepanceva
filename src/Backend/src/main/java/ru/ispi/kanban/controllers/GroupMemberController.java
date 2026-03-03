@@ -2,22 +2,20 @@ package ru.ispi.kanban.controllers;
 
 
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import ru.ispi.kanban.dto.ApiResponse;
 import ru.ispi.kanban.dto.GroupMemberDTO;
-import ru.ispi.kanban.dto.UserDTO;
 import ru.ispi.kanban.payload.AddMemberToGroupTeamPayload;
 import ru.ispi.kanban.payload.UpdateMemberRoleInGroupTeamPayload;
 import ru.ispi.kanban.services.AuthService;
 import ru.ispi.kanban.services.GroupMemberService;
 import ru.ispi.kanban.services.GroupTeamService;
-import ru.ispi.kanban.util.ApiResponses;
 
 import java.util.List;
 
 @RestController
-@RequestMapping("/api/kanban/group-member/")
+@RequestMapping("/api/kanban/group-members/")
 @RequiredArgsConstructor
 public class  GroupMemberController {
 
@@ -28,7 +26,7 @@ public class  GroupMemberController {
     private final AuthService authService;
 
     @GetMapping("{groupId}")
-    public ResponseEntity<ApiResponse<List<GroupMemberDTO>>> members(
+    public ResponseEntity<List<GroupMemberDTO>> members(
             @PathVariable Integer groupId,
             @CookieValue(value = "accessTokenKanban", required = false)
                     String accessToken
@@ -38,14 +36,13 @@ public class  GroupMemberController {
 
         memberService.checkMember(groupId, userId);
 
-        return ResponseEntity.ok(
-                ApiResponses.ok(String.format("Group members of %s", groupTeamService.get(groupId, userId).getName()),
-                        memberService.getGroupMembers(groupId))
-        );
+        return ResponseEntity
+                .status(HttpStatus.OK)
+                .body(memberService.getGroupMembers(groupId));
     }
 
     @PostMapping("{groupId}")
-    public ResponseEntity<ApiResponse<GroupMemberDTO>> add(
+    public ResponseEntity<GroupMemberDTO> add(
             @PathVariable Integer groupId,
             @RequestBody AddMemberToGroupTeamPayload payload,
             @CookieValue(value = "accessTokenKanban", required = false) String accessToken
@@ -53,16 +50,14 @@ public class  GroupMemberController {
 
         Integer adminId = authService.getUserIdFromToken(accessToken);
 
-        return ResponseEntity.ok(
-                ApiResponses.ok(
-                        "Member added",
-                        memberService.addMember(groupId,adminId, payload)
-                )
-        );
+        return ResponseEntity
+                .status(HttpStatus.CREATED)
+                .body(memberService.addMember(groupId,adminId, payload));
+
     }
 
     @PutMapping("{groupId}/{userId}")
-    public ResponseEntity<ApiResponse<GroupMemberDTO>> updateRole(
+    public ResponseEntity<GroupMemberDTO> updateRole(
             @PathVariable Integer groupId,
             @PathVariable Integer userId,
             @RequestBody UpdateMemberRoleInGroupTeamPayload payload,
@@ -71,16 +66,13 @@ public class  GroupMemberController {
 
         Integer adminId = authService.getUserIdFromToken(accessToken);
 
-        return ResponseEntity.ok(
-                ApiResponses.ok(
-                        "Role updated",
-                        memberService.updateRole(adminId, groupId, userId, payload)
-                )
-        );
+        return ResponseEntity
+                .status(HttpStatus.OK)
+                .body(memberService.updateRole(adminId, groupId, userId, payload));
     }
 
     @DeleteMapping("{groupId}/{userId}")
-    public ResponseEntity<ApiResponse<?>> remove(
+    public ResponseEntity<?> remove(
             @PathVariable Integer groupId,
             @PathVariable Integer userId,
             @CookieValue(value = "accessTokenKanban", required = false) String accessToken
@@ -90,9 +82,9 @@ public class  GroupMemberController {
 
         memberService.deleteMember(adminId, groupId, userId);
 
-        return ResponseEntity.ok(
-                ApiResponses.ok("Member removed", null)
-        );
+        return ResponseEntity
+                .status(HttpStatus.NO_CONTENT)
+                .build();
     }
 
 }

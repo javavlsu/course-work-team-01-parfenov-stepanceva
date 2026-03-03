@@ -12,7 +12,6 @@ import ru.ispi.kanban.payload.LoginPayload;
 import ru.ispi.kanban.payload.RegistrationPayload;
 import ru.ispi.kanban.services.AuthService;
 import ru.ispi.kanban.services.UserService;
-import ru.ispi.kanban.util.ApiResponses;
 import ru.ispi.kanban.util.CookiesHelper;
 
 @RestController
@@ -34,7 +33,7 @@ public class AuthController {
     private int REFRESH_TOKEN_EXPIRATION;
 
     @PostMapping("login")
-    public ResponseEntity<?> login(@RequestBody LoginPayload loginPayload, HttpServletResponse httpServletResponse){
+    public ResponseEntity<UserDTO> login(@RequestBody LoginPayload loginPayload, HttpServletResponse httpServletResponse){
 
         AuthTokensDTO tokens = authService.login(loginPayload);
 
@@ -42,15 +41,14 @@ public class AuthController {
         cookies.setCookie(httpServletResponse, "refreshTokenKanban", tokens.getRefreshToken(), REFRESH_TOKEN_EXPIRATION);
 
         return ResponseEntity
-                .status(200)
-                .body(ApiResponses.ok(
-                        "Login successful",
+                .status(HttpStatus.OK)
+                .body(
                         userService.getByEmail(loginPayload.email())
-                ));
+                );
     }
 
     @PostMapping("registration")
-    public ResponseEntity<?> registration(@RequestBody RegistrationPayload registrationPayload, HttpServletResponse response){
+    public ResponseEntity<UserDTO> registration(@RequestBody RegistrationPayload registrationPayload, HttpServletResponse response){
 
         AuthTokensDTO tokens = authService.register(registrationPayload);
 
@@ -62,24 +60,21 @@ public class AuthController {
 
         return ResponseEntity
                 .status(HttpStatus.CREATED)
-                .body(ApiResponses.ok(
-                        "The user has been registered",
+                .body(
                         userService.getByEmail(registrationPayload.email())
-                ));
+                );
     }
 
     @GetMapping("checkAuth")
-    public ResponseEntity<?> checkAuth(@CookieValue(value = "accessTokenKanban", required = false) String accessToken){
+    public ResponseEntity<UserDTO> checkAuth(@CookieValue(value = "accessTokenKanban", required = false) String accessToken){
 
-        UserDTO user = authService.checkAuth(accessToken);
-
-        return ResponseEntity.ok(
-                    ApiResponses.ok("Authorized", user)
-            );
+        return ResponseEntity
+                .status(HttpStatus.OK)
+                .body(authService.checkAuth(accessToken));
     }
 
     @PostMapping("refresh")
-    public ResponseEntity<?> refresh(@CookieValue(value = "refreshTokenKanban", required = false) String refreshToken){
+    public ResponseEntity<UserDTO> refresh(@CookieValue(value = "refreshTokenKanban", required = false) String refreshToken){
         String newAccessToken = authService.refresh(refreshToken);
 
         cookies.setCookie(httpServletResponse,
@@ -87,9 +82,9 @@ public class AuthController {
                 newAccessToken,
                 ACCESS_TOKEN_EXPIRATION);
 
-        return ResponseEntity.ok(
-                ApiResponses.ok("Token refreshed", null)
-        );
+        return ResponseEntity
+                .status(HttpStatus.OK)
+                .body(authService.checkAuth(newAccessToken));
     }
 
     @PostMapping("logout")
@@ -97,7 +92,8 @@ public class AuthController {
         //стираем куки
         cookies.setCookie(httpServletResponse, "accessTokenKanban", "", 0);
         cookies.setCookie(httpServletResponse, "refreshTokenKanban", "", 0);
-        return ResponseEntity.status(200)
-                .body(ApiResponses.ok("Logged out", null));
+        return ResponseEntity
+                .status(HttpStatus.NO_CONTENT)
+                .build();
     }
 }

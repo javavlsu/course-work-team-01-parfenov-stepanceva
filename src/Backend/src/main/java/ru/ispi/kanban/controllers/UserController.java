@@ -10,7 +10,7 @@ import java.util.List;
 
 @RestController
 @RequiredArgsConstructor
-@RequestMapping("/api/kanban/user/")
+@RequestMapping("/api/kanban/users/")
 public class UserController {
 
     private final UserService userService;
@@ -21,17 +21,14 @@ public class UserController {
     }
 
     @GetMapping("{id}")
-    public ResponseEntity<UserDTO> getUserById(@PathVariable Integer id) {
-        return userService.getById(id)
-                .map(u -> ResponseEntity.ok(u))
-                .orElse(ResponseEntity.notFound().build());
+    public UserDTO getUserById(@PathVariable Integer id) {
+        return userService.getById(id);
     }
 
     @GetMapping("email/{email}")
-    public ResponseEntity<UserDTO> getUserByEmail(@PathVariable String email) {
-        return userService.getByEmail(email)
-                .map(u -> ResponseEntity.ok(u))
-                .orElse(ResponseEntity.notFound().build());
+    public UserDTO getUserByEmail(@PathVariable String email) {
+        return userService.getByEmail(email);
+
     }
 
 //    @PostMapping()

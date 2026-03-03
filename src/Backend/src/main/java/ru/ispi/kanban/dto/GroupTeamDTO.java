@@ -13,8 +13,13 @@ import java.time.LocalDateTime;
 @NoArgsConstructor
 @AllArgsConstructor
 public class GroupTeamDTO {
-    Integer id;
-    String name;
-    String description;
-    LocalDateTime createdAt;
+
+    private Integer id;
+
+    private String name;
+
+    private String description;
+
+    private LocalDateTime createdAt;
+
 }
