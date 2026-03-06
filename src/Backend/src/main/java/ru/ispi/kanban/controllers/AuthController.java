@@ -10,6 +10,7 @@ import ru.ispi.kanban.dto.AuthTokensDTO;
 import ru.ispi.kanban.dto.UserDTO;
 import ru.ispi.kanban.payload.LoginPayload;
 import ru.ispi.kanban.payload.RegistrationPayload;
+import ru.ispi.kanban.security.JwtProperties;
 import ru.ispi.kanban.services.AuthService;
 import ru.ispi.kanban.services.UserService;
 import ru.ispi.kanban.util.CookiesHelper;
@@ -26,19 +27,15 @@ public class AuthController {
 
     private final AuthService authService;
 
-    @Value("${spring.security.jwt.access-time}")
-    private int ACCESS_TOKEN_EXPIRATION;
-
-    @Value("${spring.security.jwt.refresh-time}")
-    private int REFRESH_TOKEN_EXPIRATION;
+    private final JwtProperties jwtProperties;
 
     @PostMapping("login")
     public ResponseEntity<UserDTO> login(@RequestBody LoginPayload loginPayload, HttpServletResponse httpServletResponse){
 
         AuthTokensDTO tokens = authService.login(loginPayload);
 
-        cookies.setCookie(httpServletResponse, "accessTokenKanban", tokens.getAccessToken(), ACCESS_TOKEN_EXPIRATION);
-        cookies.setCookie(httpServletResponse, "refreshTokenKanban", tokens.getRefreshToken(), REFRESH_TOKEN_EXPIRATION);
+        cookies.setCookie(httpServletResponse, "accessTokenKanban", tokens.getAccessToken(), (int) jwtProperties.accessTime());
+        cookies.setCookie(httpServletResponse, "refreshTokenKanban", tokens.getRefreshToken(), (int) jwtProperties.refreshTime());
 
         return ResponseEntity
                 .status(HttpStatus.OK)
@@ -53,10 +50,10 @@ public class AuthController {
         AuthTokensDTO tokens = authService.register(registrationPayload);
 
         cookies.setCookie(response, "accessTokenKanban",
-                tokens.getAccessToken(), ACCESS_TOKEN_EXPIRATION);
+                tokens.getAccessToken(), (int) jwtProperties.accessTime());
 
         cookies.setCookie(response, "refreshTokenKanban",
-                tokens.getRefreshToken(), REFRESH_TOKEN_EXPIRATION);
+                tokens.getRefreshToken(), (int) jwtProperties.refreshTime());
 
         return ResponseEntity
                 .status(HttpStatus.CREATED)
@@ -80,7 +77,7 @@ public class AuthController {
         cookies.setCookie(httpServletResponse,
                 "accessTokenKanban",
                 newAccessToken,
-                ACCESS_TOKEN_EXPIRATION);
+                (int) jwtProperties.accessTime());
 
         return ResponseEntity
                 .status(HttpStatus.OK)

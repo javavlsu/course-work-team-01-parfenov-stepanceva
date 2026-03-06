@@ -35,11 +35,9 @@ public class GroupTeamController {
             String accessToken
     ) {
 
-        Integer userId = authService.getUserIdFromToken(accessToken);
-
         return ResponseEntity
                 .status(HttpStatus.OK)
-                .body(groupTeamService.getUserGroups(userId));
+                .body(groupTeamService.getUserGroups(authService.getUserIdFromToken(accessToken)));
     }
 
     @GetMapping("{id}")
@@ -48,44 +46,36 @@ public class GroupTeamController {
             @CookieValue(value = "accessTokenKanban", required = false)
             String accessToken
     ) {
-
-        Integer userId = authService.getUserIdFromToken(accessToken);
-
         return ResponseEntity
                 .status(HttpStatus.OK)
-                .body(groupTeamService.get(id, userId));
+                .body(groupTeamService.get(id, authService.getUserIdFromToken(accessToken)));
 
     }
 
     @PostMapping()
     public ResponseEntity<GroupTeamDTO> createGroupTeam(@RequestBody GroupTeamPayload groupTeam, @CookieValue(value = "accessTokenKanban", required = false) String accessToken)
     {
-
-        Integer userId = authService.getUserIdFromToken(accessToken);
-
         return ResponseEntity
                 .status(HttpStatus.CREATED)
-                .body(groupTeamService.create(groupTeam, userId));
+                .body(groupTeamService.create(groupTeam, authService.getUserIdFromToken(accessToken)));
     }
 
     @PutMapping("{id}")
     public ResponseEntity<GroupTeamDTO> updateGroupTeam(@PathVariable Integer id,
                                                                      @RequestBody GroupTeamPayload groupTeamPayload,
                                                                      @CookieValue(value = "accessTokenKanban", required = false) String accessToken) {
-        Integer userId = authService.getUserIdFromToken(accessToken);
 
         return ResponseEntity
                 .status(HttpStatus.OK)
-                .body(groupTeamService.update(id, userId, groupTeamPayload));
+                .body(groupTeamService.update(id, authService.getUserIdFromToken(accessToken), groupTeamPayload));
     }
 
     @DeleteMapping("{id}")
     public ResponseEntity<?> deleteGroupTeam(@PathVariable Integer id,
                                                        @CookieValue(value = "accessTokenKanban", required = false) String accessToken) {
 
-        Integer userId = authService.getUserIdFromToken(accessToken);
 
-        groupTeamService.delete(id,userId);
+        groupTeamService.delete(id,authService.getUserIdFromToken(accessToken));
 
         return ResponseEntity
                 .status(HttpStatus.NO_CONTENT)

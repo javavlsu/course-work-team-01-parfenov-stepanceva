@@ -6,9 +6,11 @@ import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
 import io.jsonwebtoken.io.Decoders;
 import io.jsonwebtoken.security.Keys;
+import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Service;
+import ru.ispi.kanban.security.JwtProperties;
 
 import java.security.Key;
 import java.util.Date;
@@ -16,24 +18,18 @@ import java.util.HashMap;
 import java.util.function.Function;
 
 @Service
+@RequiredArgsConstructor
 public class JwtService {
 
-    @Value("${spring.security.jwt.secret-key}")
-    private String SECRET_KEY;
-
-    @Value("${spring.security.jwt.access-time}")
-    private long ACCESS_TOKEN_EXPIRATION;
-
-    @Value("${spring.security.jwt.refresh-time}")
-    private long REFRESH_TOKEN_EXPIRATION;
+    private final JwtProperties jwtProperties;
 
     public String generateAccessToken(UserDetails userDetails) {
         // Создаем пустую Map для доп. данных, если они не нужны сейчас
-        return buildToken(new HashMap<>(), userDetails, ACCESS_TOKEN_EXPIRATION);
+        return buildToken(new HashMap<>(), userDetails, jwtProperties.accessTime());
     }
 
     public String generateRefreshToken(UserDetails userDetails) {
-        return buildToken(new HashMap<>(), userDetails, REFRESH_TOKEN_EXPIRATION);
+        return buildToken(new HashMap<>(), userDetails, jwtProperties.refreshTime());
     }
 
     /**
@@ -53,7 +49,7 @@ public class JwtService {
 
     private Key getSignInKey() {
         // Превращаем текстовый секрет из конфига обратно в байтовый массив
-        byte[] keyBytes = Decoders.BASE64.decode(SECRET_KEY);
+        byte[] keyBytes = Decoders.BASE64.decode(jwtProperties.secretKey());
         // Генерируем ключ, пригодный именно для алгоритма HMAC
         return Keys.hmacShaKeyFor(keyBytes);
     }

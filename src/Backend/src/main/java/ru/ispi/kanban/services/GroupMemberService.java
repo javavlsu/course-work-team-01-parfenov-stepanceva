@@ -1,6 +1,7 @@
 package ru.ispi.kanban.services;
 
 import lombok.RequiredArgsConstructor;
+import org.aspectj.weaver.ast.Not;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import ru.ispi.kanban.dto.GroupMemberDTO;
@@ -10,6 +11,7 @@ import ru.ispi.kanban.entity.GroupTeam;
 import ru.ispi.kanban.entity.User;
 import ru.ispi.kanban.entity.composiveKey.GroupMemberId;
 import ru.ispi.kanban.enums.GroupRole;
+import ru.ispi.kanban.exceptions.NotMemberException;
 import ru.ispi.kanban.payload.AddMemberToGroupTeamPayload;
 import ru.ispi.kanban.payload.UpdateMemberRoleInGroupTeamPayload;
 import ru.ispi.kanban.repository.MySqlGroupMemberRepository;
@@ -56,7 +58,6 @@ public class GroupMemberService {
 
         groupMemberId.setGroupId(groupId);
         groupMemberId.setUserId(userId);
-
 
         GroupMember groupMember = createGroupMember(groupTeam, user, GroupRole.admin);
 
@@ -136,7 +137,7 @@ public class GroupMemberService {
 
         memberRepository.findByGroupIdAndUserId(groupId, userId)
                 .orElseThrow(() ->
-                        new RuntimeException("Access denied"));
+                        new NotMemberException("You are not a group member in this team, accesses denied"));
     }
 
 

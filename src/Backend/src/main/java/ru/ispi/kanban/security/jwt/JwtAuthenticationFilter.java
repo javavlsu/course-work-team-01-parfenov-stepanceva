@@ -57,7 +57,7 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
             userEmail = jwtService.extractUsername(jwtToken);
         } catch (ExpiredJwtException e) {
             // токен протух
-            logger.warn("JWT token is expired");
+            logger.debug("JWT token is expired");
             filterChain.doFilter(request, response);
             return;
         } catch (JwtException | IllegalArgumentException e) {

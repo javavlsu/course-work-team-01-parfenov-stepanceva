@@ -21,8 +21,6 @@ public class  GroupMemberController {
 
     private final GroupMemberService memberService;
 
-    private final GroupTeamService groupTeamService;
-
     private final AuthService authService;
 
     @GetMapping("{groupId}")
@@ -32,9 +30,7 @@ public class  GroupMemberController {
                     String accessToken
     ) {
 
-        Integer userId = authService.getUserIdFromToken(accessToken);
-
-        memberService.checkMember(groupId, userId);
+        memberService.checkMember(groupId, authService.getUserIdFromToken(accessToken));
 
         return ResponseEntity
                 .status(HttpStatus.OK)
@@ -48,11 +44,9 @@ public class  GroupMemberController {
             @CookieValue(value = "accessTokenKanban", required = false) String accessToken
     ) {
 
-        Integer adminId = authService.getUserIdFromToken(accessToken);
-
         return ResponseEntity
                 .status(HttpStatus.CREATED)
-                .body(memberService.addMember(groupId,adminId, payload));
+                .body(memberService.addMember(groupId,authService.getUserIdFromToken(accessToken), payload));
 
     }
 
@@ -64,11 +58,9 @@ public class  GroupMemberController {
             @CookieValue(value = "accessTokenKanban", required = false) String accessToken
     ) {
 
-        Integer adminId = authService.getUserIdFromToken(accessToken);
-
         return ResponseEntity
                 .status(HttpStatus.OK)
-                .body(memberService.updateRole(adminId, groupId, userId, payload));
+                .body(memberService.updateRole(authService.getUserIdFromToken(accessToken), groupId, userId, payload));
     }
 
     @DeleteMapping("{groupId}/{userId}")
@@ -78,9 +70,7 @@ public class  GroupMemberController {
             @CookieValue(value = "accessTokenKanban", required = false) String accessToken
     ) {
 
-        Integer adminId = authService.getUserIdFromToken(accessToken);
-
-        memberService.deleteMember(adminId, groupId, userId);
+        memberService.deleteMember(authService.getUserIdFromToken(accessToken), groupId, userId);
 
         return ResponseEntity
                 .status(HttpStatus.NO_CONTENT)

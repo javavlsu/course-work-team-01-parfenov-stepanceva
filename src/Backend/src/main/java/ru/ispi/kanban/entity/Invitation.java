@@ -35,5 +35,6 @@ public class Invitation {
     @Column(nullable = false)
     private LocalDateTime expiresAt;
 
+    @Column(columnDefinition = "TINYINT(1)")
     private Boolean used;
 }
