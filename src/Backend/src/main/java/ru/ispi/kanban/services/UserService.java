@@ -36,7 +36,6 @@ public class UserService {
         // Хеш
         user.setPasswordHash(passwordEncoder.encode(payload.password()));
         user.setAvatarUrl(null);
-        user.setCreatedAt(LocalDateTime.now());
         
         User savedUser = userRepository.save(user);
         return convertToDTO(savedUser);
@@ -87,6 +86,11 @@ public class UserService {
             throw new IllegalArgumentException("User with id " + id + " not found");
         }
         userRepository.deleteById(id);
+    }
+
+    public User getEntity(Integer id){
+        return userRepository.findById(id)
+                .orElseThrow(() -> new RuntimeException("User not found"));
     }
 
     private UserDTO convertToDTO(User user) {

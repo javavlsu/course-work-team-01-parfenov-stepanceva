@@ -33,4 +33,9 @@ public class GroupMember {
 
     @Column(name = "joined_at")
     private LocalDateTime joinedAt;
+
+    @PrePersist
+    protected void onCreate() {
+        this.joinedAt = LocalDateTime.now();
+    }
 }

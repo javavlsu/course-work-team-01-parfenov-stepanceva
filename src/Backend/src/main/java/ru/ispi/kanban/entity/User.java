@@ -30,7 +30,11 @@ public class User {
     private String avatarUrl;
 
     @Column(name = "created_at",
-            insertable = false,
             updatable = false)
     private LocalDateTime createdAt;
+
+    @PrePersist
+    protected void onCreate() {
+        this.createdAt = LocalDateTime.now();
+    }
 }

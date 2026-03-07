@@ -37,4 +37,9 @@ public class Invitation {
 
     @Column(columnDefinition = "TINYINT(1)")
     private Boolean used;
+
+    @PrePersist
+    protected void onCreate() {
+        this.createdAt = LocalDateTime.now();
+    }
 }

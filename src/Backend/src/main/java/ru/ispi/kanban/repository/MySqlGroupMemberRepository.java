@@ -1,7 +1,9 @@
 package ru.ispi.kanban.repository;
 
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Query;
 import ru.ispi.kanban.entity.GroupMember;
+import ru.ispi.kanban.entity.User;
 import ru.ispi.kanban.entity.composiveKey.GroupMemberId;
 
 import java.util.List;
@@ -27,4 +29,12 @@ public interface MySqlGroupMemberRepository extends JpaRepository<GroupMember, G
             Integer groupId,
             Integer userId
     );
+
+    @Query("""
+    SELECT gm.user
+    FROM GroupMember gm
+    WHERE gm.group.id = :groupId
+    AND gm.role = 'admin'
+    """)
+    List<User> findAdmins(Integer groupId);
 }

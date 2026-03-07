@@ -39,7 +39,7 @@ public class GroupTeamService {
         GroupTeam groupTeam = new GroupTeam();
         groupTeam.setName(payload.name());
         groupTeam.setDescription(payload.description());
-        groupTeam.setCreatedAt(LocalDateTime.now());
+
 
         GroupTeam savedGroupTeam = mySqlGroupTeamRepository.save(groupTeam);
 
@@ -72,6 +72,14 @@ public class GroupTeamService {
         groupMemberService.checkAdmin(groupId, userId);
 
         mySqlGroupTeamRepository.deleteById(groupId);
+    }
+
+
+    public GroupTeam getEntity(Integer groupId, Integer userId) {
+
+        groupMemberService.checkMember(groupId, userId);
+
+        return mySqlGroupTeamRepository.getReferenceById(groupId);
     }
 
     private GroupTeamDTO convertToDto(GroupTeam savedGroupTeam) {

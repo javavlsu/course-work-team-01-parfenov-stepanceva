@@ -38,4 +38,9 @@ public class TaskHistory {
     private String newValue;
 
     private LocalDateTime changedAt;
+
+    @PrePersist
+    protected void onCreate() {
+        this.changedAt = LocalDateTime.now();
+    }
 }

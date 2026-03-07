@@ -140,6 +140,10 @@ public class GroupMemberService {
                         new NotMemberException("You are not a group member in this team, accesses denied"));
     }
 
+    public List<User> getAdmins(Integer groupId){
+        return memberRepository.findAdmins(groupId);
+    }
+
 
     //вынес логику заполнения
     private GroupMember createGroupMember(GroupTeam group, User user, GroupRole role) {
@@ -154,7 +158,7 @@ public class GroupMemberService {
         member.setGroup(group);
         member.setUser(user);
         member.setRole(role);
-        member.setJoinedAt(LocalDateTime.now());
+
 
         return member;
     }

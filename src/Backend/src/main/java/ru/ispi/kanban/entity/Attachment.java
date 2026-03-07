@@ -30,6 +30,11 @@ public class Attachment {
     @Column(columnDefinition = "TEXT", name = "storage_key", nullable = false)
     private String storageKey;
 
-    @Column(name = "uploaded_at", insertable = false, updatable = false)
+    @Column(name = "uploaded_at", updatable = false)
     private LocalDateTime uploadedAt;
+
+    @PrePersist
+    protected void onCreate() {
+        this.uploadedAt = LocalDateTime.now();
+    }
 }
