@@ -17,3 +17,4 @@ Backend
  * Validation
  * Spring boot devtools
  * JJWT
+ * liquibase
