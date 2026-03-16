@@ -1,6 +1,6 @@
 package ru.ispi.kanban.payload;
 
-public record BoardPayload(
+public record CreateBoardPayload(
         String title,
         String description
 ) {

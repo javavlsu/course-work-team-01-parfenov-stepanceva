@@ -164,4 +164,15 @@ public class GroupMemberService {
 
         return member;
     }
+
+    @Transactional(readOnly = true)
+    public User getMemberUser(Integer groupId, Integer userId) {
+
+        GroupMember member = memberRepository
+                .findByGroupIdAndUserId(groupId, userId)
+                .orElseThrow(() ->
+                        new NotMemberException("User is not a member of this group"));
+
+        return member.getUser();
+    }
 }

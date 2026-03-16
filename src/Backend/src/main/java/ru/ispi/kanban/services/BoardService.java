@@ -7,7 +7,8 @@ import ru.ispi.kanban.entity.Board;
 import ru.ispi.kanban.entity.GroupTeam;
 import ru.ispi.kanban.entity.User;
 import ru.ispi.kanban.mapper.BoardMapper;
-import ru.ispi.kanban.payload.BoardPayload;
+import ru.ispi.kanban.payload.CreateBoardPayload;
+import ru.ispi.kanban.payload.UpdateBoardPayload;
 import ru.ispi.kanban.repository.MySqlBoardRepository;
 
 import java.util.List;
@@ -28,24 +29,24 @@ public class BoardService {
 
     private final BoardMapper boardMapper;
 
-    public List<BoardDTO> getUserBoards(Integer userId, Integer groupId){
+    public List<BoardDTO> getUserBoards(Integer userIdFromToken, Integer groupId){
 
-        groupMemberService.checkMember(groupId, userId);
+        groupMemberService.checkMember(groupId, userIdFromToken);
 
         List<Board> boards =
-                boardUserService.getUserBoards(userId, groupId);
+                boardUserService.getUserBoards(userIdFromToken, groupId);
 
         return boards.stream()
                 .map(boardMapper::toDto)
                 .toList();
     }
 
-    public BoardDTO create(BoardPayload payload, Integer userId, Integer groupId){
+    public BoardDTO create(CreateBoardPayload payload, Integer userIdFromToken, Integer groupId){
 
-        groupMemberService.checkAdmin(groupId, userId);
+        groupMemberService.checkAdmin(groupId, userIdFromToken);
 
-        User creator = userService.getEntity(userId);
-        GroupTeam group = groupTeamService.getEntity(groupId, userId);
+        User creator = userService.getEntity(userIdFromToken);
+        GroupTeam group = groupTeamService.getEntity(groupId, userIdFromToken);
 
         Board board = new Board();
         board.setTitle(payload.title());
@@ -58,5 +59,40 @@ public class BoardService {
         boardUserService.grantAccessToAdmins(savedBoard);
 
         return boardMapper.toDto(savedBoard);
+    }
+
+    public BoardDTO getUserBoard(Integer userIdFromToken, Integer groupId, Integer boardId) {
+
+        groupMemberService.checkMember(groupId, userIdFromToken);
+
+        Board board =
+                boardUserService.getUserBoard(userIdFromToken, groupId, boardId);
+
+        return boardMapper.toDto(board);
+    }
+
+    public BoardDTO update(UpdateBoardPayload payload, Integer userIdFromToken, Integer groupId, Integer boardId) {
+
+        groupMemberService.checkAdmin(groupId, userIdFromToken);
+
+        Board board =
+                boardUserService.getUserBoard(userIdFromToken, groupId, boardId);
+
+        board.setTitle(payload.title());
+        board.setDescription(payload.description());
+
+        Board saved = boardRepository.save(board);
+
+        return boardMapper.toDto(saved);
+    }
+
+    public void delete(Integer userIdFromToken, Integer groupId, Integer boardId) {
+
+        groupMemberService.checkAdmin(groupId, userIdFromToken);
+
+        Board board =
+                boardUserService.getUserBoard(userIdFromToken, groupId, boardId);
+
+        boardRepository.delete(board);
     }
 }

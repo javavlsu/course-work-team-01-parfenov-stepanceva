@@ -2,10 +2,12 @@ package ru.ispi.kanban.services;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import ru.ispi.kanban.dto.UserDTO;
 import ru.ispi.kanban.entity.Board;
 import ru.ispi.kanban.entity.BoardUser;
 import ru.ispi.kanban.entity.User;
 import ru.ispi.kanban.entity.composiveKey.BoardUserId;
+import ru.ispi.kanban.mapper.UserMapper;
 import ru.ispi.kanban.repository.MySqlBoardUserRepository;
 
 import java.util.List;
@@ -17,6 +19,8 @@ public class BoardUserService {
     private final MySqlBoardUserRepository boardUserRepository;
 
     private final GroupMemberService groupMemberService;
+
+    private final UserMapper userMapper;
 
     public boolean hasAccess(Integer boardId, Integer userId){
         return boardUserRepository
@@ -83,5 +87,45 @@ public class BoardUserService {
         BoardUserId id = new BoardUserId(boardId, userId);
 
         boardUserRepository.deleteById(id);
+    }
+
+    public Board getUserBoard(Integer userIdFromToken, Integer groupId, Integer boardId) {
+
+        return boardUserRepository
+                .findBoardByUser(userIdFromToken, boardId, groupId)
+                .orElseThrow(() -> new RuntimeException("Доска не найдена или у вас нет доступа к ней"));
+    }
+
+    public List<UserDTO> getUsersBoard(Integer userIdFromToken, Integer groupId, Integer boardId) {
+
+        groupMemberService.checkMember(groupId, userIdFromToken);
+
+        checkAccess(boardId, userIdFromToken);
+
+        List<User> users = boardUserRepository.findUsersByBoard(boardId);
+
+        return users.stream()
+                .map(userMapper::toDto)
+                .toList();
+    }
+
+    public void addUserToBoard(Integer adminId, Integer groupId, Integer boardId, Integer userId){
+
+        groupMemberService.checkAdmin(groupId, adminId);
+
+        Board board = getUserBoard(adminId, groupId, boardId);
+
+        User user = groupMemberService.getMemberUser(groupId, userId);
+
+        grantAccess(board, user);
+    }
+
+    public void removeUserFromBoard(Integer adminId, Integer groupId, Integer boardId, Integer userId){
+
+        groupMemberService.checkAdmin(groupId, adminId);
+
+        checkAccess(boardId, userId);
+
+        removeAccess(boardId, userId);
     }
 }

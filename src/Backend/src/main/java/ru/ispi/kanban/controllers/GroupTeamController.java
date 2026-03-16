@@ -71,7 +71,7 @@ public class GroupTeamController {
     }
 
     @DeleteMapping("{id}")
-    public ResponseEntity<?> deleteGroupTeam(@PathVariable Integer id,
+    public ResponseEntity<Void> deleteGroupTeam(@PathVariable Integer id,
                                                        @CookieValue(value = "accessTokenKanban", required = false) String accessToken) {
 
 

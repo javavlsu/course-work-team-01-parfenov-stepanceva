@@ -64,7 +64,7 @@ public class  GroupMemberController {
     }
 
     @DeleteMapping("{groupId}/{userId}")
-    public ResponseEntity<?> remove(
+    public ResponseEntity<Void> remove(
             @PathVariable Integer groupId,
             @PathVariable Integer userId,
             @CookieValue(value = "accessTokenKanban", required = false) String accessToken
