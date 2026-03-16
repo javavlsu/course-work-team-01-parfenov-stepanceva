@@ -6,6 +6,7 @@ import ru.ispi.kanban.dto.BoardDTO;
 import ru.ispi.kanban.entity.Board;
 import ru.ispi.kanban.entity.GroupTeam;
 import ru.ispi.kanban.entity.User;
+import ru.ispi.kanban.mapper.BoardMapper;
 import ru.ispi.kanban.payload.BoardPayload;
 import ru.ispi.kanban.repository.MySqlBoardRepository;
 
@@ -25,6 +26,8 @@ public class BoardService {
 
     private final GroupTeamService groupTeamService;
 
+    private final BoardMapper boardMapper;
+
     public List<BoardDTO> getUserBoards(Integer userId, Integer groupId){
 
         groupMemberService.checkMember(groupId, userId);
@@ -33,7 +36,7 @@ public class BoardService {
                 boardUserService.getUserBoards(userId, groupId);
 
         return boards.stream()
-                .map(this::convertToDto)
+                .map(boardMapper::toDto)
                 .toList();
     }
 
@@ -54,17 +57,6 @@ public class BoardService {
 
         boardUserService.grantAccessToAdmins(savedBoard);
 
-        return convertToDto(savedBoard);
-    }
-
-    private BoardDTO convertToDto(Board board){
-        return new BoardDTO(
-                board.getId(),
-                board.getGroup(),
-                board.getTitle(),
-                board.getDescription(),
-                board.getCreatedBy(),
-                board.getCreatedAt()
-        );
+        return boardMapper.toDto(savedBoard);
     }
 }

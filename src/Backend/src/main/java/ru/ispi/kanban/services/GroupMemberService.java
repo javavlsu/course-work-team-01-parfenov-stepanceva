@@ -12,6 +12,7 @@ import ru.ispi.kanban.entity.User;
 import ru.ispi.kanban.entity.composiveKey.GroupMemberId;
 import ru.ispi.kanban.enums.GroupRole;
 import ru.ispi.kanban.exceptions.NotMemberException;
+import ru.ispi.kanban.mapper.GroupMemberMapper;
 import ru.ispi.kanban.payload.AddMemberToGroupTeamPayload;
 import ru.ispi.kanban.payload.UpdateMemberRoleInGroupTeamPayload;
 import ru.ispi.kanban.repository.MySqlGroupMemberRepository;
@@ -32,6 +33,8 @@ public class GroupMemberService {
     private final MySqlGroupTeamRepository groupRepository;
 
     private final UserRepository userRepository;
+
+    private final GroupMemberMapper groupMemberMapper;
 
     public void checkAdmin(Integer groupId, Integer userId) {
 
@@ -84,7 +87,7 @@ public class GroupMemberService {
         GroupRole role = GroupRole.valueOf(payload.role());
         GroupMember member = createGroupMember(groupTeam, user, role);
 
-        return convertToDto(memberRepository.save(member));
+        return groupMemberMapper.toDto(memberRepository.save(member));
     }
 
     public GroupMemberDTO updateRole(Integer adminId, Integer groupId, Integer userId, UpdateMemberRoleInGroupTeamPayload payload) {
@@ -96,7 +99,7 @@ public class GroupMemberService {
 
         groupMember.setRole(GroupRole.valueOf(payload.role()));
 
-        return convertToDto(memberRepository.save(groupMember));
+        return groupMemberMapper.toDto(memberRepository.save(groupMember));
     }
 
     public void deleteMember(Integer adminId, Integer groupId, Integer userId) {
@@ -110,7 +113,7 @@ public class GroupMemberService {
 
         return memberRepository.findAllByGroupId(groupId)
                 .stream()
-                .map(this ::convertToDto)
+                .map(groupMemberMapper ::toDto)
                 .collect(Collectors.toUnmodifiableList());
     }
 
@@ -159,17 +162,6 @@ public class GroupMemberService {
         member.setUser(user);
         member.setRole(role);
 
-
         return member;
-    }
-
-    private GroupMemberDTO convertToDto(GroupMember member) {
-        GroupMemberDTO dto = new GroupMemberDTO();
-        dto.setGroupId(member.getGroup().getId());
-        dto.setUserId(member.getUser().getId());
-        dto.setRole(member.getRole());
-        dto.setJoinedAt(member.getJoinedAt());
-
-        return dto;
     }
 }

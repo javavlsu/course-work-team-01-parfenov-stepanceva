@@ -7,6 +7,7 @@ import ru.ispi.kanban.dto.UserDTO;
 import ru.ispi.kanban.entity.User;
 import ru.ispi.kanban.exceptions.NoSuchUserByEmailException;
 import ru.ispi.kanban.exceptions.NoSuchUserByIdException;
+import ru.ispi.kanban.mapper.UserMapper;
 import ru.ispi.kanban.payload.RegistrationPayload;
 import ru.ispi.kanban.payload.UserPayload;
 import ru.ispi.kanban.repository.UserRepository;
@@ -24,6 +25,8 @@ public class UserService {
 
     private final PasswordEncoder passwordEncoder;
 
+    private final UserMapper userMapper;
+
     public UserDTO create(RegistrationPayload payload) {
         // Проверяем, не существует ли уже пользователь с таким email
         if (userRepository.findByEmail(payload.email()).isPresent()) {
@@ -38,24 +41,24 @@ public class UserService {
         user.setAvatarUrl(null);
         
         User savedUser = userRepository.save(user);
-        return convertToDTO(savedUser);
+        return userMapper.toDto(savedUser);
     }
 
     public List<UserDTO> getAll() {
         return userRepository.findAll().stream()
-                .map(this::convertToDTO)
+                .map(userMapper::toDto)
                 .collect(Collectors.toList());
     }
 
     public UserDTO getById(Integer id) {
         return userRepository.findById(id)
-                .map(this::convertToDTO)
+                .map(userMapper::toDto)
                 .orElseThrow(() -> new NoSuchUserByIdException(String.format("User with id %s does not exist", id)));
     }
 
     public UserDTO getByEmail(String email) {
         return userRepository.findByEmail(email)
-                .map(this::convertToDTO)
+                .map(userMapper::toDto)
                 .orElseThrow(() -> new NoSuchUserByEmailException(String.format("User by %s not found", email)));
     }
 
@@ -78,7 +81,7 @@ public class UserService {
         user.setAvatarUrl(payload.avatarUrl());
 
         User updatedUser = userRepository.save(user);
-        return convertToDTO(updatedUser);
+        return userMapper.toDto(updatedUser);
     }
 
     public void deleteById(Integer id) {
@@ -92,15 +95,4 @@ public class UserService {
         return userRepository.findById(id)
                 .orElseThrow(() -> new RuntimeException("User not found"));
     }
-
-    private UserDTO convertToDTO(User user) {
-        UserDTO dto = new UserDTO();
-        dto.setId(user.getId());
-        dto.setEmail(user.getEmail());
-        dto.setName(user.getName());
-        dto.setAvatarUrl(user.getAvatarUrl());
-        dto.setCreatedAt(user.getCreatedAt());
-        return dto;
-    }
-
 }

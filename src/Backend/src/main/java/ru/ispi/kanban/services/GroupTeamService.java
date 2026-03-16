@@ -4,6 +4,8 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import ru.ispi.kanban.dto.GroupTeamDTO;
 import ru.ispi.kanban.entity.GroupTeam;
+import ru.ispi.kanban.mapper.GroupMemberMapper;
+import ru.ispi.kanban.mapper.GroupTeamMapper;
 import ru.ispi.kanban.payload.GroupTeamPayload;
 import ru.ispi.kanban.repository.MySqlGroupTeamRepository;
 
@@ -19,6 +21,8 @@ public class GroupTeamService {
 
     private final GroupMemberService groupMemberService;
 
+    private final GroupTeamMapper groupTeamMapper;
+
     public List<GroupTeam> getGroupTeams() {
         return mySqlGroupTeamRepository.findAll();
     }
@@ -32,7 +36,7 @@ public class GroupTeamService {
 
         groupMemberService.checkMember(groupId, userId);
 
-        return convertToDto(mySqlGroupTeamRepository.getReferenceById(groupId));
+        return groupTeamMapper.toDto(mySqlGroupTeamRepository.getReferenceById(groupId));
     }
 
     public GroupTeamDTO create(GroupTeamPayload payload, Integer creatorId) {
@@ -48,7 +52,7 @@ public class GroupTeamService {
                 creatorId
         );
 
-        return convertToDto(savedGroupTeam);
+        return groupTeamMapper.toDto(savedGroupTeam);
     }
 
     public GroupTeamDTO update(Integer groupId,
@@ -62,7 +66,7 @@ public class GroupTeamService {
         groupTeam.setName(payload.name());
         groupTeam.setDescription(payload.description());
 
-        return convertToDto(
+        return groupTeamMapper.toDto(
                 mySqlGroupTeamRepository.save(groupTeam)
         );
     }
@@ -80,14 +84,5 @@ public class GroupTeamService {
         groupMemberService.checkMember(groupId, userId);
 
         return mySqlGroupTeamRepository.getReferenceById(groupId);
-    }
-
-    private GroupTeamDTO convertToDto(GroupTeam savedGroupTeam) {
-        GroupTeamDTO groupTeamDTO = new GroupTeamDTO();
-        groupTeamDTO.setId(savedGroupTeam.getId());
-        groupTeamDTO.setName(savedGroupTeam.getName());
-        groupTeamDTO.setDescription(savedGroupTeam.getDescription());
-        groupTeamDTO.setCreatedAt(savedGroupTeam.getCreatedAt());
-        return groupTeamDTO;
     }
 }
