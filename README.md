@@ -18,3 +18,4 @@ Backend
  * Spring boot devtools
  * JJWT
  * liquibase
+ * mapstruct
