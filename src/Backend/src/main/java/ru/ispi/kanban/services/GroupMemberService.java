@@ -84,7 +84,7 @@ public class GroupMemberService {
                 () -> new RuntimeException("User not found")
         );
 
-        GroupRole role = GroupRole.valueOf(payload.role());
+        GroupRole role = payload.role();
         GroupMember member = createGroupMember(groupTeam, user, role);
 
         return groupMemberMapper.toDto(memberRepository.save(member));
@@ -97,7 +97,7 @@ public class GroupMemberService {
                 () -> new RuntimeException("Member not found")
         );
 
-        groupMember.setRole(GroupRole.valueOf(payload.role()));
+        groupMember.setRole(payload.role());
 
         return groupMemberMapper.toDto(memberRepository.save(groupMember));
     }

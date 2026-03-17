@@ -1,5 +1,6 @@
 package ru.ispi.kanban.controllers;
 
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -53,7 +54,7 @@ public class GroupTeamController {
     }
 
     @PostMapping()
-    public ResponseEntity<GroupTeamDTO> createGroupTeam(@RequestBody GroupTeamPayload groupTeam, @CookieValue(value = "accessTokenKanban", required = false) String accessToken)
+    public ResponseEntity<GroupTeamDTO> createGroupTeam(@Valid @RequestBody GroupTeamPayload groupTeam, @CookieValue(value = "accessTokenKanban", required = false) String accessToken)
     {
         return ResponseEntity
                 .status(HttpStatus.CREATED)
@@ -62,7 +63,7 @@ public class GroupTeamController {
 
     @PutMapping("{id}")
     public ResponseEntity<GroupTeamDTO> updateGroupTeam(@PathVariable Integer id,
-                                                                     @RequestBody GroupTeamPayload groupTeamPayload,
+                                                                     @Valid @RequestBody GroupTeamPayload groupTeamPayload,
                                                                      @CookieValue(value = "accessTokenKanban", required = false) String accessToken) {
 
         return ResponseEntity

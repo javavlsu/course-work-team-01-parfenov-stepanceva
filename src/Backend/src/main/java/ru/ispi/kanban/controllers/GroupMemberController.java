@@ -1,6 +1,7 @@
 package ru.ispi.kanban.controllers;
 
 
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -10,7 +11,6 @@ import ru.ispi.kanban.payload.AddMemberToGroupTeamPayload;
 import ru.ispi.kanban.payload.UpdateMemberRoleInGroupTeamPayload;
 import ru.ispi.kanban.services.AuthService;
 import ru.ispi.kanban.services.GroupMemberService;
-import ru.ispi.kanban.services.GroupTeamService;
 
 import java.util.List;
 
@@ -40,7 +40,7 @@ public class  GroupMemberController {
     @PostMapping("{groupId}")
     public ResponseEntity<GroupMemberDTO> add(
             @PathVariable Integer groupId,
-            @RequestBody AddMemberToGroupTeamPayload payload,
+            @Valid @RequestBody AddMemberToGroupTeamPayload payload,
             @CookieValue(value = "accessTokenKanban", required = false) String accessToken
     ) {
 
@@ -54,7 +54,7 @@ public class  GroupMemberController {
     public ResponseEntity<GroupMemberDTO> updateRole(
             @PathVariable Integer groupId,
             @PathVariable Integer userId,
-            @RequestBody UpdateMemberRoleInGroupTeamPayload payload,
+            @Valid @RequestBody UpdateMemberRoleInGroupTeamPayload payload,
             @CookieValue(value = "accessTokenKanban", required = false) String accessToken
     ) {
 

@@ -1,5 +1,6 @@
 package ru.ispi.kanban.controllers;
 
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -54,7 +55,7 @@ public class BoardController {
     @PostMapping("{groupId}")
     public ResponseEntity<BoardDTO> CreateBoard(
             @CookieValue(value = "accessTokenKanban", required = false)
-            String accessToken, @PathVariable Integer groupId, @RequestBody CreateBoardPayload payload
+            String accessToken, @PathVariable Integer groupId,@Valid @RequestBody CreateBoardPayload payload
             ){
         return ResponseEntity
                 .status(HttpStatus.CREATED)
@@ -64,7 +65,7 @@ public class BoardController {
     @PutMapping("{groupId}/{boardId}")
     public ResponseEntity<BoardDTO> UpdateBoard(
             @CookieValue(value = "accessTokenKanban", required = false)
-            String accessToken, @PathVariable Integer groupId, @PathVariable Integer boardId, @RequestBody UpdateBoardPayload payload){
+            String accessToken, @PathVariable Integer groupId, @PathVariable Integer boardId,@Valid @RequestBody UpdateBoardPayload payload){
 
         return ResponseEntity
                 .status(HttpStatus.OK)

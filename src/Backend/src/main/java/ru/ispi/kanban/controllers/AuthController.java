@@ -1,6 +1,7 @@
 package ru.ispi.kanban.controllers;
 
 import jakarta.servlet.http.HttpServletResponse;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpStatus;
@@ -30,7 +31,7 @@ public class AuthController {
     private final JwtProperties jwtProperties;
 
     @PostMapping("login")
-    public ResponseEntity<UserDTO> login(@RequestBody LoginPayload loginPayload, HttpServletResponse httpServletResponse){
+    public ResponseEntity<UserDTO> login(@Valid @RequestBody LoginPayload loginPayload, HttpServletResponse httpServletResponse){
 
         AuthTokensDTO tokens = authService.login(loginPayload);
 
@@ -45,7 +46,7 @@ public class AuthController {
     }
 
     @PostMapping("registration")
-    public ResponseEntity<UserDTO> registration(@RequestBody RegistrationPayload registrationPayload, HttpServletResponse response){
+    public ResponseEntity<UserDTO> registration(@Valid @RequestBody RegistrationPayload registrationPayload, HttpServletResponse response){
 
         AuthTokensDTO tokens = authService.register(registrationPayload);
 
