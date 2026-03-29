@@ -2,13 +2,13 @@ package ru.ispi.kanban.services;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
-import ru.ispi.kanban.dto.UserDTO;
+import ru.ispi.kanban.dto.UserDto;
 import ru.ispi.kanban.entity.Board;
 import ru.ispi.kanban.entity.BoardUser;
 import ru.ispi.kanban.entity.User;
 import ru.ispi.kanban.entity.composiveKey.BoardUserId;
 import ru.ispi.kanban.mapper.UserMapper;
-import ru.ispi.kanban.repository.MySqlBoardUserRepository;
+import ru.ispi.kanban.repository.BoardUserRepository;
 
 import java.util.List;
 
@@ -16,7 +16,7 @@ import java.util.List;
 @RequiredArgsConstructor
 public class BoardUserService {
 
-    private final MySqlBoardUserRepository boardUserRepository;
+    private final BoardUserRepository boardUserRepository;
 
     private final GroupMemberService groupMemberService;
 
@@ -37,7 +37,10 @@ public class BoardUserService {
     }
 
     public List<Board> getUserBoards(Integer userId, Integer groupId){
-        return boardUserRepository.findBoardsByUserAndGroup(userId, groupId);
+        return boardUserRepository.findByUserIdAndBoardGroupId(userId, groupId)
+                .stream()
+                .map(BoardUser::getBoard)
+                .toList();
     }
 
     public void grantAccess(Board board, User user){
@@ -92,17 +95,21 @@ public class BoardUserService {
     public Board getUserBoard(Integer userIdFromToken, Integer groupId, Integer boardId) {
 
         return boardUserRepository
-                .findBoardByUser(userIdFromToken, boardId, groupId)
+                .findByUserIdAndBoardIdAndBoardGroupId(userIdFromToken, boardId, groupId)
+                .map(BoardUser::getBoard)
                 .orElseThrow(() -> new RuntimeException("Доска не найдена или у вас нет доступа к ней"));
     }
 
-    public List<UserDTO> getUsersBoard(Integer userIdFromToken, Integer groupId, Integer boardId) {
+    public List<UserDto> getUsersBoard(Integer userIdFromToken, Integer groupId, Integer boardId) {
 
         groupMemberService.checkMember(groupId, userIdFromToken);
 
         checkAccess(boardId, userIdFromToken);
 
-        List<User> users = boardUserRepository.findUsersByBoard(boardId);
+        List<User> users = boardUserRepository.findByBoardId(boardId)
+                .stream()
+                .map(BoardUser::getUser)
+                .toList();
 
         return users.stream()
                 .map(userMapper::toDto)

@@ -2,14 +2,14 @@ package ru.ispi.kanban.services;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
-import ru.ispi.kanban.dto.BoardDTO;
+import ru.ispi.kanban.dto.BoardDto;
 import ru.ispi.kanban.entity.Board;
 import ru.ispi.kanban.entity.GroupTeam;
 import ru.ispi.kanban.entity.User;
 import ru.ispi.kanban.mapper.BoardMapper;
 import ru.ispi.kanban.payload.CreateBoardPayload;
 import ru.ispi.kanban.payload.UpdateBoardPayload;
-import ru.ispi.kanban.repository.MySqlBoardRepository;
+import ru.ispi.kanban.repository.BoardRepository;
 
 import java.util.List;
 
@@ -21,7 +21,7 @@ public class BoardService {
 
     private final BoardUserService boardUserService;
 
-    private final MySqlBoardRepository boardRepository;
+    private final BoardRepository boardRepository;
 
     private final UserService userService;
 
@@ -29,7 +29,7 @@ public class BoardService {
 
     private final BoardMapper boardMapper;
 
-    public List<BoardDTO> getUserBoards(Integer userIdFromToken, Integer groupId){
+    public List<BoardDto> getUserBoards(Integer userIdFromToken, Integer groupId){
 
         groupMemberService.checkMember(groupId, userIdFromToken);
 
@@ -41,7 +41,7 @@ public class BoardService {
                 .toList();
     }
 
-    public BoardDTO create(CreateBoardPayload payload, Integer userIdFromToken, Integer groupId){
+    public BoardDto create(CreateBoardPayload payload, Integer userIdFromToken, Integer groupId){
 
         groupMemberService.checkAdmin(groupId, userIdFromToken);
 
@@ -61,7 +61,7 @@ public class BoardService {
         return boardMapper.toDto(savedBoard);
     }
 
-    public BoardDTO getUserBoard(Integer userIdFromToken, Integer groupId, Integer boardId) {
+    public BoardDto getUserBoard(Integer userIdFromToken, Integer groupId, Integer boardId) {
 
         groupMemberService.checkMember(groupId, userIdFromToken);
 
@@ -71,7 +71,7 @@ public class BoardService {
         return boardMapper.toDto(board);
     }
 
-    public BoardDTO update(UpdateBoardPayload payload, Integer userIdFromToken, Integer groupId, Integer boardId) {
+    public BoardDto update(UpdateBoardPayload payload, Integer userIdFromToken, Integer groupId, Integer boardId) {
 
         groupMemberService.checkAdmin(groupId, userIdFromToken);
 

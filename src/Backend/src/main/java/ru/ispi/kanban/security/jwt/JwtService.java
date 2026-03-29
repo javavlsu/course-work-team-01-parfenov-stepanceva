@@ -10,6 +10,8 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Service;
+import ru.ispi.kanban.security.CustomUserDetails;
+import ru.ispi.kanban.security.CustomUserDetailsService;
 import ru.ispi.kanban.security.JwtProperties;
 
 import java.security.Key;
@@ -32,12 +34,10 @@ public class JwtService {
         return buildToken(new HashMap<>(), userDetails, jwtProperties.refreshTime());
     }
 
-    /**
-     * @param extraClaims - дополнительные данные (роли, id)
-     * @param userDetails - данные пользователя из Spring Security
-     * @param tokenExpiration - время жизни в миллисекундах
-     */
     private String buildToken(HashMap<String, Object> extraClaims, UserDetails userDetails, long tokenExpiration) {
+
+        extraClaims.put("userId", ((CustomUserDetails) userDetails).getId());
+
         return Jwts.builder()
                 .setClaims(extraClaims) // Устанавливаем кастомные пары ключ-значение
                 .setSubject(userDetails.getUsername()) // у нас это email пользователя
@@ -100,5 +100,9 @@ public class JwtService {
         } catch (JwtException | IllegalArgumentException e) {
             return false; // Токен подделан или поврежден
         }
+    }
+
+    public Integer extractUserId(String token) {
+        return extractClaim(token, claims -> claims.get("userId", Integer.class));
     }
 }

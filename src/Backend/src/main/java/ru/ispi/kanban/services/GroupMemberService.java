@@ -1,11 +1,10 @@
 package ru.ispi.kanban.services;
 
 import lombok.RequiredArgsConstructor;
-import org.aspectj.weaver.ast.Not;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import ru.ispi.kanban.dto.GroupMemberDTO;
-import ru.ispi.kanban.dto.GroupTeamDTO;
+import ru.ispi.kanban.dto.GroupMemberDto;
+import ru.ispi.kanban.dto.GroupTeamDto;
 import ru.ispi.kanban.entity.GroupMember;
 import ru.ispi.kanban.entity.GroupTeam;
 import ru.ispi.kanban.entity.User;
@@ -15,11 +14,10 @@ import ru.ispi.kanban.exceptions.NotMemberException;
 import ru.ispi.kanban.mapper.GroupMemberMapper;
 import ru.ispi.kanban.payload.AddMemberToGroupTeamPayload;
 import ru.ispi.kanban.payload.UpdateMemberRoleInGroupTeamPayload;
-import ru.ispi.kanban.repository.MySqlGroupMemberRepository;
-import ru.ispi.kanban.repository.MySqlGroupTeamRepository;
+import ru.ispi.kanban.repository.GroupMemberRepository;
+import ru.ispi.kanban.repository.GroupTeamRepository;
 import ru.ispi.kanban.repository.UserRepository;
 
-import java.time.LocalDateTime;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -28,9 +26,9 @@ import java.util.stream.Collectors;
 @Transactional
 public class GroupMemberService {
 
-    private final MySqlGroupMemberRepository memberRepository;
+    private final GroupMemberRepository memberRepository;
 
-    private final MySqlGroupTeamRepository groupRepository;
+    private final GroupTeamRepository groupRepository;
 
     private final UserRepository userRepository;
 
@@ -67,7 +65,7 @@ public class GroupMemberService {
         memberRepository.save(groupMember);
     }
 
-    public GroupMemberDTO addMember(Integer groupId, Integer adminId, AddMemberToGroupTeamPayload payload) {
+    public GroupMemberDto addMember(Integer groupId, Integer adminId, AddMemberToGroupTeamPayload payload) {
         checkAdmin(groupId, adminId);
 
         Integer userId = payload.userId();
@@ -90,7 +88,7 @@ public class GroupMemberService {
         return groupMemberMapper.toDto(memberRepository.save(member));
     }
 
-    public GroupMemberDTO updateRole(Integer adminId, Integer groupId, Integer userId, UpdateMemberRoleInGroupTeamPayload payload) {
+    public GroupMemberDto updateRole(Integer adminId, Integer groupId, Integer userId, UpdateMemberRoleInGroupTeamPayload payload) {
         checkAdmin(groupId, adminId);
 
         GroupMember groupMember = memberRepository.findByGroupIdAndUserId(groupId, userId).orElseThrow(
@@ -109,7 +107,7 @@ public class GroupMemberService {
     }
 
     @Transactional(readOnly = true)
-    public List<GroupMemberDTO> getGroupMembers(Integer groupId) {
+    public List<GroupMemberDto> getGroupMembers(Integer groupId) {
 
         return memberRepository.findAllByGroupId(groupId)
                 .stream()
@@ -118,14 +116,14 @@ public class GroupMemberService {
     }
 
     @Transactional(readOnly = true)
-    public List<GroupTeamDTO> getUserGroups(Integer userId) {
+    public List<GroupTeamDto> getUserGroups(Integer userId) {
 
         return memberRepository.findAllByUserId(userId)
                 .stream()
                 .map(member -> {
                     GroupTeam group = member.getGroup();
 
-                    GroupTeamDTO dto = new GroupTeamDTO();
+                    GroupTeamDto dto = new GroupTeamDto();
                     dto.setId(group.getId());
                     dto.setName(group.getName());
                     dto.setDescription(group.getDescription());
@@ -144,7 +142,10 @@ public class GroupMemberService {
     }
 
     public List<User> getAdmins(Integer groupId){
-        return memberRepository.findAdmins(groupId);
+        return memberRepository.findByGroupIdAndRole(groupId, GroupRole.admin)
+                .stream()
+                .map(GroupMember::getUser)
+                .toList();
     }
 
 

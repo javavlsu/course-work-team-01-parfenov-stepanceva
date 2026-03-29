@@ -5,7 +5,7 @@ import ru.ispi.kanban.entity.Board;
 
 import java.util.List;
 
-public interface MySqlBoardRepository extends JpaRepository<Board, Integer> {
+public interface BoardRepository extends JpaRepository<Board, Integer> {
     List<Board> findByGroupId(Integer groupId);
 
 }

@@ -1,5 +1,6 @@
 package ru.ispi.kanban.dto;
 
+
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -11,17 +12,13 @@ import java.time.LocalDateTime;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-public class BoardDTO {
+public class GroupTeamDto {
 
     private Integer id;
 
-    private GroupTeamDTO group;
-
-    private String title;
+    private String name;
 
     private String description;
-
-    private UserDTO createdBy;
 
     private LocalDateTime createdAt;
 

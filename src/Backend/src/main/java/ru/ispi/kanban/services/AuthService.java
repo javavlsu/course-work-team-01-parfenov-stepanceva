@@ -6,9 +6,8 @@ import org.springframework.security.authentication.UsernamePasswordAuthenticatio
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.stereotype.Service;
-import ru.ispi.kanban.dto.AuthTokensDTO;
-import ru.ispi.kanban.dto.UserDTO;
-import ru.ispi.kanban.exceptions.NoSuchUserByEmailException;
+import ru.ispi.kanban.dto.AuthTokensDto;
+import ru.ispi.kanban.dto.UserDto;
 import ru.ispi.kanban.payload.LoginPayload;
 import ru.ispi.kanban.payload.RegistrationPayload;
 import ru.ispi.kanban.security.jwt.JwtService;
@@ -26,7 +25,7 @@ public class AuthService {
 
     private final UserService userService;
 
-    public AuthTokensDTO login (LoginPayload loginPayload){
+    public AuthTokensDto login (LoginPayload loginPayload){
         authenticationManager.authenticate(
                 new UsernamePasswordAuthenticationToken(loginPayload.email(), loginPayload.password())
         );
@@ -37,10 +36,10 @@ public class AuthService {
 
         String refreshToken = jwtService.generateRefreshToken(userDetails);
 
-        return new AuthTokensDTO(accessToken, refreshToken);
+        return new AuthTokensDto(accessToken, refreshToken);
     }
 
-    public AuthTokensDTO register(RegistrationPayload payload) {
+    public AuthTokensDto register(RegistrationPayload payload) {
 
         userService.create(payload);
 
@@ -51,7 +50,7 @@ public class AuthService {
         ));
     }
 
-    public UserDTO checkAuth(String accessToken) {
+    public UserDto checkAuth(String accessToken) {
         if (accessToken == null) {
             throw new RuntimeException("Cookie not found");
         }
@@ -95,7 +94,7 @@ public class AuthService {
 
         String email = jwtService.extractUsername(accessToken);
 
-        UserDTO user = userService.getByEmail(email);
+        UserDto user = userService.getByEmail(email);
 
         return user.getId();
     }

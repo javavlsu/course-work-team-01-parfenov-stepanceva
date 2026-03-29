@@ -2,22 +2,19 @@ package ru.ispi.kanban.services;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
-import ru.ispi.kanban.dto.GroupTeamDTO;
+import ru.ispi.kanban.dto.GroupTeamDto;
 import ru.ispi.kanban.entity.GroupTeam;
-import ru.ispi.kanban.mapper.GroupMemberMapper;
 import ru.ispi.kanban.mapper.GroupTeamMapper;
 import ru.ispi.kanban.payload.GroupTeamPayload;
-import ru.ispi.kanban.repository.MySqlGroupTeamRepository;
+import ru.ispi.kanban.repository.GroupTeamRepository;
 
-import java.time.LocalDateTime;
-import java.util.Arrays;
 import java.util.List;
 
 @Service
 @RequiredArgsConstructor
 public class GroupTeamService {
 
-    private final MySqlGroupTeamRepository mySqlGroupTeamRepository;
+    private final GroupTeamRepository mySqlGroupTeamRepository;
 
     private final GroupMemberService groupMemberService;
 
@@ -27,19 +24,19 @@ public class GroupTeamService {
         return mySqlGroupTeamRepository.findAll();
     }
 
-    public List<GroupTeamDTO> getUserGroups(Integer userId) {
+    public List<GroupTeamDto> getUserGroups(Integer userId) {
 
         return groupMemberService.getUserGroups(userId);
     }
 
-    public GroupTeamDTO get(Integer groupId, Integer userId) {
+    public GroupTeamDto get(Integer groupId, Integer userId) {
 
         groupMemberService.checkMember(groupId, userId);
 
         return groupTeamMapper.toDto(mySqlGroupTeamRepository.getReferenceById(groupId));
     }
 
-    public GroupTeamDTO create(GroupTeamPayload payload, Integer creatorId) {
+    public GroupTeamDto create(GroupTeamPayload payload, Integer creatorId) {
         GroupTeam groupTeam = new GroupTeam();
         groupTeam.setName(payload.name());
         groupTeam.setDescription(payload.description());
@@ -55,7 +52,7 @@ public class GroupTeamService {
         return groupTeamMapper.toDto(savedGroupTeam);
     }
 
-    public GroupTeamDTO update(Integer groupId,
+    public GroupTeamDto update(Integer groupId,
                                Integer userId,
                                GroupTeamPayload payload) {
 

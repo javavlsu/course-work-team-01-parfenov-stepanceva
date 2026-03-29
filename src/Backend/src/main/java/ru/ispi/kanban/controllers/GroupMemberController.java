@@ -5,11 +5,12 @@ import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
-import ru.ispi.kanban.dto.GroupMemberDTO;
+import ru.ispi.kanban.dto.GroupMemberDto;
 import ru.ispi.kanban.payload.AddMemberToGroupTeamPayload;
 import ru.ispi.kanban.payload.UpdateMemberRoleInGroupTeamPayload;
-import ru.ispi.kanban.services.AuthService;
+import ru.ispi.kanban.security.CustomUserDetails;
 import ru.ispi.kanban.services.GroupMemberService;
 
 import java.util.List;
@@ -21,16 +22,13 @@ public class  GroupMemberController {
 
     private final GroupMemberService memberService;
 
-    private final AuthService authService;
-
     @GetMapping("{groupId}")
-    public ResponseEntity<List<GroupMemberDTO>> members(
+    public ResponseEntity<List<GroupMemberDto>> members(
             @PathVariable Integer groupId,
-            @CookieValue(value = "accessTokenKanban", required = false)
-                    String accessToken
+            @AuthenticationPrincipal CustomUserDetails user
     ) {
 
-        memberService.checkMember(groupId, authService.getUserIdFromToken(accessToken));
+        memberService.checkMember(groupId, user.getId());
 
         return ResponseEntity
                 .status(HttpStatus.OK)
@@ -38,39 +36,39 @@ public class  GroupMemberController {
     }
 
     @PostMapping("{groupId}")
-    public ResponseEntity<GroupMemberDTO> add(
+    public ResponseEntity<GroupMemberDto> add(
             @PathVariable Integer groupId,
             @Valid @RequestBody AddMemberToGroupTeamPayload payload,
-            @CookieValue(value = "accessTokenKanban", required = false) String accessToken
+            @AuthenticationPrincipal CustomUserDetails user
     ) {
 
         return ResponseEntity
                 .status(HttpStatus.CREATED)
-                .body(memberService.addMember(groupId,authService.getUserIdFromToken(accessToken), payload));
+                .body(memberService.addMember(groupId,user.getId(), payload));
 
     }
 
     @PutMapping("{groupId}/{userId}")
-    public ResponseEntity<GroupMemberDTO> updateRole(
+    public ResponseEntity<GroupMemberDto> updateRole(
             @PathVariable Integer groupId,
             @PathVariable Integer userId,
             @Valid @RequestBody UpdateMemberRoleInGroupTeamPayload payload,
-            @CookieValue(value = "accessTokenKanban", required = false) String accessToken
+            @AuthenticationPrincipal CustomUserDetails user
     ) {
 
         return ResponseEntity
                 .status(HttpStatus.OK)
-                .body(memberService.updateRole(authService.getUserIdFromToken(accessToken), groupId, userId, payload));
+                .body(memberService.updateRole(user.getId(), groupId, userId, payload));
     }
 
     @DeleteMapping("{groupId}/{userId}")
     public ResponseEntity<Void> remove(
             @PathVariable Integer groupId,
             @PathVariable Integer userId,
-            @CookieValue(value = "accessTokenKanban", required = false) String accessToken
+            @AuthenticationPrincipal CustomUserDetails user
     ) {
 
-        memberService.deleteMember(authService.getUserIdFromToken(accessToken), groupId, userId);
+        memberService.deleteMember(user.getId(), groupId, userId);
 
         return ResponseEntity
                 .status(HttpStatus.NO_CONTENT)

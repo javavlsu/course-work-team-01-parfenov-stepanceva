@@ -16,6 +16,7 @@ import org.springframework.security.web.authentication.WebAuthenticationDetailsS
 import org.springframework.stereotype.Component;
 import org.springframework.web.filter.OncePerRequestFilter;
 import ru.ispi.kanban.exceptions.NoSuchUserByEmailException;
+import ru.ispi.kanban.security.CustomUserDetails;
 
 import java.io.IOException;
 
@@ -72,7 +73,8 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
         // Если email извлечен и пользователь еще не аутентифицирован в текущем контексте
         if (userEmail != null && SecurityContextHolder.getContext().getAuthentication() ==  null){
 
-            try{UserDetails userDetails = this.userDetailsService.loadUserByUsername(userEmail);
+            try{
+                CustomUserDetails userDetails = (CustomUserDetails) this.userDetailsService.loadUserByUsername(userEmail);
 
             if (jwtService.isTokenValid(jwtToken, userDetails)){
                 UsernamePasswordAuthenticationToken authToken = new UsernamePasswordAuthenticationToken(

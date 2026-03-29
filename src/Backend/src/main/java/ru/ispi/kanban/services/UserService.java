@@ -3,7 +3,7 @@ package ru.ispi.kanban.services;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
-import ru.ispi.kanban.dto.UserDTO;
+import ru.ispi.kanban.dto.UserDto;
 import ru.ispi.kanban.entity.User;
 import ru.ispi.kanban.exceptions.NoSuchUserByEmailException;
 import ru.ispi.kanban.exceptions.NoSuchUserByIdException;
@@ -12,7 +12,6 @@ import ru.ispi.kanban.payload.RegistrationPayload;
 import ru.ispi.kanban.payload.UserPayload;
 import ru.ispi.kanban.repository.UserRepository;
 
-import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -27,7 +26,7 @@ public class UserService {
 
     private final UserMapper userMapper;
 
-    public UserDTO create(RegistrationPayload payload) {
+    public UserDto create(RegistrationPayload payload) {
         // Проверяем, не существует ли уже пользователь с таким email
         if (userRepository.findByEmail(payload.email()).isPresent()) {
             throw new IllegalArgumentException("User with email " + payload.email() + " already exists");
@@ -44,25 +43,25 @@ public class UserService {
         return userMapper.toDto(savedUser);
     }
 
-    public List<UserDTO> getAll() {
+    public List<UserDto> getAll() {
         return userRepository.findAll().stream()
                 .map(userMapper::toDto)
                 .collect(Collectors.toList());
     }
 
-    public UserDTO getById(Integer id) {
+    public UserDto getById(Integer id) {
         return userRepository.findById(id)
                 .map(userMapper::toDto)
                 .orElseThrow(() -> new NoSuchUserByIdException(String.format("User with id %s does not exist", id)));
     }
 
-    public UserDTO getByEmail(String email) {
+    public UserDto getByEmail(String email) {
         return userRepository.findByEmail(email)
                 .map(userMapper::toDto)
                 .orElseThrow(() -> new NoSuchUserByEmailException(String.format("User by %s not found", email)));
     }
 
-    public UserDTO update(Integer id, UserPayload payload) {
+    public UserDto update(Integer id, UserPayload payload) {
         User user = userRepository.findById(id)
                 .orElseThrow(() -> new IllegalArgumentException("User with id " + id + " not found"));
 

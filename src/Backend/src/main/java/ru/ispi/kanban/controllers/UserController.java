@@ -3,7 +3,7 @@ package ru.ispi.kanban.controllers;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import ru.ispi.kanban.dto.UserDTO;
+import ru.ispi.kanban.dto.UserDto;
 import ru.ispi.kanban.services.UserService;
 
 import java.util.List;
@@ -16,17 +16,17 @@ public class UserController {
     private final UserService userService;
 
     @GetMapping()
-    public ResponseEntity<List<UserDTO>> getUsers() {
+    public ResponseEntity<List<UserDto>> getUsers() {
         return ResponseEntity.ok(userService.getAll());
     }
 
     @GetMapping("{id}")
-    public UserDTO getUserById(@PathVariable Integer id) {
+    public UserDto getUserById(@PathVariable Integer id) {
         return userService.getById(id);
     }
 
     @GetMapping("email/{email}")
-    public UserDTO getUserByEmail(@PathVariable String email) {
+    public UserDto getUserByEmail(@PathVariable String email) {
         return userService.getByEmail(email);
 
     }
