@@ -32,10 +32,7 @@ public class UserService {
             throw new IllegalArgumentException("User with email " + payload.email() + " already exists");
         }
 
-        User user = new User();
-        user.setEmail(payload.email());
-        user.setName(payload.name());
-        // Хеш
+        User user = userMapper.toEntity(payload);
         user.setPasswordHash(passwordEncoder.encode(payload.password()));
         user.setAvatarUrl(null);
         
@@ -71,8 +68,8 @@ public class UserService {
             throw new IllegalArgumentException("User with email " + payload.email() + " already exists");
         }
 
-        user.setEmail(payload.email());
-        user.setName(payload.name());
+        userMapper.update(user, payload);
+
         // Хешируем пароль только если он был передан
         if (payload.password() != null && !payload.password().isEmpty()) {
             user.setPasswordHash(passwordEncoder.encode(payload.password()));

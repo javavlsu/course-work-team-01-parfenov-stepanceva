@@ -37,9 +37,7 @@ public class GroupTeamService {
     }
 
     public GroupTeamDto create(GroupTeamPayload payload, Integer creatorId) {
-        GroupTeam groupTeam = new GroupTeam();
-        groupTeam.setName(payload.name());
-        groupTeam.setDescription(payload.description());
+        GroupTeam groupTeam = groupTeamMapper.toEntity(payload);
 
 
         GroupTeam savedGroupTeam = mySqlGroupTeamRepository.save(groupTeam);
@@ -60,8 +58,7 @@ public class GroupTeamService {
 
         GroupTeam groupTeam = mySqlGroupTeamRepository.getReferenceById(groupId);
 
-        groupTeam.setName(payload.name());
-        groupTeam.setDescription(payload.description());
+        groupTeamMapper.update(groupTeam, payload);
 
         return groupTeamMapper.toDto(
                 mySqlGroupTeamRepository.save(groupTeam)

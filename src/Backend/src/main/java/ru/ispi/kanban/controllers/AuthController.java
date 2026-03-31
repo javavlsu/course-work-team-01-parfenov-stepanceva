@@ -13,7 +13,7 @@ import ru.ispi.kanban.payload.RegistrationPayload;
 import ru.ispi.kanban.security.JwtProperties;
 import ru.ispi.kanban.services.AuthService;
 import ru.ispi.kanban.services.UserService;
-import ru.ispi.kanban.util.CookiesHelper;
+import ru.ispi.kanban.utils.CookiesHelper;
 
 @RestController
 @RequestMapping("/api/auth/")

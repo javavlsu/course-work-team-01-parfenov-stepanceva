@@ -1,4 +1,4 @@
-package ru.ispi.kanban.util;
+package ru.ispi.kanban.utils;
 
 import jakarta.servlet.http.HttpServletResponse;
 import org.springframework.http.HttpHeaders;

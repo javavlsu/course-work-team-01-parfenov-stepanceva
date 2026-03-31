@@ -4,6 +4,8 @@ import jakarta.persistence.*;
 import jakarta.persistence.Column;
 import lombok.Getter;
 import lombok.Setter;
+import org.springframework.data.annotation.CreatedBy;
+import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 import java.time.LocalDateTime;
 
@@ -11,6 +13,7 @@ import java.time.LocalDateTime;
 @Table(name = "boards")
 @Getter
 @Setter
+@EntityListeners(AuditingEntityListener.class)
 public class Board {
 
     @Id
@@ -27,6 +30,7 @@ public class Board {
     @Column(columnDefinition = "TEXT")
     private String description;
 
+    @CreatedBy
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "created_by")
     private User createdBy;

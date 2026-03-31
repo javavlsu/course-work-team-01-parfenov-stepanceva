@@ -48,11 +48,8 @@ public class BoardService {
         User creator = userService.getEntity(userIdFromToken);
         GroupTeam group = groupTeamService.getEntity(groupId, userIdFromToken);
 
-        Board board = new Board();
-        board.setTitle(payload.title());
-        board.setDescription(payload.description());
+        Board board = boardMapper.toEntity(payload);
         board.setGroup(group);
-        board.setCreatedBy(creator);
 
         Board savedBoard = boardRepository.save(board);
 
@@ -78,8 +75,7 @@ public class BoardService {
         Board board =
                 boardUserService.getUserBoard(userIdFromToken, groupId, boardId);
 
-        board.setTitle(payload.title());
-        board.setDescription(payload.description());
+        boardMapper.update(board, payload);
 
         Board saved = boardRepository.save(board);
 
