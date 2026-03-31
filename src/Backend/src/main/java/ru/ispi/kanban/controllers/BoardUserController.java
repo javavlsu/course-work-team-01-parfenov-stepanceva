@@ -18,52 +18,40 @@ import ru.ispi.kanban.services.BoardUserService;
 import java.util.List;
 
 @RestController
-@RequestMapping("/api/kanban/board-users/")
+@RequestMapping("/api/kanban/boards/{boardId}/users/")
 @RequiredArgsConstructor
 public class BoardUserController {
 
     private final BoardUserService boardUserService;
 
-    @GetMapping("{groupId}/{boardId}")
+    @GetMapping
     public ResponseEntity<List<UserDto>> getUsers(
-            @AuthenticationPrincipal CustomUserDetails user, @PathVariable Integer groupId, @PathVariable Integer boardId
-    ){
-
-        return ResponseEntity
-                .status(HttpStatus.OK)
-                .body(boardUserService.getUsersBoard(user.getId(), groupId, boardId));
-
+            @AuthenticationPrincipal CustomUserDetails user,
+            @PathVariable Integer boardId
+    ) {
+        return ResponseEntity.ok(
+                boardUserService.getUsersBoard(user.getId(), boardId)
+        );
     }
 
-    @PostMapping("/{groupId}/{boardId}/{userId}")
+    @PostMapping("{userId}")
     public ResponseEntity<Void> addUser(
             @AuthenticationPrincipal CustomUserDetails user,
-            @PathVariable Integer groupId,
             @PathVariable Integer boardId,
             @PathVariable Integer userId
-    ){
-
-
-        boardUserService.addUserToBoard(user.getId(), groupId, boardId, userId);
-
-        return ResponseEntity
-                .status(HttpStatus.NO_CONTENT)
-                .build();
+    ) {
+        boardUserService.addUserToBoard(user.getId(), boardId, userId);
+        return ResponseEntity.noContent().build();
     }
 
-    @DeleteMapping("/{groupId}/{boardId}/{userId}")
+    @DeleteMapping("{userId}")
     public ResponseEntity<Void> removeUser(
             @AuthenticationPrincipal CustomUserDetails user,
-            @PathVariable Integer groupId,
             @PathVariable Integer boardId,
             @PathVariable Integer userId
-    ){
-
-        boardUserService.removeUserFromBoard(user.getId(), groupId, boardId, userId);
-
-        return ResponseEntity
-                .status(HttpStatus.NO_CONTENT)
-                .build();
+    ) {
+        boardUserService.removeUserFromBoard(user.getId(), boardId, userId);
+        return ResponseEntity.noContent().build();
     }
 
 }

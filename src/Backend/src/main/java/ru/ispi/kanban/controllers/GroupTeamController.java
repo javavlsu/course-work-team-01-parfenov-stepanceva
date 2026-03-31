@@ -7,7 +7,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
 import ru.ispi.kanban.dto.GroupTeamDto;
-import ru.ispi.kanban.payload.GroupTeamPayload;
+import ru.ispi.kanban.payloads.GroupTeamPayload;
 import ru.ispi.kanban.security.CustomUserDetails;
 import ru.ispi.kanban.services.GroupTeamService;
 

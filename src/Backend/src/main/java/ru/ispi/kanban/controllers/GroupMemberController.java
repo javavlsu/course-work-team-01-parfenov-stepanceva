@@ -8,8 +8,8 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
 import ru.ispi.kanban.dto.GroupMemberDto;
-import ru.ispi.kanban.payload.AddMemberToGroupTeamPayload;
-import ru.ispi.kanban.payload.UpdateMemberRoleInGroupTeamPayload;
+import ru.ispi.kanban.payloads.AddMemberToGroupTeamPayload;
+import ru.ispi.kanban.payloads.UpdateMemberRoleInGroupTeamPayload;
 import ru.ispi.kanban.security.CustomUserDetails;
 import ru.ispi.kanban.services.GroupMemberService;
 

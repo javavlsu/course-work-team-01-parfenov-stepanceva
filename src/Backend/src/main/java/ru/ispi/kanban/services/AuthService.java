@@ -8,8 +8,8 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.stereotype.Service;
 import ru.ispi.kanban.dto.AuthTokensDto;
 import ru.ispi.kanban.dto.UserDto;
-import ru.ispi.kanban.payload.LoginPayload;
-import ru.ispi.kanban.payload.RegistrationPayload;
+import ru.ispi.kanban.payloads.LoginPayload;
+import ru.ispi.kanban.payloads.RegistrationPayload;
 import ru.ispi.kanban.security.jwt.JwtService;
 
 

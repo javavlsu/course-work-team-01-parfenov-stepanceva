@@ -14,8 +14,8 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import ru.ispi.kanban.dto.BoardDto;
-import ru.ispi.kanban.payload.CreateBoardPayload;
-import ru.ispi.kanban.payload.UpdateBoardPayload;
+import ru.ispi.kanban.payloads.CreateBoardPayload;
+import ru.ispi.kanban.payloads.UpdateBoardPayload;
 import ru.ispi.kanban.security.CustomUserDetails;
 import ru.ispi.kanban.services.BoardService;
 
@@ -28,62 +28,61 @@ public class BoardController {
 
     private final BoardService boardService;
 
-    //GetAllUserBoardsInTeam - т.к. доски доступные именно этому пользователю в группе
-    @GetMapping("{groupId}")
-    public ResponseEntity<List<BoardDto>> GetAllUserBoardsInTeam(
+    @GetMapping
+    public ResponseEntity<List<BoardDto>> getUserBoards(
+            @AuthenticationPrincipal CustomUserDetails user
+    ) {
+        return ResponseEntity.ok(
+                boardService.getUserBoards(user.getId())
+        );
+    }
+
+    @GetMapping("group/{groupId}")
+    public ResponseEntity<List<BoardDto>> getUserBoardsInGroup(
             @AuthenticationPrincipal CustomUserDetails user,
             @PathVariable Integer groupId
-    ){
-        return ResponseEntity
-                .status(HttpStatus.OK)
-                .body(boardService.getUserBoards(user.getId(), groupId));
+    ) {
+        return ResponseEntity.ok(
+                boardService.getUserBoardsInGroup(user.getId(), groupId)
+        );
     }
 
-    @GetMapping("{groupId}/{boardId}")
-    public ResponseEntity<BoardDto> GetUserBoardInTeam(
+    @GetMapping("{boardId}")
+    public ResponseEntity<BoardDto> getBoard(
             @AuthenticationPrincipal CustomUserDetails user,
-             @PathVariable Integer groupId, @PathVariable Integer boardId
-    ){
-        return ResponseEntity
-                .status(HttpStatus.OK)
-                .body(boardService.getUserBoard(user.getId(), groupId, boardId));
-    }
-
-    @PostMapping("{groupId}")
-    public ResponseEntity<BoardDto> CreateBoard(
-            @AuthenticationPrincipal CustomUserDetails user,
-            @PathVariable Integer groupId,
-            @Valid @RequestBody CreateBoardPayload payload
-            ){
-        return ResponseEntity
-                .status(HttpStatus.CREATED)
-                .body(boardService.create(payload, user.getId(), groupId));
-    }
-
-    @PutMapping("{groupId}/{boardId}")
-    public ResponseEntity<BoardDto> UpdateBoard(
-            @AuthenticationPrincipal CustomUserDetails user,
-            @PathVariable Integer groupId,
-            @PathVariable Integer boardId,
-            @Valid @RequestBody UpdateBoardPayload payload){
-
-        return ResponseEntity
-                .status(HttpStatus.OK)
-                .body(boardService.update(payload, user.getId(), groupId, boardId));
-    }
-
-
-    @DeleteMapping("{groupId}/{boardId}")
-    public ResponseEntity<Void> DeleteBoard(
-            @AuthenticationPrincipal CustomUserDetails user,
-            @PathVariable Integer groupId,
             @PathVariable Integer boardId
-    )
-    {
-        boardService.delete(user.getId(), groupId, boardId);
+    ) {
+        return ResponseEntity.ok(
+                boardService.getUserBoard(user.getId(), boardId)
+        );
+    }
 
-        return ResponseEntity
-                .status(HttpStatus.NO_CONTENT)
-                .build();
+    @PostMapping
+    public ResponseEntity<BoardDto> create(
+            @AuthenticationPrincipal CustomUserDetails user,
+            @Valid @RequestBody CreateBoardPayload payload
+    ) {
+        return ResponseEntity.status(HttpStatus.CREATED)
+                .body(boardService.create(payload, user.getId()));
+    }
+
+    @PutMapping("{boardId}")
+    public ResponseEntity<BoardDto> update(
+            @AuthenticationPrincipal CustomUserDetails user,
+            @PathVariable Integer boardId,
+            @Valid @RequestBody UpdateBoardPayload payload
+    ) {
+        return ResponseEntity.ok(
+                boardService.update(payload, user.getId(), boardId)
+        );
+    }
+
+    @DeleteMapping("{boardId}")
+    public ResponseEntity<Void> delete(
+            @AuthenticationPrincipal CustomUserDetails user,
+            @PathVariable Integer boardId
+    ) {
+        boardService.delete(user.getId(), boardId);
+        return ResponseEntity.noContent().build();
     }
 }

@@ -3,12 +3,12 @@ package ru.ispi.kanban.services;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import ru.ispi.kanban.dto.UserDto;
-import ru.ispi.kanban.entity.Board;
-import ru.ispi.kanban.entity.BoardUser;
-import ru.ispi.kanban.entity.User;
-import ru.ispi.kanban.entity.composiveKey.BoardUserId;
-import ru.ispi.kanban.mapper.UserMapper;
-import ru.ispi.kanban.repository.BoardUserRepository;
+import ru.ispi.kanban.entities.Board;
+import ru.ispi.kanban.entities.BoardUser;
+import ru.ispi.kanban.entities.User;
+import ru.ispi.kanban.entities.composiveKey.BoardUserId;
+import ru.ispi.kanban.mappers.UserMapper;
+import ru.ispi.kanban.repositories.BoardUserRepository;
 
 import java.util.List;
 
@@ -36,8 +36,8 @@ public class BoardUserService {
         }
     }
 
-    public List<Board> getUserBoards(Integer userId, Integer groupId){
-        return boardUserRepository.findByUserIdAndBoardGroupId(userId, groupId)
+    public List<Board> getUserBoards(Integer userId){
+        return boardUserRepository.findByUserId(userId)
                 .stream()
                 .map(BoardUser::getBoard)
                 .toList();
@@ -92,19 +92,19 @@ public class BoardUserService {
         boardUserRepository.deleteById(id);
     }
 
-    public Board getUserBoard(Integer userIdFromToken, Integer groupId, Integer boardId) {
+    public Board getUserBoard(Integer userId, Integer boardId) {
 
         return boardUserRepository
-                .findByUserIdAndBoardIdAndBoardGroupId(userIdFromToken, boardId, groupId)
+                .findByUserIdAndBoardId(userId, boardId)
                 .map(BoardUser::getBoard)
-                .orElseThrow(() -> new RuntimeException("Доска не найдена или у вас нет доступа к ней"));
+                .orElseThrow(() -> new RuntimeException("Нет доступа к доске"));
     }
 
-    public List<UserDto> getUsersBoard(Integer userIdFromToken, Integer groupId, Integer boardId) {
+    public List<UserDto> getUsersBoard(Integer userId, Integer boardId) {
 
-        groupMemberService.checkMember(groupId, userIdFromToken);
+        Board board = getUserBoard(userId, boardId);
 
-        checkAccess(boardId, userIdFromToken);
+        groupMemberService.checkMember(board.getGroup().getId(), userId);
 
         List<User> users = boardUserRepository.findByBoardId(boardId)
                 .stream()
@@ -116,23 +116,38 @@ public class BoardUserService {
                 .toList();
     }
 
-    public void addUserToBoard(Integer adminId, Integer groupId, Integer boardId, Integer userId){
+    public void addUserToBoard(Integer adminId, Integer boardId, Integer userId){
+
+        Board board = getUserBoard(adminId, boardId);
+
+        Integer groupId = board.getGroup().getId();
 
         groupMemberService.checkAdmin(groupId, adminId);
-
-        Board board = getUserBoard(adminId, groupId, boardId);
 
         User user = groupMemberService.getMemberUser(groupId, userId);
 
         grantAccess(board, user);
     }
 
-    public void removeUserFromBoard(Integer adminId, Integer groupId, Integer boardId, Integer userId){
+    public void removeUserFromBoard(Integer adminId, Integer boardId, Integer userId){
+
+        Board board = getUserBoard(adminId, boardId);
+
+        Integer groupId = board.getGroup().getId();
 
         groupMemberService.checkAdmin(groupId, adminId);
 
         checkAccess(boardId, userId);
 
         removeAccess(boardId, userId);
+    }
+
+    public List<Board> getUserBoardsInGroup(Integer userId, Integer groupId){
+
+        return boardUserRepository
+                .findByUserIdAndBoardGroupId(userId, groupId)
+                .stream()
+                .map(BoardUser::getBoard)
+                .toList();
     }
 }

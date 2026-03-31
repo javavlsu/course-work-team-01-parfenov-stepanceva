@@ -3,10 +3,10 @@ package ru.ispi.kanban.services;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import ru.ispi.kanban.dto.GroupTeamDto;
-import ru.ispi.kanban.entity.GroupTeam;
-import ru.ispi.kanban.mapper.GroupTeamMapper;
-import ru.ispi.kanban.payload.GroupTeamPayload;
-import ru.ispi.kanban.repository.GroupTeamRepository;
+import ru.ispi.kanban.entities.GroupTeam;
+import ru.ispi.kanban.mappers.GroupTeamMapper;
+import ru.ispi.kanban.payloads.GroupTeamPayload;
+import ru.ispi.kanban.repositories.GroupTeamRepository;
 
 import java.util.List;
 

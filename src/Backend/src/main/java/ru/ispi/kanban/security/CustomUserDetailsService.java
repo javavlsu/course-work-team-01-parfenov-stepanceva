@@ -7,9 +7,9 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
-import ru.ispi.kanban.entity.User;
+import ru.ispi.kanban.entities.User;
 import ru.ispi.kanban.exceptions.NoSuchUserByEmailException;
-import ru.ispi.kanban.repository.UserRepository;
+import ru.ispi.kanban.repositories.UserRepository;
 
 import java.util.List;
 

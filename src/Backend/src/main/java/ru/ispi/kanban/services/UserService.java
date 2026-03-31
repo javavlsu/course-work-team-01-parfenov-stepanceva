@@ -4,13 +4,13 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import ru.ispi.kanban.dto.UserDto;
-import ru.ispi.kanban.entity.User;
+import ru.ispi.kanban.entities.User;
 import ru.ispi.kanban.exceptions.NoSuchUserByEmailException;
 import ru.ispi.kanban.exceptions.NoSuchUserByIdException;
-import ru.ispi.kanban.mapper.UserMapper;
-import ru.ispi.kanban.payload.RegistrationPayload;
-import ru.ispi.kanban.payload.UserPayload;
-import ru.ispi.kanban.repository.UserRepository;
+import ru.ispi.kanban.mappers.UserMapper;
+import ru.ispi.kanban.payloads.RegistrationPayload;
+import ru.ispi.kanban.payloads.UserPayload;
+import ru.ispi.kanban.repositories.UserRepository;
 
 import java.util.List;
 import java.util.Optional;

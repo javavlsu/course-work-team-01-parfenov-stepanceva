@@ -3,7 +3,7 @@ package ru.ispi.kanban.listeners;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.AuditorAware;
 import org.springframework.stereotype.Component;
-import ru.ispi.kanban.entity.User;
+import ru.ispi.kanban.entities.User;
 import ru.ispi.kanban.services.UserService;
 import ru.ispi.kanban.utils.SecurityUtils;
 
