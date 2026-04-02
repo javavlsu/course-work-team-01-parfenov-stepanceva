@@ -1,0 +1,12 @@
+version: '3.8'
+
+services:
+  mysql:
+    image: mysql:8
+    environment:
+      MYSQL_DATABASE: kanban
+      MYSQL_USER: kanban_user
+      MYSQL_PASSWORD: kanban_password
+      MYSQL_ROOT_PASSWORD: root
+    ports:
+      - "3307:3306"

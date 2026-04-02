@@ -36,3 +36,5 @@ build/
 application-local.yml
 application-*.local.yml
 .env
+
+docker-compose.yml
