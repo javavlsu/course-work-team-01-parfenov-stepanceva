@@ -1,7 +1,11 @@
 spring:
   application:
     name: kanban
+    storage:
+      location: uploads
 
   profiles:
     active: local
     #dev - ??????
+
+
