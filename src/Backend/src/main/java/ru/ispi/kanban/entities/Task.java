@@ -50,4 +50,17 @@ public class Task {
     protected void onCreate() {
         this.createdAt = LocalDateTime.now();
     }
+
+    private Task copy(Task task) {
+        Task copy = new Task();
+        copy.setTitle(task.getTitle());
+        copy.setDescription(task.getDescription());
+        copy.setColumn(task.getColumn());
+        copy.setAssignee(task.getAssignee());
+        copy.setPosition(task.getPosition());
+        copy.setDeadline(task.getDeadline());
+        copy.setPriority(task.getPriority());
+        copy.setStatus(task.getStatus());
+        return copy;
+    }
 }

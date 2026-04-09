@@ -1,6 +1,7 @@
 package ru.ispi.kanban.services;
 
 import lombok.RequiredArgsConstructor;
+import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
@@ -8,6 +9,8 @@ import ru.ispi.kanban.dto.AttachmentDto;
 import ru.ispi.kanban.entities.Attachment;
 import ru.ispi.kanban.entities.Task;
 import ru.ispi.kanban.entities.User;
+import ru.ispi.kanban.enums.ActionType;
+import ru.ispi.kanban.listeners.TaskChangeEvent;
 import ru.ispi.kanban.mappers.AttachmentMapper;
 import ru.ispi.kanban.repositories.AttachmentRepository;
 import ru.ispi.kanban.repositories.BoardUserRepository;
@@ -34,6 +37,8 @@ public class AttachmentService {
 
     private final FileStorageService fileStorageService;
 
+    private final ApplicationEventPublisher eventPublisher;
+
     public List<AttachmentDto> getAttachmentsByTask(Integer userId, Integer boardId, Integer taskId) {
         checkAccess(userId, boardId);
         return attachmentRepository.findAllByTaskIdOrderByUploadedAtDesc(taskId)
@@ -46,12 +51,8 @@ public class AttachmentService {
     public AttachmentDto upload(Integer userId, Integer boardId, Integer taskId, MultipartFile file) {
         checkAccess(userId, boardId);
 
-
         String storageKey = fileStorageService.uploadFile(file, FOLDER_ATTACHMENTS);
-
-
         Task task = getTask(boardId, taskId);
-
         User user = getUser(userId);
 
         Attachment attachment = attachmentMapper.toEntity(
@@ -61,7 +62,14 @@ public class AttachmentService {
                 user
         );
 
-        return attachmentMapper.toDto(attachmentRepository.save(attachment));
+        Attachment savedAttachment = attachmentRepository.save(attachment);
+
+        // Публикуем событие
+        eventPublisher.publishEvent(new TaskChangeEvent(
+                task, userId, ActionType.create, "ATTACHMENT", null, file.getOriginalFilename()
+        ));
+
+        return attachmentMapper.toDto(savedAttachment);
     }
 
     @Transactional
@@ -70,6 +78,12 @@ public class AttachmentService {
 
         Attachment attachment = attachmentRepository.findByIdAndTask_IdAndTask_Column_Board_Id(attachmentId, taskId, boardId)
                 .orElseThrow(() -> new RuntimeException("Вложение не найдено"));
+
+        Task task = getTask(boardId, taskId);
+
+        eventPublisher.publishEvent(new TaskChangeEvent(
+                task, userId, ActionType.delete, "ATTACHMENT", attachment.getFileName(), null
+        ));
 
         fileStorageService.deleteFile(attachment.getStorageKey()); //из хранилища
 

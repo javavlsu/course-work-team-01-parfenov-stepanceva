@@ -1,12 +1,15 @@
 package ru.ispi.kanban.services;
 
 import lombok.RequiredArgsConstructor;
+import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import ru.ispi.kanban.dto.CommentDto;
 import ru.ispi.kanban.entities.Comment;
 import ru.ispi.kanban.entities.Task;
 import ru.ispi.kanban.entities.User;
+import ru.ispi.kanban.enums.ActionType;
+import ru.ispi.kanban.listeners.TaskChangeEvent;
 import ru.ispi.kanban.mappers.CommentMapper;
 import ru.ispi.kanban.payloads.CreateCommentPayload;
 import ru.ispi.kanban.payloads.UpdateCommentPayload;
@@ -32,6 +35,8 @@ public class CommentService {
 
     private final CommentMapper commentMapper;
 
+    private final ApplicationEventPublisher eventPublisher;
+
     public List<CommentDto> getCommentsByTask(Integer userId, Integer boardId, Integer taskId) {
         checkAccess(userId, boardId);
         return commentRepository.findAllByTaskIdOrderByCreatedAtAsc(taskId)
@@ -44,11 +49,18 @@ public class CommentService {
     public CommentDto create(Integer userId, Integer boardId, Integer taskId, CreateCommentPayload payload) {
         checkAccess(userId, boardId);
 
+        Task task = getTask(boardId, taskId); // Получаем таску, чтобы привязать к ней историю
         Comment comment = commentMapper.toEntity(payload);
-        comment.setTask(getTask(boardId, taskId));
+        comment.setTask(task);
         comment.setUser(getUser(userId));
 
-        return commentMapper.toDto(commentRepository.save(comment));
+        Comment savedComment = commentRepository.save(comment);
+
+        eventPublisher.publishEvent(new TaskChangeEvent(
+                task, userId, ActionType.create, "COMMENT", null, payload.text()
+        ));
+
+        return commentMapper.toDto(savedComment);
     }
 
     @Transactional
@@ -60,6 +72,14 @@ public class CommentService {
         // обновлять может только автор
         if (!comment.getUser().getId().equals(userId)) {
             throw new RuntimeException("Вы не можете редактировать чужой комментарий");
+        }
+
+        if (payload.text() != null && !payload.text().equals(comment.getText())) {
+            Task task = getTask(boardId, taskId);
+
+            eventPublisher.publishEvent(new TaskChangeEvent(
+                    task, userId, ActionType.update, "COMMENT", comment.getText(), payload.text()
+            ));
         }
 
         commentMapper.update(comment, payload);
@@ -78,6 +98,12 @@ public class CommentService {
         if (!comment.getUser().getId().equals(userId)) {
             throw new RuntimeException("Вы не можете удалить чужой комментарий");
         }
+
+        Task task = getTask(boardId, taskId);
+
+        eventPublisher.publishEvent(new TaskChangeEvent(
+                task, userId, ActionType.delete, "COMMENT", comment.getText(), null
+        ));
 
         commentRepository.delete(comment);
     }
