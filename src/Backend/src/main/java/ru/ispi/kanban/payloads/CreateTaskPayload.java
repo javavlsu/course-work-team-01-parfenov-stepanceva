@@ -11,7 +11,7 @@ public record CreateTaskPayload(
 
         Integer assigneeId,
 
-        Long position,
+        //Long position, - решил что юзлесс, пусть созданный таск будет всегда первым в колонке
 
         LocalDateTime deadline,
 

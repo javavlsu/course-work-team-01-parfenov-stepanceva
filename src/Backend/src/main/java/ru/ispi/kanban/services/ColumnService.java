@@ -71,6 +71,7 @@ public class ColumnService {
 
     @Transactional
     public void delete(Integer userId, Integer boardId, Integer columnId) {
+
         checkAccess(userId, boardId);
 
         BoardColumn column = getColumn(boardId, columnId);
@@ -78,46 +79,31 @@ public class ColumnService {
 
         columnRepository.delete(column);
 
-        List<BoardColumn> columns = columnRepository.findAllByBoardIdOrderByPositionAsc(boardId);
-
-        for (BoardColumn c : columns) {
-            if (c.getPosition() > deletedPosition) {
-                c.setPosition(c.getPosition() - 1);
-            }
-        }
+        // сдвигаем все колонки, которые стояли после удаленной, на -1
+        columnRepository.shiftAfterDelete(boardId, deletedPosition);
     }
 
     @Transactional
     public void move(Integer userId, Integer boardId, Integer columnId, Long newPosition) {
         checkAccess(userId, boardId);
-
         BoardColumn column = getColumn(boardId, columnId);
-
         Long oldPosition = column.getPosition();
+
+        Long maxPosition = columnRepository.findMaxPosition(boardId);
+        // Валидация границ
+        if (newPosition > maxPosition) newPosition = maxPosition; //мб тут сделать выброс исключения
+        if (newPosition < 1) newPosition = 1L;
 
         if (oldPosition.equals(newPosition)) return;
 
-        List<BoardColumn> columns = columnRepository.findAllByBoardIdOrderByPositionAsc(boardId);
-
-        for (BoardColumn c : columns) {
-
-            if (c.getId().equals(columnId)) continue;
-
-            // движение вниз
-            if (oldPosition < newPosition) {
-                if (c.getPosition() > oldPosition && c.getPosition() <= newPosition) {
-                    c.setPosition(c.getPosition() - 1);
-                }
-            }
-            // движение вверх
-            else {
-                if (c.getPosition() >= newPosition && c.getPosition() < oldPosition) {
-                    c.setPosition(c.getPosition() + 1);
-                }
-            }
+        if (oldPosition < newPosition) {
+            columnRepository.shiftForward(boardId, oldPosition, newPosition);
+        } else {
+            columnRepository.shiftBackward(boardId, oldPosition, newPosition);
         }
 
         column.setPosition(newPosition);
+        columnRepository.save(column);
     }
 
 

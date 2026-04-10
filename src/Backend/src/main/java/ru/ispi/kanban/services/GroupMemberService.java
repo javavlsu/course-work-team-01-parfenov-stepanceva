@@ -1,16 +1,19 @@
 package ru.ispi.kanban.services;
 
 import lombok.RequiredArgsConstructor;
+import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import ru.ispi.kanban.dto.GroupMemberDto;
 import ru.ispi.kanban.dto.GroupTeamDto;
+import ru.ispi.kanban.entities.Board;
 import ru.ispi.kanban.entities.GroupMember;
 import ru.ispi.kanban.entities.GroupTeam;
 import ru.ispi.kanban.entities.User;
 import ru.ispi.kanban.entities.composiveKey.GroupMemberId;
 import ru.ispi.kanban.enums.GroupRole;
 import ru.ispi.kanban.exceptions.NotMemberException;
+import ru.ispi.kanban.listeners.AdminAssignedEvent;
 import ru.ispi.kanban.mappers.GroupMemberMapper;
 import ru.ispi.kanban.payloads.AddMemberToGroupTeamPayload;
 import ru.ispi.kanban.payloads.UpdateMemberRoleInGroupTeamPayload;
@@ -33,6 +36,8 @@ public class GroupMemberService {
     private final UserRepository userRepository;
 
     private final GroupMemberMapper groupMemberMapper;
+
+    private final ApplicationEventPublisher eventPublisher;
 
     public void checkAdmin(Integer groupId, Integer userId) {
 
@@ -71,9 +76,7 @@ public class GroupMemberService {
         Integer userId = payload.userId();
 
         if (memberRepository.existsByGroupIdAndUserId(groupId, userId)) {
-
             throw new RuntimeException("Member already exists");
-
         }
 
         GroupTeam groupTeam = groupRepository.getReferenceById(groupId);
@@ -85,7 +88,13 @@ public class GroupMemberService {
         GroupRole role = payload.role();
         GroupMember member = createGroupMember(groupTeam, user, role);
 
-        return groupMemberMapper.toDto(memberRepository.save(member));
+        GroupMember saved = memberRepository.save(member);
+
+        if (role == GroupRole.admin) {
+            eventPublisher.publishEvent(new AdminAssignedEvent(groupId, user));
+        }
+
+        return groupMemberMapper.toDto(saved);
     }
 
     public GroupMemberDto updateRole(Integer adminId, Integer groupId, Integer userId, UpdateMemberRoleInGroupTeamPayload payload) {
@@ -95,9 +104,18 @@ public class GroupMemberService {
                 () -> new RuntimeException("Member not found")
         );
 
-        groupMember.setRole(payload.role());
+        GroupRole oldRole = groupMember.getRole();
+        GroupRole newRole = payload.role();
 
-        return groupMemberMapper.toDto(memberRepository.save(groupMember));
+        groupMember.setRole(newRole);
+
+        GroupMember saved = memberRepository.save(groupMember);
+
+        if (oldRole != GroupRole.admin && newRole == GroupRole.admin) {
+            eventPublisher.publishEvent(new AdminAssignedEvent(groupId, groupMember.getUser()));
+        }
+
+        return groupMemberMapper.toDto(saved);
     }
 
     public void deleteMember(Integer adminId, Integer groupId, Integer userId) {

@@ -1,13 +1,16 @@
 package ru.ispi.kanban.services;
 
 import lombok.RequiredArgsConstructor;
+import org.springframework.context.event.EventListener;
 import org.springframework.stereotype.Service;
 import ru.ispi.kanban.dto.UserDto;
 import ru.ispi.kanban.entities.Board;
 import ru.ispi.kanban.entities.BoardUser;
 import ru.ispi.kanban.entities.User;
 import ru.ispi.kanban.entities.composiveKey.BoardUserId;
+import ru.ispi.kanban.listeners.AdminAssignedEvent;
 import ru.ispi.kanban.mappers.UserMapper;
+import ru.ispi.kanban.repositories.BoardRepository;
 import ru.ispi.kanban.repositories.BoardUserRepository;
 
 import java.util.List;
@@ -21,6 +24,8 @@ public class BoardUserService {
     private final GroupMemberService groupMemberService;
 
     private final UserMapper userMapper;
+
+    private final BoardRepository boardRepository;
 
     public boolean hasAccess(Integer boardId, Integer userId){
         return boardUserRepository
@@ -149,5 +154,18 @@ public class BoardUserService {
                 .stream()
                 .map(BoardUser::getBoard)
                 .toList();
+    }
+
+    public void grantAccessToAllGroupBoards(Integer groupId, User user) {
+        List<Board> boards = boardRepository.findByGroupId(groupId);
+
+        for (Board board : boards) {
+            grantAccess(board, user);
+        }
+    }
+
+    @EventListener
+    public void handleAdminAssigned(AdminAssignedEvent event) {
+        grantAccessToAllGroupBoards(event.groupId(), event.user());
     }
 }
