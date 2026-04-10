@@ -23,7 +23,7 @@ import java.util.List;
 
 @RestController
 @RequiredArgsConstructor
-@RequestMapping("/api/kanban/boards/")
+@RequestMapping("/boards/")
 public class BoardController {
 
     private final BoardService boardService;

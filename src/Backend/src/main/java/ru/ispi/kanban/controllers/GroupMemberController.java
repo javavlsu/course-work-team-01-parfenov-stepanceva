@@ -16,7 +16,7 @@ import ru.ispi.kanban.services.GroupMemberService;
 import java.util.List;
 
 @RestController
-@RequestMapping("/api/kanban/group-members/")
+@RequestMapping("/group-members/")
 @RequiredArgsConstructor
 public class  GroupMemberController {
 
@@ -48,7 +48,7 @@ public class  GroupMemberController {
 
     }
 
-    @PutMapping("{groupId}/{userId}")
+    @PutMapping("{groupId}/users/{userId}")
     public ResponseEntity<GroupMemberDto> updateRole(
             @PathVariable Integer groupId,
             @PathVariable Integer userId,
@@ -61,7 +61,7 @@ public class  GroupMemberController {
                 .body(memberService.updateRole(user.getId(), groupId, userId, payload));
     }
 
-    @DeleteMapping("{groupId}/{userId}")
+    @DeleteMapping("{groupId}/users/{userId}")
     public ResponseEntity<Void> remove(
             @PathVariable Integer groupId,
             @PathVariable Integer userId,

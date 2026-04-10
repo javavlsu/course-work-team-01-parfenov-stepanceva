@@ -2,6 +2,7 @@ package ru.ispi.kanban.controllers;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
@@ -14,7 +15,7 @@ import java.util.List;
 
 @RestController
 @RequiredArgsConstructor
-@RequestMapping("/api/kanban/boards/{boardId}/tasks/{taskId}/attachments")
+@RequestMapping("/boards/{boardId}/tasks/{taskId}/attachments")
 public class AttachmentController {
 
     private final AttachmentService attachmentService;
@@ -28,7 +29,7 @@ public class AttachmentController {
         return ResponseEntity.ok(attachmentService.getAttachmentsByTask(user.getId(), boardId, taskId));
     }
 
-    @PostMapping(consumes = {"multipart/form-data"})
+    @PostMapping(consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
     public ResponseEntity<AttachmentDto> upload(
             @AuthenticationPrincipal CustomUserDetails user,
             @PathVariable Integer boardId,

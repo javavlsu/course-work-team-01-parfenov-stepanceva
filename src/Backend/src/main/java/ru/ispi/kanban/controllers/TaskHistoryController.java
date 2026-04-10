@@ -12,7 +12,7 @@ import java.util.List;
 
 @RestController
 @RequiredArgsConstructor
-@RequestMapping("/api/kanban/boards/{boardId}/tasks/{taskId}/history")
+@RequestMapping("/boards/{boardId}/tasks/{taskId}/history")
 public class TaskHistoryController {
 
     private final TaskHistoryService taskHistoryService;

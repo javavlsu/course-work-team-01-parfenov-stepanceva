@@ -16,7 +16,7 @@ import java.util.List;
 
 @RestController
 @RequiredArgsConstructor
-@RequestMapping("/api/kanban/boards/{boardId}/columns/")
+@RequestMapping("/boards/{boardId}/columns/")
 public class ColumnController {
 
     private final ColumnService columnService;

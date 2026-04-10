@@ -18,7 +18,7 @@ import ru.ispi.kanban.services.BoardUserService;
 import java.util.List;
 
 @RestController
-@RequestMapping("/api/kanban/boards/{boardId}/users/")
+@RequestMapping("/boards/{boardId}/users/")
 @RequiredArgsConstructor
 public class BoardUserController {
 

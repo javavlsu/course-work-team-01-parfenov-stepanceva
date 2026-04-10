@@ -16,7 +16,7 @@ import java.util.List;
 
 @RestController
 @RequiredArgsConstructor
-@RequestMapping("/api/kanban/boards/{boardId}/tasks/")
+@RequestMapping("/boards/{boardId}/tasks/")
 public class TaskController {
 
     private final TaskService taskService;

@@ -2,62 +2,56 @@ package ru.ispi.kanban.controllers;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 import ru.ispi.kanban.dto.UserDto;
+import ru.ispi.kanban.payloads.UpdateNamePayload;
+import ru.ispi.kanban.payloads.UpdatePasswordPayload;
+import ru.ispi.kanban.security.CustomUserDetails;
 import ru.ispi.kanban.services.UserService;
 
-import java.util.List;
 
 @RestController
 @RequiredArgsConstructor
-@RequestMapping("/api/kanban/users/")
+@RequestMapping("/users/profile")
 public class UserController {
 
     private final UserService userService;
 
-    @GetMapping()
-    public ResponseEntity<List<UserDto>> getUsers() {
-        return ResponseEntity.ok(userService.getAll());
+    @GetMapping
+    public ResponseEntity<UserDto> get(
+            @AuthenticationPrincipal CustomUserDetails user
+    ) {
+        return ResponseEntity.ok(userService.getById(user.getId()));
     }
 
-    @GetMapping("{id}")
-    public UserDto getUserById(@PathVariable Integer id) {
-        return userService.getById(id);
+    @PatchMapping("/name")
+    public ResponseEntity<UserDto> updateName(
+            @RequestBody UpdateNamePayload payload,
+            @AuthenticationPrincipal CustomUserDetails user
+    ) {
+        return ResponseEntity.ok(
+                userService.updateName(user.getId(), payload)
+        );
     }
 
-    @GetMapping("email/{email}")
-    public UserDto getUserByEmail(@PathVariable String email) {
-        return userService.getByEmail(email);
-
+    @PatchMapping("/password")
+    public ResponseEntity<Void> updatePassword(
+            @RequestBody UpdatePasswordPayload payload,
+            @AuthenticationPrincipal CustomUserDetails user
+    ) {
+        userService.updatePassword(user.getId(), payload);
+        return ResponseEntity.noContent().build();
     }
 
-//    @PostMapping()
-//    public ResponseEntity<UserDTO> create(@RequestBody UserPayload userPayload) {
-//        try {
-//            UserDTO createdUser = userService.create(userPayload);
-//            return ResponseEntity.status(HttpStatus.CREATED).body(createdUser);
-//        } catch (IllegalArgumentException e) {
-//            return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
-//        }
-//    }
-//
-//    @PutMapping()
-//    public ResponseEntity<UserDTO> update(@RequestParam Integer id, @RequestBody UserPayload userPayload) {
-//        try {
-//            UserDTO updatedUser = userService.update(id, userPayload);
-//            return ResponseEntity.ok(updatedUser);
-//        } catch (IllegalArgumentException e) {
-//            return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
-//        }
-//    }
-//
-//    @DeleteMapping()
-//    public ResponseEntity<Void> delete(@RequestParam Integer id) {
-//        try {
-//            userService.deleteById(id);
-//            return ResponseEntity.noContent().build();
-//        } catch (IllegalArgumentException e) {
-//            return ResponseEntity.notFound().build();
-//        }
-//    }
+    @PostMapping("/avatar")
+    public ResponseEntity<UserDto> uploadAvatar(
+            @RequestParam("file") MultipartFile file,
+            @AuthenticationPrincipal CustomUserDetails user
+    ) {
+        return ResponseEntity.ok(
+                userService.updateAvatar(user.getId(), file)
+        );
+    }
 }

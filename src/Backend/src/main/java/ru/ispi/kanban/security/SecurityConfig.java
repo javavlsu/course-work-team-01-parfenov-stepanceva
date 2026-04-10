@@ -44,9 +44,9 @@ public class SecurityConfig {
                         )
                         .authorizeHttpRequests(auth ->
                                 auth
-                                        .requestMatchers("/api/auth/**").permitAll() //всем можно авторизоваться
+                                        .requestMatchers("/auth/**").permitAll() //всем можно авторизоваться
                                         //.requestMatchers("/api/kanban/user/").permitAll()
-                                        .requestMatchers("/api/kanban/hello").permitAll() //всем можно пройти по тестовому эндпоинту hello
+                                        .requestMatchers("/hello").permitAll() //всем можно пройти по тестовому эндпоинту hello
                                         .anyRequest().authenticated() //остальное - только для авторизовавшихся
                                 )
                         .sessionManagement(sess -> sess.sessionCreationPolicy(SessionCreationPolicy.STATELESS)) //Отключил сессии в браузере

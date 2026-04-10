@@ -16,7 +16,7 @@ import java.util.List;
 
 @RestController
 @RequiredArgsConstructor
-@RequestMapping("/api/kanban/boards/{boardId}/tasks/{taskId}/comments")
+@RequestMapping("/boards/{boardId}/tasks/{taskId}/comments")
 public class CommentController {
 
     private final CommentService commentService;

@@ -14,7 +14,7 @@ import ru.ispi.kanban.services.GroupTeamService;
 import java.util.List;
 
 @RestController
-@RequestMapping("/api/kanban/groupteams/")
+@RequestMapping("/groupteams/")
 @RequiredArgsConstructor
 public class GroupTeamController {
 

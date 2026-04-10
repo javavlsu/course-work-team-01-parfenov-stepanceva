@@ -2,6 +2,7 @@ package ru.ispi.kanban.exceptions.security;
 
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import org.springframework.http.MediaType;
 import org.springframework.security.access.AccessDeniedException;
 import org.springframework.security.web.access.AccessDeniedHandler;
 import org.springframework.stereotype.Component;
@@ -18,7 +19,7 @@ public class CustomAccessDeniedHandler implements AccessDeniedHandler {
     ) throws IOException {
 
         response.setStatus(403);
-        response.setContentType("application/json");
+        response.setContentType(MediaType.APPLICATION_JSON_VALUE);
 
         mapper.writeValue(
                 response.getWriter(),

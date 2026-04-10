@@ -8,7 +8,7 @@ import org.mapstruct.NullValuePropertyMappingStrategy;
 import ru.ispi.kanban.dto.UserDto;
 import ru.ispi.kanban.entities.User;
 import ru.ispi.kanban.payloads.RegistrationPayload;
-import ru.ispi.kanban.payloads.UserPayload;
+import ru.ispi.kanban.payloads.UpdateNamePayload;
 
 @Mapper(componentModel = "spring")
 public interface UserMapper {
@@ -20,5 +20,5 @@ public interface UserMapper {
     @BeanMapping(nullValuePropertyMappingStrategy = NullValuePropertyMappingStrategy.IGNORE)
     @Mapping(target = "passwordHash", ignore = true)
     @Mapping(target = "avatarUrl", ignore = true)
-    void update(@MappingTarget User user, UserPayload payload);
+    void update(@MappingTarget User user, UpdateNamePayload payload);
 }

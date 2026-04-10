@@ -1,20 +1,25 @@
 package ru.ispi.kanban.services;
 
+import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
 import ru.ispi.kanban.dto.UserDto;
 import ru.ispi.kanban.entities.User;
 import ru.ispi.kanban.exceptions.NoSuchUserByEmailException;
 import ru.ispi.kanban.exceptions.NoSuchUserByIdException;
 import ru.ispi.kanban.mappers.UserMapper;
 import ru.ispi.kanban.payloads.RegistrationPayload;
-import ru.ispi.kanban.payloads.UserPayload;
+import ru.ispi.kanban.payloads.UpdateNamePayload;
+import ru.ispi.kanban.payloads.UpdatePasswordPayload;
 import ru.ispi.kanban.repositories.UserRepository;
 
 import java.util.List;
-import java.util.Optional;
+import java.util.Set;
 import java.util.stream.Collectors;
+
+import static ru.ispi.kanban.constants.StorageConstants.FOLDER_AVATARS;
 
 @Service
 @RequiredArgsConstructor
@@ -25,6 +30,16 @@ public class UserService {
     private final PasswordEncoder passwordEncoder;
 
     private final UserMapper userMapper;
+
+    private final LocalFileStorageService localFileStorageService;
+
+    private static final Set<String> ALLOWED_TYPES = Set.of(
+            "image/jpeg",
+            "image/png",
+            "image/webp"
+    );
+
+    private static final long MAX_FILE_SIZE = 5 * 1024 * 1024; // 5MB
 
     public UserDto create(RegistrationPayload payload) {
         // Проверяем, не существует ли уже пользователь с таким email
@@ -58,37 +73,65 @@ public class UserService {
                 .orElseThrow(() -> new NoSuchUserByEmailException(String.format("User by %s not found", email)));
     }
 
-    public UserDto update(Integer id, UserPayload payload) {
-        User user = userRepository.findById(id)
-                .orElseThrow(() -> new IllegalArgumentException("User with id " + id + " not found"));
+    public User getEntity(Integer id){ return userRepository.findById(id) .orElseThrow(() -> new RuntimeException("User not found")); }
 
-        // Проверяем, не занят ли email другим пользователем
-        Optional<User> existingUser = userRepository.findByEmail(payload.email());
-        if (existingUser.isPresent() && !existingUser.get().getId().equals(id)) {
-            throw new IllegalArgumentException("User with email " + payload.email() + " already exists");
+    @Transactional
+    public UserDto updateName(Integer id, UpdateNamePayload payload) {
+        User user = getEntity(id);
+
+        if (payload.name() == null || payload.name().isBlank()) {
+            throw new IllegalArgumentException("Name cannot be empty");
         }
 
-        userMapper.update(user, payload);
+        user.setName(payload.name().trim());
 
-        // Хешируем пароль только если он был передан
-        if (payload.password() != null && !payload.password().isEmpty()) {
-            user.setPasswordHash(passwordEncoder.encode(payload.password()));
-        }
-        user.setAvatarUrl(payload.avatarUrl());
-
-        User updatedUser = userRepository.save(user);
-        return userMapper.toDto(updatedUser);
+        return userMapper.toDto(userRepository.save(user));
     }
 
-    public void deleteById(Integer id) {
-        if (userRepository.findById(id).isEmpty()) {
-            throw new IllegalArgumentException("User with id " + id + " not found");
+    @Transactional
+    public void updatePassword(Integer id, UpdatePasswordPayload payload) {
+        User user = getEntity(id);
+
+
+        if (!passwordEncoder.matches(payload.oldPassword(), user.getPasswordHash())) {
+            throw new IllegalArgumentException("Invalid old password");
         }
-        userRepository.deleteById(id);
+
+        if (payload.newPassword() == null || payload.newPassword().length() < 6) {
+            throw new IllegalArgumentException("Password too short");
+        }
+
+        user.setPasswordHash(passwordEncoder.encode(payload.newPassword()));
+        userRepository.save(user);
     }
 
-    public User getEntity(Integer id){
-        return userRepository.findById(id)
-                .orElseThrow(() -> new RuntimeException("User not found"));
+    @Transactional
+    public UserDto updateAvatar(Integer id, MultipartFile file) {
+        User user = getEntity(id);
+
+        if (file.isEmpty()) {
+            throw new IllegalArgumentException("File is empty");
+        }
+
+        if (file.getSize() > MAX_FILE_SIZE) {
+            throw new IllegalArgumentException("File too large");
+        }
+
+        String contentType = file.getContentType();
+
+        if (contentType == null || !ALLOWED_TYPES.contains(contentType)) {
+            throw new IllegalArgumentException("Invalid file type");
+        }
+
+        // удаляем старый файл
+        if (user.getAvatarUrl() != null) {
+            localFileStorageService.deleteFile(user.getAvatarUrl());
+        }
+
+        String storageKey = localFileStorageService.uploadFile(file, FOLDER_AVATARS);
+
+        user.setAvatarUrl(storageKey);
+
+        return userMapper.toDto(userRepository.save(user));
     }
 }

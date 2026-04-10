@@ -16,7 +16,7 @@ import ru.ispi.kanban.services.UserService;
 import ru.ispi.kanban.utils.CookiesHelper;
 
 @RestController
-@RequestMapping("/api/auth/")
+@RequestMapping("/auth/")
 @RequiredArgsConstructor
 public class AuthController {
     private final HttpServletResponse httpServletResponse;

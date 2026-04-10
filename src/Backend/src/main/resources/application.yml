@@ -4,6 +4,10 @@ spring:
     storage:
       location: uploads
 
+  mvc:
+    servlet:
+      path: "/kanban/api"
+
   profiles:
     active: local
     #dev - ??????
