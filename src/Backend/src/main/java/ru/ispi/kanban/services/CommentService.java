@@ -75,10 +75,9 @@ public class CommentService {
         }
 
         if (payload.text() != null && !payload.text().equals(comment.getText())) {
-            Task task = getTask(boardId, taskId);
-
+            // task уже загружен через EntityGraph в findByIdAndTask_IdAndTask_Column_Board_Id
             eventPublisher.publishEvent(new TaskChangeEvent(
-                    task, userId, ActionType.update, "COMMENT", comment.getText(), payload.text()
+                    comment.getTask(), userId, ActionType.update, "COMMENT", comment.getText(), payload.text()
             ));
         }
 
@@ -99,10 +98,9 @@ public class CommentService {
             throw new RuntimeException("Вы не можете удалить чужой комментарий");
         }
 
-        Task task = getTask(boardId, taskId);
-
+        // task уже загружен через EntityGraph в findByIdAndTask_IdAndTask_Column_Board_Id
         eventPublisher.publishEvent(new TaskChangeEvent(
-                task, userId, ActionType.delete, "COMMENT", comment.getText(), null
+                comment.getTask(), userId, ActionType.delete, "COMMENT", comment.getText(), null
         ));
 
         commentRepository.delete(comment);

@@ -79,10 +79,9 @@ public class AttachmentService {
         Attachment attachment = attachmentRepository.findByIdAndTask_IdAndTask_Column_Board_Id(attachmentId, taskId, boardId)
                 .orElseThrow(() -> new RuntimeException("Вложение не найдено"));
 
-        Task task = getTask(boardId, taskId);
-
+        // task уже загружен через EntityGraph в findByIdAndTask_IdAndTask_Column_Board_Id
         eventPublisher.publishEvent(new TaskChangeEvent(
-                task, userId, ActionType.delete, "ATTACHMENT", attachment.getFileName(), null
+                attachment.getTask(), userId, ActionType.delete, "ATTACHMENT", attachment.getFileName(), null
         ));
 
         fileStorageService.deleteFile(attachment.getStorageKey()); //из хранилища

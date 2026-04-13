@@ -1,5 +1,6 @@
 package ru.ispi.kanban.controllers;
 
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
@@ -28,7 +29,7 @@ public class UserController {
 
     @PatchMapping("/name")
     public ResponseEntity<UserDto> updateName(
-            @RequestBody UpdateNamePayload payload,
+            @Valid @RequestBody UpdateNamePayload payload,
             @AuthenticationPrincipal CustomUserDetails user
     ) {
         return ResponseEntity.ok(
@@ -38,7 +39,7 @@ public class UserController {
 
     @PatchMapping("/password")
     public ResponseEntity<Void> updatePassword(
-            @RequestBody UpdatePasswordPayload payload,
+            @Valid @RequestBody UpdatePasswordPayload payload,
             @AuthenticationPrincipal CustomUserDetails user
     ) {
         userService.updatePassword(user.getId(), payload);

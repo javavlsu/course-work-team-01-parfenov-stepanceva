@@ -1,5 +1,6 @@
 package ru.ispi.kanban.repositories;
 
+import org.springframework.data.jpa.repository.EntityGraph;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 import ru.ispi.kanban.entities.Comment;
@@ -9,9 +10,12 @@ import java.util.Optional;
 
 @Repository
 public interface CommentRepository extends JpaRepository<Comment, Integer> {
-    // Получить все комментарии к задаче (сортировка от старых к новым)
+
+    // user нужен для CommentDto.user, task — для taskId в ответе
+    @EntityGraph(attributePaths = "user")
     List<Comment> findAllByTaskIdOrderByCreatedAtAsc(Integer taskId);
 
-    // Безопасный поиск комментария с проверкой принадлежности к задаче и доске
+    // user и task нужны для маппинга; task также используется при публикации событий
+    @EntityGraph(attributePaths = {"user", "task"})
     Optional<Comment> findByIdAndTask_IdAndTask_Column_Board_Id(Integer commentId, Integer taskId, Integer boardId);
 }

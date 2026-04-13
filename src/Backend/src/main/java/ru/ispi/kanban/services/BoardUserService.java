@@ -14,6 +14,8 @@ import ru.ispi.kanban.repositories.BoardRepository;
 import ru.ispi.kanban.repositories.BoardUserRepository;
 
 import java.util.List;
+import java.util.Set;
+import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
@@ -67,26 +69,29 @@ public class BoardUserService {
         boardUserRepository.save(boardUser);
     }
 
-    public void grantAccessToAdmins(Board board){
+    public void grantAccessToAdmins(Board board) {
+        List<User> admins = groupMemberService.getAdmins(board.getGroup().getId());
+        if (admins.isEmpty()) return;
 
-        List<User> admins =
-                groupMemberService.getAdmins(board.getGroup().getId());
+        // Получаем всех уже имеющих доступ одним запросом, чтобы избежать N×existsById
+        Set<Integer> existingUserIds = boardUserRepository.findByBoardId(board.getId())
+                .stream()
+                .map(bu -> bu.getId().getUserId())
+                .collect(Collectors.toSet());
 
-        for(User admin : admins){
+        List<BoardUser> newAccesses = admins.stream()
+                .filter(admin -> !existingUserIds.contains(admin.getId()))
+                .map(admin -> {
+                    BoardUser access = new BoardUser();
+                    access.setId(new BoardUserId(board.getId(), admin.getId()));
+                    access.setBoard(board);
+                    access.setUser(admin);
+                    return access;
+                })
+                .toList();
 
-            BoardUserId id =
-                    new BoardUserId(board.getId(), admin.getId());
-
-            if(boardUserRepository.existsById(id)){
-                continue;
-            }
-
-            BoardUser access = new BoardUser();
-            access.setId(id);
-            access.setBoard(board);
-            access.setUser(admin);
-
-            boardUserRepository.save(access);
+        if (!newAccesses.isEmpty()) {
+            boardUserRepository.saveAll(newAccesses);
         }
     }
 
@@ -158,9 +163,27 @@ public class BoardUserService {
 
     public void grantAccessToAllGroupBoards(Integer groupId, User user) {
         List<Board> boards = boardRepository.findByGroupId(groupId);
+        if (boards.isEmpty()) return;
 
-        for (Board board : boards) {
-            grantAccess(board, user);
+        // Получаем доски группы, к которым у пользователя уже есть доступ, одним запросом
+        Set<Integer> existingBoardIds = boardUserRepository.findByUserIdAndBoardGroupId(user.getId(), groupId)
+                .stream()
+                .map(bu -> bu.getId().getBoardId())
+                .collect(Collectors.toSet());
+
+        List<BoardUser> newAccesses = boards.stream()
+                .filter(board -> !existingBoardIds.contains(board.getId()))
+                .map(board -> {
+                    BoardUser access = new BoardUser();
+                    access.setId(new BoardUserId(board.getId(), user.getId()));
+                    access.setBoard(board);
+                    access.setUser(user);
+                    return access;
+                })
+                .toList();
+
+        if (!newAccesses.isEmpty()) {
+            boardUserRepository.saveAll(newAccesses);
         }
     }
 

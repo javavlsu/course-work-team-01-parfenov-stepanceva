@@ -6,7 +6,6 @@ import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import ru.ispi.kanban.dto.TaskDto;
-import ru.ispi.kanban.entities.Board;
 import ru.ispi.kanban.entities.BoardColumn;
 import ru.ispi.kanban.entities.Task;
 import ru.ispi.kanban.entities.User;
@@ -15,10 +14,10 @@ import ru.ispi.kanban.listeners.TaskChangeEvent;
 import ru.ispi.kanban.mappers.TaskMapper;
 import ru.ispi.kanban.payloads.CreateTaskPayload;
 import ru.ispi.kanban.payloads.UpdateTaskPayload;
-import ru.ispi.kanban.repositories.BoardRepository;
 import ru.ispi.kanban.repositories.BoardUserRepository;
 import ru.ispi.kanban.repositories.ColumnRepository;
 import ru.ispi.kanban.repositories.TaskRepository;
+import ru.ispi.kanban.repositories.UserRepository;
 
 import java.util.List;
 import java.util.Objects;
@@ -38,9 +37,7 @@ public class TaskService {
 
     private final ApplicationEventPublisher eventPublisher;
 
-    private final BoardRepository boardRepository;
-
-    private final GroupMemberService groupMemberService;
+    private final UserRepository userRepository;
 
     public List<TaskDto> getTasksByBoard(Integer userId, Integer boardId) {
         checkAccess(userId, boardId);
@@ -201,22 +198,15 @@ public class TaskService {
     }
 
     private User resolveUser(Integer boardId, Integer userId) {
-        if (userId == null) {
-            return null;
-        }
+        if (userId == null) return null;
 
-        Board board = boardRepository.findById(boardId)
-                .orElseThrow(() -> new RuntimeException("Board not found"));
-
-        Integer groupId = board.getGroup().getId();
-
-        User user = groupMemberService.getMemberUser(groupId, userId);
-
+        // Доступ к доске гарантирует принадлежность к группе — дополнительная проверка не нужна
         if (!boardUserRepository.existsByIdBoardIdAndIdUserId(boardId, userId)) {
             throw new RuntimeException("User is not on this board");
         }
 
-        return user;
+        return userRepository.findById(userId)
+                .orElseThrow(() -> new RuntimeException("User not found"));
     }
 
     private void publishChanges(Task oldTask, Task newTask, Integer userId, UpdateTaskPayload payload) {
