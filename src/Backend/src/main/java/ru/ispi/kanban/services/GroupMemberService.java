@@ -12,6 +12,9 @@ import ru.ispi.kanban.entities.GroupTeam;
 import ru.ispi.kanban.entities.User;
 import ru.ispi.kanban.entities.composiveKey.GroupMemberId;
 import ru.ispi.kanban.enums.GroupRole;
+import ru.ispi.kanban.exceptions.MemberAlreadyExistsException;
+import ru.ispi.kanban.exceptions.NoSuchUserByIdException;
+import ru.ispi.kanban.exceptions.NotAdminException;
 import ru.ispi.kanban.exceptions.NotMemberException;
 import ru.ispi.kanban.listeners.AdminAssignedEvent;
 import ru.ispi.kanban.mappers.GroupMemberMapper;
@@ -44,11 +47,11 @@ public class GroupMemberService {
         GroupMember groupMember = memberRepository.findByGroupIdAndUserId(
                 groupId, userId
         ).orElseThrow(
-                () -> new RuntimeException("Not group member")
-                );
+                () -> new NotMemberException("Not a group member")
+        );
 
         if (groupMember.getRole() != GroupRole.admin) {
-            throw new RuntimeException("Only group admins allowed");
+            throw new NotAdminException("Only group admins are allowed to perform this action");
         }
     }
 
@@ -57,7 +60,7 @@ public class GroupMemberService {
         GroupTeam groupTeam = groupRepository.getReferenceById(groupId);
 
         User user = userRepository.findById(userId).orElseThrow(
-                () -> new RuntimeException("User not found")
+                () -> new NoSuchUserByIdException("User not found: " + userId)
         );
 
         GroupMemberId groupMemberId = new GroupMemberId();
@@ -76,13 +79,13 @@ public class GroupMemberService {
         Integer userId = payload.userId();
 
         if (memberRepository.existsByGroupIdAndUserId(groupId, userId)) {
-            throw new RuntimeException("Member already exists");
+            throw new MemberAlreadyExistsException("User is already a member of this group");
         }
 
         GroupTeam groupTeam = groupRepository.getReferenceById(groupId);
 
         User user = userRepository.findById(userId).orElseThrow(
-                () -> new RuntimeException("User not found")
+                () -> new NoSuchUserByIdException("User not found: " + userId)
         );
 
         GroupRole role = payload.role();
@@ -101,7 +104,7 @@ public class GroupMemberService {
         checkAdmin(groupId, adminId);
 
         GroupMember groupMember = memberRepository.findByGroupIdAndUserId(groupId, userId).orElseThrow(
-                () -> new RuntimeException("Member not found")
+                () -> new NotMemberException("Member not found in group")
         );
 
         GroupRole oldRole = groupMember.getRole();
@@ -182,6 +185,27 @@ public class GroupMemberService {
         member.setRole(role);
 
         return member;
+    }
+
+    @Transactional(readOnly = true)
+    public boolean isMember(Integer groupId, Integer userId) {
+        return memberRepository.existsByGroupIdAndUserId(groupId, userId);
+    }
+
+    /** Добавить участника напрямую без проверки прав (вызывается из InvitationService) */
+    @Transactional
+    public void addMemberDirectly(Integer groupId, Integer userId, GroupRole role) {
+        GroupTeam group = groupRepository.getReferenceById(groupId);
+
+        User user = userRepository.findById(userId)
+                .orElseThrow(() -> new NoSuchUserByIdException("User not found: " + userId));
+
+        GroupMember member = createGroupMember(group, user, role);
+        memberRepository.save(member);
+
+        if (role == GroupRole.admin) {
+            eventPublisher.publishEvent(new AdminAssignedEvent(groupId, user));
+        }
     }
 
     @Transactional(readOnly = true)

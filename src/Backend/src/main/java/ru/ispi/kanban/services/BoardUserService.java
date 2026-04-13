@@ -9,6 +9,7 @@ import ru.ispi.kanban.entities.BoardUser;
 import ru.ispi.kanban.entities.User;
 import ru.ispi.kanban.entities.composiveKey.BoardUserId;
 import ru.ispi.kanban.listeners.AdminAssignedEvent;
+import ru.ispi.kanban.exceptions.BoardAccessDeniedException;
 import ru.ispi.kanban.mappers.UserMapper;
 import ru.ispi.kanban.repositories.BoardRepository;
 import ru.ispi.kanban.repositories.BoardUserRepository;
@@ -39,7 +40,7 @@ public class BoardUserService {
         boolean access = hasAccess(boardId, userId);
 
         if(!access){
-            throw new RuntimeException("No access to this board");
+            throw new BoardAccessDeniedException("No access to this board");
         }
     }
 
@@ -107,7 +108,7 @@ public class BoardUserService {
         return boardUserRepository
                 .findByUserIdAndBoardId(userId, boardId)
                 .map(BoardUser::getBoard)
-                .orElseThrow(() -> new RuntimeException("Нет доступа к доске"));
+                .orElseThrow(() -> new BoardAccessDeniedException("No access to this board"));
     }
 
     public List<UserDto> getUsersBoard(Integer userId, Integer boardId) {

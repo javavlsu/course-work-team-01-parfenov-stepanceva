@@ -14,6 +14,10 @@ import ru.ispi.kanban.listeners.TaskChangeEvent;
 import ru.ispi.kanban.mappers.TaskMapper;
 import ru.ispi.kanban.payloads.CreateTaskPayload;
 import ru.ispi.kanban.payloads.UpdateTaskPayload;
+import ru.ispi.kanban.exceptions.BoardAccessDeniedException;
+import ru.ispi.kanban.exceptions.ColumnNotFoundException;
+import ru.ispi.kanban.exceptions.NoSuchUserByIdException;
+import ru.ispi.kanban.exceptions.TaskNotFoundException;
 import ru.ispi.kanban.repositories.BoardUserRepository;
 import ru.ispi.kanban.repositories.ColumnRepository;
 import ru.ispi.kanban.repositories.TaskRepository;
@@ -67,7 +71,7 @@ public class TaskService {
         checkAccess(userId, boardId);
 
         if (!boardUserRepository.existsByIdBoardIdAndIdUserId(boardId, assigneeId)) {
-            throw new RuntimeException("User is not on this board");
+            throw new BoardAccessDeniedException("Assignee is not on this board");
         }
 
         return taskRepository.findAllByAssigneeIdAndColumn_Board_Id(assigneeId, boardId)
@@ -183,18 +187,18 @@ public class TaskService {
 
     private void checkAccess(Integer userId, Integer boardId) {
         if (!boardUserRepository.existsByIdBoardIdAndIdUserId(boardId, userId)) {
-            throw new RuntimeException("Access denied");
+            throw new BoardAccessDeniedException("No access to this board");
         }
     }
 
     private BoardColumn getColumn(Integer boardId, Integer columnId) {
         return columnRepository.findByIdAndBoardId(columnId, boardId)
-                .orElseThrow(() -> new RuntimeException("Column not found"));
+                .orElseThrow(() -> new ColumnNotFoundException("Column not found: " + columnId));
     }
 
     private Task getTaskEntity(Integer boardId, Integer taskId) {
         return taskRepository.findByIdAndColumn_Board_Id(taskId, boardId)
-                .orElseThrow(() -> new RuntimeException("Task not found"));
+                .orElseThrow(() -> new TaskNotFoundException("Task not found: " + taskId));
     }
 
     private User resolveUser(Integer boardId, Integer userId) {
@@ -202,11 +206,11 @@ public class TaskService {
 
         // Доступ к доске гарантирует принадлежность к группе — дополнительная проверка не нужна
         if (!boardUserRepository.existsByIdBoardIdAndIdUserId(boardId, userId)) {
-            throw new RuntimeException("User is not on this board");
+            throw new BoardAccessDeniedException("Assignee is not on this board");
         }
 
         return userRepository.findById(userId)
-                .orElseThrow(() -> new RuntimeException("User not found"));
+                .orElseThrow(() -> new NoSuchUserByIdException("User not found: " + userId));
     }
 
     private void publishChanges(Task oldTask, Task newTask, Integer userId, UpdateTaskPayload payload) {

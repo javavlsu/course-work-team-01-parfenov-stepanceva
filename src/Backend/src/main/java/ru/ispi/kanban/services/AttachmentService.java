@@ -13,6 +13,10 @@ import ru.ispi.kanban.enums.ActionType;
 import ru.ispi.kanban.listeners.TaskChangeEvent;
 import ru.ispi.kanban.mappers.AttachmentMapper;
 import ru.ispi.kanban.repositories.AttachmentRepository;
+import ru.ispi.kanban.exceptions.AttachmentNotFoundException;
+import ru.ispi.kanban.exceptions.BoardAccessDeniedException;
+import ru.ispi.kanban.exceptions.NoSuchUserByIdException;
+import ru.ispi.kanban.exceptions.TaskNotFoundException;
 import ru.ispi.kanban.repositories.BoardUserRepository;
 import ru.ispi.kanban.repositories.TaskRepository;
 import ru.ispi.kanban.repositories.UserRepository;
@@ -77,7 +81,7 @@ public class AttachmentService {
         checkAccess(userId, boardId);
 
         Attachment attachment = attachmentRepository.findByIdAndTask_IdAndTask_Column_Board_Id(attachmentId, taskId, boardId)
-                .orElseThrow(() -> new RuntimeException("Вложение не найдено"));
+                .orElseThrow(() -> new AttachmentNotFoundException("Attachment not found: " + attachmentId));
 
         // task уже загружен через EntityGraph в findByIdAndTask_IdAndTask_Column_Board_Id
         eventPublisher.publishEvent(new TaskChangeEvent(
@@ -91,17 +95,17 @@ public class AttachmentService {
 
     private void checkAccess(Integer userId, Integer boardId) {
         if (!boardUserRepository.existsByIdBoardIdAndIdUserId(boardId, userId)) {
-            throw new RuntimeException("Нет доступа к доске");
+            throw new BoardAccessDeniedException("No access to this board");
         }
     }
 
     private Task getTask(Integer boardId, Integer taskId) {
         return taskRepository.findByIdAndColumn_Board_Id(taskId, boardId)
-                .orElseThrow(() -> new RuntimeException("Задача не найдена"));
+                .orElseThrow(() -> new TaskNotFoundException("Task not found: " + taskId));
     }
 
     private User getUser(Integer userId) {
         return userRepository.findById(userId)
-                .orElseThrow(() -> new RuntimeException("Пользователь не найден"));
+                .orElseThrow(() -> new NoSuchUserByIdException("User not found: " + userId));
     }
 }

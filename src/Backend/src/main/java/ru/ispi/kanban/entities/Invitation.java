@@ -3,12 +3,15 @@ package ru.ispi.kanban.entities;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
+import ru.ispi.kanban.enums.InvitationStatus;
+import ru.ispi.kanban.enums.InvitationType;
 
 import java.time.LocalDateTime;
 
 @Entity
 @Table(name = "invitations")
-@Getter @Setter
+@Getter
+@Setter
 public class Invitation {
 
     @Id
@@ -19,11 +22,22 @@ public class Invitation {
     @JoinColumn(name = "group_id", nullable = false)
     private GroupTeam group;
 
-    @Column(nullable = false)
+    /** null для приглашений типа LINK */
+    @Column(nullable = true)
     private String email;
 
-    @Column(nullable = false)
+    /** UUID-токен: для EMAIL — скрытая часть ссылки, для LINK — публичная ссылка */
+    @Column(nullable = false, unique = true)
     private String inviteToken;
+
+    @Enumerated(EnumType.STRING)
+    @Column(nullable = false)
+    private InvitationType type;
+
+    /** Актуально для EMAIL-приглашений; для LINK всегда PENDING до истечения срока */
+    @Enumerated(EnumType.STRING)
+    @Column(nullable = false)
+    private InvitationStatus status;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "created_by")
@@ -34,9 +48,6 @@ public class Invitation {
 
     @Column(nullable = false)
     private LocalDateTime expiresAt;
-
-    @Column(columnDefinition = "TINYINT(1)")
-    private Boolean used;
 
     @PrePersist
     protected void onCreate() {

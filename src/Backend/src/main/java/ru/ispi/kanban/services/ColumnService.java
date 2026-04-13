@@ -11,6 +11,9 @@ import ru.ispi.kanban.payloads.CreateColumnPayload;
 import ru.ispi.kanban.payloads.UpdateColumnPayload;
 import ru.ispi.kanban.repositories.BoardRepository;
 import ru.ispi.kanban.repositories.BoardUserRepository;
+import ru.ispi.kanban.exceptions.BoardAccessDeniedException;
+import ru.ispi.kanban.exceptions.ColumnNotFoundException;
+import ru.ispi.kanban.exceptions.EntityNotFound;
 import ru.ispi.kanban.repositories.ColumnRepository;
 
 import java.util.List;
@@ -109,17 +112,17 @@ public class ColumnService {
 
     private void checkAccess(Integer userId, Integer boardId) {
         if (!boardUserRepository.existsByIdBoardIdAndIdUserId(boardId, userId)) {
-            throw new RuntimeException("Нет доступа к доске");
+            throw new BoardAccessDeniedException("No access to this board");
         }
     }
 
     private Board getBoard(Integer boardId) {
         return boardRepository.findById(boardId)
-                .orElseThrow(() -> new RuntimeException("Доска не найдена"));
+                .orElseThrow(() -> new EntityNotFound("Board not found: " + boardId));
     }
 
     private BoardColumn getColumn(Integer boardId, Integer columnId) {
         return columnRepository.findByIdAndBoardId(columnId, boardId)
-                .orElseThrow(() -> new RuntimeException("Колонка не найдена"));
+                .orElseThrow(() -> new ColumnNotFoundException("Column not found: " + columnId));
     }
 }

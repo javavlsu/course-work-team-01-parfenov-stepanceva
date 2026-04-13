@@ -9,6 +9,7 @@ import ru.ispi.kanban.entities.TaskHistory;
 import ru.ispi.kanban.entities.User;
 import ru.ispi.kanban.enums.ActionType;
 import ru.ispi.kanban.mappers.TaskHistoryMapper;
+import ru.ispi.kanban.exceptions.BoardAccessDeniedException;
 import ru.ispi.kanban.repositories.BoardUserRepository;
 import ru.ispi.kanban.repositories.TaskHistoryRepository;
 
@@ -49,7 +50,7 @@ public class TaskHistoryService {
 
     private void checkAccess(Integer userId, Integer boardId) {
         if (!boardUserRepository.existsByIdBoardIdAndIdUserId(boardId, userId)) {
-            throw new RuntimeException("Нет доступа к доске");
+            throw new BoardAccessDeniedException("No access to this board");
         }
     }
 }

@@ -13,6 +13,11 @@ import ru.ispi.kanban.listeners.TaskChangeEvent;
 import ru.ispi.kanban.mappers.CommentMapper;
 import ru.ispi.kanban.payloads.CreateCommentPayload;
 import ru.ispi.kanban.payloads.UpdateCommentPayload;
+import ru.ispi.kanban.exceptions.BoardAccessDeniedException;
+import ru.ispi.kanban.exceptions.CommentAccessDeniedException;
+import ru.ispi.kanban.exceptions.CommentNotFoundException;
+import ru.ispi.kanban.exceptions.NoSuchUserByIdException;
+import ru.ispi.kanban.exceptions.TaskNotFoundException;
 import ru.ispi.kanban.repositories.BoardUserRepository;
 import ru.ispi.kanban.repositories.CommentRepository;
 import ru.ispi.kanban.repositories.TaskRepository;
@@ -71,7 +76,7 @@ public class CommentService {
 
         // обновлять может только автор
         if (!comment.getUser().getId().equals(userId)) {
-            throw new RuntimeException("Вы не можете редактировать чужой комментарий");
+            throw new CommentAccessDeniedException("You cannot edit another user's comment");
         }
 
         if (payload.text() != null && !payload.text().equals(comment.getText())) {
@@ -95,7 +100,7 @@ public class CommentService {
         Comment comment = getCommentEntity(boardId, taskId, commentId);
 
         if (!comment.getUser().getId().equals(userId)) {
-            throw new RuntimeException("Вы не можете удалить чужой комментарий");
+            throw new CommentAccessDeniedException("You cannot delete another user's comment");
         }
 
         // task уже загружен через EntityGraph в findByIdAndTask_IdAndTask_Column_Board_Id
@@ -108,22 +113,22 @@ public class CommentService {
 
     private void checkAccess(Integer userId, Integer boardId) {
         if (!boardUserRepository.existsByIdBoardIdAndIdUserId(boardId, userId)) {
-            throw new RuntimeException("Нет доступа к доске");
+            throw new BoardAccessDeniedException("No access to this board");
         }
     }
 
     private Task getTask(Integer boardId, Integer taskId) {
         return taskRepository.findByIdAndColumn_Board_Id(taskId, boardId)
-                .orElseThrow(() -> new RuntimeException("Задача не найдена"));
+                .orElseThrow(() -> new TaskNotFoundException("Task not found: " + taskId));
     }
 
     private User getUser(Integer userId) {
         return userRepository.findById(userId)
-                .orElseThrow(() -> new RuntimeException("Пользователь не найден"));
+                .orElseThrow(() -> new NoSuchUserByIdException("User not found: " + userId));
     }
 
     private Comment getCommentEntity(Integer boardId, Integer taskId, Integer commentId) {
         return commentRepository.findByIdAndTask_IdAndTask_Column_Board_Id(commentId, taskId, boardId)
-                .orElseThrow(() -> new RuntimeException("Комментарий не найден"));
+                .orElseThrow(() -> new CommentNotFoundException("Comment not found: " + commentId));
     }
 }

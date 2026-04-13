@@ -7,8 +7,11 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 import ru.ispi.kanban.dto.UserDto;
 import ru.ispi.kanban.entities.User;
+import ru.ispi.kanban.exceptions.InvalidPasswordException;
 import ru.ispi.kanban.exceptions.NoSuchUserByEmailException;
 import ru.ispi.kanban.exceptions.NoSuchUserByIdException;
+import ru.ispi.kanban.exceptions.UserAlreadyExistsException;
+import ru.ispi.kanban.exceptions.ValidationException;
 import ru.ispi.kanban.mappers.UserMapper;
 import ru.ispi.kanban.payloads.RegistrationPayload;
 import ru.ispi.kanban.payloads.UpdateNamePayload;
@@ -44,7 +47,7 @@ public class UserService {
     public UserDto create(RegistrationPayload payload) {
         // Проверяем, не существует ли уже пользователь с таким email
         if (userRepository.findByEmail(payload.email()).isPresent()) {
-            throw new IllegalArgumentException("User with email " + payload.email() + " already exists");
+            throw new UserAlreadyExistsException("User with email " + payload.email() + " already exists");
         }
 
         User user = userMapper.toEntity(payload);
@@ -73,14 +76,17 @@ public class UserService {
                 .orElseThrow(() -> new NoSuchUserByEmailException(String.format("User by %s not found", email)));
     }
 
-    public User getEntity(Integer id){ return userRepository.findById(id) .orElseThrow(() -> new RuntimeException("User not found")); }
+    public User getEntity(Integer id) {
+        return userRepository.findById(id)
+                .orElseThrow(() -> new NoSuchUserByIdException("User not found: " + id));
+    }
 
     @Transactional
     public UserDto updateName(Integer id, UpdateNamePayload payload) {
         User user = getEntity(id);
 
         if (payload.name() == null || payload.name().isBlank()) {
-            throw new IllegalArgumentException("Name cannot be empty");
+            throw new ValidationException("Name cannot be empty");
         }
 
         user.setName(payload.name().trim());
@@ -94,11 +100,11 @@ public class UserService {
 
 
         if (!passwordEncoder.matches(payload.oldPassword(), user.getPasswordHash())) {
-            throw new IllegalArgumentException("Invalid old password");
+            throw new InvalidPasswordException("Invalid old password");
         }
 
-        if (payload.newPassword() == null || payload.newPassword().length() < 6) {
-            throw new IllegalArgumentException("Password too short");
+        if (payload.newPassword() == null || payload.newPassword().length() < 8) {
+            throw new ValidationException("New password must be at least 8 characters");
         }
 
         user.setPasswordHash(passwordEncoder.encode(payload.newPassword()));

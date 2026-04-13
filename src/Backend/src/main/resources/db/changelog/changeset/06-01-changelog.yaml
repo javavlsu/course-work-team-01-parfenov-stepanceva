@@ -594,3 +594,35 @@ databaseChangeLog:
             referencedColumnNames: id
             referencedTableName: users
 
+  - changeSet:
+      id: 1772828487289-30
+      author: parom
+      changes:
+        # 1. Удаляем старую колонку used
+        - dropColumn:
+            columnName: used
+            tableName: invitations
+        # 2. Добавляем новые колонки из Entity
+        - addColumn:
+            tableName: invitations
+            columns:
+              - column:
+                  name: type
+                  type: VARCHAR(50)
+                  constraints:
+                    nullable: false
+              - column:
+                  name: status
+                  type: VARCHAR(50)
+                  constraints:
+                    nullable: false
+        # 3. Разрешаем email быть null (для ссылок)
+        - dropNotNullConstraint:
+            columnName: email
+            tableName: invitations
+            columnDataType: VARCHAR(255)
+        # 4. Делаем токен уникальным
+        - addUniqueConstraint:
+            columnNames: invite_token
+            constraintName: uc_invitations_token
+            tableName: invitations
