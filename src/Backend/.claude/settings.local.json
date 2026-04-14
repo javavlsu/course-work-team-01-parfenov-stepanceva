@@ -1,0 +1,8 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(grep -n \"private final\\\\|@Autowired\" c:/Users/r0mba-Notebook/course-work-team-01-parfenov-stepanceva/src/Backend/src/main/java/ru/ispi/kanban/controllers/*.java)",
+      "Bash(cat c:/Users/r0mba-Notebook/course-work-team-01-parfenov-stepanceva/src/Backend/src/main/java/ru/ispi/kanban/listeners/*.java)"
+    ]
+  }
+}

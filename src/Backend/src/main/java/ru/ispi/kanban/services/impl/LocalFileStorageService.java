@@ -1,4 +1,4 @@
-package ru.ispi.kanban.services;
+package ru.ispi.kanban.services.impl;
 
 import jakarta.annotation.PostConstruct;
 import lombok.extern.slf4j.Slf4j;
@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;
 import org.springframework.web.multipart.MultipartFile;
+import ru.ispi.kanban.services.FileStorageService;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -60,7 +61,6 @@ public class LocalFileStorageService implements FileStorageService {
 
         return folder + "/" + generatedFileName;
     }
-
 
     @Override
     public void deleteFile(String storageKey) {
