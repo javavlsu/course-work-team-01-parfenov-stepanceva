@@ -1,38 +1,80 @@
 import { useState } from 'react'
+import { useNavigate } from 'react-router-dom'
 import { motion } from 'framer-motion'
-import { Plus } from 'lucide-react'
+import { Plus, Check, X } from 'lucide-react'
 import { AppShell } from '../components/layout/AppShell'
 import { PageTransition } from '../components/layout/PageTransition'
 import { Button } from '../components/ui/Button'
 import { GroupCard } from '../components/groups/GroupCard'
 import { GroupCreateModal } from '../components/groups/GroupCreateModal'
-import { useMockStore } from '../store/mockStore'
-import { Badge } from '../components/ui/Badge'
+import { useGroups } from '../hooks/useGroups'
+import { useMyInvitations, useRespondInvitation } from '../hooks/useInvitations'
+import { useAuthStore } from '../store/authStore'
 
 export default function DashboardPage() {
-  const currentUser = useMockStore((s) => s.currentUser)
-  const groups = useMockStore((s) => s.listGroups())
+  const currentUser = useAuthStore((s) => s.user)
+  const { data: groups = [], isLoading } = useGroups()
+  const { data: invitations = [] } = useMyInvitations()
+  const respond = useRespondInvitation()
   const [open, setOpen] = useState(false)
   const [bannerOpen, setBannerOpen] = useState(true)
+  const [expandInvites, setExpandInvites] = useState(false)
+  const nav = useNavigate()
+
+  const pending = invitations.filter((i) => i.status === 'PENDING')
 
   return (
     <AppShell>
       <PageTransition className="max-w-container mx-auto px-6 md:px-12 py-10">
-        {bannerOpen && (
+        {bannerOpen && pending.length > 0 && (
           <motion.div
             initial={{ y: -24, opacity: 0 }}
             animate={{ y: 0, opacity: 1 }}
-            transition={{ duration: 0.4, delay: 1 }}
-            className="mb-8 flex items-center justify-between gap-4 p-4 bg-accent-2 rounded-md"
+            transition={{ duration: 0.4, delay: 0.2 }}
+            className="mb-8 p-4 bg-accent-2 rounded-md"
           >
-            <div className="flex items-center gap-3">
-              <span className="text-xl">📬</span>
-              <span className="text-sm">У вас 2 приглашения в команду</span>
+            <div className="flex items-center justify-between gap-4">
+              <div className="flex items-center gap-3">
+                <span className="text-xl">📬</span>
+                <span className="text-sm">У вас {pending.length} приглашен{pending.length === 1 ? 'ие' : pending.length < 5 ? 'ия' : 'ий'} в команду</span>
+              </div>
+              <div className="flex items-center gap-2">
+                <Button size="sm" variant="secondary" onClick={() => setExpandInvites((v) => !v)}>
+                  {expandInvites ? 'Скрыть' : 'Посмотреть'}
+                </Button>
+                <button onClick={() => setBannerOpen(false)} className="w-8 h-8 inline-flex items-center justify-center rounded-md hover:bg-ink/10">✕</button>
+              </div>
             </div>
-            <div className="flex items-center gap-2">
-              <Button size="sm" variant="secondary">Посмотреть</Button>
-              <button onClick={() => setBannerOpen(false)} className="w-8 h-8 inline-flex items-center justify-center rounded-md hover:bg-ink/10">✕</button>
-            </div>
+            {expandInvites && (
+              <div className="mt-4 space-y-2">
+                {pending.map((inv) => (
+                  <div key={inv.id} className="bg-paper rounded-md p-3 flex items-center justify-between gap-3">
+                    <div>
+                      <div className="text-sm font-medium">{inv.group?.name || 'Группа'}</div>
+                      <div className="text-xs text-gray-600">От: {inv.createdBy?.username}</div>
+                    </div>
+                    <div className="flex items-center gap-1">
+                      <button
+                        onClick={() => respond.mutate({ id: inv.id, accept: true })}
+                        disabled={respond.isPending}
+                        className="w-8 h-8 inline-flex items-center justify-center rounded-md bg-status-done text-paper hover:opacity-90"
+                        aria-label="Принять"
+                      >
+                        <Check className="w-4 h-4" />
+                      </button>
+                      <button
+                        onClick={() => respond.mutate({ id: inv.id, accept: false })}
+                        disabled={respond.isPending}
+                        className="w-8 h-8 inline-flex items-center justify-center rounded-md bg-priority-high text-paper hover:opacity-90"
+                        aria-label="Отклонить"
+                      >
+                        <X className="w-4 h-4" />
+                      </button>
+                    </div>
+                  </div>
+                ))}
+              </div>
+            )}
           </motion.div>
         )}
 
@@ -44,7 +86,13 @@ export default function DashboardPage() {
           <Button icon={Plus} size="lg" onClick={() => setOpen(true)}>Создать группу</Button>
         </div>
 
-        {groups.length === 0 ? (
+        {isLoading ? (
+          <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
+            {[0, 1, 2].map((i) => (
+              <div key={i} className="skeleton h-[180px] rounded-lg" />
+            ))}
+          </div>
+        ) : groups.length === 0 ? (
           <EmptyState onCreate={() => setOpen(true)} />
         ) : (
           <motion.div
@@ -60,7 +108,7 @@ export default function DashboardPage() {
         )}
       </PageTransition>
 
-      <GroupCreateModal open={open} onClose={() => setOpen(false)} />
+      <GroupCreateModal open={open} onClose={() => setOpen(false)} onCreated={(g) => nav(`/groups/${g.id}`)} />
     </AppShell>
   )
 }

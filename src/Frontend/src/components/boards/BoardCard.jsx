@@ -1,20 +1,9 @@
 import { Link } from 'react-router-dom'
 import { motion } from 'framer-motion'
-import { useMockStore } from '../../store/mockStore'
 import { formatDate } from '../../utils/dates'
 import { cn } from '../../utils/cn'
 
 export function BoardCard({ board, index = 0 }) {
-  const tasks = useMockStore((s) => {
-    const cols = Object.values(s.columns).filter((c) => c.boardId === board.id).map((c) => c.id)
-    return Object.values(s.tasks).filter((t) => cols.includes(t.columnId))
-  })
-  const author = useMockStore((s) => s.users[board.authorId])
-  const inProgress = tasks.filter((t) => {
-    const col = useMockStore.getState().columns[t.columnId]
-    return col?.name?.toLowerCase().includes('progress')
-  }).length
-
   return (
     <motion.div
       initial={{ opacity: 0, y: 20 }}
@@ -42,12 +31,7 @@ export function BoardCard({ board, index = 0 }) {
           </div>
           <div className="space-y-1">
             <div className="text-xs text-gray-600">Создано: {formatDate(board.createdAt)}</div>
-            <div className="text-xs text-gray-600">Автор: @{author?.username || '—'}</div>
-            <div className="flex items-center gap-3 text-xs text-gray-600 mt-2">
-              <span>{tasks.length} задач</span>
-              <span className="text-gray-400">|</span>
-              <span>{inProgress} в прогрессе</span>
-            </div>
+            {board.author?.username && <div className="text-xs text-gray-600">Автор: @{board.author.username}</div>}
           </div>
         </div>
       </Link>

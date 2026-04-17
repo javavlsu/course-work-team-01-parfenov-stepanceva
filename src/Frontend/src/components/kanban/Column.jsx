@@ -7,14 +7,13 @@ import { TaskCard } from './TaskCard'
 import { Dropdown } from '../ui/Dropdown'
 import { Badge } from '../ui/Badge'
 import { cn } from '../../utils/cn'
-import { useMockStore } from '../../store/mockStore'
-import { toast } from 'sonner'
+import { useCreateTask, useDeleteColumn, useUpdateColumn } from '../../hooks/useKanban'
 
-export function Column({ column, tasks, onOpenTask }) {
+export function Column({ boardId, column, tasks, usersById, onOpenTask }) {
   const { setNodeRef, isOver } = useDroppable({ id: column.id, data: { type: 'column', column } })
-  const createTask = useMockStore((s) => s.createTask)
-  const removeColumn = useMockStore((s) => s.removeColumn)
-  const updateColumn = useMockStore((s) => s.updateColumn)
+  const createTask = useCreateTask(boardId)
+  const deleteColumn = useDeleteColumn(boardId)
+  const updateColumn = useUpdateColumn(boardId)
   const [adding, setAdding] = useState(false)
   const [title, setTitle] = useState('')
   const [editingName, setEditingName] = useState(false)
@@ -22,17 +21,29 @@ export function Column({ column, tasks, onOpenTask }) {
   const inputRef = useRef(null)
 
   useEffect(() => { if (adding) inputRef.current?.focus() }, [adding])
+  useEffect(() => { setName(column.name) }, [column.name])
 
   const submit = () => {
     if (!title.trim()) { setAdding(false); return }
-    createTask(column.id, { title: title.trim(), priority: 'MEDIUM' })
-    setTitle('')
-    setAdding(false)
+    createTask.mutate(
+      { columnId: column.id, title: title.trim(), priority: 'MEDIUM' },
+      {
+        onSuccess: () => { setTitle(''); setAdding(false) },
+      }
+    )
   }
 
   const onKey = (e) => {
     if (e.key === 'Enter' && !e.shiftKey) { e.preventDefault(); submit() }
     if (e.key === 'Escape') { setTitle(''); setAdding(false) }
+  }
+
+  const commitName = () => {
+    const trimmed = name.trim()
+    if (trimmed && trimmed !== column.name) {
+      updateColumn.mutate({ columnId: column.id, title: trimmed })
+    }
+    setEditingName(false)
   }
 
   return (
@@ -48,8 +59,8 @@ export function Column({ column, tasks, onOpenTask }) {
           <input
             value={name}
             onChange={(e) => setName(e.target.value)}
-            onBlur={() => { updateColumn(column.id, { name }); setEditingName(false) }}
-            onKeyDown={(e) => { if (e.key === 'Enter') e.currentTarget.blur() }}
+            onBlur={commitName}
+            onKeyDown={(e) => { if (e.key === 'Enter') e.currentTarget.blur(); if (e.key === 'Escape') { setName(column.name); setEditingName(false) } }}
             className="bg-paper border border-gray-200 rounded px-2 py-1 text-sm mono uppercase tracking-[0.1em] outline-none focus:border-ink"
             autoFocus
           />
@@ -72,7 +83,7 @@ export function Column({ column, tasks, onOpenTask }) {
           items={[
             { label: 'Переименовать', icon: Pencil, onClick: () => setEditingName(true) },
             { label: 'Удалить колонку', icon: Trash2, danger: true, onClick: () => {
-              if (confirm('Удалить колонку со всеми задачами?')) { removeColumn(column.id); toast.success('Удалена') }
+              if (confirm('Удалить колонку со всеми задачами?')) deleteColumn.mutate(column.id)
             } },
           ]}
         />
@@ -82,7 +93,7 @@ export function Column({ column, tasks, onOpenTask }) {
         <SortableContext items={tasks.map((t) => t.id)} strategy={verticalListSortingStrategy}>
           <AnimatePresence initial={false}>
             {tasks.map((t) => (
-              <TaskCard key={t.id} task={t} onOpen={onOpenTask} />
+              <TaskCard key={t.id} task={t} usersById={usersById} onOpen={onOpenTask} />
             ))}
           </AnimatePresence>
         </SortableContext>

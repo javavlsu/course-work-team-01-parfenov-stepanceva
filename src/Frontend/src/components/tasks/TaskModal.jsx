@@ -1,29 +1,32 @@
-import { useEffect, useState } from 'react'
-import { motion } from 'framer-motion'
+import { useEffect, useMemo, useState } from 'react'
 import { Trash2, Clock, User as UserIcon, Send } from 'lucide-react'
 import { Modal } from '../ui/Modal'
 import { Button } from '../ui/Button'
 import { Avatar } from '../ui/Avatar'
 import { Dot } from '../ui/Badge'
-import { useMockStore } from '../../store/mockStore'
-import { PRIORITIES, STATUSES } from '../../utils/priorities'
+import { useAuthStore } from '../../store/authStore'
+import { useColumns, useTasks, useUpdateTask, useDeleteTask } from '../../hooks/useKanban'
+import { useComments, useCreateComment, useDeleteComment } from '../../hooks/useComments'
+import { useBoardUsers } from '../../hooks/useBoards'
+import { PRIORITIES } from '../../utils/priorities'
 import { formatDate, formatRelative } from '../../utils/dates'
 import { cn } from '../../utils/cn'
 import { toast } from 'sonner'
 
-export function TaskModal({ taskId, open, onClose }) {
-  const task = useMockStore((s) => (taskId ? s.tasks[taskId] : null))
-  const updateTask = useMockStore((s) => s.updateTask)
-  const removeTask = useMockStore((s) => s.removeTask)
-  const columns = useMockStore((s) => {
-    if (!task) return []
-    return Object.values(s.columns).filter((c) => c.boardId === s.columns[task.columnId]?.boardId).sort((a, b) => a.order - b.order)
-  })
-  const users = useMockStore((s) => s.users)
-  const comments = useMockStore((s) => (taskId ? s.listComments(taskId) : []))
-  const addComment = useMockStore((s) => s.addComment)
-  const removeComment = useMockStore((s) => s.removeComment)
-  const currentUser = useMockStore((s) => s.currentUser)
+export function TaskModal({ boardId, taskId, open, onClose }) {
+  const { data: tasks = [] } = useTasks(boardId)
+  const { data: columns = [] } = useColumns(boardId)
+  const { data: boardUsers = [] } = useBoardUsers(boardId)
+  const { data: comments = [] } = useComments(boardId, taskId)
+
+  const updateTask = useUpdateTask(boardId)
+  const deleteTask = useDeleteTask(boardId)
+  const createComment = useCreateComment(boardId, taskId)
+  const removeComment = useDeleteComment(boardId, taskId)
+
+  const currentUser = useAuthStore((s) => s.user)
+  const task = useMemo(() => tasks.find((t) => t.id === taskId), [tasks, taskId])
+  const sortedColumns = useMemo(() => [...columns].sort((a, b) => a.order - b.order), [columns])
 
   const [title, setTitle] = useState('')
   const [editingTitle, setEditingTitle] = useState(false)
@@ -33,30 +36,32 @@ export function TaskModal({ taskId, open, onClose }) {
 
   useEffect(() => {
     if (task) { setTitle(task.title); setDesc(task.description || '') }
-  }, [taskId])
+  }, [taskId, task?.id])
 
   if (!task) return null
 
   const saveTitle = () => {
-    if (title.trim() && title !== task.title) {
-      updateTask(task.id, { title: title.trim() })
-      toast.success('Сохранено')
+    const trimmed = title.trim()
+    if (trimmed && trimmed !== task.title) {
+      updateTask.mutate({ taskId: task.id, data: { title: trimmed } })
     }
     setEditingTitle(false)
   }
   const saveDesc = () => {
-    updateTask(task.id, { description: desc })
+    if (desc !== (task.description || '')) {
+      updateTask.mutate({ taskId: task.id, data: { description: desc } })
+    }
     setEditingDesc(false)
   }
 
   const sendComment = () => {
-    if (!comment.trim()) return
-    addComment(task.id, comment.trim())
-    setComment('')
+    const trimmed = comment.trim()
+    if (!trimmed) return
+    createComment.mutate(trimmed, { onSuccess: () => setComment('') })
   }
 
-  const assignee = task.assigneeId ? users[task.assigneeId] : null
-  const p = PRIORITIES[task.priority]
+  const assignee = task.assignee || boardUsers.find((u) => u.id === task.assigneeId)
+  const p = PRIORITIES[task.priority] || PRIORITIES.MEDIUM
 
   return (
     <Modal open={open} onClose={onClose} size="lg" hideClose>
@@ -64,7 +69,11 @@ export function TaskModal({ taskId, open, onClose }) {
         <div className="mono text-xs tracking-[0.1em] uppercase text-gray-400">Задача</div>
         <div className="flex items-center gap-1">
           <button
-            onClick={() => { if (confirm('Удалить задачу?')) { removeTask(task.id); toast.success('Удалена'); onClose() } }}
+            onClick={() => {
+              if (confirm('Удалить задачу?')) {
+                deleteTask.mutate(task.id, { onSuccess: onClose })
+              }
+            }}
             className="w-8 h-8 inline-flex items-center justify-center rounded-md text-gray-400 hover:text-priority-high hover:bg-priority-high/10"
             aria-label="Удалить"
           >
@@ -121,18 +130,17 @@ export function TaskModal({ taskId, open, onClose }) {
             <div className="space-y-4 mb-4">
               {comments.length === 0 && <div className="text-sm text-gray-400">Пока нет комментариев</div>}
               {comments.map((c) => {
-                const au = users[c.authorId]
-                const mine = c.authorId === currentUser.id
+                const mine = c.authorId === currentUser?.id
                 return (
                   <div key={c.id} className="flex gap-3 group/comment">
-                    <Avatar user={au} size="sm" />
+                    <Avatar user={c.author} size="sm" />
                     <div className="flex-1">
                       <div className="flex items-center gap-2 mb-1">
-                        <span className="text-sm font-medium">{au?.username}</span>
+                        <span className="text-sm font-medium">{c.author?.username}</span>
                         <span className="text-xs text-gray-400" title={formatDate(c.createdAt, 'dd MMM yyyy, HH:mm')}>{formatRelative(c.createdAt)}</span>
                         {mine && (
                           <button
-                            onClick={() => removeComment(c.id)}
+                            onClick={() => removeComment.mutate(c.id)}
                             className="ml-auto text-xs text-gray-400 hover:text-priority-high opacity-0 group-hover/comment:opacity-100 transition-opacity"
                           >Удалить</button>
                         )}
@@ -155,7 +163,7 @@ export function TaskModal({ taskId, open, onClose }) {
                   className="w-full text-sm bg-paper border border-gray-200 rounded-md p-3 outline-none focus:border-ink resize-y"
                 />
               </div>
-              <Button onClick={sendComment} size="sm" icon={Send}>Отправить</Button>
+              <Button onClick={sendComment} size="sm" icon={Send} loading={createComment.isPending}>Отправить</Button>
             </div>
           </div>
         </div>
@@ -166,7 +174,7 @@ export function TaskModal({ taskId, open, onClose }) {
               {Object.entries(PRIORITIES).map(([k, v]) => (
                 <button
                   key={k}
-                  onClick={() => updateTask(task.id, { priority: k })}
+                  onClick={() => updateTask.mutate({ taskId: task.id, data: { priority: k } })}
                   className={cn(
                     'inline-flex items-center gap-1.5 px-2 py-1 rounded-md text-xs mono border',
                     task.priority === k ? 'border-ink' : 'border-gray-200 hover:border-gray-400'
@@ -181,29 +189,45 @@ export function TaskModal({ taskId, open, onClose }) {
           <Field label="Колонка">
             <select
               value={task.columnId}
-              onChange={(e) => updateTask(task.id, { columnId: e.target.value })}
+              onChange={(e) => updateTask.mutate({ taskId: task.id, data: { columnId: Number(e.target.value) || e.target.value } })}
               className="w-full bg-paper border border-gray-200 rounded-md px-3 py-2 text-sm outline-none focus:border-ink"
             >
-              {columns.map((c) => <option key={c.id} value={c.id}>{c.name}</option>)}
+              {sortedColumns.map((c) => <option key={c.id} value={c.id}>{c.name}</option>)}
             </select>
           </Field>
 
           <Field label="Исполнитель">
             <select
               value={task.assigneeId || ''}
-              onChange={(e) => updateTask(task.id, { assigneeId: e.target.value || null })}
+              onChange={(e) => {
+                const v = e.target.value
+                updateTask.mutate({ taskId: task.id, data: { assigneeId: v ? (Number(v) || v) : null } })
+              }}
               className="w-full bg-paper border border-gray-200 rounded-md px-3 py-2 text-sm outline-none focus:border-ink"
             >
               <option value="">Не назначен</option>
-              {Object.values(users).map((u) => <option key={u.id} value={u.id}>{u.username}</option>)}
+              {boardUsers.map((u) => <option key={u.id} value={u.id}>{u.username}</option>)}
             </select>
           </Field>
 
           <Field label="Дедлайн">
             <input
-              type="date"
-              value={task.deadline ? task.deadline.slice(0, 10) : ''}
-              onChange={(e) => updateTask(task.id, { deadline: e.target.value ? new Date(e.target.value).toISOString() : null })}
+              type="datetime-local"
+              value={task.deadline ? task.deadline.slice(0, 16) : ''}
+              onChange={(e) => {
+                const v = e.target.value
+                if (!v) {
+                  updateTask.mutate({ taskId: task.id, data: { deadline: null } })
+                } else {
+                  const iso = new Date(v).toISOString()
+                  const local = new Date(v)
+                  if (local.getTime() < Date.now()) {
+                    toast.error('Дедлайн должен быть в будущем')
+                    return
+                  }
+                  updateTask.mutate({ taskId: task.id, data: { deadline: iso.slice(0, 19) } })
+                }
+              }}
               className="w-full bg-paper border border-gray-200 rounded-md px-3 py-2 text-sm outline-none focus:border-ink"
             />
           </Field>

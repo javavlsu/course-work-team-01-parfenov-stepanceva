@@ -1,21 +1,19 @@
-import { useState } from 'react'
-import { Link, useNavigate } from 'react-router-dom'
+import { useEffect, useState } from 'react'
+import { Link, useNavigate, useLocation } from 'react-router-dom'
 import { useForm } from 'react-hook-form'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { z } from 'zod'
 import { motion } from 'framer-motion'
-import { toast } from 'sonner'
 import { AuthLayout } from '../components/auth/AuthLayout'
 import { Input } from '../components/ui/Input'
 import { Button } from '../components/ui/Button'
-import { useAuthStore } from '../store/authStore'
-import { useMockStore } from '../store/mockStore'
+import { useRegister } from '../hooks/useAuth'
 import { cn } from '../utils/cn'
 
 const schema = z.object({
-  username: z.string().min(3, 'Минимум 3 символа').max(20, 'Максимум 20 символов').regex(/^[A-Za-z0-9_]+$/, 'Только буквы, цифры, _'),
+  name: z.string().min(3, 'Минимум 3 символа').max(20, 'Максимум 20 символов').regex(/^[A-Za-zА-Яа-яЁё0-9_]+$/, 'Буквы, цифры, _'),
   email: z.string().email('Неверный email'),
-  password: z.string().min(8, 'Минимум 8 символов'),
+  password: z.string().min(8, 'Минимум 8 символов').max(100, 'Максимум 100 символов'),
 })
 
 function scorePassword(p = '') {
@@ -37,30 +35,27 @@ const strengthMeta = [
 
 export default function RegisterPage() {
   const nav = useNavigate()
-  const setUser = useAuthStore((s) => s.setUser)
-  const currentUser = useMockStore((s) => s.currentUser)
-  const updateUser = useMockStore((s) => s.updateUser)
-  const [loading, setLoading] = useState(false)
+  const loc = useLocation()
+  const registerMutation = useRegister()
   const [pw, setPw] = useState('')
   const { register, handleSubmit, formState: { errors } } = useForm({ resolver: zodResolver(schema), mode: 'onBlur' })
 
   const meta = strengthMeta[scorePassword(pw)]
 
-  const onSubmit = async (data) => {
-    setLoading(true)
-    await new Promise((r) => setTimeout(r, 500))
-    updateUser({ username: data.username, email: data.email })
-    setUser({ ...currentUser, username: data.username, email: data.email })
-    toast.success('Аккаунт создан!')
-    nav('/dashboard', { replace: true })
-    setLoading(false)
-  }
+  useEffect(() => {
+    if (registerMutation.isSuccess) {
+      const from = loc.state?.from || '/dashboard'
+      nav(from, { replace: true })
+    }
+  }, [registerMutation.isSuccess, loc.state, nav])
+
+  const onSubmit = (data) => registerMutation.mutate(data)
 
   return (
     <AuthLayout title="Регистрация" subtitle="— Create account">
       <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
         {[
-          <Input key="u" label="Имя пользователя" error={errors.username?.message} {...register('username')} />,
+          <Input key="u" label="Имя пользователя" error={errors.name?.message} {...register('name')} />,
           <Input key="e" type="email" label="Email" error={errors.email?.message} {...register('email')} />,
         ].map((el, i) => (
           <motion.div key={i} initial={{ opacity: 0, y: 8 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.2 + i * 0.05, duration: 0.3 }}>
@@ -81,7 +76,7 @@ export default function RegisterPage() {
           {meta.label && <div className="mt-1 text-xs text-gray-600">{meta.label}</div>}
         </motion.div>
         <motion.div initial={{ opacity: 0, y: 8 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.4, duration: 0.3 }} className="pt-2">
-          <Button type="submit" size="lg" fullWidth loading={loading}>Зарегистрироваться</Button>
+          <Button type="submit" size="lg" fullWidth loading={registerMutation.isPending}>Зарегистрироваться</Button>
         </motion.div>
       </form>
       <div className="mt-8 text-sm text-gray-600">

@@ -1,18 +1,16 @@
-import { forwardRef, memo } from 'react'
+import { memo } from 'react'
 import { motion } from 'framer-motion'
 import { useSortable } from '@dnd-kit/sortable'
 import { CSS } from '@dnd-kit/utilities'
 import { MessageSquare, Paperclip, Pencil, AlertCircle } from 'lucide-react'
 import { Avatar } from '../ui/Avatar'
 import { Dot } from '../ui/Badge'
-import { useMockStore } from '../../store/mockStore'
 import { PRIORITIES } from '../../utils/priorities'
 import { deadlineStatus } from '../../utils/dates'
 import { cn } from '../../utils/cn'
 
-function TaskCardImpl({ task, onOpen, isOverlay = false }) {
-  const users = useMockStore((s) => s.users)
-  const assignee = task.assigneeId ? users[task.assigneeId] : null
+function TaskCardImpl({ task, usersById = {}, onOpen, isOverlay = false }) {
+  const assignee = task.assignee || (task.assigneeId ? usersById[task.assigneeId] : null)
   const p = PRIORITIES[task.priority] || PRIORITIES.MEDIUM
   const dl = deadlineStatus(task.deadline)
 
@@ -31,7 +29,7 @@ function TaskCardImpl({ task, onOpen, isOverlay = false }) {
       style={style}
       {...attributes}
       {...listeners}
-      onClick={(e) => { if (!isDragging) onOpen?.(task) }}
+      onClick={() => { if (!isDragging) onOpen?.(task) }}
       initial={!isOverlay ? { opacity: 0, y: 8 } : false}
       animate={!isOverlay ? { opacity: 1, y: 0 } : false}
       whileHover={!isOverlay && !isDragging ? { y: -2 } : undefined}
@@ -96,7 +94,7 @@ export const TaskCard = memo(TaskCardImpl, (a, b) =>
   a.task.deadline === b.task.deadline &&
   a.task.assigneeId === b.task.assigneeId &&
   a.task.description === b.task.description &&
-  a.task.commentsCount === b.task.commentsCount &&
-  a.task.attachmentsCount === b.task.attachmentsCount &&
+  a.task.order === b.task.order &&
+  a.task.columnId === b.task.columnId &&
   a.isOverlay === b.isOverlay
 )

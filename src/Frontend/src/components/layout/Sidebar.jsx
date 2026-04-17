@@ -1,24 +1,20 @@
 import { useState } from 'react'
-import { Link, useLocation, useNavigate } from 'react-router-dom'
+import { Link, useLocation } from 'react-router-dom'
 import { motion, AnimatePresence } from 'framer-motion'
-import { LayoutGrid, ChevronRight, Plus, User as UserIcon, Settings, LogOut, FolderKanban } from 'lucide-react'
+import { LayoutGrid, ChevronRight, User as UserIcon, LogOut, FolderKanban } from 'lucide-react'
 import { cn } from '../../utils/cn'
-import { useMockStore } from '../../store/mockStore'
-import { useAuthStore } from '../../store/authStore'
 import { useUiStore } from '../../store/uiStore'
+import { useGroups } from '../../hooks/useGroups'
+import { useMyBoards } from '../../hooks/useBoards'
+import { useLogout } from '../../hooks/useAuth'
 
 export function Sidebar() {
   const location = useLocation()
-  const navigate = useNavigate()
-  const groups = useMockStore((s) => s.listGroups())
-  const boardsMap = useMockStore((s) => s.boards)
+  const { data: groups = [] } = useGroups()
+  const { data: boards = [] } = useMyBoards()
   const sidebarOpen = useUiStore((s) => s.sidebarOpen)
-  const logout = useAuthStore((s) => s.logout)
-  const [expanded, setExpanded] = useState(() => {
-    const map = {}
-    groups.forEach((g) => { map[g.id] = true })
-    return map
-  })
+  const logout = useLogout()
+  const [expanded, setExpanded] = useState({})
 
   const isActive = (path) => location.pathname === path || location.pathname.startsWith(path + '/')
 
@@ -49,7 +45,7 @@ export function Sidebar() {
 
               {groups.map((g) => {
                 const isOpen = !!expanded[g.id]
-                const groupBoards = Object.values(boardsMap).filter((b) => b.groupId === g.id)
+                const groupBoards = boards.filter((b) => b.groupId === g.id)
                 return (
                   <div key={g.id} className="mb-1">
                     <div className="flex items-stretch">
@@ -104,7 +100,7 @@ export function Sidebar() {
             <div className="p-3 border-t border-gray-200/60">
               <SidebarItem to="/profile" icon={UserIcon} label="Профиль" active={isActive('/profile')} />
               <button
-                onClick={() => { logout(); navigate('/login') }}
+                onClick={() => logout.mutate()}
                 className="w-full text-left px-3 py-2 h-9 rounded-md text-sm text-gray-600 hover:text-ink hover:bg-gray-100 transition-all duration-base flex items-center gap-2"
               >
                 <LogOut className="w-4 h-4" />

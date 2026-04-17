@@ -8,19 +8,35 @@ import { TaskModal } from '../components/tasks/TaskModal'
 import { AvatarGroup } from '../components/ui/Avatar'
 import { Dropdown } from '../components/ui/Dropdown'
 import { Button } from '../components/ui/Button'
-import { useMockStore } from '../store/mockStore'
+import { Input } from '../components/ui/Input'
+import { Modal } from '../components/ui/Modal'
+import { useBoard, useBoardUsers, useDeleteBoard, useUpdateBoard } from '../hooks/useBoards'
 import { toast } from 'sonner'
 
 export default function BoardPage() {
   const { boardId } = useParams()
   const nav = useNavigate()
-  const board = useMockStore((s) => s.boards[boardId])
-  const group = useMockStore((s) => board ? s.groups[board.groupId] : null)
-  const users = useMockStore((s) => s.users)
-  const removeBoard = useMockStore((s) => s.removeBoard)
-  const [activeTaskId, setActiveTaskId] = useState(null)
+  const { data: board, isLoading, isError } = useBoard(boardId)
+  const { data: boardUsers = [] } = useBoardUsers(boardId)
+  const deleteBoard = useDeleteBoard()
+  const updateBoard = useUpdateBoard()
 
-  if (!board || !group) {
+  const [activeTaskId, setActiveTaskId] = useState(null)
+  const [editOpen, setEditOpen] = useState(false)
+  const [editTitle, setEditTitle] = useState('')
+  const [editDesc, setEditDesc] = useState('')
+
+  if (isLoading) {
+    return (
+      <AppShell>
+        <div className="p-12 flex justify-center">
+          <div className="w-10 h-10 rounded-full border-2 border-gray-200 border-t-ink animate-spin" />
+        </div>
+      </AppShell>
+    )
+  }
+
+  if (isError || !board) {
     return (
       <AppShell>
         <div className="p-12 text-center">
@@ -31,12 +47,25 @@ export default function BoardPage() {
     )
   }
 
-  const members = group.members.map((m) => users[m.userId]).filter(Boolean)
   const breadcrumb = [
     { label: 'Dashboard', to: '/dashboard' },
-    { label: group.name, to: `/groups/${group.id}` },
+    { label: board.groupName || 'Группа', to: `/groups/${board.groupId}` },
     { label: board.name },
   ]
+
+  const openEdit = () => {
+    setEditTitle(board.name)
+    setEditDesc(board.description || '')
+    setEditOpen(true)
+  }
+
+  const saveEdit = (e) => {
+    e.preventDefault()
+    if (editTitle.trim().length < 3) return toast.error('Минимум 3 символа')
+    updateBoard.mutate({ id: board.id, title: editTitle.trim(), description: editDesc.trim() }, {
+      onSuccess: () => setEditOpen(false),
+    })
+  }
 
   return (
     <AppShell breadcrumb={breadcrumb}>
@@ -48,18 +77,18 @@ export default function BoardPage() {
           className="flex items-center justify-between gap-4 px-6 md:px-12 py-5 border-b border-gray-100"
         >
           <div className="flex items-center gap-3 min-w-0">
-            <Link to={`/groups/${group.id}`} className="w-9 h-9 inline-flex items-center justify-center rounded-md hover:bg-gray-100 transition-colors" aria-label="Назад">
+            <Link to={`/groups/${board.groupId}`} className="w-9 h-9 inline-flex items-center justify-center rounded-md hover:bg-gray-100 transition-colors" aria-label="Назад">
               <ArrowLeft className="w-4 h-4" />
             </Link>
             <div className="min-w-0">
-              <div className="mono text-xs tracking-[0.1em] uppercase text-gray-400 truncate">{group.name}</div>
+              <div className="mono text-xs tracking-[0.1em] uppercase text-gray-400 truncate">{board.groupName || 'Группа'}</div>
               <h1 className="display-serif text-2xl truncate leading-tight">{board.name}</h1>
             </div>
           </div>
           <div className="flex items-center gap-3">
             <div className="hidden sm:flex items-center gap-2">
-              <AvatarGroup users={members} max={5} size="sm" />
-              <Button variant="outline" size="sm" icon={Users} onClick={() => nav(`/groups/${group.id}`)}>Участники</Button>
+              <AvatarGroup users={boardUsers} max={5} size="sm" />
+              <Button variant="outline" size="sm" icon={Users} onClick={() => nav(`/groups/${board.groupId}`)}>Участники</Button>
             </div>
             <Dropdown
               align="right"
@@ -69,9 +98,11 @@ export default function BoardPage() {
                 </button>
               }
               items={[
-                { label: 'Переименовать', icon: Pencil, onClick: () => toast.info('Скоро') },
+                { label: 'Переименовать', icon: Pencil, onClick: openEdit },
                 { label: 'Удалить доску', icon: Trash2, danger: true, onClick: () => {
-                  if (confirm('Удалить доску?')) { removeBoard(boardId); toast.success('Удалена'); nav(`/groups/${group.id}`) }
+                  if (confirm('Удалить доску?')) {
+                    deleteBoard.mutate(boardId, { onSuccess: () => nav(`/groups/${board.groupId}`) })
+                  }
                 } },
               ]}
             />
@@ -83,7 +114,18 @@ export default function BoardPage() {
         </div>
       </div>
 
-      <TaskModal taskId={activeTaskId} open={!!activeTaskId} onClose={() => setActiveTaskId(null)} />
+      <TaskModal boardId={boardId} taskId={activeTaskId} open={!!activeTaskId} onClose={() => setActiveTaskId(null)} />
+
+      <Modal open={editOpen} onClose={() => setEditOpen(false)} title="Переименовать доску" size="sm">
+        <form onSubmit={saveEdit} className="px-6 py-5 space-y-4">
+          <Input label="Название (3–100)" value={editTitle} onChange={(e) => setEditTitle(e.target.value)} autoFocus />
+          <Input label="Описание" value={editDesc} onChange={(e) => setEditDesc(e.target.value)} />
+          <div className="flex justify-end gap-2 pt-2">
+            <Button variant="ghost" type="button" onClick={() => setEditOpen(false)}>Отмена</Button>
+            <Button type="submit" loading={updateBoard.isPending}>Сохранить</Button>
+          </div>
+        </form>
+      </Modal>
     </AppShell>
   )
 }

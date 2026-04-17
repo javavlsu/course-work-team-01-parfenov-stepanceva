@@ -3,14 +3,18 @@ import { motion } from 'framer-motion'
 import { ArrowRight, Users, LayoutGrid } from 'lucide-react'
 import { Badge } from '../ui/Badge'
 import { AvatarGroup } from '../ui/Avatar'
-import { useMockStore } from '../../store/mockStore'
+import { useGroupMembers } from '../../hooks/useGroups'
+import { useMyBoards } from '../../hooks/useBoards'
+import { useAuthStore } from '../../store/authStore'
 
 export function GroupCard({ group, index = 0 }) {
-  const boardsCount = useMockStore((s) => Object.values(s.boards).filter((b) => b.groupId === group.id).length)
-  const users = useMockStore((s) => s.users)
-  const currentUserId = useMockStore((s) => s.currentUser.id)
-  const members = group.members.map((m) => users[m.userId]).filter(Boolean)
-  const myRole = group.members.find((m) => m.userId === currentUserId)?.role || 'MEMBER'
+  const { data: members = [] } = useGroupMembers(group.id)
+  const { data: boards = [] } = useMyBoards()
+  const currentUser = useAuthStore((s) => s.user)
+
+  const boardsCount = boards.filter((b) => b.groupId === group.id).length
+  const myRole = members.find((m) => m.userId === currentUser?.id)?.role || 'MEMBER'
+  const memberUsers = members.map((m) => ({ id: m.userId, username: `#${m.userId}` }))
 
   return (
     <motion.div
@@ -29,11 +33,11 @@ export function GroupCard({ group, index = 0 }) {
         <h3 className="display-serif text-xl mb-1">{group.name}</h3>
         {group.description && <p className="text-sm text-gray-600 line-clamp-1 mb-6">{group.description}</p>}
         <div className="flex items-center gap-4 text-xs text-gray-600 mb-5">
-          <span className="inline-flex items-center gap-1.5"><Users className="w-3.5 h-3.5" />{group.members.length}</span>
+          <span className="inline-flex items-center gap-1.5"><Users className="w-3.5 h-3.5" />{members.length}</span>
           <span className="inline-flex items-center gap-1.5"><LayoutGrid className="w-3.5 h-3.5" />{boardsCount}</span>
         </div>
         <div className="flex items-center justify-between">
-          <AvatarGroup users={members} max={4} size="xs" />
+          <AvatarGroup users={memberUsers} max={4} size="xs" />
           <span className="inline-flex items-center gap-1 text-sm text-gray-600 opacity-0 group-hover:opacity-100 translate-x-[-4px] group-hover:translate-x-0 transition-all duration-base">
             Открыть <ArrowRight className="w-3.5 h-3.5" />
           </span>

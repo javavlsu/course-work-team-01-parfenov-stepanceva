@@ -1,18 +1,21 @@
-import { useState, useMemo, useRef } from 'react'
+import { useState, useMemo } from 'react'
 import { DndContext, PointerSensor, KeyboardSensor, useSensor, useSensors, DragOverlay, closestCorners } from '@dnd-kit/core'
-import { sortableKeyboardCoordinates, arrayMove } from '@dnd-kit/sortable'
+import { sortableKeyboardCoordinates } from '@dnd-kit/sortable'
 import { motion, AnimatePresence } from 'framer-motion'
 import { Plus, Check, X } from 'lucide-react'
 import { Column } from './Column'
 import { TaskCard } from './TaskCard'
-import { useMockStore } from '../../store/mockStore'
-import { toast } from 'sonner'
+import { useColumns, useTasks, useCreateColumn, useMoveTask } from '../../hooks/useKanban'
+import { useBoardUsers } from '../../hooks/useBoards'
 
 export function KanbanBoard({ boardId, onOpenTask }) {
-  const columns = useMockStore((s) => s.listColumns(boardId))
-  const tasks = useMockStore((s) => s.listTasks(boardId))
-  const moveTask = useMockStore((s) => s.moveTask)
-  const createColumn = useMockStore((s) => s.createColumn)
+  const { data: columns = [], isLoading: colLoading } = useColumns(boardId)
+  const { data: tasks = [], isLoading: taskLoading } = useTasks(boardId)
+  const { data: boardUsers = [] } = useBoardUsers(boardId)
+  const createColumn = useCreateColumn(boardId)
+  const moveTask = useMoveTask(boardId)
+
+  const usersById = useMemo(() => Object.fromEntries(boardUsers.map((u) => [u.id, u])), [boardUsers])
 
   const sensors = useSensors(
     useSensor(PointerSensor, { activationConstraint: { distance: 4 } }),
@@ -23,21 +26,24 @@ export function KanbanBoard({ boardId, onOpenTask }) {
   const [addingCol, setAddingCol] = useState(false)
   const [colName, setColName] = useState('')
 
+  const sortedColumns = useMemo(() => [...columns].sort((a, b) => a.order - b.order), [columns])
+  const sortedTasks = useMemo(() => [...tasks].sort((a, b) => a.order - b.order), [tasks])
+
   const tasksByColumn = useMemo(() => {
     const map = {}
-    columns.forEach((c) => (map[c.id] = []))
-    tasks.forEach((t) => { if (map[t.columnId]) map[t.columnId].push(t) })
+    sortedColumns.forEach((c) => (map[c.id] = []))
+    sortedTasks.forEach((t) => { if (map[t.columnId]) map[t.columnId].push(t) })
     return map
-  }, [columns, tasks])
+  }, [sortedColumns, sortedTasks])
 
   const findContainer = (id) => {
     if (tasksByColumn[id]) return id
-    const task = tasks.find((t) => t.id === id)
+    const task = sortedTasks.find((t) => t.id === id)
     return task?.columnId
   }
 
   const onDragStart = (e) => {
-    const task = tasks.find((t) => t.id === e.active.id)
+    const task = sortedTasks.find((t) => t.id === e.active.id)
     setActiveTask(task || null)
   }
 
@@ -51,7 +57,7 @@ export function KanbanBoard({ boardId, onOpenTask }) {
     const toCol = findContainer(over.id)
     if (!fromCol || !toCol) return
 
-    const overIsTask = tasks.some((t) => t.id === over.id)
+    const overIsTask = sortedTasks.some((t) => t.id === over.id)
     let destIndex
     if (overIsTask) {
       const overTasks = tasksByColumn[toCol]
@@ -60,14 +66,25 @@ export function KanbanBoard({ boardId, onOpenTask }) {
     } else {
       destIndex = tasksByColumn[toCol]?.length || 0
     }
-    moveTask(active.id, toCol, destIndex)
+    moveTask.mutate({ taskId: active.id, columnId: toCol, position: destIndex })
   }
 
   const submitCol = () => {
-    if (!colName.trim()) { setAddingCol(false); return }
-    createColumn(boardId, { name: colName.trim().toUpperCase() })
-    toast.success('Колонка создана')
-    setColName(''); setAddingCol(false)
+    const trimmed = colName.trim()
+    if (!trimmed) { setAddingCol(false); return }
+    createColumn.mutate(trimmed.toUpperCase(), {
+      onSuccess: () => { setColName(''); setAddingCol(false) },
+    })
+  }
+
+  if (colLoading || taskLoading) {
+    return (
+      <div className="h-full scroll-x px-6 md:px-12 pb-6">
+        <div className="flex gap-4 h-full items-stretch">
+          {[0, 1, 2].map((i) => <div key={i} className="shrink-0 w-[300px] skeleton rounded-lg" />)}
+        </div>
+      </div>
+    )
   }
 
   return (
@@ -79,8 +96,15 @@ export function KanbanBoard({ boardId, onOpenTask }) {
     >
       <div className="h-full scroll-x px-6 md:px-12 pb-6">
         <div className="flex gap-4 h-full items-stretch">
-          {columns.map((c) => (
-            <Column key={c.id} column={c} tasks={tasksByColumn[c.id] || []} onOpenTask={onOpenTask} />
+          {sortedColumns.map((c) => (
+            <Column
+              key={c.id}
+              boardId={boardId}
+              column={c}
+              tasks={tasksByColumn[c.id] || []}
+              usersById={usersById}
+              onOpenTask={onOpenTask}
+            />
           ))}
 
           <AnimatePresence mode="wait">
@@ -125,7 +149,7 @@ export function KanbanBoard({ boardId, onOpenTask }) {
       </div>
 
       <DragOverlay>
-        {activeTask ? <TaskCard task={activeTask} isOverlay /> : null}
+        {activeTask ? <TaskCard task={activeTask} usersById={usersById} isOverlay /> : null}
       </DragOverlay>
     </DndContext>
   )

@@ -1,9 +1,11 @@
-import { lazy, Suspense } from 'react'
+import { lazy, Suspense, useEffect } from 'react'
 import { BrowserRouter, Routes, Route, useLocation } from 'react-router-dom'
 import { AnimatePresence } from 'framer-motion'
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query'
 import { Toaster } from 'sonner'
 import { AuthGuard, GuestGuard } from './components/auth/AuthGuard'
+import { authApi } from './api/auth'
+import { useAuthStore } from './store/authStore'
 
 const LandingPage = lazy(() => import('./pages/LandingPage'))
 const LoginPage = lazy(() => import('./pages/LoginPage'))
@@ -24,6 +26,23 @@ function Loader() {
       <div className="w-10 h-10 rounded-full border-2 border-gray-200 border-t-ink animate-spin" />
     </div>
   )
+}
+
+function SessionBootstrap({ children }) {
+  const setUser = useAuthStore((s) => s.setUser)
+  const markChecked = useAuthStore((s) => s.markChecked)
+  const isChecked = useAuthStore((s) => s.isChecked)
+
+  useEffect(() => {
+    let cancelled = false
+    authApi.check()
+      .then((u) => { if (!cancelled) setUser(u) })
+      .catch(() => { if (!cancelled) markChecked() })
+    return () => { cancelled = true }
+  }, [setUser, markChecked])
+
+  if (!isChecked) return <Loader />
+  return children
 }
 
 function AnimatedRoutes() {
@@ -63,7 +82,9 @@ export default function App() {
   return (
     <QueryClientProvider client={queryClient}>
       <BrowserRouter>
-        <AnimatedRoutes />
+        <SessionBootstrap>
+          <AnimatedRoutes />
+        </SessionBootstrap>
         <Toaster
           position="bottom-right"
           toastOptions={{

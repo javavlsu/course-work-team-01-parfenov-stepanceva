@@ -1,20 +1,20 @@
 import { useState } from 'react'
 import { useParams, useNavigate } from 'react-router-dom'
 import { motion } from 'framer-motion'
-import { Plus, MoreHorizontal, Trash2, Pencil } from 'lucide-react'
+import { Plus, MoreHorizontal, Trash2 } from 'lucide-react'
 import { AppShell } from '../components/layout/AppShell'
 import { PageTransition } from '../components/layout/PageTransition'
 import { Button } from '../components/ui/Button'
 import { AvatarGroup } from '../components/ui/Avatar'
-import { Tooltip } from '../components/ui/Tooltip'
 import { Dropdown } from '../components/ui/Dropdown'
 import { BoardCard } from '../components/boards/BoardCard'
 import { BoardCreateModal } from '../components/boards/BoardCreateModal'
 import { MemberList } from '../components/groups/MemberList'
 import { InviteForm } from '../components/invitations/InviteForm'
-import { useMockStore } from '../store/mockStore'
+import { useGroup, useGroupMembers, useDeleteGroup } from '../hooks/useGroups'
+import { useGroupBoards } from '../hooks/useBoards'
+import { useAuthStore } from '../store/authStore'
 import { cn } from '../utils/cn'
-import { toast } from 'sonner'
 
 const TABS = [
   { id: 'boards', label: 'Доски' },
@@ -25,16 +25,26 @@ const TABS = [
 export default function GroupPage() {
   const { groupId } = useParams()
   const nav = useNavigate()
-  const group = useMockStore((s) => s.groups[groupId])
-  const boards = useMockStore((s) => s.listBoards(groupId))
-  const users = useMockStore((s) => s.users)
-  const currentUserId = useMockStore((s) => s.currentUser.id)
-  const removeGroup = useMockStore((s) => s.removeGroup)
+  const currentUser = useAuthStore((s) => s.user)
+  const { data: group, isLoading: groupLoading, isError } = useGroup(groupId)
+  const { data: members = [] } = useGroupMembers(groupId)
+  const { data: boards = [], isLoading: boardsLoading } = useGroupBoards(groupId)
+  const deleteGroup = useDeleteGroup()
 
   const [tab, setTab] = useState('boards')
   const [boardOpen, setBoardOpen] = useState(false)
 
-  if (!group) {
+  if (groupLoading) {
+    return (
+      <AppShell>
+        <div className="p-12 flex justify-center">
+          <div className="w-10 h-10 rounded-full border-2 border-gray-200 border-t-ink animate-spin" />
+        </div>
+      </AppShell>
+    )
+  }
+
+  if (isError || !group) {
     return (
       <AppShell>
         <div className="p-12 text-center">
@@ -45,9 +55,9 @@ export default function GroupPage() {
     )
   }
 
-  const myRole = group.members.find((m) => m.userId === currentUserId)?.role
+  const myRole = members.find((m) => m.userId === currentUser?.id)?.role
   const isAdmin = myRole === 'ADMIN'
-  const members = group.members.map((m) => users[m.userId]).filter(Boolean)
+  const memberStubs = members.map((m) => ({ id: m.userId, username: `#${m.userId}` }))
 
   const breadcrumb = [{ label: 'Dashboard', to: '/dashboard' }, { label: group.name }]
 
@@ -60,18 +70,14 @@ export default function GroupPage() {
             <h1 className="display-serif text-3xl md:text-4xl uppercase tracking-tight leading-none mb-2">{group.name}</h1>
             {group.description && <p className="text-gray-600 max-w-xl">{group.description}</p>}
             <div className="mt-5 flex items-center gap-4">
-              <AvatarGroup
-                users={members.map((u) => ({ ...u }))}
-                max={6}
-                size="sm"
-              />
+              <AvatarGroup users={memberStubs} max={6} size="sm" />
               <span className="text-xs mono text-gray-400">
-                admin: {members.filter((u) => group.members.find((m) => m.userId === u.id)?.role === 'ADMIN').map((u) => u.id === currentUserId ? 'Вы' : u.username).join(', ')}
+                {members.filter((m) => m.role === 'ADMIN').length} admin · {members.length} всего
               </span>
             </div>
           </div>
           <div className="flex items-center gap-2">
-            <Button icon={Plus} onClick={() => setBoardOpen(true)}>Доска</Button>
+            {isAdmin && <Button icon={Plus} onClick={() => setBoardOpen(true)}>Доска</Button>}
             {isAdmin && (
               <Dropdown
                 align="right"
@@ -81,9 +87,10 @@ export default function GroupPage() {
                   </button>
                 }
                 items={[
-                  { label: 'Переименовать', icon: Pencil, onClick: () => toast.info('Скоро') },
                   { label: 'Удалить группу', icon: Trash2, danger: true, onClick: () => {
-                    if (confirm('Удалить группу?')) { removeGroup(groupId); toast.success('Удалена'); nav('/dashboard') }
+                    if (confirm('Удалить группу?')) {
+                      deleteGroup.mutate(groupId, { onSuccess: () => nav('/dashboard') })
+                    }
                   } },
                 ]}
               />
@@ -114,11 +121,17 @@ export default function GroupPage() {
 
         {tab === 'boards' && (
           <>
-            {boards.length === 0 ? (
+            {boardsLoading ? (
+              <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
+                {[0, 1, 2].map((i) => <div key={i} className="skeleton aspect-[3/2] rounded-lg" />)}
+              </div>
+            ) : boards.length === 0 ? (
               <div className="border border-dashed border-gray-200 rounded-lg p-16 text-center">
                 <h2 className="display-serif text-2xl mb-2">Пока нет досок</h2>
-                <p className="text-gray-600 mb-6">Создайте первую доску, чтобы начать работу.</p>
-                <Button onClick={() => setBoardOpen(true)} icon={Plus}>Создать доску</Button>
+                <p className="text-gray-600 mb-6">
+                  {isAdmin ? 'Создайте первую доску, чтобы начать работу.' : 'Администратор пока не создал досок.'}
+                </p>
+                {isAdmin && <Button onClick={() => setBoardOpen(true)} icon={Plus}>Создать доску</Button>}
               </div>
             ) : (
               <motion.div

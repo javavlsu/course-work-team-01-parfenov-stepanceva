@@ -1,14 +1,11 @@
 import { create } from 'zustand'
-import { persist } from 'zustand/middleware'
 
-export const useAuthStore = create(
-  persist(
-    (set) => ({
-      user: null,
-      isAuthenticated: false,
-      setUser: (user) => set({ user, isAuthenticated: !!user }),
-      logout: () => set({ user: null, isAuthenticated: false }),
-    }),
-    { name: 'kanban-auth' }
-  )
-)
+// Session lives server-side (cookies). Local store holds user profile + a "checked" flag.
+export const useAuthStore = create((set) => ({
+  user: null,
+  isAuthenticated: false,
+  isChecked: false,
+  setUser: (user) => set({ user, isAuthenticated: !!user, isChecked: true }),
+  markChecked: () => set({ isChecked: true }),
+  logout: () => set({ user: null, isAuthenticated: false, isChecked: true }),
+}))
