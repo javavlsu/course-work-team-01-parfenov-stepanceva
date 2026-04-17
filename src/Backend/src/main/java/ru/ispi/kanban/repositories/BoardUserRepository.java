@@ -31,4 +31,6 @@ public interface BoardUserRepository extends JpaRepository<BoardUser, BoardUserI
 
     @EntityGraph(attributePaths = {"board", "board.group", "board.createdBy"})
     Optional<BoardUser> findByUserIdAndBoardId(Integer userId, Integer boardId);
+
+    void deleteAllByBoardId(Integer boardId);
 }

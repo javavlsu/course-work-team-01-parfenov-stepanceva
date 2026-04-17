@@ -38,4 +38,6 @@ public interface ColumnRepository extends JpaRepository<BoardColumn, Integer> {
     @Query("UPDATE BoardColumn c SET c.position = c.position - 1 " +
             "WHERE c.board.id = :boardId AND c.position > :deletedPos")
     void shiftAfterDelete(Integer boardId, Long deletedPos);
+
+    void deleteAllByBoardId(Integer boardId);
 }

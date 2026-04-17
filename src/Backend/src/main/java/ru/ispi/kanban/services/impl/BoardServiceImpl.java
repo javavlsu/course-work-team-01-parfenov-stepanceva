@@ -2,15 +2,23 @@ package ru.ispi.kanban.services.impl;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import ru.ispi.kanban.dto.BoardDto;
 import ru.ispi.kanban.entities.Board;
 import ru.ispi.kanban.entities.GroupTeam;
 import ru.ispi.kanban.mappers.BoardMapper;
 import ru.ispi.kanban.payloads.CreateBoardPayload;
 import ru.ispi.kanban.payloads.UpdateBoardPayload;
+import ru.ispi.kanban.repositories.AttachmentRepository;
 import ru.ispi.kanban.repositories.BoardRepository;
+import ru.ispi.kanban.repositories.BoardUserRepository;
+import ru.ispi.kanban.repositories.ColumnRepository;
+import ru.ispi.kanban.repositories.CommentRepository;
+import ru.ispi.kanban.repositories.TaskHistoryRepository;
+import ru.ispi.kanban.repositories.TaskRepository;
 import ru.ispi.kanban.services.BoardService;
 import ru.ispi.kanban.services.BoardUserService;
+import ru.ispi.kanban.services.FileStorageService;
 import ru.ispi.kanban.services.GroupPermissionService;
 import ru.ispi.kanban.services.GroupTeamService;
 
@@ -26,6 +34,13 @@ public class BoardServiceImpl implements BoardService {
     private final BoardRepository boardRepository;
     private final GroupTeamService groupTeamService;
     private final BoardMapper boardMapper;
+    private final AttachmentRepository attachmentRepository;
+    private final CommentRepository commentRepository;
+    private final TaskHistoryRepository taskHistoryRepository;
+    private final TaskRepository taskRepository;
+    private final ColumnRepository columnRepository;
+    private final BoardUserRepository boardUserRepository;
+    private final FileStorageService fileStorageService;
 
     @Override
     public List<BoardDto> getUserBoards(Integer userId) {
@@ -70,11 +85,20 @@ public class BoardServiceImpl implements BoardService {
     }
 
     @Override
+    @Transactional
     public void delete(Integer userId, Integer boardId) {
         Board board = boardUserService.getUserBoard(userId, boardId);
 
         groupPermissionService.checkAdmin(board.getGroup().getId(), userId);
 
+        attachmentRepository.findAllByTask_Column_Board_Id(boardId)
+                .forEach(a -> fileStorageService.deleteFile(a.getStorageKey()));
+        taskHistoryRepository.deleteAllByTask_Column_Board_Id(boardId);
+        commentRepository.deleteAllByTask_Column_Board_Id(boardId);
+        attachmentRepository.deleteAllByTask_Column_Board_Id(boardId);
+        taskRepository.deleteAllByColumn_Board_Id(boardId);
+        columnRepository.deleteAllByBoardId(boardId);
+        boardUserRepository.deleteAllByBoardId(boardId);
         boardRepository.delete(board);
     }
 

@@ -18,6 +18,8 @@ public class GroupMemberDto {
 
     private Integer userId;
 
+    private UserDto user;
+
     private GroupRole role;
 
     private LocalDateTime joinedAt;

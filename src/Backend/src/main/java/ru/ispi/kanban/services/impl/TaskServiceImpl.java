@@ -18,10 +18,14 @@ import ru.ispi.kanban.listeners.TaskChangeEvent;
 import ru.ispi.kanban.mappers.TaskMapper;
 import ru.ispi.kanban.payloads.CreateTaskPayload;
 import ru.ispi.kanban.payloads.UpdateTaskPayload;
+import ru.ispi.kanban.repositories.AttachmentRepository;
 import ru.ispi.kanban.repositories.BoardUserRepository;
 import ru.ispi.kanban.repositories.ColumnRepository;
+import ru.ispi.kanban.repositories.CommentRepository;
+import ru.ispi.kanban.repositories.TaskHistoryRepository;
 import ru.ispi.kanban.repositories.TaskRepository;
 import ru.ispi.kanban.repositories.UserRepository;
+import ru.ispi.kanban.services.FileStorageService;
 import ru.ispi.kanban.services.TaskService;
 
 import java.util.List;
@@ -38,6 +42,10 @@ public class TaskServiceImpl implements TaskService {
     private final TaskMapper taskMapper;
     private final ApplicationEventPublisher eventPublisher;
     private final UserRepository userRepository;
+    private final AttachmentRepository attachmentRepository;
+    private final CommentRepository commentRepository;
+    private final TaskHistoryRepository taskHistoryRepository;
+    private final FileStorageService fileStorageService;
 
     @Override
     public List<TaskDto> getTasksByBoard(Integer userId, Integer boardId) {
@@ -138,6 +146,15 @@ public class TaskServiceImpl implements TaskService {
         Task task = getTaskEntity(boardId, taskId);
         Long deletedPos = task.getPosition();
         Integer columnId = task.getColumn().getId();
+
+        // удаляем файлы с диска перед удалением записей из БД
+        attachmentRepository.findAllByTaskIdOrderByUploadedAtDesc(taskId)
+                .forEach(a -> fileStorageService.deleteFile(a.getStorageKey()));
+
+        // удаляем дочерние записи, чтобы не нарушить FK-ограничения, а то ошибка
+        taskHistoryRepository.deleteAllByTask_Id(taskId);
+        commentRepository.deleteAllByTask_Id(taskId);
+        attachmentRepository.deleteAllByTask_Id(taskId);
 
         taskRepository.delete(task);
         taskRepository.shiftAfterDelete(columnId, deletedPos);

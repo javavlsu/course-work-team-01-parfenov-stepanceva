@@ -1,6 +1,7 @@
 package ru.ispi.kanban.security.jwt;
 
 import io.jsonwebtoken.Claims;
+import io.jsonwebtoken.ExpiredJwtException;
 import io.jsonwebtoken.JwtException;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
@@ -94,11 +95,12 @@ public class JwtService {
 
     public boolean isTokenSignatureValid(String token) {
         try {
-            // Пытаемся просто распарсить токен. Если подпись кривая - упадет в Catch.
             Jwts.parserBuilder().setSigningKey(getSignInKey()).build().parseClaimsJws(token);
             return true;
+        } catch (ExpiredJwtException e) {
+            return true; // подпись корректна, токен просто истёк
         } catch (JwtException | IllegalArgumentException e) {
-            return false; // Токен подделан или поврежден
+            return false; // токен подделан или повреждён
         }
     }
 
