@@ -1,9 +1,15 @@
+import { useState } from 'react'
 import { Link } from 'react-router-dom'
 import { motion } from 'framer-motion'
 import { formatDate } from '../../utils/dates'
 import { cn } from '../../utils/cn'
 
+const DESC_CLAMP_THRESHOLD = 120
+
 export function BoardCard({ board, index = 0 }) {
+  const [descExpanded, setDescExpanded] = useState(false)
+  const isLongDesc = board.description && board.description.length > DESC_CLAMP_THRESHOLD
+
   return (
     <motion.div
       initial={{ opacity: 0, y: 20 }}
@@ -13,7 +19,7 @@ export function BoardCard({ board, index = 0 }) {
     >
       <Link
         to={`/boards/${board.id}`}
-        className="group relative block overflow-hidden bg-paper border border-gray-100 rounded-lg aspect-[3/2] min-w-[240px] p-6 hover:shadow-lg hover:border-gray-400 transition-all duration-base"
+        className="group relative block overflow-hidden bg-paper border border-gray-100 rounded-lg min-w-[240px] p-6 hover:shadow-lg hover:border-gray-400 transition-all duration-base"
       >
         <div
           aria-hidden
@@ -24,10 +30,24 @@ export function BoardCard({ board, index = 0 }) {
             board.pattern === 3 && 'kanban-pattern-3'
           )}
         />
-        <div className="relative h-full flex flex-col justify-between">
+        <div className="relative flex flex-col gap-4">
           <div>
             <h3 className="display-serif text-2xl leading-tight mb-2">{board.name}</h3>
-            {board.description && <p className="text-sm text-gray-600 line-clamp-2">{board.description}</p>}
+            {board.description && (
+              <div>
+                <p className={cn('text-sm text-gray-600 break-words', !descExpanded && 'line-clamp-3')}>
+                  {board.description}
+                </p>
+                {isLongDesc && (
+                  <button
+                    onClick={(e) => { e.preventDefault(); e.stopPropagation(); setDescExpanded((v) => !v) }}
+                    className="text-xs text-gray-400 hover:text-ink mt-1 transition-colors"
+                  >
+                    {descExpanded ? 'Свернуть' : 'Читать далее'}
+                  </button>
+                )}
+              </div>
+            )}
           </div>
           <div className="space-y-1">
             <div className="text-xs text-gray-600">Создано: {formatDate(board.createdAt)}</div>

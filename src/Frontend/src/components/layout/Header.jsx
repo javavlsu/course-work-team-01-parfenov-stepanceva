@@ -22,7 +22,7 @@ export function Header({ breadcrumb }) {
         >
           <Menu className="w-5 h-5" />
         </button>
-        <Link to="/dashboard" className="display-serif text-xl tracking-tight">KANBAN</Link>
+        <Link to="/" className="display-serif text-xl tracking-tight">KANBAN</Link>
         {breadcrumb?.length > 0 && (
           <nav className="hidden md:flex items-center gap-1 ml-4 text-sm text-gray-400">
             <span className="mx-1">/</span>

@@ -1,12 +1,12 @@
 import { useEffect, useMemo, useRef, useState } from 'react'
-import { Trash2, Clock, User as UserIcon, Send, Paperclip, X, Download, History } from 'lucide-react'
+import { Trash2, Clock, User as UserIcon, Send, Paperclip, X, Download, History, Pencil, Check } from 'lucide-react'
 import { Modal } from '../ui/Modal'
 import { Button } from '../ui/Button'
 import { Avatar } from '../ui/Avatar'
 import { Dot } from '../ui/Badge'
 import { useAuthStore } from '../../store/authStore'
 import { useColumns, useTasks, useUpdateTask, useDeleteTask } from '../../hooks/useKanban'
-import { useComments, useCreateComment, useDeleteComment } from '../../hooks/useComments'
+import { useComments, useCreateComment, useDeleteComment, useUpdateComment } from '../../hooks/useComments'
 import { useAttachments, useUploadAttachment, useDeleteAttachment } from '../../hooks/useAttachments'
 import { useTaskHistory } from '../../hooks/useTaskHistory'
 import { useBoardUsers } from '../../hooks/useBoards'
@@ -26,6 +26,7 @@ export function TaskModal({ boardId, taskId, open, onClose }) {
   const deleteTask = useDeleteTask(boardId)
   const createComment = useCreateComment(boardId, taskId)
   const removeComment = useDeleteComment(boardId, taskId)
+  const editComment = useUpdateComment(boardId, taskId)
   const { data: attachments = [] } = useAttachments(boardId, taskId)
   const uploadAttachment = useUploadAttachment(boardId, taskId)
   const removeAttachment = useDeleteAttachment(boardId, taskId)
@@ -42,6 +43,8 @@ export function TaskModal({ boardId, taskId, open, onClose }) {
   const [desc, setDesc] = useState('')
   const [editingDesc, setEditingDesc] = useState(false)
   const [comment, setComment] = useState('')
+  const [editingCommentId, setEditingCommentId] = useState(null)
+  const [editCommentText, setEditCommentText] = useState('')
 
   useEffect(() => {
     if (task) { setTitle(task.title); setDesc(task.description || '') }
@@ -114,7 +117,7 @@ export function TaskModal({ boardId, taskId, open, onClose }) {
 
       {tab === 'history' && (
         <div className="p-6 max-h-[78vh] overflow-y-auto">
-          <HistoryTab history={history} />
+          <HistoryTab history={history} columns={sortedColumns} />
         </div>
       )}
 
@@ -151,7 +154,7 @@ export function TaskModal({ boardId, taskId, open, onClose }) {
             ) : (
               <div
                 onClick={() => setEditingDesc(true)}
-                className="cursor-text text-sm leading-relaxed min-h-[60px] p-3 rounded-md hover:bg-gray-100/50 whitespace-pre-wrap"
+                className="cursor-text text-sm leading-relaxed min-h-[60px] p-3 rounded-md hover:bg-gray-100/50 whitespace-pre-wrap break-all"
               >
                 {task.description || <span className="text-gray-400">Добавьте описание…</span>}
               </div>
@@ -219,21 +222,62 @@ export function TaskModal({ boardId, taskId, open, onClose }) {
               {comments.length === 0 && <div className="text-sm text-gray-400">Пока нет комментариев</div>}
               {comments.map((c) => {
                 const mine = c.authorId === currentUser?.id
+                const isEditing = editingCommentId === c.id
                 return (
                   <div key={c.id} className="flex gap-3 group/comment">
                     <Avatar user={c.author} size="sm" />
-                    <div className="flex-1">
+                    <div className="flex-1 min-w-0">
                       <div className="flex items-center gap-2 mb-1">
                         <span className="text-sm font-medium">{c.author?.username}</span>
                         <span className="text-xs text-gray-400" title={formatDate(c.createdAt, 'dd MMM yyyy, HH:mm')}>{formatRelative(c.createdAt)}</span>
-                        {mine && (
-                          <button
-                            onClick={() => removeComment.mutate(c.id)}
-                            className="ml-auto text-xs text-gray-400 hover:text-priority-high opacity-0 group-hover/comment:opacity-100 transition-opacity"
-                          >Удалить</button>
+                        {c.updatedAt && c.updatedAt !== c.createdAt && (
+                          <span className="text-xs text-gray-300">(изм.)</span>
+                        )}
+                        {mine && !isEditing && (
+                          <div className="ml-auto flex items-center gap-2 opacity-0 group-hover/comment:opacity-100 transition-opacity">
+                            <button
+                              onClick={() => { setEditingCommentId(c.id); setEditCommentText(c.text) }}
+                              className="text-xs text-gray-400 hover:text-ink inline-flex items-center gap-1"
+                            ><Pencil className="w-3 h-3" /> Изменить</button>
+                            <button
+                              onClick={() => removeComment.mutate(c.id)}
+                              className="text-xs text-gray-400 hover:text-priority-high"
+                            >Удалить</button>
+                          </div>
                         )}
                       </div>
-                      <div className="text-sm text-gray-800 whitespace-pre-wrap">{c.text}</div>
+                      {isEditing ? (
+                        <div className="space-y-2">
+                          <textarea
+                            value={editCommentText}
+                            onChange={(e) => setEditCommentText(e.target.value)}
+                            autoFocus
+                            rows={2}
+                            className="w-full text-sm bg-paper border border-gray-200 rounded-md p-2 outline-none focus:border-ink resize-y"
+                          />
+                          <div className="flex gap-1">
+                            <button
+                              onClick={() => {
+                                const trimmed = editCommentText.trim()
+                                if (trimmed && trimmed !== c.text) {
+                                  editComment.mutate({ commentId: c.id, text: trimmed }, {
+                                    onSuccess: () => setEditingCommentId(null),
+                                  })
+                                } else {
+                                  setEditingCommentId(null)
+                                }
+                              }}
+                              className="w-6 h-6 inline-flex items-center justify-center rounded bg-ink text-paper hover:bg-gray-800"
+                            ><Check className="w-3 h-3" /></button>
+                            <button
+                              onClick={() => setEditingCommentId(null)}
+                              className="w-6 h-6 inline-flex items-center justify-center rounded hover:bg-gray-100"
+                            ><X className="w-3 h-3" /></button>
+                          </div>
+                        </div>
+                      ) : (
+                        <div className="text-sm text-gray-800 whitespace-pre-wrap break-words">{c.text}</div>
+                      )}
                     </div>
                   </div>
                 )
@@ -347,41 +391,80 @@ const ATTR_LABELS = {
   TASK: 'Задача', TITLE: 'Заголовок', DESCRIPTION: 'Описание',
   COLUMN: 'Колонка', ASSIGNEE: 'Исполнитель', POSITION: 'Позиция',
   DEADLINE: 'Дедлайн', PRIORITY: 'Приоритет', STATUS: 'Статус',
+  COMMENT: 'Комментарий', ATTACHMENT: 'Вложение',
 }
 
-function HistoryTab({ history }) {
+const CREATE_LABELS = {
+  TASK: 'Задача создана',
+  COMMENT: 'Добавил комментарий',
+  ATTACHMENT: 'Добавил вложение',
+}
+
+const DELETE_LABELS = {
+  COMMENT: 'Удалил комментарий',
+  ATTACHMENT: 'Удалил вложение',
+}
+
+function HistoryTab({ history, columns = [] }) {
+  const columnById = useMemo(
+    () => Object.fromEntries(columns.map((c) => [String(c.id), c.name])),
+    [columns]
+  )
+
+  const resolveValue = (attr, value) => {
+    if (!value) return value
+    if (attr === 'COLUMN') return columnById[String(value)] || value
+    return value
+  }
+
   if (history.length === 0) {
     return <div className="text-sm text-gray-400 py-4">История изменений пуста</div>
   }
+
   return (
     <div className="space-y-3">
-      {history.map((h) => (
-        <div key={h.id} className="flex gap-3">
-          <Avatar user={h.user} size="sm" />
-          <div className="flex-1 min-w-0">
-            <div className="flex items-center gap-2 flex-wrap mb-1">
-              <span className="text-sm font-medium">{h.user?.username || 'System'}</span>
-              <span className="mono text-[10px] tracking-[0.08em] uppercase text-gray-400">
-                {ATTR_LABELS[h.changedAttribute] || h.changedAttribute}
-              </span>
-              <span className="text-xs text-gray-400 ml-auto">{formatRelative(h.changedAt)}</span>
-            </div>
-            {h.actionType === 'create' ? (
-              <div className="text-xs text-gray-600">Задача создана</div>
-            ) : (
-              <div className="text-xs text-gray-600 flex items-center gap-1.5 flex-wrap">
-                {h.oldValue && (
-                  <span className="line-through text-gray-400 truncate max-w-[140px]" title={h.oldValue}>{h.oldValue}</span>
+      {history.map((h) => {
+        const attr = h.changedAttribute
+        const isCreateEvent = h.actionType === 'create'
+        const isDeleteEvent = h.actionType === 'delete'
+        const simpleLabel =
+          isCreateEvent ? (CREATE_LABELS[attr] || CREATE_LABELS.TASK) :
+          isDeleteEvent ? DELETE_LABELS[attr] : null
+
+        return (
+          <div key={h.id} className="flex gap-3">
+            <Avatar user={h.user} size="sm" />
+            <div className="flex-1 min-w-0">
+              <div className="flex items-center gap-2 flex-wrap mb-1">
+                <span className="text-sm font-medium">{h.user?.username || 'System'}</span>
+                {attr && !simpleLabel && (
+                  <span className="mono text-[10px] tracking-[0.08em] uppercase text-gray-400">
+                    {ATTR_LABELS[attr] || attr}
+                  </span>
                 )}
-                {h.oldValue && <span className="text-gray-300">→</span>}
-                {h.newValue && (
-                  <span className="text-gray-800 truncate max-w-[140px]" title={h.newValue}>{h.newValue}</span>
-                )}
+                <span className="text-xs text-gray-400 ml-auto">{formatRelative(h.changedAt)}</span>
               </div>
-            )}
+              {simpleLabel ? (
+                <div className="text-xs text-gray-600">{simpleLabel}</div>
+              ) : (
+                <div className="text-xs text-gray-600 flex items-center gap-1.5 flex-wrap">
+                  {h.oldValue && (
+                    <span className="line-through text-gray-400 truncate max-w-[140px]" title={resolveValue(attr, h.oldValue)}>
+                      {resolveValue(attr, h.oldValue)}
+                    </span>
+                  )}
+                  {h.oldValue && <span className="text-gray-300">→</span>}
+                  {h.newValue && (
+                    <span className="text-gray-800 truncate max-w-[140px]" title={resolveValue(attr, h.newValue)}>
+                      {resolveValue(attr, h.newValue)}
+                    </span>
+                  )}
+                </div>
+              )}
+            </div>
           </div>
-        </div>
-      ))}
+        )
+      })}
     </div>
   )
 }

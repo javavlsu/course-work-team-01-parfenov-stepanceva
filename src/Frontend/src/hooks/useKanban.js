@@ -1,6 +1,7 @@
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query'
 import { toast } from 'sonner'
 import { columnsApi, tasksApi } from '../api/resources'
+import { taskHistoryKey } from './useTaskHistory'
 
 export const columnsKey = (boardId) => ['columns', boardId]
 export const tasksKey = (boardId) => ['tasks', boardId]
@@ -73,7 +74,10 @@ export function useUpdateTask(boardId) {
   const qc = useQueryClient()
   return useMutation({
     mutationFn: ({ taskId, data }) => tasksApi.update(boardId, taskId, data),
-    onSuccess: () => qc.invalidateQueries({ queryKey: tasksKey(boardId) }),
+    onSuccess: (_, { taskId }) => {
+      qc.invalidateQueries({ queryKey: tasksKey(boardId) })
+      qc.invalidateQueries({ queryKey: taskHistoryKey(boardId, taskId) })
+    },
   })
 }
 

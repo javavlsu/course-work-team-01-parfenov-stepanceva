@@ -3,8 +3,10 @@ import { Link } from 'react-router-dom'
 import { motion, useScroll, useMotionValueEvent } from 'framer-motion'
 import { cn } from '../../utils/cn'
 import { Button } from '../ui/Button'
+import { useAuthStore } from '../../store/authStore'
 
 export function LandingNavbar() {
+  const isAuthenticated = useAuthStore((s) => !!s.user)
   const { scrollY } = useScroll()
   const [scrolled, setScrolled] = useState(false)
   const [hidden, setHidden] = useState(false)
@@ -27,7 +29,7 @@ export function LandingNavbar() {
       )}
     >
       <div className="max-w-container mx-auto px-6 md:px-12 h-[72px] flex items-center justify-between">
-        <Link to="/" className="display-serif text-[2rem] tracking-[-0.02em] leading-none">
+        <Link to={isAuthenticated ? '/dashboard' : '/'} className="display-serif text-[2rem] tracking-[-0.02em] leading-none">
           KANBAN
         </Link>
         <div className="hidden md:flex items-center gap-8 mono tracking-[0.1em] text-[0.75rem] uppercase text-gray-600">

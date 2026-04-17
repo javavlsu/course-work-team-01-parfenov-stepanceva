@@ -20,6 +20,14 @@ export function useCreateComment(boardId, taskId) {
   })
 }
 
+export function useUpdateComment(boardId, taskId) {
+  const qc = useQueryClient()
+  return useMutation({
+    mutationFn: ({ commentId, text }) => commentsApi.update(boardId, taskId, commentId, text),
+    onSuccess: () => qc.invalidateQueries({ queryKey: commentsKey(boardId, taskId) }),
+  })
+}
+
 export function useDeleteComment(boardId, taskId) {
   const qc = useQueryClient()
   return useMutation({

@@ -1,11 +1,11 @@
 import { useState, useMemo } from 'react'
 import { DndContext, PointerSensor, KeyboardSensor, useSensor, useSensors, DragOverlay, closestCorners } from '@dnd-kit/core'
-import { sortableKeyboardCoordinates } from '@dnd-kit/sortable'
+import { SortableContext, sortableKeyboardCoordinates, horizontalListSortingStrategy } from '@dnd-kit/sortable'
 import { motion, AnimatePresence } from 'framer-motion'
 import { Plus, Check, X } from 'lucide-react'
 import { Column } from './Column'
 import { TaskCard } from './TaskCard'
-import { useColumns, useTasks, useCreateColumn, useMoveTask } from '../../hooks/useKanban'
+import { useColumns, useTasks, useCreateColumn, useMoveTask, useMoveColumn } from '../../hooks/useKanban'
 import { useBoardUsers } from '../../hooks/useBoards'
 
 export function KanbanBoard({ boardId, onOpenTask }) {
@@ -14,6 +14,7 @@ export function KanbanBoard({ boardId, onOpenTask }) {
   const { data: boardUsers = [] } = useBoardUsers(boardId)
   const createColumn = useCreateColumn(boardId)
   const moveTask = useMoveTask(boardId)
+  const moveColumn = useMoveColumn(boardId)
 
   const usersById = useMemo(() => Object.fromEntries(boardUsers.map((u) => [u.id, u])), [boardUsers])
 
@@ -23,6 +24,7 @@ export function KanbanBoard({ boardId, onOpenTask }) {
   )
 
   const [activeTask, setActiveTask] = useState(null)
+  const [activeColumn, setActiveColumn] = useState(null)
   const [addingCol, setAddingCol] = useState(false)
   const [colName, setColName] = useState('')
 
@@ -36,23 +38,45 @@ export function KanbanBoard({ boardId, onOpenTask }) {
     return map
   }, [sortedColumns, sortedTasks])
 
+  const colIds = useMemo(() => sortedColumns.map((c) => `col-${c.id}`), [sortedColumns])
+
   const findContainer = (id) => {
-    if (tasksByColumn[id]) return id
+    const strId = String(id)
+    if (strId.startsWith('col-')) {
+      const numId = Number(strId.slice(4))
+      return tasksByColumn[numId] !== undefined ? numId : null
+    }
+    if (tasksByColumn[id] !== undefined) return id
     const task = sortedTasks.find((t) => t.id === id)
-    return task?.columnId
+    return task?.columnId ?? null
   }
 
   const onDragStart = (e) => {
+    if (e.active.data.current?.type === 'column') {
+      setActiveColumn(sortedColumns.find((c) => `col-${c.id}` === e.active.id) || null)
+      return
+    }
     const task = sortedTasks.find((t) => t.id === e.active.id)
     setActiveTask(task || null)
   }
 
   const onDragEnd = (e) => {
-    setActiveTask(null)
     const { active, over } = e
-    if (!over) return
-    if (active.id === over.id) return
+    setActiveTask(null)
+    setActiveColumn(null)
+    if (!over || active.id === over.id) return
 
+    // Column reorder
+    if (active.data.current?.type === 'column') {
+      const fromIdx = sortedColumns.findIndex((c) => `col-${c.id}` === active.id)
+      const toIdx = sortedColumns.findIndex((c) => `col-${c.id}` === over.id)
+      if (fromIdx !== -1 && toIdx !== -1 && fromIdx !== toIdx) {
+        moveColumn.mutate({ columnId: sortedColumns[fromIdx].id, newPosition: toIdx + 1 })
+      }
+      return
+    }
+
+    // Task move
     const fromCol = findContainer(active.id)
     const toCol = findContainer(over.id)
     if (!fromCol || !toCol) return
@@ -96,16 +120,18 @@ export function KanbanBoard({ boardId, onOpenTask }) {
     >
       <div className="h-full scroll-x px-6 md:px-12 pb-6">
         <div className="flex gap-4 h-full items-stretch">
-          {sortedColumns.map((c) => (
-            <Column
-              key={c.id}
-              boardId={boardId}
-              column={c}
-              tasks={tasksByColumn[c.id] || []}
-              usersById={usersById}
-              onOpenTask={onOpenTask}
-            />
-          ))}
+          <SortableContext items={colIds} strategy={horizontalListSortingStrategy}>
+            {sortedColumns.map((c) => (
+              <Column
+                key={c.id}
+                boardId={boardId}
+                column={c}
+                tasks={tasksByColumn[c.id] || []}
+                usersById={usersById}
+                onOpenTask={onOpenTask}
+              />
+            ))}
+          </SortableContext>
 
           <AnimatePresence mode="wait">
             {addingCol ? (
@@ -149,7 +175,13 @@ export function KanbanBoard({ boardId, onOpenTask }) {
       </div>
 
       <DragOverlay>
-        {activeTask ? <TaskCard task={activeTask} usersById={usersById} isOverlay /> : null}
+        {activeColumn ? (
+          <div className="shrink-0 w-[300px] bg-gray-100 rounded-lg opacity-90 shadow-xl ring-2 ring-ink/20 h-20 flex items-center px-4">
+            <span className="mono text-sm tracking-[0.1em] uppercase text-gray-600">{activeColumn.name}</span>
+          </div>
+        ) : activeTask ? (
+          <TaskCard task={activeTask} usersById={usersById} isOverlay />
+        ) : null}
       </DragOverlay>
     </DndContext>
   )

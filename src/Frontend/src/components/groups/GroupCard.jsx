@@ -31,7 +31,7 @@ export function GroupCard({ group, index = 0 }) {
           <Badge variant={myRole === 'ADMIN' ? 'ink' : 'default'}>{myRole}</Badge>
         </div>
         <h3 className="display-serif text-xl mb-1">{group.name}</h3>
-        {group.description && <p className="text-sm text-gray-600 line-clamp-1 mb-6">{group.description}</p>}
+        {group.description && <p className="text-sm text-gray-600 line-clamp-2 break-words mb-6">{group.description}</p>}
         <div className="flex items-center gap-4 text-xs text-gray-600 mb-5">
           <span className="inline-flex items-center gap-1.5"><Users className="w-3.5 h-3.5" />{members.length}</span>
           <span className="inline-flex items-center gap-1.5"><LayoutGrid className="w-3.5 h-3.5" />{boardsCount}</span>

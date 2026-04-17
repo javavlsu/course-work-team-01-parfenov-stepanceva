@@ -35,7 +35,7 @@ function TaskCardImpl({ task, usersById = {}, onOpen, isOverlay = false }) {
       whileHover={!isOverlay && !isDragging ? { y: -2 } : undefined}
       transition={{ duration: 0.25, ease: [0.16, 1, 0.3, 1] }}
       className={cn(
-        'group relative bg-paper rounded-md p-3.5 border border-gray-100 text-left cursor-grab active:cursor-grabbing select-none',
+        'group relative bg-paper rounded-md p-3.5 border border-gray-100 text-left cursor-grab active:cursor-grabbing select-none overflow-hidden',
         'hover:shadow-md transition-shadow duration-base',
         isDragging && !isOverlay && 'opacity-40 border-dashed',
         isOverlay && 'shadow-xl rotate-2 scale-[1.04]'
@@ -64,7 +64,7 @@ function TaskCardImpl({ task, usersById = {}, onOpen, isOverlay = false }) {
       <div className="text-sm text-ink leading-snug mb-1 line-clamp-2">{task.title}</div>
 
       {task.description && (
-        <div className="text-xs text-gray-600 line-clamp-2 mb-3">{task.description}</div>
+        <div className="text-xs text-gray-600 line-clamp-2 mb-3 break-words">{task.description}</div>
       )}
 
       <div className="flex items-center justify-between mt-2">

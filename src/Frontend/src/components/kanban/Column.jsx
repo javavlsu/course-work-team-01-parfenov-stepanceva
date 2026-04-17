@@ -1,8 +1,9 @@
-import { useState, useRef, useEffect } from 'react'
+import { useState, useRef, useEffect, useCallback } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
 import { useDroppable } from '@dnd-kit/core'
-import { SortableContext, verticalListSortingStrategy } from '@dnd-kit/sortable'
-import { Plus, X, Check, MoreHorizontal, Trash2, Pencil } from 'lucide-react'
+import { SortableContext, verticalListSortingStrategy, useSortable } from '@dnd-kit/sortable'
+import { CSS } from '@dnd-kit/utilities'
+import { Plus, X, Check, MoreHorizontal, Trash2, Pencil, GripVertical } from 'lucide-react'
 import { TaskCard } from './TaskCard'
 import { Dropdown } from '../ui/Dropdown'
 import { Badge } from '../ui/Badge'
@@ -10,7 +11,21 @@ import { cn } from '../../utils/cn'
 import { useCreateTask, useDeleteColumn, useUpdateColumn } from '../../hooks/useKanban'
 
 export function Column({ boardId, column, tasks, usersById, onOpenTask }) {
-  const { setNodeRef, isOver } = useDroppable({ id: column.id, data: { type: 'column', column } })
+  const {
+    attributes,
+    listeners,
+    setNodeRef: setSortableRef,
+    transform,
+    transition,
+    isDragging: isColDragging,
+  } = useSortable({ id: `col-${column.id}`, data: { type: 'column', column } })
+
+  const { setNodeRef: setDroppableRef, isOver } = useDroppable({ id: column.id, data: { type: 'column', column } })
+
+  const setNodeRef = useCallback(
+    (node) => { setSortableRef(node); setDroppableRef(node) },
+    [setSortableRef, setDroppableRef]
+  )
   const createTask = useCreateTask(boardId)
   const deleteColumn = useDeleteColumn(boardId)
   const updateColumn = useUpdateColumn(boardId)
@@ -46,28 +61,40 @@ export function Column({ boardId, column, tasks, usersById, onOpenTask }) {
     setEditingName(false)
   }
 
+  const colStyle = { transform: CSS.Transform.toString(transform), transition }
+
   return (
     <div
       ref={setNodeRef}
+      style={colStyle}
+      {...attributes}
       className={cn(
         'shrink-0 w-[300px] h-full bg-gray-100 rounded-lg flex flex-col transition-colors duration-base',
-        isOver && 'bg-accent-2/40 ring-2 ring-ink/20'
+        isOver && 'bg-accent-2/40 ring-2 ring-ink/20',
+        isColDragging && 'opacity-40'
       )}
     >
       <div className="flex items-center justify-between px-4 py-3 border-b border-gray-200/60">
+        <div
+          {...listeners}
+          className="w-5 h-5 flex items-center justify-center text-gray-300 hover:text-gray-500 cursor-grab active:cursor-grabbing shrink-0 mr-1"
+          aria-label="Перетащить колонку"
+        >
+          <GripVertical className="w-4 h-4" />
+        </div>
         {editingName ? (
           <input
             value={name}
             onChange={(e) => setName(e.target.value)}
             onBlur={commitName}
             onKeyDown={(e) => { if (e.key === 'Enter') e.currentTarget.blur(); if (e.key === 'Escape') { setName(column.name); setEditingName(false) } }}
-            className="bg-paper border border-gray-200 rounded px-2 py-1 text-sm mono uppercase tracking-[0.1em] outline-none focus:border-ink"
+            className="flex-1 bg-paper border border-gray-200 rounded px-2 py-1 text-sm mono uppercase tracking-[0.1em] outline-none focus:border-ink"
             autoFocus
           />
         ) : (
           <h3
             onDoubleClick={() => setEditingName(true)}
-            className="mono text-sm tracking-[0.1em] uppercase text-gray-600 flex items-center gap-2"
+            className="flex-1 mono text-sm tracking-[0.1em] uppercase text-gray-600 flex items-center gap-2"
           >
             {column.name}
             <Badge variant={tasks.length > 10 ? 'danger' : 'default'}>{tasks.length}</Badge>
