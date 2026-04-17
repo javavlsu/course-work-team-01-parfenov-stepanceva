@@ -1,5 +1,5 @@
 import { useEffect, useMemo, useRef, useState } from 'react'
-import { Trash2, Clock, User as UserIcon, Send, Paperclip, X, Download } from 'lucide-react'
+import { Trash2, Clock, User as UserIcon, Send, Paperclip, X, Download, History } from 'lucide-react'
 import { Modal } from '../ui/Modal'
 import { Button } from '../ui/Button'
 import { Avatar } from '../ui/Avatar'
@@ -8,6 +8,7 @@ import { useAuthStore } from '../../store/authStore'
 import { useColumns, useTasks, useUpdateTask, useDeleteTask } from '../../hooks/useKanban'
 import { useComments, useCreateComment, useDeleteComment } from '../../hooks/useComments'
 import { useAttachments, useUploadAttachment, useDeleteAttachment } from '../../hooks/useAttachments'
+import { useTaskHistory } from '../../hooks/useTaskHistory'
 import { useBoardUsers } from '../../hooks/useBoards'
 import { PRIORITIES } from '../../utils/priorities'
 import { formatDate, formatRelative } from '../../utils/dates'
@@ -32,8 +33,10 @@ export function TaskModal({ boardId, taskId, open, onClose }) {
   const currentUser = useAuthStore((s) => s.user)
   const task = useMemo(() => tasks.find((t) => t.id === taskId), [tasks, taskId])
   const sortedColumns = useMemo(() => [...columns].sort((a, b) => a.order - b.order), [columns])
+  const { data: history = [] } = useTaskHistory(boardId, taskId)
   const fileRef = useRef(null)
 
+  const [tab, setTab] = useState('main')
   const [title, setTitle] = useState('')
   const [editingTitle, setEditingTitle] = useState(false)
   const [desc, setDesc] = useState('')
@@ -71,9 +74,27 @@ export function TaskModal({ boardId, taskId, open, onClose }) {
 
   return (
     <Modal open={open} onClose={onClose} size="lg" hideClose>
-      <div className="px-6 pt-5 pb-4 flex items-center justify-between border-b border-gray-100">
-        <div className="mono text-xs tracking-[0.1em] uppercase text-gray-400">Задача</div>
-        <div className="flex items-center gap-1">
+      <div className="px-6 pt-5 pb-0 flex items-center justify-between border-b border-gray-100">
+        <div className="flex items-center gap-5">
+          {[
+            { id: 'main', label: 'Задача' },
+            { id: 'history', label: 'История', icon: History },
+          ].map((t) => (
+            <button
+              key={t.id}
+              onClick={() => setTab(t.id)}
+              className={cn(
+                'pb-4 relative mono text-xs tracking-[0.1em] uppercase transition-colors inline-flex items-center gap-1.5',
+                tab === t.id ? 'text-ink' : 'text-gray-400 hover:text-gray-600'
+              )}
+            >
+              {t.icon && <t.icon className="w-3 h-3" />}
+              {t.label}
+              {tab === t.id && <span className="absolute left-0 right-0 -bottom-px h-[2px] bg-ink" />}
+            </button>
+          ))}
+        </div>
+        <div className="flex items-center gap-1 pb-4">
           <button
             onClick={() => {
               if (confirm('Удалить задачу?')) {
@@ -91,7 +112,13 @@ export function TaskModal({ boardId, taskId, open, onClose }) {
         </div>
       </div>
 
-      <div className="grid md:grid-cols-[1fr_240px] gap-0 max-h-[78vh] overflow-y-auto">
+      {tab === 'history' && (
+        <div className="p-6 max-h-[78vh] overflow-y-auto">
+          <HistoryTab history={history} />
+        </div>
+      )}
+
+      <div className={cn('grid md:grid-cols-[1fr_240px] gap-0 max-h-[78vh] overflow-y-auto', tab !== 'main' && 'hidden')}>
         <div className="p-6 space-y-6 border-r border-gray-100">
           <div>
             {editingTitle ? (
@@ -312,6 +339,49 @@ function Field({ label, children }) {
     <div>
       <div className="mono text-[11px] tracking-[0.1em] uppercase text-gray-400 mb-2">{label}</div>
       {children}
+    </div>
+  )
+}
+
+const ATTR_LABELS = {
+  TASK: 'Задача', TITLE: 'Заголовок', DESCRIPTION: 'Описание',
+  COLUMN: 'Колонка', ASSIGNEE: 'Исполнитель', POSITION: 'Позиция',
+  DEADLINE: 'Дедлайн', PRIORITY: 'Приоритет', STATUS: 'Статус',
+}
+
+function HistoryTab({ history }) {
+  if (history.length === 0) {
+    return <div className="text-sm text-gray-400 py-4">История изменений пуста</div>
+  }
+  return (
+    <div className="space-y-3">
+      {history.map((h) => (
+        <div key={h.id} className="flex gap-3">
+          <Avatar user={h.user} size="sm" />
+          <div className="flex-1 min-w-0">
+            <div className="flex items-center gap-2 flex-wrap mb-1">
+              <span className="text-sm font-medium">{h.user?.username || 'System'}</span>
+              <span className="mono text-[10px] tracking-[0.08em] uppercase text-gray-400">
+                {ATTR_LABELS[h.changedAttribute] || h.changedAttribute}
+              </span>
+              <span className="text-xs text-gray-400 ml-auto">{formatRelative(h.changedAt)}</span>
+            </div>
+            {h.actionType === 'create' ? (
+              <div className="text-xs text-gray-600">Задача создана</div>
+            ) : (
+              <div className="text-xs text-gray-600 flex items-center gap-1.5 flex-wrap">
+                {h.oldValue && (
+                  <span className="line-through text-gray-400 truncate max-w-[140px]" title={h.oldValue}>{h.oldValue}</span>
+                )}
+                {h.oldValue && <span className="text-gray-300">→</span>}
+                {h.newValue && (
+                  <span className="text-gray-800 truncate max-w-[140px]" title={h.newValue}>{h.newValue}</span>
+                )}
+              </div>
+            )}
+          </div>
+        </div>
+      ))}
     </div>
   )
 }

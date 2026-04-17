@@ -65,3 +65,33 @@ export function useBoardUsers(boardId) {
     enabled: !!boardId,
   })
 }
+
+export function useAddBoardUser(boardId) {
+  const qc = useQueryClient()
+  return useMutation({
+    mutationFn: (userId) => boardUsersApi.add(boardId, userId),
+    onSuccess: () => {
+      qc.invalidateQueries({ queryKey: boardUsersKey(boardId) })
+      toast.success('Участник добавлен на доску')
+    },
+    onError: (err) => {
+      const msg = err.response?.data?.message
+      toast.error(msg || 'Не удалось добавить участника')
+    },
+  })
+}
+
+export function useRemoveBoardUser(boardId) {
+  const qc = useQueryClient()
+  return useMutation({
+    mutationFn: (userId) => boardUsersApi.remove(boardId, userId),
+    onSuccess: () => {
+      qc.invalidateQueries({ queryKey: boardUsersKey(boardId) })
+      toast.success('Участник удалён с доски')
+    },
+    onError: (err) => {
+      const msg = err.response?.data?.message
+      toast.error(msg || 'Не удалось удалить участника')
+    },
+  })
+}

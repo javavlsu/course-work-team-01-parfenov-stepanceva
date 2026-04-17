@@ -1,7 +1,7 @@
 import { client } from './client'
 import {
   normalizeUser, normalizeGroup, normalizeBoard, normalizeColumn,
-  normalizeTask, normalizeComment, normalizeInvitation,
+  normalizeTask, normalizeComment, normalizeInvitation, normalizeHistory,
   priorityToApi, statusToApi, roleToApi,
 } from '../utils/normalize'
 
@@ -35,6 +35,7 @@ export const membersApi = {
     r.data.map((m) => ({
       groupId: m.groupId,
       userId: m.userId,
+      user: normalizeUser(m.user),
       role: (m.role || 'member').toUpperCase(),
       joinedAt: m.joinedAt,
     }))
@@ -143,6 +144,12 @@ export const commentsApi = {
     client.put(`/boards/${boardId}/tasks/${taskId}/comments/${commentId}`, { text }).then((r) => normalizeComment(r.data)),
   remove: (boardId, taskId, commentId) =>
     client.delete(`/boards/${boardId}/tasks/${taskId}/comments/${commentId}`),
+}
+
+// Task history
+export const taskHistoryApi = {
+  list: (boardId, taskId) =>
+    client.get(`/boards/${boardId}/tasks/${taskId}/history`).then((r) => r.data.map(normalizeHistory)),
 }
 
 // Attachments

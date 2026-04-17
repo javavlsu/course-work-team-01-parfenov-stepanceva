@@ -18,4 +18,6 @@ public interface AttachmentRepository extends JpaRepository<Attachment, Integer>
     // user и task нужны для маппинга и событий при удалении
     @EntityGraph(attributePaths = {"user", "task"})
     Optional<Attachment> findByIdAndTask_IdAndTask_Column_Board_Id(Integer attachmentId, Integer taskId, Integer boardId);
+
+    void deleteAllByTask_Id(Integer taskId);
 }

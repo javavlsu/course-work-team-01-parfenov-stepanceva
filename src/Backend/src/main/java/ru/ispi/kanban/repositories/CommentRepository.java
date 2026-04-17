@@ -18,4 +18,6 @@ public interface CommentRepository extends JpaRepository<Comment, Integer> {
     // user и task нужны для маппинга; task также используется при публикации событий
     @EntityGraph(attributePaths = {"user", "task"})
     Optional<Comment> findByIdAndTask_IdAndTask_Column_Board_Id(Integer commentId, Integer taskId, Integer boardId);
+
+    void deleteAllByTask_Id(Integer taskId);
 }

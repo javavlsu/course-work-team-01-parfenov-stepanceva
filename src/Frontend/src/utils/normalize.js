@@ -104,6 +104,20 @@ export function normalizeInvitation(inv) {
   }
 }
 
+export function normalizeHistory(h) {
+  if (!h) return null
+  return {
+    id: h.id,
+    taskId: h.taskId,
+    user: normalizeUser(h.user),
+    actionType: h.actionType,
+    changedAttribute: h.changedAttribute,
+    oldValue: h.oldValue,
+    newValue: h.newValue,
+    changedAt: h.changedAt,
+  }
+}
+
 // Priority/status helpers
 export const priorityToApi = (p) => (p || 'medium').toLowerCase()
 export const statusToApi = (s) => (s || 'todo').toLowerCase().replace('in_progress', 'in_progress')

@@ -13,4 +13,10 @@ public interface TaskHistoryRepository extends JpaRepository<TaskHistory, Intege
     // user нужен для TaskHistoryDto.user, task — для taskId
     @EntityGraph(attributePaths = {"user", "task"})
     List<TaskHistory> findAllByTask_IdAndTask_Column_Board_IdOrderByChangedAtDesc(Integer taskId, Integer boardId);
+
+    void deleteAllByTask_Id(Integer taskId);
+
+    void deleteAllByTask_ColumnId(Integer columnId);
+
+    void deleteAllByTask_Column_Board_Id(Integer boardId);
 }

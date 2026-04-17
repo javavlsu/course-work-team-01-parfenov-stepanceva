@@ -27,13 +27,14 @@ export function MemberList({ groupId, isAdmin }) {
         <tbody>
           {members.map((m) => {
             const isSelf = m.userId === currentUser?.id
-            const userStub = { id: m.userId, username: isSelf ? currentUser.username : `user#${m.userId}` }
+            const user = m.user || { id: m.userId, username: isSelf ? currentUser?.username : `user#${m.userId}` }
+            const displayUser = isSelf ? { ...user, username: currentUser?.username, avatar: currentUser?.avatar } : user
             return (
               <tr key={m.userId} className="border-t border-gray-100 hover:bg-gray-100/50 transition-colors">
                 <td className="px-6 py-3">
                   <div className="flex items-center gap-3">
-                    <Avatar user={userStub} size="sm" />
-                    <span>{userStub.username}{isSelf && <span className="text-gray-400 ml-1">(вы)</span>}</span>
+                    <Avatar user={displayUser} size="sm" />
+                    <span>{displayUser.username}{isSelf && <span className="text-gray-400 ml-1">(вы)</span>}</span>
                   </div>
                 </td>
                 <td className="py-3">
