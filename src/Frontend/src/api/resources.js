@@ -124,7 +124,7 @@ export const tasksApi = {
     if (data.title !== undefined) payload.title = data.title
     if (data.description !== undefined) payload.description = data.description
     if (data.assigneeId !== undefined) payload.assigneeId = data.assigneeId
-    if (data.position !== undefined) payload.position = data.position
+    if (data.position !== undefined) payload.position = data.position + 1
     if (data.deadline !== undefined) payload.deadline = data.deadline
     if (data.priority !== undefined) payload.priority = priorityToApi(data.priority)
     if (data.status !== undefined) payload.status = statusToApi(data.status)

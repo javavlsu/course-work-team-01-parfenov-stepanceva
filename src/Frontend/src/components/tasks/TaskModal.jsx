@@ -1,5 +1,5 @@
-import { useEffect, useMemo, useState } from 'react'
-import { Trash2, Clock, User as UserIcon, Send } from 'lucide-react'
+import { useEffect, useMemo, useRef, useState } from 'react'
+import { Trash2, Clock, User as UserIcon, Send, Paperclip, X, Download } from 'lucide-react'
 import { Modal } from '../ui/Modal'
 import { Button } from '../ui/Button'
 import { Avatar } from '../ui/Avatar'
@@ -7,11 +7,13 @@ import { Dot } from '../ui/Badge'
 import { useAuthStore } from '../../store/authStore'
 import { useColumns, useTasks, useUpdateTask, useDeleteTask } from '../../hooks/useKanban'
 import { useComments, useCreateComment, useDeleteComment } from '../../hooks/useComments'
+import { useAttachments, useUploadAttachment, useDeleteAttachment } from '../../hooks/useAttachments'
 import { useBoardUsers } from '../../hooks/useBoards'
 import { PRIORITIES } from '../../utils/priorities'
 import { formatDate, formatRelative } from '../../utils/dates'
 import { cn } from '../../utils/cn'
 import { toast } from 'sonner'
+import { API_BASE } from '../../api/client'
 
 export function TaskModal({ boardId, taskId, open, onClose }) {
   const { data: tasks = [] } = useTasks(boardId)
@@ -23,10 +25,14 @@ export function TaskModal({ boardId, taskId, open, onClose }) {
   const deleteTask = useDeleteTask(boardId)
   const createComment = useCreateComment(boardId, taskId)
   const removeComment = useDeleteComment(boardId, taskId)
+  const { data: attachments = [] } = useAttachments(boardId, taskId)
+  const uploadAttachment = useUploadAttachment(boardId, taskId)
+  const removeAttachment = useDeleteAttachment(boardId, taskId)
 
   const currentUser = useAuthStore((s) => s.user)
   const task = useMemo(() => tasks.find((t) => t.id === taskId), [tasks, taskId])
   const sortedColumns = useMemo(() => [...columns].sort((a, b) => a.order - b.order), [columns])
+  const fileRef = useRef(null)
 
   const [title, setTitle] = useState('')
   const [editingTitle, setEditingTitle] = useState(false)
@@ -126,6 +132,61 @@ export function TaskModal({ boardId, taskId, open, onClose }) {
           </div>
 
           <div>
+            <div className="flex items-center justify-between mb-3">
+              <div className="mono text-[11px] tracking-[0.1em] uppercase text-gray-400">Вложения</div>
+              <button
+                onClick={() => fileRef.current?.click()}
+                className="inline-flex items-center gap-1 text-xs text-gray-500 hover:text-ink border border-gray-200 hover:border-ink rounded-md px-2 py-1 transition-colors"
+              >
+                <Paperclip className="w-3 h-3" /> Прикрепить
+              </button>
+              <input
+                ref={fileRef}
+                type="file"
+                className="hidden"
+                onChange={(e) => {
+                  const file = e.target.files?.[0]
+                  if (file) {
+                    if (file.size > 20 * 1024 * 1024) { toast.error('Файл слишком большой (max 20 MB)'); return }
+                    uploadAttachment.mutate(file)
+                    e.target.value = ''
+                  }
+                }}
+              />
+            </div>
+            {attachments.length === 0 && !uploadAttachment.isPending && (
+              <div className="text-sm text-gray-400 mb-4">Нет вложений</div>
+            )}
+            {uploadAttachment.isPending && (
+              <div className="text-sm text-gray-400 mb-2">Загрузка…</div>
+            )}
+            <div className="space-y-2 mb-4">
+              {attachments.map((a) => (
+                <div key={a.id} className="flex items-center gap-2 text-sm group/att border border-gray-100 rounded-md px-3 py-2 hover:bg-gray-50">
+                  <Paperclip className="w-3.5 h-3.5 text-gray-400 shrink-0" />
+                  <span className="flex-1 truncate text-gray-800">{a.fileName}</span>
+                  <span className="text-xs text-gray-400 shrink-0">{formatDate(a.uploadedAt)}</span>
+                  <a
+                    href={`${API_BASE}/files/${a.storageKey}`}
+                    download={a.fileName}
+                    className="text-gray-400 hover:text-ink opacity-0 group-hover/att:opacity-100 transition-opacity"
+                    aria-label="Скачать"
+                  >
+                    <Download className="w-3.5 h-3.5" />
+                  </a>
+                  <button
+                    onClick={() => removeAttachment.mutate(a.id)}
+                    className="text-gray-400 hover:text-priority-high opacity-0 group-hover/att:opacity-100 transition-opacity"
+                    aria-label="Удалить"
+                  >
+                    <X className="w-3.5 h-3.5" />
+                  </button>
+                </div>
+              ))}
+            </div>
+          </div>
+
+          <div>
             <div className="mono text-[11px] tracking-[0.1em] uppercase text-gray-400 mb-3">Комментарии</div>
             <div className="space-y-4 mb-4">
               {comments.length === 0 && <div className="text-sm text-gray-400">Пока нет комментариев</div>}
@@ -175,9 +236,10 @@ export function TaskModal({ boardId, taskId, open, onClose }) {
                 <button
                   key={k}
                   onClick={() => updateTask.mutate({ taskId: task.id, data: { priority: k } })}
+                  style={task.priority === k ? { backgroundColor: v.color + '33', borderColor: v.color } : {}}
                   className={cn(
-                    'inline-flex items-center gap-1.5 px-2 py-1 rounded-md text-xs mono border',
-                    task.priority === k ? 'border-ink' : 'border-gray-200 hover:border-gray-400'
+                    'inline-flex items-center gap-1.5 px-2 py-1 rounded-md text-xs mono border transition-all',
+                    task.priority === k ? 'font-semibold' : 'border-gray-200 hover:border-gray-400'
                   )}
                 >
                   <Dot color={v.color} /> {v.label}

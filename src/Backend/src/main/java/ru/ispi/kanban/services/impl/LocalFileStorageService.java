@@ -75,9 +75,16 @@ public class LocalFileStorageService implements FileStorageService {
         }
     }
 
-    //пока не надо
     @Override
     public byte[] downloadFile(String storageKey) {
-        return new byte[0];
+        try {
+            Path filePath = rootLocation.resolve(storageKey).normalize();
+            if (!filePath.startsWith(rootLocation.normalize())) {
+                throw new RuntimeException("Недопустимый путь к файлу");
+            }
+            return Files.readAllBytes(filePath);
+        } catch (IOException e) {
+            throw new RuntimeException("Ошибка при чтении файла: " + storageKey, e);
+        }
     }
 }

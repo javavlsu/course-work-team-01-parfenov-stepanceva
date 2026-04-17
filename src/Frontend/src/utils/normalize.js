@@ -2,13 +2,15 @@
 // Backend uses: name, avatarUrl, title, position, assignee, priority lowercase, role lowercase.
 // Frontend uses: username, avatar, name (for board/column/group), order, assigneeId, priority UPPERCASE, role UPPERCASE.
 
+const API_BASE = import.meta.env.VITE_API_BASE ?? '/kanban/api'
+
 export function normalizeUser(u) {
   if (!u) return null
   return {
     id: u.id,
     username: u.name,
     email: u.email,
-    avatar: u.avatarUrl || null,
+    avatar: u.avatarUrl ? `${API_BASE}/files/${u.avatarUrl}` : null,
     createdAt: u.createdAt,
   }
 }
