@@ -20,4 +20,12 @@ public interface AttachmentRepository extends JpaRepository<Attachment, Integer>
     Optional<Attachment> findByIdAndTask_IdAndTask_Column_Board_Id(Integer attachmentId, Integer taskId, Integer boardId);
 
     void deleteAllByTask_Id(Integer taskId);
+
+    List<Attachment> findAllByTask_ColumnId(Integer columnId);
+
+    List<Attachment> findAllByTask_Column_Board_Id(Integer boardId);
+
+    void deleteAllByTask_ColumnId(Integer columnId);
+
+    void deleteAllByTask_Column_Board_Id(Integer boardId);
 }

@@ -29,7 +29,8 @@ public interface InvitationRepository extends JpaRepository<Invitation, Integer>
     @EntityGraph(attributePaths = "createdBy")
     List<Invitation> findByGroupId(Integer groupId);
 
-    // Поиск конкретного email-приглашения по id + email (для ответа)
     @EntityGraph(attributePaths = {"group", "createdBy"})
     Optional<Invitation> findByIdAndEmail(Integer id, String email);
+
+    void deleteAllByGroupId(Integer groupId);
 }

@@ -20,4 +20,8 @@ public interface CommentRepository extends JpaRepository<Comment, Integer> {
     Optional<Comment> findByIdAndTask_IdAndTask_Column_Board_Id(Integer commentId, Integer taskId, Integer boardId);
 
     void deleteAllByTask_Id(Integer taskId);
+
+    void deleteAllByTask_ColumnId(Integer columnId);
+
+    void deleteAllByTask_Column_Board_Id(Integer boardId);
 }

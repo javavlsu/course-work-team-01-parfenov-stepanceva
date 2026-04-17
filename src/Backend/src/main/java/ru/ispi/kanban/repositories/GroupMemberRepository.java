@@ -23,6 +23,8 @@ public interface GroupMemberRepository extends JpaRepository<GroupMember, GroupM
 
     void deleteByGroupIdAndUserId(Integer groupId, Integer userId);
 
+    void deleteAllByGroupId(Integer groupId);
+
     // user нужен для извлечения User-сущностей в getAdmins
     @EntityGraph(attributePaths = "user")
     List<GroupMember> findByGroupIdAndRole(Integer groupId, GroupRole role);

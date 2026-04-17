@@ -12,10 +12,15 @@ import ru.ispi.kanban.exceptions.EntityNotFound;
 import ru.ispi.kanban.mappers.ColumnMapper;
 import ru.ispi.kanban.payloads.CreateColumnPayload;
 import ru.ispi.kanban.payloads.UpdateColumnPayload;
+import ru.ispi.kanban.repositories.AttachmentRepository;
 import ru.ispi.kanban.repositories.BoardRepository;
 import ru.ispi.kanban.repositories.BoardUserRepository;
 import ru.ispi.kanban.repositories.ColumnRepository;
+import ru.ispi.kanban.repositories.CommentRepository;
+import ru.ispi.kanban.repositories.TaskHistoryRepository;
+import ru.ispi.kanban.repositories.TaskRepository;
 import ru.ispi.kanban.services.ColumnService;
+import ru.ispi.kanban.services.FileStorageService;
 
 import java.util.List;
 
@@ -27,6 +32,11 @@ public class ColumnServiceImpl implements ColumnService {
     private final BoardRepository boardRepository;
     private final BoardUserRepository boardUserRepository;
     private final ColumnMapper columnMapper;
+    private final AttachmentRepository attachmentRepository;
+    private final CommentRepository commentRepository;
+    private final TaskHistoryRepository taskHistoryRepository;
+    private final TaskRepository taskRepository;
+    private final FileStorageService fileStorageService;
 
     @Override
     public List<ColumnDto> getColumns(Integer userId, Integer boardId) {
@@ -80,9 +90,14 @@ public class ColumnServiceImpl implements ColumnService {
         BoardColumn column = getColumn(boardId, columnId);
         Long deletedPosition = column.getPosition();
 
-        columnRepository.delete(column);
+        attachmentRepository.findAllByTask_ColumnId(columnId)
+                .forEach(a -> fileStorageService.deleteFile(a.getStorageKey()));
+        taskHistoryRepository.deleteAllByTask_ColumnId(columnId);
+        commentRepository.deleteAllByTask_ColumnId(columnId);
+        attachmentRepository.deleteAllByTask_ColumnId(columnId);
+        taskRepository.deleteAllByColumnId(columnId);
 
-        // сдвигаем все колонки, которые стояли после удаленной, на -1
+        columnRepository.delete(column);
         columnRepository.shiftAfterDelete(boardId, deletedPosition);
     }
 

@@ -43,4 +43,8 @@ public interface TaskRepository extends JpaRepository<Task, Integer> {
     @Modifying
     @Query("UPDATE Task t SET t.position = t.position + 1 WHERE t.column.id = :columnId AND t.position >= :newPos")
     void shiftAfterInsert(Integer columnId, Long newPos);
+
+    void deleteAllByColumnId(Integer columnId);
+
+    void deleteAllByColumn_Board_Id(Integer boardId);
 }
