@@ -1,0 +1,51 @@
+services:
+  mysql:
+    image: mysql:8
+    environment:
+      MYSQL_DATABASE: kanban
+      MYSQL_USER: kanban_user
+      MYSQL_PASSWORD: kanban_password
+      MYSQL_ROOT_PASSWORD: root
+    ports:
+      - "3306:3306"
+    volumes:
+      - mysql_data:/var/lib/mysql
+    healthcheck:
+      test: ["CMD", "mysqladmin", "ping", "-h", "localhost", "-u", "root", "-proot"]
+      interval: 10s
+      timeout: 5s
+      retries: 10
+      start_period: 30s
+
+  backend:
+    build:
+      context: ./Backend
+    depends_on:
+      mysql:
+        condition: service_healthy
+    environment:
+      SPRING_PROFILES_ACTIVE: dev
+      SPRING_DATASOURCE_URL: jdbc:mysql://mysql:3306/kanban
+      SPRING_DATASOURCE_USERNAME: kanban_user
+      SPRING_DATASOURCE_PASSWORD: kanban_password
+      SPRING_SECURITY_JWT_SECRET_KEY: "SECRETSECRETSECRETSECRETSECRETSECRETSECRETSECRETSECRETSECRETSECRETSECRETSECRETSECRET"
+      SPRING_SECURITY_JWT_ACCESS_TIME: "12000000"
+      SPRING_SECURITY_JWT_REFRESH_TIME: "48000000"
+      SPRING_SERVLET_MULTIPART_MAX_FILE_SIZE: "20MB"
+      SPRING_SERVLET_MULTIPART_MAX_REQUEST_SIZE: "20MB"
+    ports:
+      - "8080:8080"
+    volumes:
+      - uploads:/app/uploads
+
+  frontend:
+    build:
+      context: ./Frontend
+    depends_on:
+      - backend
+    ports:
+      - "80:80"
+
+volumes:
+  mysql_data:
+  uploads:

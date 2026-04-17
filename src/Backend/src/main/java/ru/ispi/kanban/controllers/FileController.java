@@ -5,15 +5,23 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.core.io.Resource;
 import org.springframework.core.io.UrlResource;
 import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
+import ru.ispi.kanban.repositories.AttachmentRepository;
+import ru.ispi.kanban.repositories.BoardUserRepository;
+import ru.ispi.kanban.security.CustomUserDetails;
 
 import java.net.MalformedURLException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.util.Optional;
 import java.util.Set;
+
+import static ru.ispi.kanban.constants.StorageConstants.FOLDER_ATTACHMENTS;
 
 @RestController
 @RequiredArgsConstructor
@@ -25,13 +33,25 @@ public class FileController {
     @Value("${spring.application.storage.location}")
     private String storageLocation;
 
+    private final AttachmentRepository attachmentRepository;
+    private final BoardUserRepository boardUserRepository;
+
     @GetMapping("/{folder}/{filename}")
     public ResponseEntity<Resource> getFile(
+            @AuthenticationPrincipal CustomUserDetails user,
             @PathVariable String folder,
             @PathVariable String filename
     ) {
         if (!ALLOWED_FOLDERS.contains(folder)) {
             return ResponseEntity.notFound().build();
+        }
+
+        // Вложения доступны только членам доски, которой принадлежит файл
+        if (FOLDER_ATTACHMENTS.equals(folder)) {
+            Optional<Integer> boardId = attachmentRepository.findBoardIdByStorageKey(filename);
+            if (boardId.isEmpty() || !boardUserRepository.existsByIdBoardIdAndIdUserId(boardId.get(), user.getId())) {
+                return ResponseEntity.status(HttpStatus.FORBIDDEN).build();
+            }
         }
 
         try {
