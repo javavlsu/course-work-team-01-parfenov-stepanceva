@@ -6,8 +6,10 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
+import ru.ispi.kanban.dto.PageResponseDto;
 import ru.ispi.kanban.dto.TaskDto;
 import ru.ispi.kanban.payloads.CreateTaskPayload;
+import ru.ispi.kanban.payloads.TaskPageQuery;
 import ru.ispi.kanban.payloads.UpdateTaskPayload;
 import ru.ispi.kanban.security.CustomUserDetails;
 import ru.ispi.kanban.services.TaskService;
@@ -61,6 +63,15 @@ public class TaskController {
         return ResponseEntity.ok(
                 taskService.getTasksByAssignee(user.getId(), boardId, user.getId())
         );
+    }
+
+    @GetMapping("page")
+    public ResponseEntity<PageResponseDto<TaskDto>> getTasksPage(
+            @AuthenticationPrincipal CustomUserDetails user,
+            @PathVariable Integer boardId,
+            @ModelAttribute TaskPageQuery query
+    ) {
+        return ResponseEntity.ok(taskService.getTasksPage(user.getId(), boardId, query));
     }
 
     @GetMapping("assignee/{assigneeId}")

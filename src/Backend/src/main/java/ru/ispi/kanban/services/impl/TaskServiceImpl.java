@@ -3,8 +3,12 @@ package ru.ispi.kanban.services.impl;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.context.ApplicationEventPublisher;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import ru.ispi.kanban.dto.PageResponseDto;
 import ru.ispi.kanban.dto.TaskDto;
 import ru.ispi.kanban.entities.BoardColumn;
 import ru.ispi.kanban.entities.Task;
@@ -17,6 +21,7 @@ import ru.ispi.kanban.exceptions.TaskNotFoundException;
 import ru.ispi.kanban.listeners.TaskChangeEvent;
 import ru.ispi.kanban.mappers.TaskMapper;
 import ru.ispi.kanban.payloads.CreateTaskPayload;
+import ru.ispi.kanban.payloads.TaskPageQuery;
 import ru.ispi.kanban.payloads.UpdateTaskPayload;
 import ru.ispi.kanban.repositories.AttachmentRepository;
 import ru.ispi.kanban.repositories.BoardUserRepository;
@@ -25,11 +30,14 @@ import ru.ispi.kanban.repositories.CommentRepository;
 import ru.ispi.kanban.repositories.TaskHistoryRepository;
 import ru.ispi.kanban.repositories.TaskRepository;
 import ru.ispi.kanban.repositories.UserRepository;
+import ru.ispi.kanban.repositories.specifications.TaskSpecifications;
 import ru.ispi.kanban.services.FileStorageService;
 import ru.ispi.kanban.services.TaskService;
+import ru.ispi.kanban.utils.TaskSortResolver;
 
 import java.util.List;
 import java.util.Objects;
+
 
 @Slf4j
 @Service
@@ -86,6 +94,24 @@ public class TaskServiceImpl implements TaskService {
                 .stream()
                 .map(taskMapper::toDto)
                 .toList();
+    }
+
+    @Override
+    public PageResponseDto<TaskDto> getTasksPage(Integer userId, Integer boardId, TaskPageQuery query) {
+        checkAccess(userId, boardId);
+
+        Pageable pageable = PageRequest.of(
+                query.pageOrDefault(),
+                query.sizeOrDefault(),
+                TaskSortResolver.resolve(query.sortBy(), query.sortDir())
+        );
+
+        Page<Task> result = taskRepository.findAll(
+                TaskSpecifications.forBoardWithFilters(boardId, query),
+                pageable
+        );
+
+        return PageResponseDto.from(result.map(taskMapper::toDto));
     }
 
     @Override

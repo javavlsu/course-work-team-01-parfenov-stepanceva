@@ -5,6 +5,7 @@ import { taskHistoryKey } from './useTaskHistory'
 
 export const columnsKey = (boardId) => ['columns', boardId]
 export const tasksKey = (boardId) => ['tasks', boardId]
+export const tasksPageKey = (boardId, params) => ['tasks', boardId, 'page', params]
 
 export function useColumns(boardId) {
   return useQuery({
@@ -19,6 +20,15 @@ export function useTasks(boardId) {
     queryKey: tasksKey(boardId),
     queryFn: () => tasksApi.list(boardId),
     enabled: !!boardId,
+  })
+}
+
+export function useTasksPage(boardId, params) {
+  return useQuery({
+    queryKey: tasksPageKey(boardId, params),
+    queryFn: () => tasksApi.page(boardId, params),
+    enabled: !!boardId,
+    keepPreviousData: true,
   })
 }
 

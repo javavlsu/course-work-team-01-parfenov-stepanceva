@@ -1,10 +1,11 @@
 import { useState } from 'react'
 import { useParams, useNavigate, Link } from 'react-router-dom'
 import { motion } from 'framer-motion'
-import { ArrowLeft, MoreHorizontal, Trash2, Users, Pencil, UserCog } from 'lucide-react'
+import { ArrowLeft, MoreHorizontal, Trash2, Users, Pencil, UserCog, LayoutGrid, List } from 'lucide-react'
 import { AppShell } from '../components/layout/AppShell'
 import { KanbanBoard } from '../components/kanban/KanbanBoard'
 import { TaskModal } from '../components/tasks/TaskModal'
+import { TasksTable } from '../components/tasks/TasksTable'
 import { BoardMembersModal } from '../components/boards/BoardMembersModal'
 import { AvatarGroup } from '../components/ui/Avatar'
 import { Dropdown } from '../components/ui/Dropdown'
@@ -12,6 +13,7 @@ import { Button } from '../components/ui/Button'
 import { Input } from '../components/ui/Input'
 import { Modal } from '../components/ui/Modal'
 import { useBoard, useBoardUsers, useDeleteBoard, useUpdateBoard } from '../hooks/useBoards'
+import { cn } from '../utils/cn'
 import { toast } from 'sonner'
 
 export default function BoardPage() {
@@ -27,6 +29,7 @@ export default function BoardPage() {
   const [editTitle, setEditTitle] = useState('')
   const [editDesc, setEditDesc] = useState('')
   const [membersOpen, setMembersOpen] = useState(false)
+  const [view, setView] = useState('board') // 'board' | 'list'
 
   if (isLoading) {
     return (
@@ -112,8 +115,34 @@ export default function BoardPage() {
           </div>
         </motion.div>
 
+        <div className="px-6 md:px-12 pt-4 border-b border-gray-100">
+          <div className="flex items-center gap-5">
+            {[
+              { id: 'board', label: 'Доска', icon: LayoutGrid },
+              { id: 'list', label: 'Задачи', icon: List },
+            ].map((t) => (
+              <button
+                key={t.id}
+                onClick={() => setView(t.id)}
+                className={cn(
+                  'pb-3 relative mono text-xs tracking-[0.1em] uppercase transition-colors inline-flex items-center gap-1.5',
+                  view === t.id ? 'text-ink' : 'text-gray-400 hover:text-gray-600'
+                )}
+              >
+                <t.icon className="w-3.5 h-3.5" />
+                {t.label}
+                {view === t.id && <span className="absolute left-0 right-0 -bottom-px h-[2px] bg-ink" />}
+              </button>
+            ))}
+          </div>
+        </div>
+
         <div className="flex-1 overflow-hidden pt-4">
-          <KanbanBoard boardId={boardId} onOpenTask={(t) => setActiveTaskId(t.id)} />
+          {view === 'board' ? (
+            <KanbanBoard boardId={boardId} onOpenTask={(t) => setActiveTaskId(t.id)} />
+          ) : (
+            <TasksTable boardId={boardId} onOpenTask={(t) => setActiveTaskId(t.id)} />
+          )}
         </div>
       </div>
 

@@ -107,6 +107,25 @@ export const tasksApi = {
     client.get(`/boards/${boardId}/tasks/column/${columnId}`).then((r) => r.data.map(normalizeTask)),
   mine: (boardId) =>
     client.get(`/boards/${boardId}/tasks/my`).then((r) => r.data.map(normalizeTask)),
+  page: (boardId, params = {}) => {
+    const query = {}
+    if (params.search) query.search = params.search
+    if (params.priority) query.priority = priorityToApi(params.priority)
+    if (params.status) query.status = statusToApi(params.status)
+    if (params.columnId != null) query.columnId = params.columnId
+    if (params.assigneeId != null) query.assigneeId = params.assigneeId
+    if (params.sortBy) query.sortBy = params.sortBy
+    if (params.sortDir) query.sortDir = params.sortDir
+    if (params.page != null) query.page = params.page
+    if (params.size != null) query.size = params.size
+    return client.get(`/boards/${boardId}/tasks/page`, { params: query }).then((r) => ({
+      content: (r.data.content || []).map(normalizeTask),
+      page: r.data.page,
+      size: r.data.size,
+      totalElements: r.data.totalElements,
+      totalPages: r.data.totalPages,
+    }))
+  },
   create: (boardId, data) => {
     const payload = {
       columnId: data.columnId,
