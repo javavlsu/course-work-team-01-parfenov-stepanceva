@@ -6,15 +6,18 @@ import { AvatarGroup } from '../ui/Avatar'
 import { useGroupMembers } from '../../hooks/useGroups'
 import { useMyBoards } from '../../hooks/useBoards'
 import { useAuthStore } from '../../store/authStore'
+import { useTranslation } from '../../i18n'
 
 export function GroupCard({ group, index = 0 }) {
   const { data: members = [] } = useGroupMembers(group.id)
   const { data: boards = [] } = useMyBoards()
   const currentUser = useAuthStore((s) => s.user)
+  const { t } = useTranslation()
 
   const boardsCount = boards.filter((b) => b.groupId === group.id).length
   const myRole = members.find((m) => m.userId === currentUser?.id)?.role || 'MEMBER'
   const memberUsers = members.map((m) => ({ id: m.userId, username: `#${m.userId}` }))
+  const roleLabel = myRole === 'ADMIN' ? t('groups.roleAdmin') : t('groups.roleMember')
 
   return (
     <motion.div
@@ -28,7 +31,7 @@ export function GroupCard({ group, index = 0 }) {
         className="group block bg-paper border border-gray-100 rounded-lg p-6 hover:border-gray-400 hover:shadow-lg transition-all duration-base ease-out"
       >
         <div className="flex items-start justify-between mb-4">
-          <Badge variant={myRole === 'ADMIN' ? 'ink' : 'default'}>{myRole}</Badge>
+          <Badge variant={myRole === 'ADMIN' ? 'ink' : 'default'}>{roleLabel}</Badge>
         </div>
         <h3 className="display-serif text-xl mb-1">{group.name}</h3>
         {group.description && <p className="text-sm text-gray-600 line-clamp-2 break-words mb-6">{group.description}</p>}
@@ -39,7 +42,7 @@ export function GroupCard({ group, index = 0 }) {
         <div className="flex items-center justify-between">
           <AvatarGroup users={memberUsers} max={4} size="xs" />
           <span className="inline-flex items-center gap-1 text-sm text-gray-600 opacity-0 group-hover:opacity-100 translate-x-[-4px] group-hover:translate-x-0 transition-all duration-base">
-            Открыть <ArrowRight className="w-3.5 h-3.5" />
+            {t('common.more')} <ArrowRight className="w-3.5 h-3.5" />
           </span>
         </div>
       </Link>

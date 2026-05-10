@@ -4,6 +4,7 @@ import { useNavigate } from 'react-router-dom'
 import { toast } from 'sonner'
 import { authApi } from '../api/auth'
 import { useAuthStore } from '../store/authStore'
+import { t } from '../i18n'
 
 export const authKey = ['auth', 'me']
 
@@ -33,11 +34,11 @@ export function useLogin() {
     onSuccess: (user) => {
       setUser(user)
       qc.setQueryData(authKey, user)
-      toast.success(`С возвращением, ${user.username}!`)
+      toast.success(t('auth.loginSuccess', { name: user.username }))
     },
     onError: (err) => {
       const status = err.response?.status
-      if (status === 400 || status === 401) toast.error('Неверный email или пароль')
+      if (status === 400 || status === 401) toast.error(t('auth.loginFailed'))
     },
   })
 }
@@ -50,10 +51,10 @@ export function useRegister() {
     onSuccess: (user) => {
       setUser(user)
       qc.setQueryData(authKey, user)
-      toast.success('Аккаунт создан!')
+      toast.success(t('auth.registerSuccess'))
     },
     onError: (err) => {
-      if (err.response?.status === 409) toast.error('Email уже занят')
+      if (err.response?.status === 409) toast.error(t('auth.emailTaken'))
     },
   })
 }

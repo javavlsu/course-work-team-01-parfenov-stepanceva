@@ -2,6 +2,7 @@ import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query'
 import { toast } from 'sonner'
 import { columnsApi, tasksApi } from '../api/resources'
 import { taskHistoryKey } from './useTaskHistory'
+import { t } from '../i18n'
 
 export const columnsKey = (boardId) => ['columns', boardId]
 export const tasksKey = (boardId) => ['tasks', boardId]
@@ -38,7 +39,7 @@ export function useCreateColumn(boardId) {
     mutationFn: (title) => columnsApi.create(boardId, title),
     onSuccess: () => {
       qc.invalidateQueries({ queryKey: columnsKey(boardId) })
-      toast.success('Колонка создана')
+      toast.success(t('columns.created'))
     },
   })
 }
@@ -67,7 +68,7 @@ export function useDeleteColumn(boardId) {
     onSuccess: () => {
       qc.invalidateQueries({ queryKey: columnsKey(boardId) })
       qc.invalidateQueries({ queryKey: tasksKey(boardId) })
-      toast.success('Колонка удалена')
+      toast.success(t('columns.deleted'))
     },
   })
 }
@@ -97,7 +98,7 @@ export function useDeleteTask(boardId) {
     mutationFn: (taskId) => tasksApi.remove(boardId, taskId),
     onSuccess: () => {
       qc.invalidateQueries({ queryKey: tasksKey(boardId) })
-      toast.success('Задача удалена')
+      toast.success(t('tasks.deleted'))
     },
   })
 }
@@ -134,7 +135,7 @@ export function useMoveTask(boardId) {
     },
     onError: (_err, _vars, ctx) => {
       if (ctx?.prev) qc.setQueryData(tasksKey(boardId), ctx.prev)
-      toast.error('Не удалось переместить задачу')
+      toast.error(t('tasks.moveFailed'))
     },
     onSettled: () => qc.invalidateQueries({ queryKey: tasksKey(boardId) }),
   })

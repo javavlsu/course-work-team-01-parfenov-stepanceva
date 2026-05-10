@@ -1,6 +1,7 @@
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query'
 import { toast } from 'sonner'
 import { commentsApi } from '../api/resources'
+import { t } from '../i18n'
 
 export const commentsKey = (boardId, taskId) => ['comments', boardId, taskId]
 
@@ -34,7 +35,7 @@ export function useDeleteComment(boardId, taskId) {
     mutationFn: (commentId) => commentsApi.remove(boardId, taskId, commentId),
     onSuccess: () => {
       qc.invalidateQueries({ queryKey: commentsKey(boardId, taskId) })
-      toast.success('Удалено')
+      toast.success(t('comments.deleted'))
     },
   })
 }

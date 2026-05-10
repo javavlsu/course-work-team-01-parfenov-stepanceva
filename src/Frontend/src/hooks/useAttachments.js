@@ -1,6 +1,7 @@
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query'
 import { toast } from 'sonner'
 import { attachmentsApi } from '../api/resources'
+import { translateError, t } from '../i18n'
 
 export const attachmentsKey = (boardId, taskId) => ['attachments', boardId, taskId]
 
@@ -18,9 +19,9 @@ export function useUploadAttachment(boardId, taskId) {
     mutationFn: (file) => attachmentsApi.upload(boardId, taskId, file),
     onSuccess: () => {
       qc.invalidateQueries({ queryKey: attachmentsKey(boardId, taskId) })
-      toast.success('Файл прикреплён')
+      toast.success(t('tasks.fileAttached'))
     },
-    onError: () => toast.error('Не удалось загрузить файл'),
+    onError: (err) => toast.error(translateError(err, 'tasks.fileUploadFailed')),
   })
 }
 
@@ -30,8 +31,8 @@ export function useDeleteAttachment(boardId, taskId) {
     mutationFn: (attachmentId) => attachmentsApi.remove(boardId, taskId, attachmentId),
     onSuccess: () => {
       qc.invalidateQueries({ queryKey: attachmentsKey(boardId, taskId) })
-      toast.success('Файл удалён')
+      toast.success(t('tasks.fileRemoved'))
     },
-    onError: () => toast.error('Не удалось удалить файл'),
+    onError: (err) => toast.error(translateError(err, 'tasks.fileRemoveFailed')),
   })
 }

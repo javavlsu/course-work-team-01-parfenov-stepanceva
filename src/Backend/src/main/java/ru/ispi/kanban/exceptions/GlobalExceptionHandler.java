@@ -1,13 +1,16 @@
 package ru.ispi.kanban.exceptions;
 
 
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.boot.webmvc.error.ErrorController;
+import org.springframework.core.annotation.AnnotationUtils;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.http.converter.HttpMessageNotReadableException;
 import org.springframework.validation.FieldError;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
+import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 import tools.jackson.databind.exc.InvalidFormatException;
 
@@ -15,67 +18,58 @@ import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
 
+@Slf4j
 @RestControllerAdvice
 public class GlobalExceptionHandler implements ErrorController {
 
-    //для всех исключений
-    @ExceptionHandler(Exception.class)
-    public ResponseEntity<?> handleException(Exception ex)
-    {
-        return ResponseEntity
-                .status(HttpStatus.INTERNAL_SERVER_ERROR)
-                .body(Map.of("message", ex.getMessage()));
-    }
-
-    //для исключений, которые я создал сам
     @ExceptionHandler(ApiException.class)
-    public ResponseEntity<?> handleApiException(ApiException ex) {
-        return ResponseEntity
-                .status(ex.getStatus())
-                .body(Map.of("message", ex.getMessage()));
+    public ResponseEntity<ErrorResponse> handleApiException(ApiException ex) {
+        HttpStatus status = resolveStatus(ex);
+        return ResponseEntity.status(status).body(ErrorResponse.of(ex.getErrorCode(), ex.getMessage()));
     }
 
-    //для перехвата ошибок валидации
     @ExceptionHandler(MethodArgumentNotValidException.class)
-    public ResponseEntity<?> handleValidationExceptions(MethodArgumentNotValidException ex) {
-        Map<String, String> errors = new HashMap<>();
-
+    public ResponseEntity<ErrorResponse> handleValidation(MethodArgumentNotValidException ex) {
+        Map<String, String> fields = new HashMap<>();
         for (FieldError error : ex.getBindingResult().getFieldErrors()) {
-            errors.put(error.getField(), error.getDefaultMessage());
+            fields.put(error.getField(), error.getDefaultMessage());
+        }
+        return ResponseEntity
+                .status(HttpStatus.BAD_REQUEST)
+                .body(ErrorResponse.of(ErrorCode.VALIDATION_FAILED, ErrorMessages.of(ErrorCode.VALIDATION_FAILED), Map.of("fields", fields)));
+    }
+
+    @ExceptionHandler(HttpMessageNotReadableException.class)
+    public ResponseEntity<ErrorResponse> handleNotReadable(HttpMessageNotReadableException ex) {
+        if (ex.getCause() instanceof InvalidFormatException ife && ife.getTargetType().isEnum()) {
+            String fieldName = ife.getPath().isEmpty() ? null : ife.getPath().get(0).getPropertyName();
+            String value = String.valueOf(ife.getValue());
+            String acceptedValues = Arrays.toString(ife.getTargetType().getEnumConstants());
+
+            return ResponseEntity
+                    .status(HttpStatus.BAD_REQUEST)
+                    .body(ErrorResponse.of(
+                            ErrorCode.VALIDATION_BAD_ENUM,
+                            String.format("Invalid value '%s' for field '%s'", value, fieldName),
+                            Map.of("acceptedValues", acceptedValues)
+                    ));
         }
 
         return ResponseEntity
                 .status(HttpStatus.BAD_REQUEST)
-                .body(Map.of(
-                        "message", "Validation failed",
-                        "errors", errors
-                ));
+                .body(ErrorResponse.of(ErrorCode.VALIDATION_BAD_REQUEST, ErrorMessages.of(ErrorCode.VALIDATION_BAD_REQUEST)));
     }
 
-    // для перехвата неправильного enum
-    @ExceptionHandler(HttpMessageNotReadableException.class)
-    public ResponseEntity<?> handleHttpMessageNotReadableException(HttpMessageNotReadableException ex) {
-
-        if (ex.getCause() instanceof InvalidFormatException ife) {
-            if (ife.getTargetType().isEnum()) {
-                String fieldName = ife.getPath().get(0).getPropertyName();
-                String value = ife.getValue().toString();
-
-                // Получаем список всех доступных значений Enum
-                String acceptedValues = Arrays.toString(ife.getTargetType().getEnumConstants());
-
-                return ResponseEntity
-                        .status(HttpStatus.BAD_REQUEST)
-                        .body(Map.of(
-                                "message", String.format("Invalid value '%s' for field '%s'", value, fieldName),
-                                "acceptedValues", acceptedValues
-                        ));
-            }
-        }
-
-        // Если ошибка какая-то другая
-        return ResponseEntity.status(HttpStatus.BAD_REQUEST)
-                .body(Map.of("message", "Malformed JSON request or invalid data type"));
+    @ExceptionHandler(Exception.class)
+    public ResponseEntity<ErrorResponse> handleUnknown(Exception ex) {
+        log.error("Unhandled exception", ex);
+        return ResponseEntity
+                .status(HttpStatus.INTERNAL_SERVER_ERROR)
+                .body(ErrorResponse.of(ErrorCode.INTERNAL_ERROR, ex.getMessage()));
     }
 
+    private HttpStatus resolveStatus(ApiException ex) {
+        ResponseStatus annotation = AnnotationUtils.findAnnotation(ex.getClass(), ResponseStatus.class);
+        return annotation != null ? annotation.value() : HttpStatus.INTERNAL_SERVER_ERROR;
+    }
 }

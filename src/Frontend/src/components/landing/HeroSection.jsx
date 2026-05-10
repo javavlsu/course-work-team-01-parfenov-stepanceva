@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom'
 import { motion, useMotionValue, useSpring, useTransform } from 'framer-motion'
 import { ArrowRight } from 'lucide-react'
 import { Button } from '../ui/Button'
+import { useTranslation } from '../../i18n'
 
 const wordVariants = {
   initial: { clipPath: 'inset(0 100% 0 0)' },
@@ -13,10 +14,21 @@ const wordVariants = {
 }
 
 export function HeroSection() {
+  const { t, locale } = useTranslation()
   const mx = useMotionValue(0)
   const my = useMotionValue(0)
   const rx = useSpring(useTransform(my, [-0.5, 0.5], [5, -5]), { stiffness: 120, damping: 15 })
   const ry = useSpring(useTransform(mx, [-0.5, 0.5], [-5, 5]), { stiffness: 120, damping: 15 })
+
+  const heroWords = locale === 'ru'
+    ? ['УПРАВЛЯЙТЕ', 'РАБОТОЙ', 'КРАСИВО.']
+    : ['MANAGE', 'YOUR WORK', 'BEAUTIFULLY.']
+
+  const previewCols = [
+    { col: t('statuses.TODO'), items: locale === 'ru' ? ['Починить авторизацию', 'Редизайн профиля'] : ['Fix auth bug', 'Profile redesign'] },
+    { col: t('statuses.IN_PROGRESS'), items: locale === 'ru' ? ['Канбан-интерфейс'] : ['Kanban UI'] },
+    { col: t('statuses.DONE'), items: locale === 'ru' ? ['Лендинг'] : ['Landing'] },
+  ]
 
   const onMove = (e) => {
     const r = e.currentTarget.getBoundingClientRect()
@@ -38,9 +50,9 @@ export function HeroSection() {
       <div className="max-w-container mx-auto relative grid md:grid-cols-5 gap-12 items-center">
         <div className="md:col-span-3">
           <h1 className="display-serif text-hero leading-[0.92] tracking-[-0.03em]">
-            {['MANAGE', 'YOUR WORK', 'BEAUTIFULLY.'].map((w, i) => (
+            {heroWords.map((w, i) => (
               <motion.span
-                key={w}
+                key={`${locale}-${w}`}
                 custom={i}
                 variants={wordVariants}
                 initial="initial"
@@ -57,7 +69,7 @@ export function HeroSection() {
             transition={{ delay: 0.4, duration: 0.5 }}
             className="mt-8 text-lg text-gray-600 max-w-[420px]"
           >
-            Kanban для команд, которым важна не только эффективность, но и то, как выглядит процесс.
+            {t('landing.heroSubtitle')}
           </motion.p>
           <motion.div
             initial={{ opacity: 0, y: 16 }}
@@ -65,9 +77,9 @@ export function HeroSection() {
             transition={{ delay: 0.55, duration: 0.5 }}
             className="mt-10 flex flex-wrap items-center gap-4"
           >
-            <Link to="/register"><Button size="lg">Start for free</Button></Link>
+            <Link to="/register"><Button size="lg">{t('landing.heroCtaPrimary')}</Button></Link>
             <a href="#how" className="group inline-flex items-center gap-2 text-sm text-ink hover:text-gray-600 transition-colors">
-              See it in action
+              {t('landing.heroCtaSecondary')}
               <ArrowRight className="w-4 h-4 transition-transform duration-base group-hover:translate-x-1" />
             </a>
           </motion.div>
@@ -87,21 +99,17 @@ export function HeroSection() {
           >
             <div className="mono text-[10px] tracking-[0.1em] uppercase text-gray-400 mb-3">Sprint 42</div>
             <div className="grid grid-cols-3 gap-2">
-              {[
-                { col: 'TO DO', items: ['Fix auth bug', 'Profile redesign'] },
-                { col: 'IN PROGRESS', items: ['Kanban UI'] },
-                { col: 'DONE', items: ['Landing'] },
-              ].map((c) => (
+              {previewCols.map((c) => (
                 <div key={c.col} className="bg-gray-100 rounded-md p-2">
                   <div className="text-[9px] mono tracking-[0.12em] uppercase text-gray-600 mb-2">{c.col}</div>
                   <div className="space-y-1.5">
-                    {c.items.map((t, i) => (
+                    {c.items.map((item, i) => (
                       <div key={i} className="bg-paper rounded px-2 py-1.5 text-[11px] shadow-sm">
                         <div className="flex items-center gap-1 mb-1">
                           <span className="w-1.5 h-1.5 rounded-full bg-priority-high" />
-                          <span className="mono text-[8px] text-gray-400">HIGH</span>
+                          <span className="mono text-[8px] text-gray-400 uppercase">{t('priorities.HIGH')}</span>
                         </div>
-                        <div className="text-ink">{t}</div>
+                        <div className="text-ink">{item}</div>
                       </div>
                     ))}
                   </div>

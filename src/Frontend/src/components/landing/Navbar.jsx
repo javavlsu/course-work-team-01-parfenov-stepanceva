@@ -1,9 +1,11 @@
-import { useEffect, useState } from 'react'
+import { useState } from 'react'
 import { Link } from 'react-router-dom'
 import { motion, useScroll, useMotionValueEvent } from 'framer-motion'
 import { cn } from '../../utils/cn'
 import { Button } from '../ui/Button'
+import { LanguageSwitcher } from '../ui/LanguageSwitcher'
 import { useAuthStore } from '../../store/authStore'
+import { useTranslation } from '../../i18n'
 
 export function LandingNavbar() {
   const isAuthenticated = useAuthStore((s) => !!s.user)
@@ -11,6 +13,7 @@ export function LandingNavbar() {
   const [scrolled, setScrolled] = useState(false)
   const [hidden, setHidden] = useState(false)
   const [lastY, setLastY] = useState(0)
+  const { t } = useTranslation()
 
   useMotionValueEvent(scrollY, 'change', (y) => {
     setScrolled(y > 80)
@@ -33,15 +36,15 @@ export function LandingNavbar() {
           KANBAN
         </Link>
         <div className="hidden md:flex items-center gap-8 mono tracking-[0.1em] text-[0.75rem] uppercase text-gray-600">
-          <a href="#features" className="hover:text-ink transition-colors">Features</a>
-          <a href="#how" className="hover:text-ink transition-colors">How it works</a>
-          <a href="#stats" className="hover:text-ink transition-colors">Stats</a>
+          <a href="#features" className="hover:text-ink transition-colors">{t('landing.featuresTitle')}</a>
+          <a href="#how" className="hover:text-ink transition-colors">{t('landing.howTitle')}</a>
         </div>
         <div className="flex items-center gap-3">
+          <LanguageSwitcher size="sm" />
           <Link to="/login" className="hidden md:inline-flex mono text-[0.75rem] uppercase tracking-[0.1em] text-gray-600 hover:text-ink transition-colors">
-            Sign in
+            {t('nav.login')}
           </Link>
-          <Link to="/register"><Button size="sm">Get Started</Button></Link>
+          <Link to="/register"><Button size="sm">{t('landing.ctaButton')}</Button></Link>
         </div>
       </div>
     </motion.nav>

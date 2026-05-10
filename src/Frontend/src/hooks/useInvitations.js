@@ -1,7 +1,8 @@
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query'
 import { toast } from 'sonner'
 import { invitationsApi } from '../api/resources'
-import { groupsKey, membersKey } from './useGroups'
+import { groupsKey } from './useGroups'
+import { t } from '../i18n'
 
 export const myInvitesKey = ['invitations', 'my']
 export const groupInvitesKey = (groupId) => ['invitations', 'group', groupId]
@@ -24,12 +25,13 @@ export function useInviteByEmail(groupId) {
     mutationFn: ({ email, expiresInDays }) => invitationsApi.createEmail(groupId, email, expiresInDays),
     onSuccess: () => {
       qc.invalidateQueries({ queryKey: groupInvitesKey(groupId) })
-      toast.success('Приглашение отправлено')
+      toast.success(t('groups.inviteSent'))
     },
     onError: (err) => {
       const status = err.response?.status
-      if (status === 404) toast.error('Пользователь не найден')
-      else if (status !== 409 && status !== 403) toast.error('Не удалось отправить')
+      // 404 — пользователь не найден; для 409/403 toast уже показал глобальный обработчик
+      if (status === 404) toast.error(t('errors.US0001'))
+      else if (status !== 409 && status !== 403) toast.error(t('groups.inviteFailed'))
     },
   })
 }
@@ -40,7 +42,7 @@ export function useInviteByLink(groupId) {
     mutationFn: (expiresInDays) => invitationsApi.createLink(groupId, expiresInDays),
     onSuccess: () => {
       qc.invalidateQueries({ queryKey: groupInvitesKey(groupId) })
-      toast.success('Ссылка создана')
+      toast.success(t('groups.linkCreated'))
     },
   })
 }
@@ -51,7 +53,7 @@ export function useCancelInvitation(groupId) {
     mutationFn: (id) => invitationsApi.cancel(id),
     onSuccess: () => {
       qc.invalidateQueries({ queryKey: groupInvitesKey(groupId) })
-      toast.success('Отозвано')
+      toast.success(t('groups.inviteRevoked'))
     },
   })
 }
@@ -63,7 +65,7 @@ export function useRespondInvitation() {
     onSuccess: (_, { accept }) => {
       qc.invalidateQueries({ queryKey: myInvitesKey })
       qc.invalidateQueries({ queryKey: groupsKey })
-      toast.success(accept ? 'Приглашение принято' : 'Приглашение отклонено')
+      toast.success(accept ? t('invitations.accepted') : t('invitations.declined'))
     },
   })
 }

@@ -2,15 +2,18 @@ import { useNavigate, Link } from 'react-router-dom'
 import { LogOut, User as UserIcon, Menu } from 'lucide-react'
 import { Avatar } from '../ui/Avatar'
 import { Dropdown } from '../ui/Dropdown'
+import { LanguageSwitcher } from '../ui/LanguageSwitcher'
 import { useAuthStore } from '../../store/authStore'
 import { useUiStore } from '../../store/uiStore'
 import { useLogout } from '../../hooks/useAuth'
+import { useTranslation } from '../../i18n'
 
 export function Header({ breadcrumb }) {
   const navigate = useNavigate()
   const currentUser = useAuthStore((s) => s.user)
   const toggleSidebar = useUiStore((s) => s.toggleSidebar)
   const logout = useLogout()
+  const { t } = useTranslation()
 
   return (
     <header className="h-16 px-6 flex items-center justify-between border-b border-gray-100 bg-paper/95 backdrop-blur-sm sticky top-0 z-30">
@@ -37,6 +40,7 @@ export function Header({ breadcrumb }) {
       </div>
 
       <div className="flex items-center gap-2">
+        <LanguageSwitcher size="sm" />
         <Dropdown
           align="right"
           trigger={
@@ -47,9 +51,9 @@ export function Header({ breadcrumb }) {
           items={[
             { label: currentUser?.username, hint: currentUser?.email, disabled: true },
             { divider: true },
-            { label: 'Профиль', icon: UserIcon, onClick: () => navigate('/profile') },
+            { label: t('nav.profile'), icon: UserIcon, onClick: () => navigate('/profile') },
             { divider: true },
-            { label: 'Выйти', icon: LogOut, onClick: () => logout.mutate(), danger: true },
+            { label: t('nav.logout'), icon: LogOut, onClick: () => logout.mutate(), danger: true },
           ]}
         />
       </div>

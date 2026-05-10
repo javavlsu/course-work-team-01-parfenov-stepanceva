@@ -9,6 +9,7 @@ import { Dropdown } from '../ui/Dropdown'
 import { Badge } from '../ui/Badge'
 import { cn } from '../../utils/cn'
 import { useCreateTask, useDeleteColumn, useUpdateColumn } from '../../hooks/useKanban'
+import { useTranslation } from '../../i18n'
 
 export function Column({ boardId, column, tasks, usersById, onOpenTask }) {
   const {
@@ -29,6 +30,7 @@ export function Column({ boardId, column, tasks, usersById, onOpenTask }) {
   const createTask = useCreateTask(boardId)
   const deleteColumn = useDeleteColumn(boardId)
   const updateColumn = useUpdateColumn(boardId)
+  const { t } = useTranslation()
   const [adding, setAdding] = useState(false)
   const [title, setTitle] = useState('')
   const [editingName, setEditingName] = useState(false)
@@ -78,7 +80,7 @@ export function Column({ boardId, column, tasks, usersById, onOpenTask }) {
         <div
           {...listeners}
           className="w-5 h-5 flex items-center justify-center text-gray-300 hover:text-gray-500 cursor-grab active:cursor-grabbing shrink-0 mr-1"
-          aria-label="Перетащить колонку"
+          aria-label={t('common.more')}
         >
           <GripVertical className="w-4 h-4" />
         </div>
@@ -103,14 +105,14 @@ export function Column({ boardId, column, tasks, usersById, onOpenTask }) {
         <Dropdown
           align="right"
           trigger={
-            <button className="w-7 h-7 inline-flex items-center justify-center rounded hover:bg-gray-200 transition-colors" aria-label="More">
+            <button className="w-7 h-7 inline-flex items-center justify-center rounded hover:bg-gray-200 transition-colors" aria-label={t('common.actions')}>
               <MoreHorizontal className="w-4 h-4" />
             </button>
           }
           items={[
-            { label: 'Переименовать', icon: Pencil, onClick: () => setEditingName(true) },
-            { label: 'Удалить колонку', icon: Trash2, danger: true, onClick: () => {
-              if (confirm('Удалить колонку со всеми задачами?')) deleteColumn.mutate(column.id)
+            { label: t('common.rename'), icon: Pencil, onClick: () => setEditingName(true) },
+            { label: t('common.delete'), icon: Trash2, danger: true, onClick: () => {
+              if (confirm(t('columns.deleteConfirm'))) deleteColumn.mutate(column.id)
             } },
           ]}
         />
@@ -140,14 +142,14 @@ export function Column({ boardId, column, tasks, usersById, onOpenTask }) {
                   value={title}
                   onChange={(e) => setTitle(e.target.value)}
                   onKeyDown={onKey}
-                  placeholder="Название задачи…"
+                  placeholder={t('tasks.titlePlaceholder')}
                   className="w-full resize-none outline-none text-sm bg-transparent min-h-[60px]"
                 />
                 <div className="flex justify-end gap-1 mt-1">
-                  <button onClick={() => { setAdding(false); setTitle('') }} className="w-7 h-7 inline-flex items-center justify-center rounded hover:bg-gray-100" aria-label="Отмена">
+                  <button onClick={() => { setAdding(false); setTitle('') }} className="w-7 h-7 inline-flex items-center justify-center rounded hover:bg-gray-100" aria-label={t('common.cancel')}>
                     <X className="w-4 h-4" />
                   </button>
-                  <button onClick={submit} className="w-7 h-7 inline-flex items-center justify-center rounded bg-ink text-paper hover:bg-gray-800" aria-label="Создать">
+                  <button onClick={submit} className="w-7 h-7 inline-flex items-center justify-center rounded bg-ink text-paper hover:bg-gray-800" aria-label={t('common.create')}>
                     <Check className="w-4 h-4" />
                   </button>
                 </div>
@@ -161,7 +163,7 @@ export function Column({ boardId, column, tasks, usersById, onOpenTask }) {
             onClick={() => setAdding(true)}
             className="w-full flex items-center gap-2 px-2 py-2 text-sm text-gray-600 hover:text-ink hover:bg-gray-200/60 rounded-md transition-colors"
           >
-            <Plus className="w-4 h-4" /> Задача
+            <Plus className="w-4 h-4" /> {t('tasks.addTask')}
           </button>
         )}
       </div>

@@ -23,8 +23,6 @@ public class AuthController {
 
     private final UserService userService;
 
-    private final CookiesHelper cookies;
-
     private final AuthService authService;
 
     private final JwtProperties jwtProperties;
@@ -34,8 +32,8 @@ public class AuthController {
 
         AuthTokensDto tokens = authService.login(loginPayload);
 
-        cookies.setCookie(httpServletResponse, "accessTokenKanban", tokens.getAccessToken(), (int) jwtProperties.accessTime());
-        cookies.setCookie(httpServletResponse, "refreshTokenKanban", tokens.getRefreshToken(), (int) jwtProperties.refreshTime());
+        CookiesHelper.setCookie(httpServletResponse, "accessTokenKanban", tokens.getAccessToken(), (int) jwtProperties.accessTime());
+        CookiesHelper.setCookie(httpServletResponse, "refreshTokenKanban", tokens.getRefreshToken(), (int) jwtProperties.refreshTime());
 
         return ResponseEntity
                 .status(HttpStatus.OK)
@@ -49,10 +47,10 @@ public class AuthController {
 
         AuthTokensDto tokens = authService.register(registrationPayload);
 
-        cookies.setCookie(response, "accessTokenKanban",
+        CookiesHelper.setCookie(response, "accessTokenKanban",
                 tokens.getAccessToken(), (int) jwtProperties.accessTime());
 
-        cookies.setCookie(response, "refreshTokenKanban",
+        CookiesHelper.setCookie(response, "refreshTokenKanban",
                 tokens.getRefreshToken(), (int) jwtProperties.refreshTime());
 
         return ResponseEntity
@@ -74,7 +72,7 @@ public class AuthController {
     public ResponseEntity<UserDto> refresh(@CookieValue(value = "refreshTokenKanban", required = false) String refreshToken){
         String newAccessToken = authService.refresh(refreshToken);
 
-        cookies.setCookie(httpServletResponse,
+        CookiesHelper.setCookie(httpServletResponse,
                 "accessTokenKanban",
                 newAccessToken,
                 (int) jwtProperties.accessTime());
@@ -87,8 +85,8 @@ public class AuthController {
     @PostMapping("logout")
     public ResponseEntity<?> logout(HttpServletResponse httpServletResponse){
         //стираем куки
-        cookies.setCookie(httpServletResponse, "accessTokenKanban", "", 0);
-        cookies.setCookie(httpServletResponse, "refreshTokenKanban", "", 0);
+        CookiesHelper.setCookie(httpServletResponse, "accessTokenKanban", "", 0);
+        CookiesHelper.setCookie(httpServletResponse, "refreshTokenKanban", "", 0);
         return ResponseEntity
                 .status(HttpStatus.NO_CONTENT)
                 .build();

@@ -6,6 +6,9 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;
 import org.springframework.web.multipart.MultipartFile;
+import ru.ispi.kanban.exceptions.FileEmptyException;
+import ru.ispi.kanban.exceptions.FileStorageException;
+import ru.ispi.kanban.exceptions.InvalidFilePathException;
 import ru.ispi.kanban.services.FileStorageService;
 
 import java.io.IOException;
@@ -35,14 +38,14 @@ public class LocalFileStorageService implements FileStorageService {
             Files.createDirectories(rootLocation.resolve("avatars"));
             log.info("Директории для файлов инициализированы: {}", rootLocation.toAbsolutePath());
         } catch (IOException e) {
-            throw new RuntimeException("Не удалось создать директории для хранения файлов", e);
+            throw new FileStorageException("Не удалось создать директории для хранения файлов", e);
         }
     }
 
     @Override
     public String uploadFile(MultipartFile file, String folder) {
         if (file.isEmpty()) {
-            throw new RuntimeException("Файл пуст");
+            throw new FileEmptyException("Файл пуст");
         }
 
         String originalFilename = file.getOriginalFilename();
@@ -56,7 +59,7 @@ public class LocalFileStorageService implements FileStorageService {
         try (InputStream inputStream = file.getInputStream()) {
             Files.copy(inputStream, destinationFile, StandardCopyOption.REPLACE_EXISTING);
         } catch (IOException e) {
-            throw new RuntimeException("Ошибка при сохранении файла", e);
+            throw new FileStorageException("Ошибка при сохранении файла", e);
         }
 
         return folder + "/" + generatedFileName;
@@ -80,11 +83,11 @@ public class LocalFileStorageService implements FileStorageService {
         try {
             Path filePath = rootLocation.resolve(storageKey).normalize();
             if (!filePath.startsWith(rootLocation.normalize())) {
-                throw new RuntimeException("Недопустимый путь к файлу");
+                throw new InvalidFilePathException("Недопустимый путь к файлу");
             }
             return Files.readAllBytes(filePath);
         } catch (IOException e) {
-            throw new RuntimeException("Ошибка при чтении файла: " + storageKey, e);
+            throw new FileStorageException("Ошибка при чтении файла: " + storageKey, e);
         }
     }
 }

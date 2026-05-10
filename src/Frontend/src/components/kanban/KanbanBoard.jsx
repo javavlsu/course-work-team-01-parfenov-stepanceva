@@ -7,6 +7,7 @@ import { Column } from './Column'
 import { TaskCard } from './TaskCard'
 import { useColumns, useTasks, useCreateColumn, useMoveTask, useMoveColumn } from '../../hooks/useKanban'
 import { useBoardUsers } from '../../hooks/useBoards'
+import { useTranslation } from '../../i18n'
 
 export function KanbanBoard({ boardId, onOpenTask }) {
   const { data: columns = [], isLoading: colLoading } = useColumns(boardId)
@@ -15,6 +16,7 @@ export function KanbanBoard({ boardId, onOpenTask }) {
   const createColumn = useCreateColumn(boardId)
   const moveTask = useMoveTask(boardId)
   const moveColumn = useMoveColumn(boardId)
+  const { t } = useTranslation()
 
   const usersById = useMemo(() => Object.fromEntries(boardUsers.map((u) => [u.id, u])), [boardUsers])
 
@@ -150,7 +152,7 @@ export function KanbanBoard({ boardId, onOpenTask }) {
                     if (e.key === 'Enter') submitCol()
                     if (e.key === 'Escape') { setColName(''); setAddingCol(false) }
                   }}
-                  placeholder="Название колонки…"
+                  placeholder={t('columns.namePlaceholder')}
                   className="w-full bg-paper border border-gray-200 rounded px-3 py-2 text-sm outline-none focus:border-ink"
                 />
                 <div className="flex gap-1 mt-2 justify-end">
@@ -167,7 +169,7 @@ export function KanbanBoard({ boardId, onOpenTask }) {
                 onClick={() => setAddingCol(true)}
                 className="shrink-0 w-[300px] h-14 border border-dashed border-gray-200 hover:border-ink rounded-lg flex items-center justify-center gap-2 text-sm text-gray-600 hover:text-ink transition-colors"
               >
-                <Plus className="w-4 h-4" /> Добавить колонку
+                <Plus className="w-4 h-4" /> {t('columns.addColumn')}
               </motion.button>
             )}
           </AnimatePresence>

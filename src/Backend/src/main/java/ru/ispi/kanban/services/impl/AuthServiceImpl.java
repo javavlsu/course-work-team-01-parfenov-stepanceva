@@ -5,11 +5,13 @@ import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
-import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import ru.ispi.kanban.dto.AuthTokensDto;
-import ru.ispi.kanban.exceptions.ApiException;
 import ru.ispi.kanban.dto.UserDto;
+import ru.ispi.kanban.exceptions.AuthCookieMissingException;
+import ru.ispi.kanban.exceptions.RefreshTokenExpiredException;
+import ru.ispi.kanban.exceptions.RefreshTokenInvalidException;
+import ru.ispi.kanban.exceptions.TokenExpiredException;
 import ru.ispi.kanban.payloads.LoginPayload;
 import ru.ispi.kanban.payloads.RegistrationPayload;
 import ru.ispi.kanban.security.jwt.JwtService;
@@ -50,14 +52,14 @@ public class AuthServiceImpl implements AuthService {
     @Override
     public UserDto checkAuth(String accessToken) {
         if (accessToken == null) {
-            throw new RuntimeException("Cookie not found");
+            throw new AuthCookieMissingException("Cookie not found");
         }
 
         String email = jwtService.extractUsername(accessToken);
         UserDetails userDetails = userDetailsService.loadUserByUsername(email);
 
         if (!jwtService.isTokenValid(accessToken, userDetails)) {
-            throw new RuntimeException("Token expired");
+            throw new TokenExpiredException("Token expired");
         }
 
         return userService.getByEmail(email);
@@ -66,14 +68,14 @@ public class AuthServiceImpl implements AuthService {
     @Override
     public String refresh(String refreshToken) {
         if (refreshToken == null || !jwtService.isTokenSignatureValid(refreshToken)) {
-            throw new ApiException("Refresh token is invalid", HttpStatus.UNAUTHORIZED);
+            throw new RefreshTokenInvalidException("Refresh token is invalid");
         }
 
         String email = jwtService.extractUsername(refreshToken);
         UserDetails userDetails = userDetailsService.loadUserByUsername(email);
 
         if (!jwtService.isTokenValid(refreshToken, userDetails)) {
-            throw new ApiException("Refresh token expired, please log in again", HttpStatus.UNAUTHORIZED);
+            throw new RefreshTokenExpiredException("Refresh token expired, please log in again");
         }
 
         return jwtService.generateAccessToken(userDetails);
@@ -82,7 +84,7 @@ public class AuthServiceImpl implements AuthService {
     @Override
     public Integer getUserIdFromToken(String accessToken) {
         if (accessToken == null) {
-            throw new RuntimeException("Cookie not found");
+            throw new AuthCookieMissingException("Cookie not found");
         }
 
         String email = jwtService.extractUsername(accessToken);

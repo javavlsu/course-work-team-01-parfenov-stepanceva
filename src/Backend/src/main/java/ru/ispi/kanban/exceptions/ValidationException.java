@@ -1,10 +1,12 @@
 package ru.ispi.kanban.exceptions;
 
 import org.springframework.http.HttpStatus;
+import org.springframework.web.bind.annotation.ResponseStatus;
 
-public class ValidationException extends ApiException{
+@ResponseStatus(HttpStatus.BAD_REQUEST)
+public class ValidationException extends ApiException {
 
     public ValidationException(String message) {
-        super(message, HttpStatus.BAD_REQUEST);
+        super(ErrorCode.VALIDATION_FAILED, message);
     }
 }

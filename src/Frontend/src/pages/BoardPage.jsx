@@ -13,6 +13,7 @@ import { Button } from '../components/ui/Button'
 import { Input } from '../components/ui/Input'
 import { Modal } from '../components/ui/Modal'
 import { useBoard, useBoardUsers, useDeleteBoard, useUpdateBoard } from '../hooks/useBoards'
+import { useTranslation } from '../i18n'
 import { cn } from '../utils/cn'
 import { toast } from 'sonner'
 
@@ -23,6 +24,7 @@ export default function BoardPage() {
   const { data: boardUsers = [] } = useBoardUsers(boardId)
   const deleteBoard = useDeleteBoard()
   const updateBoard = useUpdateBoard()
+  const { t } = useTranslation()
 
   const [activeTaskId, setActiveTaskId] = useState(null)
   const [editOpen, setEditOpen] = useState(false)
@@ -45,16 +47,16 @@ export default function BoardPage() {
     return (
       <AppShell>
         <div className="p-12 text-center">
-          <h2 className="display-serif text-2xl mb-2">Доска не найдена</h2>
-          <Button onClick={() => nav('/dashboard')}>К дашборду</Button>
+          <h2 className="display-serif text-2xl mb-2">{t('boards.notFound')}</h2>
+          <Button onClick={() => nav('/dashboard')}>{t('boards.toDashboard')}</Button>
         </div>
       </AppShell>
     )
   }
 
   const breadcrumb = [
-    { label: 'Dashboard', to: '/dashboard' },
-    { label: board.groupName || 'Группа', to: `/groups/${board.groupId}` },
+    { label: t('nav.dashboard'), to: '/dashboard' },
+    { label: board.groupName || t('groups.title'), to: `/groups/${board.groupId}` },
     { label: board.name },
   ]
 
@@ -66,7 +68,7 @@ export default function BoardPage() {
 
   const saveEdit = (e) => {
     e.preventDefault()
-    if (editTitle.trim().length < 3) return toast.error('Минимум 3 символа')
+    if (editTitle.trim().length < 3) return toast.error(t('boards.minTitle'))
     updateBoard.mutate({ id: board.id, title: editTitle.trim(), description: editDesc.trim() }, {
       onSuccess: () => setEditOpen(false),
     })
@@ -93,20 +95,20 @@ export default function BoardPage() {
           <div className="flex items-center gap-3">
             <div className="hidden sm:flex items-center gap-2">
               <AvatarGroup users={boardUsers} max={5} size="sm" />
-              <Button variant="outline" size="sm" icon={Users} onClick={() => setMembersOpen(true)}>Участники</Button>
+              <Button variant="outline" size="sm" icon={Users} onClick={() => setMembersOpen(true)}>{t('common.members')}</Button>
             </div>
             <Dropdown
               align="right"
               trigger={
-                <button className="w-9 h-9 inline-flex items-center justify-center rounded-md border border-gray-200 hover:border-ink" aria-label="More">
+                <button className="w-9 h-9 inline-flex items-center justify-center rounded-md border border-gray-200 hover:border-ink" aria-label={t('common.actions')}>
                   <MoreHorizontal className="w-4 h-4" />
                 </button>
               }
               items={[
-                { label: 'Переименовать', icon: Pencil, onClick: openEdit },
-                { label: 'Участники доски', icon: UserCog, onClick: () => setMembersOpen(true) },
-                { label: 'Удалить доску', icon: Trash2, danger: true, onClick: () => {
-                  if (confirm('Удалить доску?')) {
+                { label: t('common.rename'), icon: Pencil, onClick: openEdit },
+                { label: t('boards.membersTitle'), icon: UserCog, onClick: () => setMembersOpen(true) },
+                { label: t('common.delete'), icon: Trash2, danger: true, onClick: () => {
+                  if (confirm(t('boards.deleteConfirm'))) {
                     deleteBoard.mutate(boardId, { onSuccess: () => nav(`/groups/${board.groupId}`) })
                   }
                 } },
@@ -118,20 +120,20 @@ export default function BoardPage() {
         <div className="px-6 md:px-12 pt-4 border-b border-gray-100">
           <div className="flex items-center gap-5">
             {[
-              { id: 'board', label: 'Доска', icon: LayoutGrid },
-              { id: 'list', label: 'Задачи', icon: List },
-            ].map((t) => (
+              { id: 'board', label: t('boards.tabBoard'), icon: LayoutGrid },
+              { id: 'list', label: t('boards.tabTasks'), icon: List },
+            ].map((tabItem) => (
               <button
-                key={t.id}
-                onClick={() => setView(t.id)}
+                key={tabItem.id}
+                onClick={() => setView(tabItem.id)}
                 className={cn(
                   'pb-3 relative mono text-xs tracking-[0.1em] uppercase transition-colors inline-flex items-center gap-1.5',
-                  view === t.id ? 'text-ink' : 'text-gray-400 hover:text-gray-600'
+                  view === tabItem.id ? 'text-ink' : 'text-gray-400 hover:text-gray-600'
                 )}
               >
-                <t.icon className="w-3.5 h-3.5" />
-                {t.label}
-                {view === t.id && <span className="absolute left-0 right-0 -bottom-px h-[2px] bg-ink" />}
+                <tabItem.icon className="w-3.5 h-3.5" />
+                {tabItem.label}
+                {view === tabItem.id && <span className="absolute left-0 right-0 -bottom-px h-[2px] bg-ink" />}
               </button>
             ))}
           </div>
@@ -150,13 +152,13 @@ export default function BoardPage() {
 
       <BoardMembersModal open={membersOpen} onClose={() => setMembersOpen(false)} boardId={boardId} groupId={board.groupId} />
 
-      <Modal open={editOpen} onClose={() => setEditOpen(false)} title="Переименовать доску" size="sm">
+      <Modal open={editOpen} onClose={() => setEditOpen(false)} title={t('boards.rename')} size="sm">
         <form onSubmit={saveEdit} className="px-6 py-5 space-y-4">
-          <Input label="Название (3–100)" value={editTitle} onChange={(e) => setEditTitle(e.target.value)} autoFocus />
-          <Input label="Описание" value={editDesc} onChange={(e) => setEditDesc(e.target.value)} />
+          <Input label={t('boards.nameLabel')} value={editTitle} onChange={(e) => setEditTitle(e.target.value)} autoFocus />
+          <Input label={t('boards.descLabel')} value={editDesc} onChange={(e) => setEditDesc(e.target.value)} />
           <div className="flex justify-end gap-2 pt-2">
-            <Button variant="ghost" type="button" onClick={() => setEditOpen(false)}>Отмена</Button>
-            <Button type="submit" loading={updateBoard.isPending}>Сохранить</Button>
+            <Button variant="ghost" type="button" onClick={() => setEditOpen(false)}>{t('common.cancel')}</Button>
+            <Button type="submit" loading={updateBoard.isPending}>{t('common.save')}</Button>
           </div>
         </form>
       </Modal>

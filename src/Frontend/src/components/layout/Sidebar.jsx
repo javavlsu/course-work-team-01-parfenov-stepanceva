@@ -7,6 +7,7 @@ import { useUiStore } from '../../store/uiStore'
 import { useGroups } from '../../hooks/useGroups'
 import { useMyBoards } from '../../hooks/useBoards'
 import { useLogout } from '../../hooks/useAuth'
+import { useTranslation } from '../../i18n'
 
 export function Sidebar() {
   const location = useLocation()
@@ -14,6 +15,7 @@ export function Sidebar() {
   const { data: boards = [] } = useMyBoards()
   const sidebarOpen = useUiStore((s) => s.sidebarOpen)
   const logout = useLogout()
+  const { t } = useTranslation()
   const [expanded, setExpanded] = useState({})
 
   const isActive = (path) => location.pathname === path || location.pathname.startsWith(path + '/')
@@ -33,14 +35,14 @@ export function Sidebar() {
               <SidebarItem
                 to="/dashboard"
                 icon={LayoutGrid}
-                label="Dashboard"
+                label={t('nav.dashboard')}
                 active={isActive('/dashboard') && !location.pathname.startsWith('/groups') && !location.pathname.startsWith('/boards')}
               />
 
-              <div className="mt-6 mb-2 px-3 text-xs mono tracking-[0.15em] text-gray-400 uppercase">Мои группы</div>
+              <div className="mt-6 mb-2 px-3 text-xs mono tracking-[0.15em] text-gray-400 uppercase">{t('dashboard.myGroups')}</div>
 
               {groups.length === 0 && (
-                <div className="px-3 py-2 text-sm text-gray-400">Пока нет групп</div>
+                <div className="px-3 py-2 text-sm text-gray-400">{t('dashboard.noGroups')}</div>
               )}
 
               {groups.map((g) => {
@@ -52,7 +54,7 @@ export function Sidebar() {
                       <button
                         onClick={() => setExpanded((e) => ({ ...e, [g.id]: !e[g.id] }))}
                         className="w-6 flex items-center justify-center text-gray-400 hover:text-ink"
-                        aria-label={isOpen ? 'Свернуть' : 'Развернуть'}
+                        aria-label={t('common.more')}
                       >
                         <ChevronRight
                           className={cn('w-3.5 h-3.5 transition-transform duration-base', isOpen && 'rotate-90')}
@@ -87,7 +89,7 @@ export function Sidebar() {
                             />
                           ))}
                           {groupBoards.length === 0 && (
-                            <div className="text-xs text-gray-400 px-3 py-1">Нет досок</div>
+                            <div className="text-xs text-gray-400 px-3 py-1">{t('dashboard.noBoards')}</div>
                           )}
                         </motion.div>
                       )}
@@ -98,13 +100,13 @@ export function Sidebar() {
             </div>
 
             <div className="p-3 border-t border-gray-200/60">
-              <SidebarItem to="/profile" icon={UserIcon} label="Профиль" active={isActive('/profile')} />
+              <SidebarItem to="/profile" icon={UserIcon} label={t('nav.profile')} active={isActive('/profile')} />
               <button
                 onClick={() => logout.mutate()}
                 className="w-full text-left px-3 py-2 h-9 rounded-md text-sm text-gray-600 hover:text-ink hover:bg-gray-100 transition-all duration-base flex items-center gap-2"
               >
                 <LogOut className="w-4 h-4" />
-                <span>Выйти</span>
+                <span>{t('nav.logout')}</span>
               </button>
             </div>
           </div>

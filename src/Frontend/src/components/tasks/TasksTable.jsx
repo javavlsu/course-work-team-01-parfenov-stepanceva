@@ -6,21 +6,23 @@ import { Avatar } from '../ui/Avatar'
 import { Dot } from '../ui/Badge'
 import { PRIORITIES, STATUSES } from '../../utils/priorities'
 import { deadlineStatus, formatDate } from '../../utils/dates'
+import { useTranslation } from '../../i18n'
 import { cn } from '../../utils/cn'
 
 const PAGE_SIZE = 10
 
-const SORTABLE_COLUMNS = [
-  { key: 'title', label: 'Задача' },
-  { key: 'status', label: 'Статус' },
-  { key: 'priority', label: 'Приоритет' },
-  { key: 'deadline', label: 'Дедлайн' },
-  { key: 'createdAt', label: 'Создана' },
-]
-
 export function TasksTable({ boardId, onOpenTask }) {
   const { data: columns = [] } = useColumns(boardId)
   const { data: boardUsers = [] } = useBoardUsers(boardId)
+  const { t } = useTranslation()
+
+  const sortableColumns = [
+    { key: 'title', label: t('tasksTable.colTitle') },
+    { key: 'status', label: t('tasksTable.colStatus') },
+    { key: 'priority', label: t('tasksTable.colPriority') },
+    { key: 'deadline', label: t('tasksTable.colDeadline') },
+    { key: 'createdAt', label: t('tasksTable.colCreated') },
+  ]
 
   const [search, setSearch] = useState('')
   const [debouncedSearch, setDebouncedSearch] = useState('')
@@ -35,16 +37,14 @@ export function TasksTable({ boardId, onOpenTask }) {
   const [page, setPage] = useState(0)
   const { priority, status, columnId, assigneeId, sortBy, sortDir } = filters
 
-  // дебаунс поиска + сброс на первую страницу
   useEffect(() => {
-    const t = setTimeout(() => {
+    const timer = setTimeout(() => {
       setDebouncedSearch(search.trim())
       setPage(0)
     }, 300)
-    return () => clearTimeout(t)
+    return () => clearTimeout(timer)
   }, [search])
 
-  // обновление фильтров всегда сбрасывает страницу — делаем через единый хелпер
   const patchFilters = (patch) => {
     setFilters((prev) => ({ ...prev, ...patch }))
     setPage(0)
@@ -96,46 +96,45 @@ export function TasksTable({ boardId, onOpenTask }) {
 
   return (
     <div className="h-full overflow-y-auto px-6 md:px-12 pb-8">
-
       <div className="flex flex-wrap items-center gap-3 py-4">
         <div className="relative flex-1 min-w-[220px] max-w-md">
           <Search className="w-4 h-4 absolute left-3 top-1/2 -translate-y-1/2 text-gray-400" />
           <input
             value={search}
             onChange={(e) => setSearch(e.target.value)}
-            placeholder="Поиск по заголовку и описанию…"
+            placeholder={t('tasksTable.searchPlaceholder')}
             className="w-full h-10 pl-9 pr-9 bg-paper border border-gray-200 rounded-md text-sm outline-none focus:border-ink"
           />
           {search && (
             <button
               onClick={() => setSearch('')}
               className="absolute right-2 top-1/2 -translate-y-1/2 text-gray-400 hover:text-ink"
-              aria-label="Очистить поиск"
+              aria-label={t('common.reset')}
             >
               <X className="w-4 h-4" />
             </button>
           )}
         </div>
 
-        <FilterSelect value={priority} onChange={(v) => patchFilters({ priority: v })} placeholder="Все приоритеты">
-          {Object.entries(PRIORITIES).map(([k, v]) => (
-            <option key={k} value={k}>{v.label}</option>
+        <FilterSelect value={priority} onChange={(v) => patchFilters({ priority: v })} placeholder={t('tasksTable.allPriorities')}>
+          {Object.keys(PRIORITIES).map((k) => (
+            <option key={k} value={k}>{t(`priorities.${k}`)}</option>
           ))}
         </FilterSelect>
 
-        <FilterSelect value={status} onChange={(v) => patchFilters({ status: v })} placeholder="Все статусы">
-          {Object.entries(STATUSES).map(([k, v]) => (
-            <option key={k} value={k}>{v.label}</option>
+        <FilterSelect value={status} onChange={(v) => patchFilters({ status: v })} placeholder={t('tasksTable.allStatuses')}>
+          {Object.keys(STATUSES).map((k) => (
+            <option key={k} value={k}>{t(`statuses.${k}`)}</option>
           ))}
         </FilterSelect>
 
-        <FilterSelect value={columnId} onChange={(v) => patchFilters({ columnId: v })} placeholder="Все колонки">
+        <FilterSelect value={columnId} onChange={(v) => patchFilters({ columnId: v })} placeholder={t('tasksTable.allColumns')}>
           {columns.map((c) => (
             <option key={c.id} value={c.id}>{c.name}</option>
           ))}
         </FilterSelect>
 
-        <FilterSelect value={assigneeId} onChange={(v) => patchFilters({ assigneeId: v })} placeholder="Все исполнители">
+        <FilterSelect value={assigneeId} onChange={(v) => patchFilters({ assigneeId: v })} placeholder={t('tasksTable.allAssignees')}>
           {boardUsers.map((u) => (
             <option key={u.id} value={u.id}>{u.username}</option>
           ))}
@@ -146,7 +145,7 @@ export function TasksTable({ boardId, onOpenTask }) {
             onClick={resetFilters}
             className="text-xs mono tracking-[0.08em] uppercase text-gray-500 hover:text-ink inline-flex items-center gap-1"
           >
-            <X className="w-3 h-3" /> Сбросить
+            <X className="w-3 h-3" /> {t('tasksTable.resetFilters')}
           </button>
         )}
       </div>
@@ -156,7 +155,7 @@ export function TasksTable({ boardId, onOpenTask }) {
           <table className="w-full text-sm">
             <thead className="bg-gray-50 border-b border-gray-100">
               <tr>
-                {SORTABLE_COLUMNS.map((col, i) => (
+                {sortableColumns.map((col, i) => (
                   <th
                     key={col.key}
                     onClick={() => toggleSort(col.key)}
@@ -172,10 +171,10 @@ export function TasksTable({ boardId, onOpenTask }) {
                   </th>
                 ))}
                 <th className="text-left px-4 py-3 mono text-[11px] tracking-[0.1em] uppercase text-gray-500 whitespace-nowrap">
-                  Колонка
+                  {t('tasksTable.colColumn')}
                 </th>
                 <th className="text-left px-4 py-3 mono text-[11px] tracking-[0.1em] uppercase text-gray-500 whitespace-nowrap pr-6">
-                  Исполнитель
+                  {t('tasksTable.colAssignee')}
                 </th>
               </tr>
             </thead>
@@ -189,17 +188,17 @@ export function TasksTable({ boardId, onOpenTask }) {
                   </tr>
                 ))
               ) : isError ? (
-                <tr><td colSpan={7} className="px-6 py-10 text-center text-priority-high">Не удалось загрузить задачи</td></tr>
+                <tr><td colSpan={7} className="px-6 py-10 text-center text-priority-high">{t('tasksTable.loadFailed')}</td></tr>
               ) : tasks.length === 0 ? (
-                <tr><td colSpan={7} className="px-6 py-10 text-center text-gray-400">Задачи не найдены</td></tr>
+                <tr><td colSpan={7} className="px-6 py-10 text-center text-gray-400">{t('tasksTable.emptyState')}</td></tr>
               ) : (
-                tasks.map((t) => (
+                tasks.map((task) => (
                   <TaskRow
-                    key={t.id}
-                    task={t}
-                    column={columnById[t.columnId]}
-                    assignee={t.assignee || usersById[t.assigneeId]}
-                    onClick={() => onOpenTask?.(t)}
+                    key={task.id}
+                    task={task}
+                    column={columnById[task.columnId]}
+                    assignee={task.assignee || usersById[task.assigneeId]}
+                    onClick={() => onOpenTask?.(task)}
                   />
                 ))
               )}
@@ -210,12 +209,16 @@ export function TasksTable({ boardId, onOpenTask }) {
         <div className="flex items-center justify-between px-4 py-3 border-t border-gray-100 text-xs text-gray-500">
           <div className="mono tracking-[0.08em]">
             {isFetching && !isLoading ? (
-              <span className="text-gray-400">Обновление…</span>
+              <span className="text-gray-400">{t('tasksTable.refreshing')}</span>
             ) : (
               <span>
                 {totalElements === 0
-                  ? '0 задач'
-                  : `${currentPage * PAGE_SIZE + 1}–${Math.min((currentPage + 1) * PAGE_SIZE, totalElements)} из ${totalElements}`}
+                  ? t('tasksTable.noResults')
+                  : t('tasksTable.countLabel', {
+                      from: currentPage * PAGE_SIZE + 1,
+                      to: Math.min((currentPage + 1) * PAGE_SIZE, totalElements),
+                      total: totalElements,
+                    })}
               </span>
             )}
           </div>
@@ -224,7 +227,7 @@ export function TasksTable({ boardId, onOpenTask }) {
               disabled={currentPage === 0}
               onClick={() => setPage((p) => Math.max(0, p - 1))}
               className="w-8 h-8 inline-flex items-center justify-center rounded-md border border-gray-200 disabled:opacity-40 disabled:cursor-not-allowed hover:border-ink"
-              aria-label="Предыдущая страница"
+              aria-label={t('common.previous')}
             >
               <ChevronLeft className="w-4 h-4" />
             </button>
@@ -235,7 +238,7 @@ export function TasksTable({ boardId, onOpenTask }) {
               disabled={currentPage + 1 >= totalPages}
               onClick={() => setPage((p) => p + 1)}
               className="w-8 h-8 inline-flex items-center justify-center rounded-md border border-gray-200 disabled:opacity-40 disabled:cursor-not-allowed hover:border-ink"
-              aria-label="Следующая страница"
+              aria-label={t('common.next')}
             >
               <ChevronRight className="w-4 h-4" />
             </button>
@@ -265,6 +268,7 @@ function SortIcon({ active, dir }) {
 }
 
 function TaskRow({ task, column, assignee, onClick }) {
+  const { t } = useTranslation()
   const p = PRIORITIES[task.priority] || PRIORITIES.MEDIUM
   const s = STATUSES[task.status] || STATUSES.TODO
   const dl = deadlineStatus(task.deadline)
@@ -282,12 +286,12 @@ function TaskRow({ task, column, assignee, onClick }) {
       </td>
       <td className="px-4 py-3 whitespace-nowrap">
         <span className="inline-flex items-center gap-1.5 text-xs mono tracking-[0.08em] uppercase">
-          <Dot color={s.color} /> {s.label}
+          <Dot color={s.color} /> {t(`statuses.${task.status}`)}
         </span>
       </td>
       <td className="px-4 py-3 whitespace-nowrap">
         <span className="inline-flex items-center gap-1.5 text-xs mono tracking-[0.08em] uppercase">
-          <Dot color={p.color} /> {p.label}
+          <Dot color={p.color} /> {t(`priorities.${task.priority}`)}
         </span>
       </td>
       <td className="px-4 py-3 whitespace-nowrap">
@@ -321,7 +325,7 @@ function TaskRow({ task, column, assignee, onClick }) {
             <span className="text-xs text-gray-700 truncate max-w-[120px]">{assignee.username}</span>
           </div>
         ) : (
-          <span className="text-xs text-gray-300">Не назначен</span>
+          <span className="text-xs text-gray-300">{t('tasks.unassigned')}</span>
         )}
       </td>
     </tr>

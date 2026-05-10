@@ -3,12 +3,14 @@ import { Avatar } from '../ui/Avatar'
 import { Badge } from '../ui/Badge'
 import { useGroupMembers, useUpdateMemberRole, useRemoveMember } from '../../hooks/useGroups'
 import { useAuthStore } from '../../store/authStore'
+import { useTranslation } from '../../i18n'
 
 export function MemberList({ groupId, isAdmin }) {
   const { data: members = [], isLoading } = useGroupMembers(groupId)
   const updateRole = useUpdateMemberRole(groupId)
   const removeMember = useRemoveMember(groupId)
   const currentUser = useAuthStore((s) => s.user)
+  const { t } = useTranslation()
 
   if (isLoading) {
     return <div className="skeleton h-40 rounded-lg" />
@@ -19,8 +21,8 @@ export function MemberList({ groupId, isAdmin }) {
       <table className="w-full text-sm">
         <thead>
           <tr className="text-xs mono tracking-[0.1em] uppercase text-gray-400 bg-gray-100/50">
-            <th className="text-left px-6 py-3 font-normal">Участник</th>
-            <th className="text-left py-3 font-normal">Роль</th>
+            <th className="text-left px-6 py-3 font-normal">{t('common.member')}</th>
+            <th className="text-left py-3 font-normal">{t('groups.role')}</th>
             {isAdmin && <th className="w-10"></th>}
           </tr>
         </thead>
@@ -29,12 +31,13 @@ export function MemberList({ groupId, isAdmin }) {
             const isSelf = m.userId === currentUser?.id
             const user = m.user || { id: m.userId, username: isSelf ? currentUser?.username : `user#${m.userId}` }
             const displayUser = isSelf ? { ...user, username: currentUser?.username, avatar: currentUser?.avatar } : user
+            const roleLabel = m.role === 'ADMIN' ? t('groups.roleAdmin') : t('groups.roleMember')
             return (
               <tr key={m.userId} className="border-t border-gray-100 hover:bg-gray-100/50 transition-colors">
                 <td className="px-6 py-3">
                   <div className="flex items-center gap-3">
                     <Avatar user={displayUser} size="sm" />
-                    <span>{displayUser.username}{isSelf && <span className="text-gray-400 ml-1">(вы)</span>}</span>
+                    <span>{displayUser.username}</span>
                   </div>
                 </td>
                 <td className="py-3">
@@ -44,20 +47,20 @@ export function MemberList({ groupId, isAdmin }) {
                       onChange={(e) => updateRole.mutate({ userId: m.userId, role: e.target.value })}
                       className="bg-transparent text-sm border border-gray-200 rounded px-2 py-1 focus:border-ink outline-none"
                     >
-                      <option value="ADMIN">ADMIN</option>
-                      <option value="MEMBER">MEMBER</option>
+                      <option value="ADMIN">{t('groups.roleAdmin')}</option>
+                      <option value="MEMBER">{t('groups.roleMember')}</option>
                     </select>
                   ) : (
-                    <Badge variant={m.role === 'ADMIN' ? 'ink' : 'default'}>{m.role}</Badge>
+                    <Badge variant={m.role === 'ADMIN' ? 'ink' : 'default'}>{roleLabel}</Badge>
                   )}
                 </td>
                 {isAdmin && (
                   <td className="py-3 pr-4 text-right">
                     {!isSelf && (
                       <button
-                        onClick={() => { if (confirm('Удалить участника?')) removeMember.mutate(m.userId) }}
+                        onClick={() => { if (confirm(t('groups.removeMemberConfirm'))) removeMember.mutate(m.userId) }}
                         className="w-8 h-8 inline-flex items-center justify-center rounded-md text-gray-400 hover:text-priority-high hover:bg-priority-high/10 transition-colors"
-                        aria-label="Удалить"
+                        aria-label={t('common.delete')}
                       >
                         <Trash2 className="w-4 h-4" />
                       </button>
@@ -68,7 +71,7 @@ export function MemberList({ groupId, isAdmin }) {
             )
           })}
           {members.length === 0 && (
-            <tr><td colSpan={isAdmin ? 3 : 2} className="px-6 py-8 text-center text-gray-500">Нет участников</td></tr>
+            <tr><td colSpan={isAdmin ? 3 : 2} className="px-6 py-8 text-center text-gray-500">{t('common.none')}</td></tr>
           )}
         </tbody>
       </table>

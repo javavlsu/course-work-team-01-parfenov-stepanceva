@@ -1,5 +1,6 @@
 import axios from 'axios'
 import { toast } from 'sonner'
+import { translateError } from '../i18n'
 
 export const API_BASE = import.meta.env.VITE_API_BASE ?? '/kanban/api'
 
@@ -38,13 +39,19 @@ client.interceptors.response.use(
       }
     }
 
-    const msg = err.response?.data?.message
+    // Глобальные toast'ы для статусов, которые редко осмысленно обрабатывать в месте вызова.
+    // Конкретные ошибки (404, validation) показывают сами хуки/страницы через translateError.
     if (status === 401 && isAuthEndpoint) {
-      // refresh/checkAuth вернул 401 — редирект обработан в interceptor выше, toast не нужен
-    } else if (status === 403) toast.error(msg || 'Недостаточно прав')
-    else if (status === 409) toast.error(msg || 'Конфликт данных')
-    else if (status === 410) toast.error(msg || 'Ссылка или приглашение истекло')
-    else if (status === 500) toast.error(msg || 'Ошибка сервера')
+      // refresh/checkAuth вернул 401 — редирект уже обработан выше, toast не нужен
+    } else if (status === 403) {
+      toast.error(translateError(err, 'errors.forbidden'))
+    } else if (status === 409) {
+      toast.error(translateError(err, 'errors.conflict'))
+    } else if (status === 410) {
+      toast.error(translateError(err, 'errors.gone'))
+    } else if (status === 500) {
+      toast.error(translateError(err, 'errors.SY0001'))
+    }
 
     return Promise.reject(err)
   }

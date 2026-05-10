@@ -1,12 +1,14 @@
 import { motion } from 'framer-motion'
-
-const features = [
-  { num: '01', title: 'Командная работа', desc: 'Группы, участники, роли. Приглашайте по email или ссылке, назначайте admin/member.' },
-  { num: '02', title: 'Drag & Drop', desc: 'Перетаскивайте задачи между колонками, меняйте порядок внутри — всё плавно и интуитивно.' },
-  { num: '03', title: 'История изменений', desc: 'Каждое изменение сохраняется: кто, что и когда. Полный аудит действий внутри команды.' },
-]
+import { useTranslation } from '../../i18n'
 
 export function FeaturesSection() {
+  const { t } = useTranslation()
+  const features = [
+    { num: '01', title: t('landing.feature1Title'), desc: t('landing.feature1Desc') },
+    { num: '02', title: t('landing.feature2Title'), desc: t('landing.feature2Desc') },
+    { num: '03', title: t('landing.feature3Title'), desc: t('landing.feature3Desc') },
+  ]
+
   return (
     <section id="features" className="py-24 px-6 md:px-12 border-t border-gray-100">
       <div className="max-w-container mx-auto">
@@ -17,8 +19,8 @@ export function FeaturesSection() {
           transition={{ duration: 0.6 }}
           className="mb-16 text-center"
         >
-          <div className="mono tracking-[0.2em] text-xs text-gray-400 uppercase mb-3">What we offer</div>
-          <h2 className="display-serif text-3xl md:text-4xl tracking-[-0.02em]">Зачем вам это.</h2>
+          <div className="mono tracking-[0.2em] text-xs text-gray-400 uppercase mb-3">{t('landing.featuresTitle')}</div>
+          <h2 className="display-serif text-3xl md:text-4xl tracking-[-0.02em]">{t('landing.featuresTitle')}</h2>
         </motion.div>
         <div className="grid md:grid-cols-3 gap-8">
           {features.map((f, i) => (

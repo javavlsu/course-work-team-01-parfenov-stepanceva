@@ -2,12 +2,14 @@ import { useState } from 'react'
 import { Link } from 'react-router-dom'
 import { motion } from 'framer-motion'
 import { formatDate } from '../../utils/dates'
+import { useTranslation } from '../../i18n'
 import { cn } from '../../utils/cn'
 
 const DESC_CLAMP_THRESHOLD = 120
 
 export function BoardCard({ board, index = 0 }) {
   const [descExpanded, setDescExpanded] = useState(false)
+  const { t } = useTranslation()
   const isLongDesc = board.description && board.description.length > DESC_CLAMP_THRESHOLD
 
   return (
@@ -43,15 +45,15 @@ export function BoardCard({ board, index = 0 }) {
                     onClick={(e) => { e.preventDefault(); e.stopPropagation(); setDescExpanded((v) => !v) }}
                     className="text-xs text-gray-400 hover:text-ink mt-1 transition-colors"
                   >
-                    {descExpanded ? 'Свернуть' : 'Читать далее'}
+                    {descExpanded ? t('common.close') : t('common.more')}
                   </button>
                 )}
               </div>
             )}
           </div>
           <div className="space-y-1">
-            <div className="text-xs text-gray-600">Создано: {formatDate(board.createdAt)}</div>
-            {board.author?.username && <div className="text-xs text-gray-600">Автор: @{board.author.username}</div>}
+            <div className="text-xs text-gray-600">{t('tasks.createdAt')}: {formatDate(board.createdAt)}</div>
+            {board.author?.username && <div className="text-xs text-gray-600">@{board.author.username}</div>}
           </div>
         </div>
       </Link>

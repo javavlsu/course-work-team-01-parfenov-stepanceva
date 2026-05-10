@@ -6,6 +6,7 @@ import { Toaster } from 'sonner'
 import { AuthGuard, GuestGuard } from './components/auth/AuthGuard'
 import { authApi } from './api/auth'
 import { useAuthStore } from './store/authStore'
+import { useTranslation } from './i18n'
 
 const LandingPage = lazy(() => import('./pages/LandingPage'))
 const LoginPage = lazy(() => import('./pages/LoginPage'))
@@ -67,12 +68,13 @@ function AnimatedRoutes() {
 }
 
 function NotFound() {
+  const { t } = useTranslation()
   return (
     <div className="min-h-screen flex items-center justify-center bg-paper">
       <div className="text-center">
-        <div className="display-serif text-[10rem] leading-none">404</div>
-        <p className="mt-4 text-gray-600">Страница не найдена</p>
-        <a href="/" className="mt-6 inline-block underline underline-offset-4">На главную</a>
+        <div className="display-serif text-[10rem] leading-none">{t('notFound.title')}</div>
+        <p className="mt-4 text-gray-600">{t('notFound.message')}</p>
+        <a href="/" className="mt-6 inline-block underline underline-offset-4">{t('notFound.goHome')}</a>
       </div>
     </div>
   )

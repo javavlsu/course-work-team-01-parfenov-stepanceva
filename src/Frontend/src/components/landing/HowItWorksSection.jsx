@@ -1,13 +1,14 @@
 import { motion } from 'framer-motion'
-
-const steps = [
-  { n: '❶', title: 'Создайте группу', desc: 'Назовите свою команду и добавьте описание.' },
-  { n: '❷', title: 'Добавьте доску', desc: 'Для каждого проекта или спринта.' },
-  { n: '❸', title: 'Пригласите команду', desc: 'По email или публичной ссылке.' },
-  { n: '❹', title: 'Работайте', desc: 'Задачи, приоритеты, дедлайны, комментарии.' },
-]
+import { useTranslation } from '../../i18n'
 
 export function HowItWorksSection() {
+  const { t } = useTranslation()
+  const steps = [
+    { n: '❶', title: t('landing.step1'), desc: t('landing.step1Desc') },
+    { n: '❷', title: t('landing.step2'), desc: t('landing.step2Desc') },
+    { n: '❸', title: t('landing.step3'), desc: t('landing.step3Desc') },
+  ]
+
   return (
     <section id="how" className="py-24 px-6 md:px-12 bg-gray-100/50">
       <div className="max-w-container mx-auto">
@@ -18,11 +19,11 @@ export function HowItWorksSection() {
           transition={{ duration: 0.6 }}
           className="mb-16 text-center"
         >
-          <div className="mono tracking-[0.2em] text-xs text-gray-400 uppercase mb-3">Getting started</div>
-          <h2 className="display-serif text-3xl md:text-4xl">Как это работает.</h2>
+          <div className="mono tracking-[0.2em] text-xs text-gray-400 uppercase mb-3">{t('landing.howTitle')}</div>
+          <h2 className="display-serif text-3xl md:text-4xl">{t('landing.howTitle')}</h2>
         </motion.div>
 
-        <div className="grid md:grid-cols-4 gap-6">
+        <div className="grid md:grid-cols-3 gap-6">
           {steps.map((s, i) => (
             <motion.div
               key={i}

@@ -1,6 +1,7 @@
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query'
 import { toast } from 'sonner'
 import { boardsApi, boardUsersApi } from '../api/resources'
+import { translateError, t } from '../i18n'
 
 export const boardsAllKey = ['boards', 'all']
 export const boardsForGroupKey = (groupId) => ['boards', 'group', groupId]
@@ -30,7 +31,7 @@ export function useCreateBoard() {
     onSuccess: (b) => {
       qc.invalidateQueries({ queryKey: boardsAllKey })
       if (b?.groupId) qc.invalidateQueries({ queryKey: boardsForGroupKey(b.groupId) })
-      toast.success('Доска создана')
+      toast.success(t('boards.created'))
     },
   })
 }
@@ -42,7 +43,7 @@ export function useUpdateBoard() {
     onSuccess: (_, { id }) => {
       qc.invalidateQueries({ queryKey: boardsAllKey })
       qc.invalidateQueries({ queryKey: boardKey(id) })
-      toast.success('Сохранено')
+      toast.success(t('boards.saved'))
     },
   })
 }
@@ -53,7 +54,7 @@ export function useDeleteBoard() {
     mutationFn: (id) => boardsApi.remove(id),
     onSuccess: () => {
       qc.invalidateQueries({ queryKey: boardsAllKey })
-      toast.success('Доска удалена')
+      toast.success(t('boards.deleted'))
     },
   })
 }
@@ -72,11 +73,10 @@ export function useAddBoardUser(boardId) {
     mutationFn: (userId) => boardUsersApi.add(boardId, userId),
     onSuccess: () => {
       qc.invalidateQueries({ queryKey: boardUsersKey(boardId) })
-      toast.success('Участник добавлен на доску')
+      toast.success(t('boards.memberAdded'))
     },
     onError: (err) => {
-      const msg = err.response?.data?.message
-      toast.error(msg || 'Не удалось добавить участника')
+      toast.error(translateError(err, 'boards.addMemberFailed'))
     },
   })
 }
@@ -87,11 +87,10 @@ export function useRemoveBoardUser(boardId) {
     mutationFn: (userId) => boardUsersApi.remove(boardId, userId),
     onSuccess: () => {
       qc.invalidateQueries({ queryKey: boardUsersKey(boardId) })
-      toast.success('Участник удалён с доски')
+      toast.success(t('boards.memberRemoved'))
     },
     onError: (err) => {
-      const msg = err.response?.data?.message
-      toast.error(msg || 'Не удалось удалить участника')
+      toast.error(translateError(err, 'boards.removeMemberFailed'))
     },
   })
 }

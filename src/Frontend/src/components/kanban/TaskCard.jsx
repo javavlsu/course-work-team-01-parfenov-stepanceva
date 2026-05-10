@@ -6,13 +6,23 @@ import { MessageSquare, Paperclip, Pencil, AlertCircle } from 'lucide-react'
 import { Avatar } from '../ui/Avatar'
 import { Dot } from '../ui/Badge'
 import { PRIORITIES } from '../../utils/priorities'
-import { deadlineStatus } from '../../utils/dates'
+import { deadlineStatus, formatDate } from '../../utils/dates'
+import { useTranslation } from '../../i18n'
 import { cn } from '../../utils/cn'
 
 function TaskCardImpl({ task, usersById = {}, onOpen, isOverlay = false }) {
+  const { t } = useTranslation()
   const assignee = task.assignee || (task.assigneeId ? usersById[task.assigneeId] : null)
   const p = PRIORITIES[task.priority] || PRIORITIES.MEDIUM
   const dl = deadlineStatus(task.deadline)
+
+  const dlLabel = dl.kind === 'overdue'
+    ? t('tasks.overdue')
+    : dl.kind === 'soon'
+      ? `${dl.days} ${t('tasks.days')}`
+      : dl.kind === 'future'
+        ? formatDate(dl.date, 'dd MMM')
+        : ''
 
   const { attributes, listeners, setNodeRef, transform, transition, isDragging } = useSortable({
     id: task.id,
@@ -44,7 +54,7 @@ function TaskCardImpl({ task, usersById = {}, onOpen, isOverlay = false }) {
       <div className="flex items-center justify-between mb-2 text-[11px] mono">
         <div className="inline-flex items-center gap-1.5">
           <Dot color={p.color} />
-          <span className="tracking-[0.08em] uppercase text-gray-600">{p.label}</span>
+          <span className="tracking-[0.08em] uppercase text-gray-600">{t(`priorities.${task.priority}`)}</span>
         </div>
         {task.deadline && (
           <span
@@ -56,7 +66,7 @@ function TaskCardImpl({ task, usersById = {}, onOpen, isOverlay = false }) {
             )}
           >
             {dl.color === 'danger' && <AlertCircle className="w-3 h-3" />}
-            {dl.label}
+            {dlLabel}
           </span>
         )}
       </div>

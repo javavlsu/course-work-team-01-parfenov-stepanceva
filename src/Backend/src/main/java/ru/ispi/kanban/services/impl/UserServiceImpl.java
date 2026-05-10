@@ -7,6 +7,9 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 import ru.ispi.kanban.dto.UserDto;
 import ru.ispi.kanban.entities.User;
+import ru.ispi.kanban.exceptions.FileEmptyException;
+import ru.ispi.kanban.exceptions.FileTooLargeException;
+import ru.ispi.kanban.exceptions.InvalidFileTypeException;
 import ru.ispi.kanban.exceptions.InvalidPasswordException;
 import ru.ispi.kanban.exceptions.NoSuchUserByEmailException;
 import ru.ispi.kanban.exceptions.NoSuchUserByIdException;
@@ -121,17 +124,17 @@ public class UserServiceImpl implements UserService {
         User user = getEntity(id);
 
         if (file.isEmpty()) {
-            throw new IllegalArgumentException("File is empty");
+            throw new FileEmptyException("File is empty");
         }
 
         if (file.getSize() > MAX_FILE_SIZE) {
-            throw new IllegalArgumentException("File too large");
+            throw new FileTooLargeException("File too large");
         }
 
         String contentType = file.getContentType();
 
         if (contentType == null || !ALLOWED_TYPES.contains(contentType)) {
-            throw new IllegalArgumentException("Invalid file type");
+            throw new InvalidFileTypeException("Invalid file type");
         }
 
         // удаляем старый файл

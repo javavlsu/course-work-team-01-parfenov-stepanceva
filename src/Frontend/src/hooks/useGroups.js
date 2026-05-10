@@ -1,6 +1,7 @@
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query'
 import { toast } from 'sonner'
 import { groupsApi, membersApi } from '../api/resources'
+import { t } from '../i18n'
 
 export const groupsKey = ['groups']
 export const groupKey = (id) => ['group', id]
@@ -24,7 +25,7 @@ export function useCreateGroup() {
     mutationFn: (data) => groupsApi.create(data),
     onSuccess: (g) => {
       qc.invalidateQueries({ queryKey: groupsKey })
-      toast.success('Группа создана')
+      toast.success(t('groups.created'))
       return g
     },
   })
@@ -37,7 +38,7 @@ export function useUpdateGroup() {
     onSuccess: (_, { id }) => {
       qc.invalidateQueries({ queryKey: groupsKey })
       qc.invalidateQueries({ queryKey: groupKey(id) })
-      toast.success('Обновлено')
+      toast.success(t('boards.saved'))
     },
   })
 }
@@ -48,7 +49,7 @@ export function useDeleteGroup() {
     mutationFn: (id) => groupsApi.remove(id),
     onSuccess: () => {
       qc.invalidateQueries({ queryKey: groupsKey })
-      toast.success('Группа удалена')
+      toast.success(t('groups.deleted'))
     },
   })
 }
@@ -59,7 +60,7 @@ export function useUpdateMemberRole(groupId) {
     mutationFn: ({ userId, role }) => membersApi.updateRole(groupId, userId, role),
     onSuccess: () => {
       qc.invalidateQueries({ queryKey: membersKey(groupId) })
-      toast.success('Роль обновлена')
+      toast.success(t('groups.roleChanged'))
     },
   })
 }
@@ -70,7 +71,7 @@ export function useRemoveMember(groupId) {
     mutationFn: (userId) => membersApi.remove(groupId, userId),
     onSuccess: () => {
       qc.invalidateQueries({ queryKey: membersKey(groupId) })
-      toast.success('Участник удалён')
+      toast.success(t('groups.memberRemoved'))
     },
   })
 }

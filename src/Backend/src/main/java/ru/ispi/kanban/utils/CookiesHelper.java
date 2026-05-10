@@ -3,12 +3,14 @@ package ru.ispi.kanban.utils;
 import jakarta.servlet.http.HttpServletResponse;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.ResponseCookie;
-import org.springframework.stereotype.Component;
 
-@Component
-public class CookiesHelper {
-    public void setCookie(HttpServletResponse response, String nameCookie, String valueCookie, int maxAge){
-        ResponseCookie cookie = ResponseCookie.from(nameCookie, valueCookie)
+public final class CookiesHelper {
+
+    private CookiesHelper() {
+    }
+
+    public static void setCookie(HttpServletResponse response, String name, String value, int maxAge) {
+        ResponseCookie cookie = ResponseCookie.from(name, value)
                 .httpOnly(true)
                 .secure(false)
                 .path("/")

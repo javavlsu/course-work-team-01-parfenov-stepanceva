@@ -10,6 +10,7 @@ import { GroupCreateModal } from '../components/groups/GroupCreateModal'
 import { useGroups } from '../hooks/useGroups'
 import { useMyInvitations, useRespondInvitation } from '../hooks/useInvitations'
 import { useAuthStore } from '../store/authStore'
+import { useTranslation } from '../i18n'
 
 export default function DashboardPage() {
   const currentUser = useAuthStore((s) => s.user)
@@ -20,6 +21,7 @@ export default function DashboardPage() {
   const [bannerOpen, setBannerOpen] = useState(true)
   const [expandInvites, setExpandInvites] = useState(false)
   const nav = useNavigate()
+  const { t } = useTranslation()
 
   const pending = invitations.filter((i) => i.status === 'PENDING')
 
@@ -36,11 +38,11 @@ export default function DashboardPage() {
             <div className="flex items-center justify-between gap-4">
               <div className="flex items-center gap-3">
                 <span className="text-xl">📬</span>
-                <span className="text-sm">У вас {pending.length} приглашен{pending.length === 1 ? 'ие' : pending.length < 5 ? 'ия' : 'ий'} в команду</span>
+                <span className="text-sm">{t('dashboard.pendingInvites')}: {pending.length}</span>
               </div>
               <div className="flex items-center gap-2">
                 <Button size="sm" variant="secondary" onClick={() => setExpandInvites((v) => !v)}>
-                  {expandInvites ? 'Скрыть' : 'Посмотреть'}
+                  {expandInvites ? t('common.close') : t('common.more')}
                 </Button>
                 <button onClick={() => setBannerOpen(false)} className="w-8 h-8 inline-flex items-center justify-center rounded-md hover:bg-ink/10">✕</button>
               </div>
@@ -50,15 +52,15 @@ export default function DashboardPage() {
                 {pending.map((inv) => (
                   <div key={inv.id} className="bg-paper rounded-md p-3 flex items-center justify-between gap-3">
                     <div>
-                      <div className="text-sm font-medium">{inv.group?.name || 'Группа'}</div>
-                      <div className="text-xs text-gray-600">От: {inv.createdBy?.username}</div>
+                      <div className="text-sm font-medium">{inv.group?.name || t('common.notFound')}</div>
+                      <div className="text-xs text-gray-600">{t('invitations.sentBy')}: {inv.createdBy?.username}</div>
                     </div>
                     <div className="flex items-center gap-1">
                       <button
                         onClick={() => respond.mutate({ id: inv.id, accept: true })}
                         disabled={respond.isPending}
                         className="w-8 h-8 inline-flex items-center justify-center rounded-md bg-status-done text-paper hover:opacity-90"
-                        aria-label="Принять"
+                        aria-label={t('dashboard.accept')}
                       >
                         <Check className="w-4 h-4" />
                       </button>
@@ -66,7 +68,7 @@ export default function DashboardPage() {
                         onClick={() => respond.mutate({ id: inv.id, accept: false })}
                         disabled={respond.isPending}
                         className="w-8 h-8 inline-flex items-center justify-center rounded-md bg-priority-high text-paper hover:opacity-90"
-                        aria-label="Отклонить"
+                        aria-label={t('dashboard.decline')}
                       >
                         <X className="w-4 h-4" />
                       </button>
@@ -80,10 +82,10 @@ export default function DashboardPage() {
 
         <div className="flex flex-wrap items-end justify-between gap-4 mb-10">
           <div>
-            <div className="mono text-xs tracking-[0.15em] uppercase text-gray-400 mb-2">Dashboard</div>
-            <h1 className="display-serif text-3xl md:text-4xl leading-none">Привет, {currentUser?.username}!</h1>
+            <div className="mono text-xs tracking-[0.15em] uppercase text-gray-400 mb-2">{t('dashboard.title')}</div>
+            <h1 className="display-serif text-3xl md:text-4xl leading-none">{t('dashboard.welcome', { name: currentUser?.username })}</h1>
           </div>
-          <Button icon={Plus} size="lg" onClick={() => setOpen(true)}>Создать группу</Button>
+          <Button icon={Plus} size="lg" onClick={() => setOpen(true)}>{t('dashboard.createGroup')}</Button>
         </div>
 
         {isLoading ? (
@@ -114,11 +116,12 @@ export default function DashboardPage() {
 }
 
 function EmptyState({ onCreate }) {
+  const { t } = useTranslation()
   return (
     <div className="border border-dashed border-gray-200 rounded-lg p-16 text-center">
-      <h2 className="display-serif text-2xl mb-2">Здесь пока пусто</h2>
-      <p className="text-gray-600 mb-6">Создайте первую группу, чтобы начать работу.</p>
-      <Button onClick={onCreate} icon={Plus}>Создать группу</Button>
+      <h2 className="display-serif text-2xl mb-2">{t('dashboard.noGroups')}</h2>
+      <p className="text-gray-600 mb-6">{t('dashboard.noGroupsHint')}</p>
+      <Button onClick={onCreate} icon={Plus}>{t('dashboard.createGroup')}</Button>
     </div>
   )
 }
