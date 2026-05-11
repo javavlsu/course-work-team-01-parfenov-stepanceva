@@ -4,14 +4,13 @@ import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
 import ru.ispi.kanban.dto.InvitationDto;
 import ru.ispi.kanban.payloads.CreateEmailInvitationPayload;
 import ru.ispi.kanban.payloads.CreateLinkInvitationPayload;
 import ru.ispi.kanban.payloads.InvitationRespondPayload;
-import ru.ispi.kanban.security.CustomUserDetails;
 import ru.ispi.kanban.services.InvitationService;
+import ru.ispi.kanban.utils.SecurityUtils;
 
 import java.util.List;
 
@@ -24,67 +23,50 @@ public class InvitationController {
 
     @PostMapping("/group/{groupId}/email")
     public ResponseEntity<InvitationDto> inviteByEmail(
-            @AuthenticationPrincipal CustomUserDetails user,
             @PathVariable Integer groupId,
             @Valid @RequestBody CreateEmailInvitationPayload payload
     ) {
         return ResponseEntity
                 .status(HttpStatus.CREATED)
-                .body(invitationService.inviteByEmail(groupId, user.getId(), payload));
+                .body(invitationService.inviteByEmail(groupId, SecurityUtils.requireCurrentUserId(), payload));
     }
 
-    // Сгенерировать ссылку-приглашение (многоразовая, действует до expiresInDays).
     @PostMapping("/group/{groupId}/link")
     public ResponseEntity<InvitationDto> generateLink(
-            @AuthenticationPrincipal CustomUserDetails user,
             @PathVariable Integer groupId,
             @Valid @RequestBody CreateLinkInvitationPayload payload
     ) {
         return ResponseEntity
                 .status(HttpStatus.CREATED)
-                .body(invitationService.generateInviteLink(groupId, user.getId(), payload));
+                .body(invitationService.generateInviteLink(groupId, SecurityUtils.requireCurrentUserId(), payload));
     }
 
     @GetMapping("/group/{groupId}")
-    public ResponseEntity<List<InvitationDto>> getGroupInvitations(
-            @AuthenticationPrincipal CustomUserDetails user,
-            @PathVariable Integer groupId
-    ) {
-        return ResponseEntity.ok(invitationService.getGroupInvitations(groupId, user.getId()));
+    public ResponseEntity<List<InvitationDto>> getGroupInvitations(@PathVariable Integer groupId) {
+        return ResponseEntity.ok(invitationService.getGroupInvitations(groupId, SecurityUtils.requireCurrentUserId()));
     }
 
-    // Отозвать приглашение
     @DeleteMapping("/{invitationId}")
-    public ResponseEntity<Void> revokeInvitation(
-            @AuthenticationPrincipal CustomUserDetails user,
-            @PathVariable Integer invitationId
-    ) {
-        invitationService.revokeInvitation(invitationId, user.getId());
+    public ResponseEntity<Void> revokeInvitation(@PathVariable Integer invitationId) {
+        invitationService.revokeInvitation(invitationId, SecurityUtils.requireCurrentUserId());
         return ResponseEntity.noContent().build();
     }
 
     @GetMapping("/my")
-    public ResponseEntity<List<InvitationDto>> getMyInvitations(
-            @AuthenticationPrincipal CustomUserDetails user
-    ) {
-        return ResponseEntity.ok(invitationService.getMyInvitations(user.getId()));
+    public ResponseEntity<List<InvitationDto>> getMyInvitations() {
+        return ResponseEntity.ok(invitationService.getMyInvitations(SecurityUtils.requireCurrentUserId()));
     }
 
-    // Body: { "accept": true } или { "accept": false }
     @PostMapping("/{invitationId}/respond")
     public ResponseEntity<InvitationDto> respond(
-            @AuthenticationPrincipal CustomUserDetails user,
             @PathVariable Integer invitationId,
             @Valid @RequestBody InvitationRespondPayload payload
     ) {
-        return ResponseEntity.ok(invitationService.respond(invitationId, user.getId(), payload));
+        return ResponseEntity.ok(invitationService.respond(invitationId, SecurityUtils.requireCurrentUserId(), payload));
     }
 
     @PostMapping("/join/{token}")
-    public ResponseEntity<InvitationDto> joinByLink(
-            @AuthenticationPrincipal CustomUserDetails user,
-            @PathVariable String token
-    ) {
-        return ResponseEntity.ok(invitationService.joinByLink(token, user.getId()));
+    public ResponseEntity<InvitationDto> joinByLink(@PathVariable String token) {
+        return ResponseEntity.ok(invitationService.joinByLink(token, SecurityUtils.requireCurrentUserId()));
     }
 }

@@ -55,7 +55,7 @@ export default function RegisterPage() {
   const onSubmit = (data) => registerMutation.mutate(data)
 
   return (
-    <AuthLayout title={t('auth.registerTitle')} subtitle="— Create account">
+    <AuthLayout title={t('auth.registerTitle')} subtitle={t('auth.registerSubtitle')}>
       <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
         {[
           <Input key="u" label={t('auth.nameLabel')} error={errors.name?.message} {...register('name')} />,

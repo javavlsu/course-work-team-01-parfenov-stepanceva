@@ -4,12 +4,11 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 import ru.ispi.kanban.dto.AttachmentDto;
-import ru.ispi.kanban.security.CustomUserDetails;
 import ru.ispi.kanban.services.AttachmentService;
+import ru.ispi.kanban.utils.SecurityUtils;
 
 import java.util.List;
 
@@ -22,32 +21,29 @@ public class AttachmentController {
 
     @GetMapping
     public ResponseEntity<List<AttachmentDto>> getTaskAttachments(
-            @AuthenticationPrincipal CustomUserDetails user,
             @PathVariable Integer boardId,
             @PathVariable Integer taskId
     ) {
-        return ResponseEntity.ok(attachmentService.getAttachmentsByTask(user.getId(), boardId, taskId));
+        return ResponseEntity.ok(attachmentService.getAttachmentsByTask(SecurityUtils.requireCurrentUserId(), boardId, taskId));
     }
 
     @PostMapping(consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
     public ResponseEntity<AttachmentDto> upload(
-            @AuthenticationPrincipal CustomUserDetails user,
             @PathVariable Integer boardId,
             @PathVariable Integer taskId,
             @RequestParam("file") MultipartFile file
     ) {
         return ResponseEntity.status(HttpStatus.CREATED)
-                .body(attachmentService.upload(user.getId(), boardId, taskId, file));
+                .body(attachmentService.upload(SecurityUtils.requireCurrentUserId(), boardId, taskId, file));
     }
 
     @DeleteMapping("/{attachmentId}")
     public ResponseEntity<Void> delete(
-            @AuthenticationPrincipal CustomUserDetails user,
             @PathVariable Integer boardId,
             @PathVariable Integer taskId,
             @PathVariable Integer attachmentId
     ) {
-        attachmentService.delete(user.getId(), boardId, taskId, attachmentId);
+        attachmentService.delete(SecurityUtils.requireCurrentUserId(), boardId, taskId, attachmentId);
         return ResponseEntity.noContent().build();
     }
 }

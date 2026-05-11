@@ -10,6 +10,8 @@ public final class ErrorCode {
     public static final String AUTH_TOKEN_EXPIRED = "AU0002";
     public static final String AUTH_REFRESH_INVALID = "AU0003";
     public static final String AUTH_REFRESH_EXPIRED = "AU0004";
+    public static final String AUTH_UNAUTHENTICATED = "AU0005";
+    public static final String AUTH_FORBIDDEN = "AU0006";
 
     // US — User
     public static final String USER_NOT_FOUND_BY_EMAIL = "US0001";

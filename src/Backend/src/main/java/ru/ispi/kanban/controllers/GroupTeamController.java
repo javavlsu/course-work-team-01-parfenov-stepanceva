@@ -4,12 +4,11 @@ import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
 import ru.ispi.kanban.dto.GroupTeamDto;
 import ru.ispi.kanban.payloads.GroupTeamPayload;
-import ru.ispi.kanban.security.CustomUserDetails;
 import ru.ispi.kanban.services.GroupTeamService;
+import ru.ispi.kanban.utils.SecurityUtils;
 
 import java.util.List;
 
@@ -20,61 +19,40 @@ public class GroupTeamController {
 
     private final GroupTeamService groupTeamService;
 
-//    @GetMapping("all")
-//    public ResponseEntity<?> getAllGroupTeams()
-//    {
-//        return ResponseEntity
-//                .status(HttpStatus.OK)
-//                .body(groupTeamService.getGroupTeams());
-//    }
-
     @GetMapping()
-    public ResponseEntity<List<GroupTeamDto>> getUserGroupTeams(
-            @AuthenticationPrincipal CustomUserDetails user
-    ) {
-
+    public ResponseEntity<List<GroupTeamDto>> getUserGroupTeams() {
         return ResponseEntity
                 .status(HttpStatus.OK)
-                .body(groupTeamService.getUserGroups(user.getId()));
+                .body(groupTeamService.getUserGroups(SecurityUtils.requireCurrentUserId()));
     }
 
     @GetMapping("{id}")
-    public ResponseEntity<GroupTeamDto> getGroupTeamById(
-            @PathVariable Integer id,
-            @AuthenticationPrincipal CustomUserDetails user
-    ) {
+    public ResponseEntity<GroupTeamDto> getGroupTeamById(@PathVariable Integer id) {
         return ResponseEntity
                 .status(HttpStatus.OK)
-                .body(groupTeamService.get(id, user.getId()));
-
+                .body(groupTeamService.get(id, SecurityUtils.requireCurrentUserId()));
     }
 
     @PostMapping()
-    public ResponseEntity<GroupTeamDto> createGroupTeam(@Valid @RequestBody GroupTeamPayload groupTeam,
-                                                        @AuthenticationPrincipal CustomUserDetails user)
-    {
+    public ResponseEntity<GroupTeamDto> createGroupTeam(@Valid @RequestBody GroupTeamPayload groupTeam) {
         return ResponseEntity
                 .status(HttpStatus.CREATED)
-                .body(groupTeamService.create(groupTeam, user.getId()));
+                .body(groupTeamService.create(groupTeam, SecurityUtils.requireCurrentUserId()));
     }
 
     @PutMapping("{id}")
-    public ResponseEntity<GroupTeamDto> updateGroupTeam(@PathVariable Integer id,
-                                                        @Valid @RequestBody GroupTeamPayload groupTeamPayload,
-                                                        @AuthenticationPrincipal CustomUserDetails user) {
-
+    public ResponseEntity<GroupTeamDto> updateGroupTeam(
+            @PathVariable Integer id,
+            @Valid @RequestBody GroupTeamPayload groupTeamPayload
+    ) {
         return ResponseEntity
                 .status(HttpStatus.OK)
-                .body(groupTeamService.update(id, user.getId(), groupTeamPayload));
+                .body(groupTeamService.update(id, SecurityUtils.requireCurrentUserId(), groupTeamPayload));
     }
 
     @DeleteMapping("{id}")
-    public ResponseEntity<Void> deleteGroupTeam(@PathVariable Integer id,
-                                                @AuthenticationPrincipal CustomUserDetails user) {
-
-
-        groupTeamService.delete(id,user.getId());
-
+    public ResponseEntity<Void> deleteGroupTeam(@PathVariable Integer id) {
+        groupTeamService.delete(id, SecurityUtils.requireCurrentUserId());
         return ResponseEntity
                 .status(HttpStatus.NO_CONTENT)
                 .build();

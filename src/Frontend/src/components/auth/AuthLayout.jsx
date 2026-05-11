@@ -1,7 +1,9 @@
 import { Link } from 'react-router-dom'
 import { motion } from 'framer-motion'
+import { useTranslation } from '../../i18n'
 
-export function AuthLayout({ title, subtitle, children, quote }) {
+export function AuthLayout({ title, subtitle, children, quote, quoteAuthor }) {
+  const { t } = useTranslation()
   return (
     <div className="min-h-screen grid md:grid-cols-2 bg-paper">
       <motion.div
@@ -22,9 +24,9 @@ export function AuthLayout({ title, subtitle, children, quote }) {
         </div>
         <div className="relative z-10 max-w-md">
           <p className="display-serif text-2xl leading-snug text-paper">
-            {quote || '"Good design is obvious. Great design is transparent."'}
+            {quote || t('auth.quote')}
           </p>
-          <p className="mt-4 text-sm text-paper/50 mono">— Joe Sparano</p>
+          <p className="mt-4 text-sm text-paper/50 mono">{quoteAuthor || t('auth.quoteAuthor')}</p>
         </div>
       </motion.div>
       <motion.div

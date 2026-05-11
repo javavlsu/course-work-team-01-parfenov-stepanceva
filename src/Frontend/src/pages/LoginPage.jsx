@@ -33,7 +33,7 @@ export default function LoginPage() {
   const onSubmit = (data) => login.mutate(data)
 
   return (
-    <AuthLayout title={t('auth.loginTitle')} subtitle="— Sign in">
+    <AuthLayout title={t('auth.loginTitle')} subtitle={t('auth.loginSubtitle')}>
       <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
         {[
           { i: 0, el: <Input key="email" type="email" label={t('auth.emailLabel')} error={errors.email?.message} {...register('email')} /> },

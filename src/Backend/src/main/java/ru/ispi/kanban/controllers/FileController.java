@@ -8,11 +8,10 @@ import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
 import ru.ispi.kanban.repositories.AttachmentRepository;
 import ru.ispi.kanban.repositories.BoardUserRepository;
-import ru.ispi.kanban.security.CustomUserDetails;
+import ru.ispi.kanban.utils.SecurityUtils;
 
 import java.net.MalformedURLException;
 import java.nio.file.Files;
@@ -38,7 +37,6 @@ public class FileController {
 
     @GetMapping("/{folder}/{filename}")
     public ResponseEntity<Resource> getFile(
-            @AuthenticationPrincipal CustomUserDetails user,
             @PathVariable String folder,
             @PathVariable String filename
     ) {
@@ -48,8 +46,9 @@ public class FileController {
 
         // Вложения доступны только членам доски, которой принадлежит файл
         if (FOLDER_ATTACHMENTS.equals(folder)) {
+            Integer userId = SecurityUtils.requireCurrentUserId();
             Optional<Integer> boardId = attachmentRepository.findBoardIdByStorageKey(filename);
-            if (boardId.isEmpty() || !boardUserRepository.existsByIdBoardIdAndIdUserId(boardId.get(), user.getId())) {
+            if (boardId.isEmpty() || !boardUserRepository.existsByIdBoardIdAndIdUserId(boardId.get(), userId)) {
                 return ResponseEntity.status(HttpStatus.FORBIDDEN).build();
             }
         }
