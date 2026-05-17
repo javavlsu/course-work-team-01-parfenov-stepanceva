@@ -1,0 +1,1151 @@
+timeStamp,elapsed,label,responseCode,responseMessage,threadName,dataType,success,failureMessage,bytes,sentBytes,grpThreads,allThreads,URL,Latency,IdleTime,Connect
+1779051090178,157,01 POST Регистрация,201,,Пользователи Kanban 1-3,text,true,,1053,299,11,11,http://localhost:8080/kanban/api/auth/registration,153,0,17
+1779051090178,157,01 POST Регистрация,201,,Пользователи Kanban 1-1,text,true,,1053,299,11,11,http://localhost:8080/kanban/api/auth/registration,153,0,17
+1779051090183,152,01 POST Регистрация,201,,Пользователи Kanban 1-4,text,true,,1053,299,11,11,http://localhost:8080/kanban/api/auth/registration,148,0,12
+1779051090178,157,01 POST Регистрация,201,,Пользователи Kanban 1-2,text,true,,1053,299,11,11,http://localhost:8080/kanban/api/auth/registration,153,0,17
+1779051090203,142,01 POST Регистрация,201,,Пользователи Kanban 1-5,text,true,,1053,299,12,12,http://localhost:8080/kanban/api/auth/registration,142,0,1
+1779051090224,141,01 POST Регистрация,201,,Пользователи Kanban 1-6,text,true,,1053,299,12,12,http://localhost:8080/kanban/api/auth/registration,141,0,1
+1779051090243,149,01 POST Регистрация,201,,Пользователи Kanban 1-7,text,true,,1053,299,14,14,http://localhost:8080/kanban/api/auth/registration,148,0,1
+1779051090263,139,01 POST Регистрация,201,,Пользователи Kanban 1-8,text,true,,1053,299,15,15,http://localhost:8080/kanban/api/auth/registration,139,0,2
+1779051090340,69,02 POST Вход,200,,Пользователи Kanban 1-1,text,true,,1045,663,15,15,http://localhost:8080/kanban/api/auth/login,69,0,0
+1779051090340,75,02 POST Вход,200,,Пользователи Kanban 1-4,text,true,,1045,663,15,15,http://localhost:8080/kanban/api/auth/login,75,0,0
+1779051090341,74,02 POST Вход,200,,Пользователи Kanban 1-3,text,true,,1045,663,15,15,http://localhost:8080/kanban/api/auth/login,74,0,0
+1779051090340,80,02 POST Вход,200,,Пользователи Kanban 1-2,text,true,,1045,663,15,15,http://localhost:8080/kanban/api/auth/login,80,0,0
+1779051090284,147,01 POST Регистрация,201,,Пользователи Kanban 1-9,text,true,,1053,299,16,16,http://localhost:8080/kanban/api/auth/registration,147,0,1
+1779051090346,86,02 POST Вход,200,,Пользователи Kanban 1-5,text,true,,1045,663,16,16,http://localhost:8080/kanban/api/auth/login,86,0,0
+1779051090303,163,01 POST Регистрация,201,,Пользователи Kanban 1-10,text,true,,1057,301,17,17,http://localhost:8080/kanban/api/auth/registration,163,0,2
+1779051090326,146,01 POST Регистрация,201,,Пользователи Kanban 1-11,text,true,,1057,301,18,18,http://localhost:8080/kanban/api/auth/registration,146,0,1
+1779051090366,109,02 POST Вход,200,,Пользователи Kanban 1-6,text,true,,1045,663,18,18,http://localhost:8080/kanban/api/auth/login,109,0,0
+1779051090416,31,03 POST Создание группы (подготовка),201,,Пользователи Kanban 1-3,text,true,,461,672,17,17,http://localhost:8080/kanban/api/groupteams/,31,0,0
+1779051090410,77,03 POST Создание группы (подготовка),201,,Пользователи Kanban 1-1,text,true,,461,672,19,19,http://localhost:8080/kanban/api/groupteams/,77,0,0
+1779051090403,85,02 POST Вход,200,,Пользователи Kanban 1-8,text,true,,1045,663,19,19,http://localhost:8080/kanban/api/auth/login,85,0,0
+1779051090416,78,03 POST Создание группы (подготовка),201,,Пользователи Kanban 1-4,text,true,,461,672,19,19,http://localhost:8080/kanban/api/groupteams/,78,0,0
+1779051090393,114,02 POST Вход,200,,Пользователи Kanban 1-7,text,true,,1045,663,20,20,http://localhost:8080/kanban/api/auth/login,113,0,0
+1779051090421,86,03 POST Создание группы (подготовка),201,,Пользователи Kanban 1-2,text,true,,460,672,20,20,http://localhost:8080/kanban/api/groupteams/,86,0,0
+1779051090433,79,03 POST Создание группы (подготовка),201,,Пользователи Kanban 1-5,text,true,,461,672,20,20,http://localhost:8080/kanban/api/groupteams/,79,0,0
+1779051090349,189,01 POST Регистрация,201,,Пользователи Kanban 1-12,text,true,,1057,301,21,21,http://localhost:8080/kanban/api/auth/registration,189,0,1
+1779051090369,174,01 POST Регистрация,201,,Пользователи Kanban 1-13,text,true,,1057,301,22,22,http://localhost:8080/kanban/api/auth/registration,174,0,2
+1779051090467,105,02 POST Вход,200,,Пользователи Kanban 1-10,text,true,,1049,666,23,23,http://localhost:8080/kanban/api/auth/login,105,0,0
+1779051090473,102,02 POST Вход,200,,Пользователи Kanban 1-11,text,true,,1049,666,23,23,http://localhost:8080/kanban/api/auth/login,102,0,0
+1779051090384,195,01 POST Регистрация,201,,Пользователи Kanban 1-14,text,true,,1057,301,23,23,http://localhost:8080/kanban/api/auth/registration,195,0,2
+1779051090477,103,10 GET Список досок,200,,Пользователи Kanban 1-3,text,true,,344,579,23,23,http://localhost:8080/kanban/api/boards/,103,0,0
+1779051090403,177,01 POST Регистрация,201,,Пользователи Kanban 1-15,text,true,,1057,301,23,23,http://localhost:8080/kanban/api/auth/registration,177,0,1
+1779051090488,94,10 GET Список досок,200,,Пользователи Kanban 1-1,text,true,,344,579,23,23,http://localhost:8080/kanban/api/boards/,94,0,0
+1779051090513,75,10 GET Список досок,200,,Пользователи Kanban 1-5,text,true,,344,579,24,24,http://localhost:8080/kanban/api/boards/,72,0,0
+1779051090425,172,01 POST Регистрация,201,,Пользователи Kanban 1-16,text,true,,1057,301,24,24,http://localhost:8080/kanban/api/auth/registration,172,0,0
+1779051090476,122,03 POST Создание группы (подготовка),201,,Пользователи Kanban 1-6,text,true,,461,672,24,24,http://localhost:8080/kanban/api/groupteams/,122,0,0
+1779051090488,110,03 POST Создание группы (подготовка),201,,Пользователи Kanban 1-8,text,true,,461,672,24,24,http://localhost:8080/kanban/api/groupteams/,110,0,0
+1779051090508,91,10 GET Список досок,200,,Пользователи Kanban 1-2,text,true,,344,579,24,24,http://localhost:8080/kanban/api/boards/,91,0,0
+1779051090432,172,02 POST Вход,200,,Пользователи Kanban 1-9,text,true,,1045,663,24,24,http://localhost:8080/kanban/api/auth/login,172,0,0
+1779051090470,150,01 POST Регистрация,201,,Пользователи Kanban 1-18,text,true,,1057,301,25,25,http://localhost:8080/kanban/api/auth/registration,150,0,1
+1779051090507,113,03 POST Создание группы (подготовка),201,,Пользователи Kanban 1-7,text,true,,461,672,25,25,http://localhost:8080/kanban/api/groupteams/,113,0,0
+1779051090495,126,10 GET Список досок,200,,Пользователи Kanban 1-4,text,true,,344,579,25,25,http://localhost:8080/kanban/api/boards/,126,0,0
+1779051090572,50,03 POST Создание группы (подготовка),201,,Пользователи Kanban 1-10,text,true,,462,675,25,25,http://localhost:8080/kanban/api/groupteams/,50,0,0
+1779051090444,199,01 POST Регистрация,201,,Пользователи Kanban 1-17,text,true,,1057,301,27,27,http://localhost:8080/kanban/api/auth/registration,199,0,1
+1779051090583,65,11 POST Создание доски,201,,Пользователи Kanban 1-1,text,true,,696,668,27,27,http://localhost:8080/kanban/api/boards/,65,0,0
+1779051090539,124,02 POST Вход,200,,Пользователи Kanban 1-12,text,true,,1049,666,28,28,http://localhost:8080/kanban/api/auth/login,124,0,0
+1779051090576,89,03 POST Создание группы (подготовка),201,,Пользователи Kanban 1-11,text,true,,462,675,28,28,http://localhost:8080/kanban/api/groupteams/,89,0,0
+1779051090483,182,01 POST Регистрация,201,,Пользователи Kanban 1-19,text,true,,1057,301,28,28,http://localhost:8080/kanban/api/auth/registration,182,0,1
+1779051090581,94,11 POST Создание доски,201,,Пользователи Kanban 1-3,text,true,,696,668,28,28,http://localhost:8080/kanban/api/boards/,94,0,0
+1779051090580,111,02 POST Вход,200,,Пользователи Kanban 1-14,text,true,,1049,666,29,29,http://localhost:8080/kanban/api/auth/login,111,0,0
+1779051090503,188,01 POST Регистрация,201,,Пользователи Kanban 1-20,text,true,,1057,301,29,29,http://localhost:8080/kanban/api/auth/registration,188,0,1
+1779051090621,72,10 GET Список досок,200,,Пользователи Kanban 1-7,text,true,,344,579,29,29,http://localhost:8080/kanban/api/boards/,72,0,0
+1779051090581,138,02 POST Вход,200,,Пользователи Kanban 1-15,text,true,,1049,666,30,30,http://localhost:8080/kanban/api/auth/login,138,0,0
+1779051090599,121,10 GET Список досок,200,,Пользователи Kanban 1-6,text,true,,344,579,30,30,http://localhost:8080/kanban/api/boards/,121,0,0
+1779051090524,199,01 POST Регистрация,201,,Пользователи Kanban 1-21,text,true,,1057,301,31,31,http://localhost:8080/kanban/api/auth/registration,199,0,2
+1779051090565,162,01 POST Регистрация,201,,Пользователи Kanban 1-23,text,true,,1056,301,31,31,http://localhost:8080/kanban/api/auth/registration,162,0,1
+1779051090544,185,02 POST Вход,200,,Пользователи Kanban 1-13,text,true,,1049,666,31,31,http://localhost:8080/kanban/api/auth/login,185,0,0
+1779051090550,185,01 POST Регистрация,201,,Пользователи Kanban 1-22,text,true,,1057,301,31,31,http://localhost:8080/kanban/api/auth/registration,185,0,1
+1779051090600,139,11 POST Создание доски,201,,Пользователи Kanban 1-2,text,true,,696,668,31,31,http://localhost:8080/kanban/api/boards/,139,0,0
+1779051090598,141,02 POST Вход,200,,Пользователи Kanban 1-16,text,true,,1049,666,31,31,http://localhost:8080/kanban/api/auth/login,141,0,0
+1779051090605,147,03 POST Создание группы (подготовка),201,,Пользователи Kanban 1-9,text,true,,461,672,32,32,http://localhost:8080/kanban/api/groupteams/,147,0,0
+1779051090621,135,02 POST Вход,200,,Пользователи Kanban 1-18,text,true,,1049,666,32,32,http://localhost:8080/kanban/api/auth/login,135,0,0
+1779051090664,93,03 POST Создание группы (подготовка),201,,Пользователи Kanban 1-12,text,true,,462,675,32,32,http://localhost:8080/kanban/api/groupteams/,93,0,0
+1779051090600,158,10 GET Список досок,200,,Пользователи Kanban 1-8,text,true,,344,579,32,32,http://localhost:8080/kanban/api/boards/,158,0,0
+1779051090586,183,01 POST Регистрация,201,,Пользователи Kanban 1-24,text,true,,1057,301,33,33,http://localhost:8080/kanban/api/auth/registration,183,0,1
+1779051090589,181,11 POST Создание доски,201,,Пользователи Kanban 1-5,text,true,,696,668,33,33,http://localhost:8080/kanban/api/boards/,181,0,0
+1779051090666,106,10 GET Список досок,200,,Пользователи Kanban 1-11,text,true,,344,581,33,33,http://localhost:8080/kanban/api/boards/,106,0,0
+1779051090622,162,11 POST Создание доски,201,,Пользователи Kanban 1-4,text,true,,695,668,34,34,http://localhost:8080/kanban/api/boards/,162,0,0
+1779051090607,193,01 POST Регистрация,201,,Пользователи Kanban 1-25,text,true,,1057,301,34,34,http://localhost:8080/kanban/api/auth/registration,193,0,2
+1779051090623,178,10 GET Список досок,200,,Пользователи Kanban 1-10,text,true,,344,581,34,34,http://localhost:8080/kanban/api/boards/,178,0,0
+1779051090739,65,12 GET Список групп,200,,Пользователи Kanban 1-2,text,true,,455,583,35,35,http://localhost:8080/kanban/api/groupteams/,65,0,0
+1779051090676,131,12 GET Список групп,200,,Пользователи Kanban 1-3,text,true,,455,583,35,35,http://localhost:8080/kanban/api/groupteams/,131,0,0
+1779051090692,124,02 POST Вход,200,,Пользователи Kanban 1-20,text,true,,1049,666,35,35,http://localhost:8080/kanban/api/auth/login,124,0,0
+1779051090643,181,02 POST Вход,200,,Пользователи Kanban 1-17,text,true,,1049,666,36,36,http://localhost:8080/kanban/api/auth/login,180,0,0
+1779051090753,71,10 GET Список досок,200,,Пользователи Kanban 1-9,text,true,,344,579,36,36,http://localhost:8080/kanban/api/boards/,71,0,0
+1779051090691,141,03 POST Создание группы (подготовка),201,,Пользователи Kanban 1-14,text,true,,462,675,36,36,http://localhost:8080/kanban/api/groupteams/,141,0,0
+1779051090666,169,02 POST Вход,200,,Пользователи Kanban 1-19,text,true,,1049,666,36,36,http://localhost:8080/kanban/api/auth/login,169,0,0
+1779051090720,133,03 POST Создание группы (подготовка),201,,Пользователи Kanban 1-15,text,true,,462,675,37,37,http://localhost:8080/kanban/api/groupteams/,133,0,0
+1779051090630,225,01 POST Регистрация,201,,Пользователи Kanban 1-26,text,true,,1057,301,37,37,http://localhost:8080/kanban/api/auth/registration,224,0,1
+1779051090758,97,10 GET Список досок,200,,Пользователи Kanban 1-12,text,true,,344,581,37,37,http://localhost:8080/kanban/api/boards/,97,0,0
+1779051090649,206,12 GET Список групп,200,,Пользователи Kanban 1-1,text,true,,455,583,37,37,http://localhost:8080/kanban/api/groupteams/,206,0,0
+1779051090721,141,11 POST Создание доски,201,,Пользователи Kanban 1-6,text,true,,696,668,37,37,http://localhost:8080/kanban/api/boards/,141,0,0
+1779051090771,94,12 GET Список групп,200,,Пользователи Kanban 1-5,text,true,,455,583,38,38,http://localhost:8080/kanban/api/groupteams/,94,0,0
+1779051090644,223,01 POST Регистрация,201,,Пользователи Kanban 1-27,text,true,,1057,301,38,38,http://localhost:8080/kanban/api/auth/registration,223,0,1
+1779051090662,214,01 POST Регистрация,201,,Пользователи Kanban 1-28,text,true,,1057,301,38,38,http://localhost:8080/kanban/api/auth/registration,214,0,2
+1779051090684,198,01 POST Регистрация,201,,Пользователи Kanban 1-29,text,true,,1057,301,38,38,http://localhost:8080/kanban/api/auth/registration,198,0,1
+1779051090773,120,11 POST Создание доски,201,,Пользователи Kanban 1-11,text,true,,700,671,39,39,http://localhost:8080/kanban/api/boards/,120,0,0
+1779051090739,156,03 POST Создание группы (подготовка),201,,Пользователи Kanban 1-16,text,true,,462,675,39,39,http://localhost:8080/kanban/api/groupteams/,156,0,0
+1779051090808,88,13 GET Профиль пользователя,200,,Пользователи Kanban 1-3,text,true,,457,585,39,39,http://localhost:8080/kanban/api/users/profile,88,0,0
+1779051090893,6,12 GET Список групп,200,,Пользователи Kanban 1-11,text,true,,456,585,39,39,http://localhost:8080/kanban/api/groupteams/,6,0,0
+1779051090727,185,01 POST Регистрация,201,,Пользователи Kanban 1-31,text,true,,1057,301,40,40,http://localhost:8080/kanban/api/auth/registration,185,0,5
+1779051090723,196,02 POST Вход,200,,Пользователи Kanban 1-21,text,true,,1049,666,40,40,http://localhost:8080/kanban/api/auth/login,196,0,0
+1779051090694,227,11 POST Создание доски,201,,Пользователи Kanban 1-7,text,true,,696,668,40,40,http://localhost:8080/kanban/api/boards/,227,0,0
+1779051090783,138,01 POST Регистрация,201,,Пользователи Kanban 1-34,text,true,,1057,301,40,40,http://localhost:8080/kanban/api/auth/registration,138,0,1
+1779051090758,177,11 POST Создание доски,201,,Пользователи Kanban 1-8,text,true,,696,668,41,41,http://localhost:8080/kanban/api/boards/,177,0,0
+1779051090866,73,13 GET Профиль пользователя,200,,Пользователи Kanban 1-5,text,true,,457,585,41,41,http://localhost:8080/kanban/api/users/profile,73,0,0
+1779051090728,212,02 POST Вход,200,,Пользователи Kanban 1-23,text,true,,1049,666,41,41,http://localhost:8080/kanban/api/auth/login,212,0,0
+1779051090747,205,01 POST Регистрация,201,,Пользователи Kanban 1-32,text,true,,1057,301,42,42,http://localhost:8080/kanban/api/auth/registration,205,0,1
+1779051090757,202,03 POST Создание группы (подготовка),201,,Пользователи Kanban 1-18,text,true,,462,675,42,42,http://localhost:8080/kanban/api/groupteams/,201,0,0
+1779051090730,238,03 POST Создание группы (подготовка),201,,Пользователи Kanban 1-13,text,true,,462,675,43,43,http://localhost:8080/kanban/api/groupteams/,238,0,0
+1779051090703,274,01 POST Регистрация,201,,Пользователи Kanban 1-30,text,true,,1057,301,43,43,http://localhost:8080/kanban/api/auth/registration,274,0,1
+1779051090770,228,02 POST Вход,200,,Пользователи Kanban 1-24,text,true,,1049,666,44,44,http://localhost:8080/kanban/api/auth/login,228,0,0
+1779051090868,139,02 POST Вход,200,,Пользователи Kanban 1-27,text,true,,1049,666,45,45,http://localhost:8080/kanban/api/auth/login,139,0,0
+1779051090765,245,01 POST Регистрация,201,,Пользователи Kanban 1-33,text,true,,1057,301,45,45,http://localhost:8080/kanban/api/auth/registration,244,0,1
+1779051090801,217,02 POST Вход,200,,Пользователи Kanban 1-25,text,true,,1049,666,45,45,http://localhost:8080/kanban/api/auth/login,217,0,0
+1779051090833,187,10 GET Список досок,200,,Пользователи Kanban 1-14,text,true,,344,581,45,45,http://localhost:8080/kanban/api/boards/,187,0,0
+1779051090883,140,02 POST Вход,200,,Пользователи Kanban 1-29,text,true,,1049,666,46,46,http://localhost:8080/kanban/api/auth/login,140,0,0
+1779051090824,204,03 POST Создание группы (подготовка),201,,Пользователи Kanban 1-17,text,true,,462,675,46,46,http://localhost:8080/kanban/api/groupteams/,204,0,0
+1779051090854,175,10 GET Список досок,200,,Пользователи Kanban 1-15,text,true,,344,581,46,46,http://localhost:8080/kanban/api/boards/,175,0,0
+1779051090862,170,12 GET Список групп,200,,Пользователи Kanban 1-6,text,true,,455,583,46,46,http://localhost:8080/kanban/api/groupteams/,170,0,0
+1779051090825,207,11 POST Создание доски,201,,Пользователи Kanban 1-9,text,true,,697,669,46,46,http://localhost:8080/kanban/api/boards/,207,0,0
+1779051090836,203,03 POST Создание группы (подготовка),201,,Пользователи Kanban 1-19,text,true,,462,675,46,46,http://localhost:8080/kanban/api/groupteams/,203,0,0
+1779051090804,239,01 POST Регистрация,201,,Пользователи Kanban 1-35,text,true,,1057,301,47,47,http://localhost:8080/kanban/api/auth/registration,238,0,2
+1779051090939,105,10 GET Список досок,200,,Пользователи Kanban 1-5,text,true,,690,579,47,47,http://localhost:8080/kanban/api/boards/,105,0,0
+1779051090919,138,03 POST Создание группы (подготовка),201,,Пользователи Kanban 1-21,text,true,,462,675,47,47,http://localhost:8080/kanban/api/groupteams/,138,0,0
+1779051090856,204,11 POST Создание доски,201,,Пользователи Kanban 1-12,text,true,,701,672,47,47,http://localhost:8080/kanban/api/boards/,204,0,0
+1779051090805,256,13 GET Профиль пользователя,200,,Пользователи Kanban 1-2,text,true,,457,585,47,47,http://localhost:8080/kanban/api/users/profile,256,0,0
+1779051090842,224,01 POST Регистрация,201,,Пользователи Kanban 1-37,text,true,,1057,301,48,48,http://localhost:8080/kanban/api/auth/registration,224,0,1
+1779051090802,275,11 POST Создание доски,201,,Пользователи Kanban 1-10,text,true,,701,672,48,48,http://localhost:8080/kanban/api/boards/,275,0,0
+1779051090855,235,02 POST Вход,200,,Пользователи Kanban 1-26,text,true,,1049,666,49,49,http://localhost:8080/kanban/api/auth/login,235,0,0
+1779051090896,195,10 GET Список досок,200,,Пользователи Kanban 1-16,text,true,,344,581,49,49,http://localhost:8080/kanban/api/boards/,195,0,0
+1779051090817,281,03 POST Создание группы (подготовка),201,,Пользователи Kanban 1-20,text,true,,462,675,49,49,http://localhost:8080/kanban/api/groupteams/,281,0,0
+1779051090897,202,10 GET Список досок,200,,Пользователи Kanban 1-3,text,true,,690,579,49,49,http://localhost:8080/kanban/api/boards/,202,0,0
+1779051090864,235,01 POST Регистрация,201,,Пользователи Kanban 1-38,text,true,,1057,301,49,49,http://localhost:8080/kanban/api/auth/registration,235,0,8
+1779051090900,201,13 GET Профиль пользователя,200,,Пользователи Kanban 1-11,text,true,,459,587,49,49,http://localhost:8080/kanban/api/users/profile,201,0,0
+1779051090948,175,01 POST Регистрация,201,,Пользователи Kanban 1-42,text,true,,1057,301,50,50,http://localhost:8080/kanban/api/auth/registration,175,0,6
+1779051090877,246,02 POST Вход,200,,Пользователи Kanban 1-28,text,true,,1049,666,50,50,http://localhost:8080/kanban/api/auth/login,246,0,0
+1779051090856,270,13 GET Профиль пользователя,200,,Пользователи Kanban 1-1,text,true,,457,585,50,50,http://localhost:8080/kanban/api/users/profile,270,0,0
+1779051090888,246,01 POST Регистрация,201,,Пользователи Kanban 1-39,text,true,,1056,301,50,50,http://localhost:8080/kanban/api/auth/registration,246,0,1
+1779051090921,217,12 GET Список групп,200,,Пользователи Kanban 1-7,text,true,,455,583,50,50,http://localhost:8080/kanban/api/groupteams/,217,0,0
+1779051090823,324,01 POST Регистрация,201,,Пользователи Kanban 1-36,text,true,,1057,301,50,50,http://localhost:8080/kanban/api/auth/registration,324,0,1
+1779051090936,214,12 GET Список групп,200,,Пользователи Kanban 1-8,text,true,,455,583,50,50,http://localhost:8080/kanban/api/groupteams/,214,0,0
+1779051091040,113,10 GET Список досок,200,,Пользователи Kanban 1-19,text,true,,344,581,50,50,http://localhost:8080/kanban/api/boards/,113,0,0
+1779051091030,132,11 POST Создание доски,201,,Пользователи Kanban 1-15,text,true,,701,672,50,50,http://localhost:8080/kanban/api/boards/,132,0,0
+1779051090913,254,02 POST Вход,200,,Пользователи Kanban 1-31,text,true,,1049,666,50,50,http://localhost:8080/kanban/api/auth/login,254,0,0
+1779051090926,250,01 POST Регистрация,201,,Пользователи Kanban 1-41,text,true,,1057,301,50,50,http://localhost:8080/kanban/api/auth/registration,250,0,1
+1779051090940,240,03 POST Создание группы (подготовка),201,,Пользователи Kanban 1-23,text,true,,461,675,50,50,http://localhost:8080/kanban/api/groupteams/,240,0,0
+1779051090921,268,02 POST Вход,200,,Пользователи Kanban 1-34,text,true,,1049,666,50,50,http://localhost:8080/kanban/api/auth/login,268,0,0
+1779051090959,231,10 GET Список досок,200,,Пользователи Kanban 1-18,text,true,,344,581,50,50,http://localhost:8080/kanban/api/boards/,231,0,0
+1779051090969,224,10 GET Список досок,200,,Пользователи Kanban 1-13,text,true,,344,581,50,50,http://localhost:8080/kanban/api/boards/,224,0,0
+1779051090967,236,01 POST Регистрация,201,,Пользователи Kanban 1-43,text,true,,1057,301,50,50,http://localhost:8080/kanban/api/auth/registration,236,0,3
+1779051090983,226,01 POST Регистрация,201,,Пользователи Kanban 1-44,text,true,,1056,301,50,50,http://localhost:8080/kanban/api/auth/registration,226,0,1
+1779051090736,477,02 POST Вход,200,,Пользователи Kanban 1-22,text,true,,1049,666,50,50,http://localhost:8080/kanban/api/auth/login,477,0,0
+1779051090998,225,03 POST Создание группы (подготовка),201,,Пользователи Kanban 1-24,text,true,,462,675,50,50,http://localhost:8080/kanban/api/groupteams/,225,0,0
+1779051091043,189,02 POST Вход,200,,Пользователи Kanban 1-35,text,true,,1049,666,50,50,http://localhost:8080/kanban/api/auth/login,189,0,0
+1779051091002,230,01 POST Регистрация,201,,Пользователи Kanban 1-45,text,true,,1057,301,50,50,http://localhost:8080/kanban/api/auth/registration,230,0,1
+1779051090903,329,01 POST Регистрация,201,,Пользователи Kanban 1-40,text,true,,1057,301,50,50,http://localhost:8080/kanban/api/auth/registration,329,0,2
+1779051091099,134,10 GET Список досок,200,,Пользователи Kanban 1-20,text,true,,344,581,50,50,http://localhost:8080/kanban/api/boards/,134,0,0
+1779051090953,291,02 POST Вход,200,,Пользователи Kanban 1-32,text,true,,1049,666,50,50,http://localhost:8080/kanban/api/auth/login,291,0,0
+1779051090977,280,02 POST Вход,200,,Пользователи Kanban 1-30,text,true,,1049,666,50,50,http://localhost:8080/kanban/api/auth/login,280,0,0
+1779051091022,235,01 POST Регистрация,201,,Пользователи Kanban 1-46,text,true,,1057,301,50,50,http://localhost:8080/kanban/api/auth/registration,235,0,1
+1779051091029,229,10 GET Список досок,200,,Пользователи Kanban 1-17,text,true,,344,581,50,50,http://localhost:8080/kanban/api/boards/,229,0,0
+1779051091033,227,12 GET Список групп,200,,Пользователи Kanban 1-9,text,true,,455,583,50,50,http://localhost:8080/kanban/api/groupteams/,226,0,0
+1779051091151,112,13 GET Профиль пользователя,200,,Пользователи Kanban 1-8,text,true,,457,585,50,50,http://localhost:8080/kanban/api/users/profile,112,0,0
+1779051091058,208,10 GET Список досок,200,,Пользователи Kanban 1-21,text,true,,344,581,50,50,http://localhost:8080/kanban/api/boards/,207,0,0
+1779051091100,168,11 POST Создание доски,201,,Пользователи Kanban 1-3,text,true,,697,669,50,50,http://localhost:8080/kanban/api/boards/,168,0,0
+1779051091061,207,12 GET Список групп,200,,Пользователи Kanban 1-12,text,true,,456,585,50,50,http://localhost:8080/kanban/api/groupteams/,207,0,0
+1779051091021,253,11 POST Создание доски,201,,Пользователи Kanban 1-14,text,true,,700,672,50,50,http://localhost:8080/kanban/api/boards/,252,0,0
+1779051091078,199,12 GET Список групп,200,,Пользователи Kanban 1-10,text,true,,456,585,50,50,http://localhost:8080/kanban/api/groupteams/,199,0,0
+1779051091024,261,03 POST Создание группы (подготовка),201,,Пользователи Kanban 1-29,text,true,,462,675,50,50,http://localhost:8080/kanban/api/groupteams/,261,0,0
+1779051091100,195,02 POST Вход,200,,Пользователи Kanban 1-38,text,true,,1049,666,50,50,http://localhost:8080/kanban/api/auth/login,195,0,0
+1779051091044,259,11 POST Создание доски,201,,Пользователи Kanban 1-5,text,true,,697,669,50,50,http://localhost:8080/kanban/api/boards/,259,0,0
+1779051091189,113,03 POST Создание группы (подготовка),201,,Пользователи Kanban 1-34,text,true,,462,675,50,50,http://localhost:8080/kanban/api/groupteams/,113,0,0
+1779051091043,275,01 POST Регистрация,201,,Пользователи Kanban 1-47,text,true,,1056,301,50,50,http://localhost:8080/kanban/api/auth/registration,275,0,2
+1779051091102,219,10 GET Список досок,200,,Пользователи Kanban 1-11,text,true,,694,581,50,50,http://localhost:8080/kanban/api/boards/,219,0,0
+1779051091091,231,11 POST Создание доски,201,,Пользователи Kanban 1-16,text,true,,701,672,50,50,http://localhost:8080/kanban/api/boards/,231,0,0
+1779051091091,233,03 POST Создание группы (подготовка),201,,Пользователи Kanban 1-26,text,true,,462,675,50,50,http://localhost:8080/kanban/api/groupteams/,233,0,0
+1779051091127,199,10 GET Список досок,200,,Пользователи Kanban 1-1,text,true,,690,579,50,50,http://localhost:8080/kanban/api/boards/,199,0,0
+1779051091067,260,02 POST Вход,200,,Пользователи Kanban 1-37,text,true,,1049,666,50,50,http://localhost:8080/kanban/api/auth/login,260,0,0
+1779051091138,190,13 GET Профиль пользователя,200,,Пользователи Kanban 1-7,text,true,,457,585,50,50,http://localhost:8080/kanban/api/users/profile,190,0,0
+1779051091033,295,13 GET Профиль пользователя,200,,Пользователи Kanban 1-6,text,true,,457,585,50,50,http://localhost:8080/kanban/api/users/profile,295,0,0
+1779051090784,549,12 GET Список групп,200,,Пользователи Kanban 1-4,text,true,,455,583,50,50,http://localhost:8080/kanban/api/groupteams/,548,0,0
+1779051091019,314,03 POST Создание группы (подготовка),201,,Пользователи Kanban 1-25,text,true,,462,675,50,50,http://localhost:8080/kanban/api/groupteams/,314,0,0
+1779051091008,335,03 POST Создание группы (подготовка),201,,Пользователи Kanban 1-27,text,true,,462,675,50,50,http://localhost:8080/kanban/api/groupteams/,335,0,0
+1779051091162,184,12 GET Список групп,200,,Пользователи Kanban 1-15,text,true,,456,585,50,50,http://localhost:8080/kanban/api/groupteams/,184,0,0
+1779051091181,166,10 GET Список досок,200,,Пользователи Kanban 1-23,text,true,,344,581,50,50,http://localhost:8080/kanban/api/boards/,166,0,0
+1779051091064,287,01 POST Регистрация,201,,Пользователи Kanban 1-48,text,true,,1057,301,50,50,http://localhost:8080/kanban/api/auth/registration,287,0,1
+1779051091062,291,10 GET Список досок,200,,Пользователи Kanban 1-2,text,true,,690,579,50,50,http://localhost:8080/kanban/api/boards/,291,0,0
+1779051091233,123,03 POST Создание группы (подготовка),201,,Пользователи Kanban 1-35,text,true,,462,675,50,50,http://localhost:8080/kanban/api/groupteams/,123,0,0
+1779051091010,348,02 POST Вход,200,,Пользователи Kanban 1-33,text,true,,1049,666,50,50,http://localhost:8080/kanban/api/auth/login,348,0,0
+1779051091088,273,01 POST Регистрация,201,,Пользователи Kanban 1-49,text,true,,1057,301,50,50,http://localhost:8080/kanban/api/auth/registration,273,0,5
+1779051091167,202,03 POST Создание группы (подготовка),201,,Пользователи Kanban 1-31,text,true,,462,675,50,50,http://localhost:8080/kanban/api/groupteams/,202,0,0
+1779051091224,146,10 GET Список досок,200,,Пользователи Kanban 1-24,text,true,,344,581,50,50,http://localhost:8080/kanban/api/boards/,146,0,0
+1779051091106,274,01 POST Регистрация,201,,Пользователи Kanban 1-50,text,true,,1057,301,50,50,http://localhost:8080/kanban/api/auth/registration,274,0,1
+1779051091124,258,02 POST Вход,200,,Пользователи Kanban 1-42,text,true,,1049,666,50,50,http://localhost:8080/kanban/api/auth/login,258,0,0
+1779051091154,231,11 POST Создание доски,201,,Пользователи Kanban 1-19,text,true,,701,672,50,50,http://localhost:8080/kanban/api/boards/,231,0,0
+1779051091148,242,02 POST Вход,200,,Пользователи Kanban 1-36,text,true,,1049,666,50,50,http://localhost:8080/kanban/api/auth/login,242,0,0
+1779051091214,177,03 POST Создание группы (подготовка),201,,Пользователи Kanban 1-22,text,true,,462,675,50,50,http://localhost:8080/kanban/api/groupteams/,177,0,0
+1779051091190,201,11 POST Создание доски,201,,Пользователи Kanban 1-18,text,true,,701,672,50,50,http://localhost:8080/kanban/api/boards/,201,0,0
+1779051091194,197,11 POST Создание доски,201,,Пользователи Kanban 1-13,text,true,,701,672,50,50,http://localhost:8080/kanban/api/boards/,197,0,0
+1779051091124,292,03 POST Создание группы (подготовка),201,,Пользователи Kanban 1-28,text,true,,462,675,50,50,http://localhost:8080/kanban/api/groupteams/,292,0,0
+1779051091203,217,02 POST Вход,200,,Пользователи Kanban 1-43,text,true,,1049,666,50,50,http://localhost:8080/kanban/api/auth/login,216,0,0
+1779051091209,212,02 POST Вход,200,,Пользователи Kanban 1-44,text,true,,1049,666,50,50,http://localhost:8080/kanban/api/auth/login,212,0,0
+1779051091260,163,13 GET Профиль пользователя,200,,Пользователи Kanban 1-9,text,true,,457,585,50,50,http://localhost:8080/kanban/api/users/profile,163,0,0
+1779051091245,178,03 POST Создание группы (подготовка),201,,Пользователи Kanban 1-32,text,true,,462,675,50,50,http://localhost:8080/kanban/api/groupteams/,178,0,0
+1779051091264,161,10 GET Список досок,200,,Пользователи Kanban 1-8,text,true,,690,579,50,50,http://localhost:8080/kanban/api/boards/,161,0,0
+1779051091233,194,11 POST Создание доски,201,,Пользователи Kanban 1-20,text,true,,701,672,50,50,http://localhost:8080/kanban/api/boards/,194,0,0
+1779051091333,96,10 GET Список досок,200,,Пользователи Kanban 1-25,text,true,,344,581,50,50,http://localhost:8080/kanban/api/boards/,96,0,0
+1779051091344,85,10 GET Список досок,200,,Пользователи Kanban 1-27,text,true,,344,581,50,50,http://localhost:8080/kanban/api/boards/,84,0,0
+1779051091423,7,10 GET Список досок,200,,Пользователи Kanban 1-32,text,true,,344,581,50,50,http://localhost:8080/kanban/api/boards/,7,0,0
+1779051091268,165,12 GET Список групп,200,,Пользователи Kanban 1-3,text,true,,455,583,50,50,http://localhost:8080/kanban/api/groupteams/,165,0,0
+1779051091278,157,13 GET Профиль пользователя,200,,Пользователи Kanban 1-10,text,true,,459,587,50,50,http://localhost:8080/kanban/api/users/profile,156,0,0
+1779051091357,80,10 GET Список досок,200,,Пользователи Kanban 1-35,text,true,,344,581,50,50,http://localhost:8080/kanban/api/boards/,80,0,0
+1779051091286,151,10 GET Список досок,200,,Пользователи Kanban 1-29,text,true,,344,581,50,50,http://localhost:8080/kanban/api/boards/,151,0,0
+1779051091232,207,02 POST Вход,200,,Пользователи Kanban 1-40,text,true,,1049,666,50,50,http://localhost:8080/kanban/api/auth/login,207,0,0
+1779051091303,137,10 GET Список досок,200,,Пользователи Kanban 1-34,text,true,,344,581,50,50,http://localhost:8080/kanban/api/boards/,137,0,0
+1779051091257,184,03 POST Создание группы (подготовка),201,,Пользователи Kanban 1-30,text,true,,462,675,50,50,http://localhost:8080/kanban/api/groupteams/,184,0,0
+1779051091303,138,12 GET Список групп,200,,Пользователи Kanban 1-5,text,true,,455,583,50,50,http://localhost:8080/kanban/api/groupteams/,138,0,0
+1779051091233,217,02 POST Вход,200,,Пользователи Kanban 1-45,text,true,,1049,666,50,50,http://localhost:8080/kanban/api/auth/login,217,0,0
+1779051091325,126,10 GET Список досок,200,,Пользователи Kanban 1-26,text,true,,344,581,50,50,http://localhost:8080/kanban/api/boards/,126,0,0
+1779051091319,144,02 POST Вход,200,,Пользователи Kanban 1-47,text,true,,1049,666,50,50,http://localhost:8080/kanban/api/auth/login,144,0,0
+1779051091328,136,10 GET Список досок,200,,Пользователи Kanban 1-7,text,true,,690,579,50,50,http://localhost:8080/kanban/api/boards/,136,0,0
+1779051091258,206,11 POST Создание доски,201,,Пользователи Kanban 1-17,text,true,,701,672,50,50,http://localhost:8080/kanban/api/boards/,206,0,0
+1779051091333,140,13 GET Профиль пользователя,200,,Пользователи Kanban 1-4,text,true,,457,585,50,50,http://localhost:8080/kanban/api/users/profile,140,0,0
+1779051091417,58,10 GET Список досок,200,,Пользователи Kanban 1-28,text,true,,344,581,50,50,http://localhost:8080/kanban/api/boards/,58,0,0
+1779051091268,211,13 GET Профиль пользователя,200,,Пользователи Kanban 1-12,text,true,,459,587,50,50,http://localhost:8080/kanban/api/users/profile,211,0,0
+1779051091135,352,02 POST Вход,200,,Пользователи Kanban 1-39,text,true,,1049,666,50,50,http://localhost:8080/kanban/api/auth/login,352,0,0
+1779051091274,216,12 GET Список групп,200,,Пользователи Kanban 1-14,text,true,,456,585,50,50,http://localhost:8080/kanban/api/groupteams/,216,0,0
+1779051091257,233,02 POST Вход,200,,Пользователи Kanban 1-46,text,true,,1049,666,50,50,http://localhost:8080/kanban/api/auth/login,233,0,0
+1779051091346,146,13 GET Профиль пользователя,200,,Пользователи Kanban 1-15,text,true,,459,587,50,50,http://localhost:8080/kanban/api/users/profile,145,0,0
+1779051091439,54,03 POST Создание группы (подготовка),201,,Пользователи Kanban 1-40,text,true,,462,675,50,50,http://localhost:8080/kanban/api/groupteams/,54,0,0
+1779051091177,317,02 POST Вход,200,,Пользователи Kanban 1-41,text,true,,1049,666,50,50,http://localhost:8080/kanban/api/auth/login,317,0,0
+1779051091327,169,03 POST Создание группы (подготовка),201,,Пользователи Kanban 1-37,text,true,,462,675,50,50,http://localhost:8080/kanban/api/groupteams/,169,0,0
+1779051091438,59,11 POST Создание доски,201,,Пользователи Kanban 1-35,text,true,,701,672,50,50,http://localhost:8080/kanban/api/boards/,59,0,0
+1779051091371,126,11 POST Создание доски,201,,Пользователи Kanban 1-24,text,true,,701,672,50,50,http://localhost:8080/kanban/api/boards/,126,0,0
+1779051091434,64,13 GET Профиль пользователя,200,,Пользователи Kanban 1-3,text,true,,457,585,50,50,http://localhost:8080/kanban/api/users/profile,64,0,0
+1779051091370,130,10 GET Список досок,200,,Пользователи Kanban 1-31,text,true,,344,581,50,50,http://localhost:8080/kanban/api/boards/,130,0,0
+1779051091492,8,10 GET Список досок,200,,Пользователи Kanban 1-15,text,true,,695,581,50,50,http://localhost:8080/kanban/api/boards/,8,0,0
+1779051091435,66,10 GET Список досок,200,,Пользователи Kanban 1-10,text,true,,695,581,50,50,http://localhost:8080/kanban/api/boards/,66,0,0
+1779051091442,62,13 GET Профиль пользователя,200,,Пользователи Kanban 1-5,text,true,,457,585,50,50,http://localhost:8080/kanban/api/users/profile,62,0,0
+1779051091381,134,02 POST Вход,200,,Пользователи Kanban 1-50,text,true,,1049,666,50,50,http://localhost:8080/kanban/api/auth/login,133,0,0
+1779051091323,194,12 GET Список групп,200,,Пользователи Kanban 1-16,text,true,,456,585,50,50,http://localhost:8080/kanban/api/groupteams/,194,0,0
+1779051091420,97,03 POST Создание группы (подготовка),201,,Пользователи Kanban 1-43,text,true,,462,675,50,50,http://localhost:8080/kanban/api/groupteams/,97,0,0
+1779051091266,252,11 POST Создание доски,201,,Пользователи Kanban 1-21,text,true,,701,672,50,50,http://localhost:8080/kanban/api/boards/,252,0,0
+1779051091392,127,12 GET Список групп,200,,Пользователи Kanban 1-13,text,true,,456,585,50,50,http://localhost:8080/kanban/api/groupteams/,127,0,0
+1779051091385,134,12 GET Список групп,200,,Пользователи Kanban 1-19,text,true,,456,585,50,50,http://localhost:8080/kanban/api/groupteams/,134,0,0
+1779051091296,232,03 POST Создание группы (подготовка),201,,Пользователи Kanban 1-38,text,true,,462,675,50,50,http://localhost:8080/kanban/api/groupteams/,232,0,0
+1779051091427,104,12 GET Список групп,200,,Пользователи Kanban 1-20,text,true,,456,585,50,50,http://localhost:8080/kanban/api/groupteams/,104,0,0
+1779051091495,38,03 POST Создание группы (подготовка),201,,Пользователи Kanban 1-41,text,true,,462,675,50,50,http://localhost:8080/kanban/api/groupteams/,38,0,0
+1779051091429,105,11 POST Создание доски,201,,Пользователи Kanban 1-27,text,true,,701,672,50,50,http://localhost:8080/kanban/api/boards/,105,0,0
+1779051091354,180,11 POST Создание доски,201,,Пользователи Kanban 1-2,text,true,,697,669,50,50,http://localhost:8080/kanban/api/boards/,180,0,0
+1779051091326,211,11 POST Создание доски,201,,Пользователи Kanban 1-1,text,true,,697,669,50,50,http://localhost:8080/kanban/api/boards/,211,0,0
+1779051091322,215,11 POST Создание доски,201,,Пользователи Kanban 1-11,text,true,,701,672,50,50,http://localhost:8080/kanban/api/boards/,215,0,0
+1779051091392,148,10 GET Список досок,200,,Пользователи Kanban 1-22,text,true,,344,581,50,50,http://localhost:8080/kanban/api/boards/,148,0,0
+1779051091497,46,12 GET Список групп,200,,Пользователи Kanban 1-24,text,true,,456,585,50,50,http://localhost:8080/kanban/api/groupteams/,46,0,0
+1779051091382,161,03 POST Создание группы (подготовка),201,,Пользователи Kanban 1-42,text,true,,462,675,50,50,http://localhost:8080/kanban/api/groupteams/,161,0,0
+1779051091392,154,12 GET Список групп,200,,Пользователи Kanban 1-18,text,true,,456,585,50,50,http://localhost:8080/kanban/api/groupteams/,154,0,0
+1779051091421,127,03 POST Создание группы (подготовка),201,,Пользователи Kanban 1-44,text,true,,462,675,50,50,http://localhost:8080/kanban/api/groupteams/,127,0,0
+1779051091505,44,10 GET Список досок,200,,Пользователи Kanban 1-5,text,true,,1036,579,50,50,http://localhost:8080/kanban/api/boards/,44,0,0
+1779051091518,32,13 GET Профиль пользователя,200,,Пользователи Kanban 1-16,text,true,,459,587,50,50,http://localhost:8080/kanban/api/users/profile,32,0,0
+1779051091520,32,13 GET Профиль пользователя,200,,Пользователи Kanban 1-13,text,true,,459,587,50,50,http://localhost:8080/kanban/api/users/profile,32,0,0
+1779051091426,126,11 POST Создание доски,201,,Пользователи Kanban 1-8,text,true,,697,669,50,50,http://localhost:8080/kanban/api/boards/,126,0,0
+1779051091473,81,10 GET Список досок,200,,Пользователи Kanban 1-4,text,true,,690,579,50,50,http://localhost:8080/kanban/api/boards/,81,0,0
+1779051091361,197,02 POST Вход,200,,Пользователи Kanban 1-49,text,true,,1049,666,50,50,http://localhost:8080/kanban/api/auth/login,197,0,0
+1779051091480,81,10 GET Список досок,200,,Пользователи Kanban 1-12,text,true,,695,581,50,50,http://localhost:8080/kanban/api/boards/,81,0,0
+1779051091431,133,11 POST Создание доски,201,,Пользователи Kanban 1-32,text,true,,701,672,50,50,http://localhost:8080/kanban/api/boards/,133,0,0
+1779051091359,205,03 POST Создание группы (подготовка),201,,Пользователи Kanban 1-33,text,true,,461,675,50,50,http://localhost:8080/kanban/api/groupteams/,205,0,0
+1779051091429,135,11 POST Создание доски,201,,Пользователи Kanban 1-25,text,true,,701,672,50,50,http://localhost:8080/kanban/api/boards/,135,0,0
+1779051091491,75,13 GET Профиль пользователя,200,,Пользователи Kanban 1-14,text,true,,459,587,50,50,http://localhost:8080/kanban/api/users/profile,75,0,0
+1779051091497,69,10 GET Список досок,200,,Пользователи Kanban 1-37,text,true,,344,581,50,50,http://localhost:8080/kanban/api/boards/,69,0,0
+1779051091494,74,10 GET Список досок,200,,Пользователи Kanban 1-40,text,true,,344,581,50,50,http://localhost:8080/kanban/api/boards/,74,0,0
+1779051091497,74,12 GET Список групп,200,,Пользователи Kanban 1-35,text,true,,456,585,50,50,http://localhost:8080/kanban/api/groupteams/,74,0,0
+1779051091440,133,11 POST Создание доски,201,,Пользователи Kanban 1-34,text,true,,701,672,50,50,http://localhost:8080/kanban/api/boards/,133,0,0
+1779051091441,132,10 GET Список досок,200,,Пользователи Kanban 1-30,text,true,,344,581,50,50,http://localhost:8080/kanban/api/boards/,132,0,0
+1779051091499,76,10 GET Список досок,200,,Пользователи Kanban 1-3,text,true,,1036,579,50,50,http://localhost:8080/kanban/api/boards/,75,0,0
+1779051091464,114,03 POST Создание группы (подготовка),201,,Пользователи Kanban 1-47,text,true,,462,675,50,50,http://localhost:8080/kanban/api/groupteams/,114,0,0
+1779051091451,127,03 POST Создание группы (подготовка),201,,Пользователи Kanban 1-45,text,true,,462,675,50,50,http://localhost:8080/kanban/api/groupteams/,127,0,0
+1779051091464,115,11 POST Создание доски,201,,Пользователи Kanban 1-7,text,true,,697,669,50,50,http://localhost:8080/kanban/api/boards/,115,0,0
+1779051091544,37,10 GET Список досок,200,,Пользователи Kanban 1-42,text,true,,344,581,50,50,http://localhost:8080/kanban/api/boards/,37,0,0
+1779051091544,37,13 GET Профиль пользователя,200,,Пользователи Kanban 1-24,text,true,,459,587,50,50,http://localhost:8080/kanban/api/users/profile,37,0,0
+1779051091518,68,12 GET Список групп,200,,Пользователи Kanban 1-21,text,true,,456,585,50,50,http://localhost:8080/kanban/api/groupteams/,68,0,0
+1779051091476,116,11 POST Создание доски,201,,Пользователи Kanban 1-28,text,true,,701,672,50,50,http://localhost:8080/kanban/api/boards/,116,0,0
+1779051091487,105,03 POST Создание группы (подготовка),201,,Пользователи Kanban 1-39,text,true,,462,675,50,50,http://localhost:8080/kanban/api/groupteams/,105,0,0
+1779051091491,101,03 POST Создание группы (подготовка),201,,Пользователи Kanban 1-46,text,true,,462,675,50,50,http://localhost:8080/kanban/api/groupteams/,101,0,0
+1779051091391,201,03 POST Создание группы (подготовка),201,,Пользователи Kanban 1-36,text,true,,461,675,50,50,http://localhost:8080/kanban/api/groupteams/,201,0,0
+1779051091518,79,10 GET Список досок,200,,Пользователи Kanban 1-43,text,true,,344,581,50,50,http://localhost:8080/kanban/api/boards/,79,0,0
+1779051091520,77,13 GET Профиль пользователя,200,,Пользователи Kanban 1-19,text,true,,459,587,50,50,http://localhost:8080/kanban/api/users/profile,77,0,0
+1779051091549,50,10 GET Список досок,200,,Пользователи Kanban 1-44,text,true,,344,581,50,50,http://localhost:8080/kanban/api/boards/,50,0,0
+1779051091423,176,10 GET Список досок,200,,Пользователи Kanban 1-9,text,true,,691,579,50,50,http://localhost:8080/kanban/api/boards/,176,0,0
+1779051091464,138,12 GET Список групп,200,,Пользователи Kanban 1-17,text,true,,456,585,50,50,http://localhost:8080/kanban/api/groupteams/,138,0,0
+1779051091529,73,10 GET Список досок,200,,Пользователи Kanban 1-38,text,true,,344,581,50,50,http://localhost:8080/kanban/api/boards/,73,0,0
+1779051091534,74,12 GET Список групп,200,,Пользователи Kanban 1-27,text,true,,456,585,50,50,http://localhost:8080/kanban/api/groupteams/,74,0,0
+1779051091352,258,02 POST Вход,200,,Пользователи Kanban 1-48,text,true,,1049,666,50,50,http://localhost:8080/kanban/api/auth/login,258,0,0
+1779051091553,59,12 GET Список групп,200,,Пользователи Kanban 1-8,text,true,,455,583,50,50,http://localhost:8080/kanban/api/groupteams/,59,0,0
+1779051091603,9,13 GET Профиль пользователя,200,,Пользователи Kanban 1-17,text,true,,459,587,50,50,http://localhost:8080/kanban/api/users/profile,9,0,0
+1779051091538,80,12 GET Список групп,200,,Пользователи Kanban 1-1,text,true,,455,583,50,50,http://localhost:8080/kanban/api/groupteams/,80,0,0
+1779051091500,129,11 POST Создание доски,201,,Пользователи Kanban 1-31,text,true,,701,672,50,50,http://localhost:8080/kanban/api/boards/,129,0,0
+1779051091502,127,11 POST Создание доски,201,,Пользователи Kanban 1-10,text,true,,700,672,50,50,http://localhost:8080/kanban/api/boards/,127,0,0
+1779051091500,129,11 POST Создание доски,201,,Пользователи Kanban 1-15,text,true,,701,672,50,50,http://localhost:8080/kanban/api/boards/,129,0,0
+1779051091438,191,11 POST Создание доски,201,,Пользователи Kanban 1-29,text,true,,701,672,50,50,http://localhost:8080/kanban/api/boards/,191,0,0
+1779051091546,89,13 GET Профиль пользователя,200,,Пользователи Kanban 1-18,text,true,,459,587,50,50,http://localhost:8080/kanban/api/users/profile,89,0,0
+1779051091630,7,12 GET Список групп,200,,Пользователи Kanban 1-31,text,true,,456,585,50,50,http://localhost:8080/kanban/api/groupteams/,7,0,0
+1779051091347,292,11 POST Создание доски,201,,Пользователи Kanban 1-23,text,true,,701,672,50,50,http://localhost:8080/kanban/api/boards/,292,0,0
+1779051091532,109,13 GET Профиль пользователя,200,,Пользователи Kanban 1-20,text,true,,459,587,50,50,http://localhost:8080/kanban/api/users/profile,109,0,0
+1779051091534,109,12 GET Список групп,200,,Пользователи Kanban 1-2,text,true,,455,583,50,50,http://localhost:8080/kanban/api/groupteams/,109,0,0
+1779051091599,44,11 POST Создание доски,201,,Пользователи Kanban 1-44,text,true,,701,672,50,50,http://localhost:8080/kanban/api/boards/,44,0,0
+1779051091554,89,11 POST Создание доски,201,,Пользователи Kanban 1-4,text,true,,697,669,50,50,http://localhost:8080/kanban/api/boards/,89,0,0
+1779051091611,32,03 POST Создание группы (подготовка),201,,Пользователи Kanban 1-48,text,true,,462,675,50,50,http://localhost:8080/kanban/api/groupteams/,32,0,0
+1779051091551,93,10 GET Список досок,200,,Пользователи Kanban 1-16,text,true,,695,581,50,50,http://localhost:8080/kanban/api/boards/,93,0,0
+1779051091597,47,10 GET Список досок,200,,Пользователи Kanban 1-19,text,true,,695,581,50,50,http://localhost:8080/kanban/api/boards/,47,0,0
+1779051091534,111,10 GET Список досок,200,,Пользователи Kanban 1-41,text,true,,344,581,50,50,http://localhost:8080/kanban/api/boards/,111,0,0
+1779051091328,319,10 GET Список досок,200,,Пользователи Kanban 1-6,text,true,,690,579,50,50,http://localhost:8080/kanban/api/boards/,319,0,0
+1779051091600,48,11 POST Создание доски,201,,Пользователи Kanban 1-9,text,true,,697,669,50,50,http://localhost:8080/kanban/api/boards/,48,0,0
+1779051091538,110,12 GET Список групп,200,,Пользователи Kanban 1-11,text,true,,456,585,50,50,http://localhost:8080/kanban/api/groupteams/,110,0,0
+1779051091565,85,12 GET Список групп,200,,Пользователи Kanban 1-25,text,true,,456,585,50,50,http://localhost:8080/kanban/api/groupteams/,85,0,0
+1779051091571,79,13 GET Профиль пользователя,200,,Пользователи Kanban 1-35,text,true,,459,587,50,50,http://localhost:8080/kanban/api/users/profile,79,0,0
+1779051091552,100,10 GET Список досок,200,,Пользователи Kanban 1-13,text,true,,695,581,50,50,http://localhost:8080/kanban/api/boards/,100,0,0
+1779051091515,145,03 POST Создание группы (подготовка),201,,Пользователи Kanban 1-50,text,true,,462,675,50,50,http://localhost:8080/kanban/api/groupteams/,145,0,0
+1779051091541,119,11 POST Создание доски,201,,Пользователи Kanban 1-22,text,true,,701,672,50,50,http://localhost:8080/kanban/api/boards/,119,0,0
+1779051091579,86,12 GET Список групп,200,,Пользователи Kanban 1-7,text,true,,455,583,50,50,http://localhost:8080/kanban/api/groupteams/,86,0,0
+1779051091582,83,11 POST Создание доски,201,,Пользователи Kanban 1-42,text,true,,701,672,50,50,http://localhost:8080/kanban/api/boards/,83,0,0
+1779051091452,213,11 POST Создание доски,201,,Пользователи Kanban 1-26,text,true,,701,672,50,50,http://localhost:8080/kanban/api/boards/,213,0,0
+1779051091579,87,10 GET Список досок,200,,Пользователи Kanban 1-45,text,true,,344,581,50,50,http://localhost:8080/kanban/api/boards/,87,0,0
+1779051091593,74,10 GET Список досок,200,,Пользователи Kanban 1-39,text,true,,344,581,50,50,http://localhost:8080/kanban/api/boards/,74,0,0
+1779051091579,89,10 GET Список досок,200,,Пользователи Kanban 1-47,text,true,,344,581,50,50,http://localhost:8080/kanban/api/boards/,88,0,0
+1779051091549,119,11 POST Создание доски,201,,Пользователи Kanban 1-5,text,true,,697,669,50,50,http://localhost:8080/kanban/api/boards/,119,0,0
+1779051091582,89,10 GET Список досок,200,,Пользователи Kanban 1-24,text,true,,695,581,50,50,http://localhost:8080/kanban/api/boards/,89,0,0
+1779051091638,33,13 GET Профиль пользователя,200,,Пользователи Kanban 1-31,text,true,,459,587,50,50,http://localhost:8080/kanban/api/users/profile,33,0,0
+1779051091609,65,13 GET Профиль пользователя,200,,Пользователи Kanban 1-27,text,true,,459,587,50,50,http://localhost:8080/kanban/api/users/profile,65,0,0
+1779051091593,81,12 GET Список групп,200,,Пользователи Kanban 1-28,text,true,,456,585,50,50,http://localhost:8080/kanban/api/groupteams/,81,0,0
+1779051091603,71,11 POST Создание доски,201,,Пользователи Kanban 1-38,text,true,,701,672,50,50,http://localhost:8080/kanban/api/boards/,71,0,0
+1779051091565,111,10 GET Список досок,200,,Пользователи Kanban 1-33,text,true,,344,581,50,50,http://localhost:8080/kanban/api/boards/,111,0,0
+1779051091567,109,10 GET Список досок,200,,Пользователи Kanban 1-14,text,true,,695,581,50,50,http://localhost:8080/kanban/api/boards/,109,0,0
+1779051091613,64,13 GET Профиль пользователя,200,,Пользователи Kanban 1-8,text,true,,457,585,50,50,http://localhost:8080/kanban/api/users/profile,64,0,0
+1779051091565,113,12 GET Список групп,200,,Пользователи Kanban 1-32,text,true,,456,585,50,50,http://localhost:8080/kanban/api/groupteams/,113,0,0
+1779051091559,121,03 POST Создание группы (подготовка),201,,Пользователи Kanban 1-49,text,true,,462,675,50,50,http://localhost:8080/kanban/api/groupteams/,120,0,0
+1779051091569,111,11 POST Создание доски,201,,Пользователи Kanban 1-40,text,true,,701,672,50,50,http://localhost:8080/kanban/api/boards/,111,0,0
+1779051091630,52,12 GET Список групп,200,,Пользователи Kanban 1-10,text,true,,456,585,50,50,http://localhost:8080/kanban/api/groupteams/,52,0,0
+1779051091648,34,12 GET Список групп,200,,Пользователи Kanban 1-9,text,true,,455,583,50,50,http://localhost:8080/kanban/api/groupteams/,34,0,0
+1779051091630,52,12 GET Список групп,200,,Пользователи Kanban 1-29,text,true,,456,585,50,50,http://localhost:8080/kanban/api/groupteams/,52,0,0
+1779051091587,96,13 GET Профиль пользователя,200,,Пользователи Kanban 1-21,text,true,,459,587,50,50,http://localhost:8080/kanban/api/users/profile,96,0,0
+1779051091593,90,10 GET Список досок,200,,Пользователи Kanban 1-46,text,true,,344,581,50,50,http://localhost:8080/kanban/api/boards/,90,0,0
+1779051091630,53,12 GET Список групп,200,,Пользователи Kanban 1-15,text,true,,456,585,50,50,http://localhost:8080/kanban/api/groupteams/,53,0,0
+1779051091593,92,10 GET Список досок,200,,Пользователи Kanban 1-36,text,true,,344,581,50,50,http://localhost:8080/kanban/api/boards/,92,0,0
+1779051091665,21,13 GET Профиль пользователя,200,,Пользователи Kanban 1-7,text,true,,457,585,50,50,http://localhost:8080/kanban/api/users/profile,21,0,0
+1779051091641,45,10 GET Список досок,200,,Пользователи Kanban 1-20,text,true,,695,581,50,50,http://localhost:8080/kanban/api/boards/,45,0,0
+1779051091635,51,10 GET Список досок,200,,Пользователи Kanban 1-18,text,true,,695,581,50,50,http://localhost:8080/kanban/api/boards/,51,0,0
+1779051091639,49,12 GET Список групп,200,,Пользователи Kanban 1-23,text,true,,456,585,50,50,http://localhost:8080/kanban/api/groupteams/,49,0,0
+1779051091574,115,11 POST Создание доски,201,,Пользователи Kanban 1-30,text,true,,701,672,50,50,http://localhost:8080/kanban/api/boards/,115,0,0
+1779051091562,127,11 POST Создание доски,201,,Пользователи Kanban 1-12,text,true,,701,672,50,50,http://localhost:8080/kanban/api/boards/,127,0,0
+1779051091573,119,12 GET Список групп,200,,Пользователи Kanban 1-34,text,true,,456,585,50,50,http://localhost:8080/kanban/api/groupteams/,118,0,0
+1779051091666,26,12 GET Список групп,200,,Пользователи Kanban 1-26,text,true,,456,585,50,50,http://localhost:8080/kanban/api/groupteams/,25,0,0
+1779051091643,51,12 GET Список групп,200,,Пользователи Kanban 1-44,text,true,,456,585,50,50,http://localhost:8080/kanban/api/groupteams/,51,0,0
+1779051091643,53,12 GET Список групп,200,,Пользователи Kanban 1-4,text,true,,455,583,50,50,http://localhost:8080/kanban/api/groupteams/,52,0,0
+1779051091575,122,11 POST Создание доски,201,,Пользователи Kanban 1-3,text,true,,697,669,50,50,http://localhost:8080/kanban/api/boards/,122,0,0
+1779051091650,50,13 GET Профиль пользователя,200,,Пользователи Kanban 1-25,text,true,,459,587,50,50,http://localhost:8080/kanban/api/users/profile,50,0,0
+1779051091681,19,12 GET Список групп,200,,Пользователи Kanban 1-40,text,true,,456,585,50,50,http://localhost:8080/kanban/api/groupteams/,19,0,0
+1779051091619,83,13 GET Профиль пользователя,200,,Пользователи Kanban 1-1,text,true,,457,585,50,50,http://localhost:8080/kanban/api/users/profile,83,0,0
+1779051091661,45,12 GET Список групп,200,,Пользователи Kanban 1-22,text,true,,456,585,50,50,http://localhost:8080/kanban/api/groupteams/,45,0,0
+1779051091666,40,12 GET Список групп,200,,Пользователи Kanban 1-42,text,true,,456,585,50,50,http://localhost:8080/kanban/api/groupteams/,40,0,0
+1779051091675,31,12 GET Список групп,200,,Пользователи Kanban 1-38,text,true,,456,585,50,50,http://localhost:8080/kanban/api/groupteams/,31,0,0
+1779051091675,34,10 GET Список досок,200,,Пользователи Kanban 1-27,text,true,,695,581,50,50,http://localhost:8080/kanban/api/boards/,33,0,0
+1779051091668,42,12 GET Список групп,200,,Пользователи Kanban 1-5,text,true,,455,583,50,50,http://localhost:8080/kanban/api/groupteams/,42,0,0
+1779051091648,62,13 GET Профиль пользователя,200,,Пользователи Kanban 1-11,text,true,,459,587,50,50,http://localhost:8080/kanban/api/users/profile,62,0,0
+1779051091660,52,10 GET Список досок,200,,Пользователи Kanban 1-50,text,true,,344,581,50,50,http://localhost:8080/kanban/api/boards/,52,0,0
+1779051091643,71,13 GET Профиль пользователя,200,,Пользователи Kanban 1-2,text,true,,457,585,50,50,http://localhost:8080/kanban/api/users/profile,71,0,0
+1779051091668,51,11 POST Создание доски,201,,Пользователи Kanban 1-39,text,true,,701,672,50,50,http://localhost:8080/kanban/api/boards/,51,0,0
+1779051091567,152,11 POST Создание доски,201,,Пользователи Kanban 1-37,text,true,,701,672,50,50,http://localhost:8080/kanban/api/boards/,152,0,0
+1779051091651,70,10 GET Список досок,200,,Пользователи Kanban 1-35,text,true,,695,581,50,50,http://localhost:8080/kanban/api/boards/,70,0,0
+1779051091683,38,10 GET Список досок,200,,Пользователи Kanban 1-21,text,true,,695,581,50,50,http://localhost:8080/kanban/api/boards/,38,0,0
+1779051091682,43,13 GET Профиль пользователя,200,,Пользователи Kanban 1-9,text,true,,457,585,50,50,http://localhost:8080/kanban/api/users/profile,43,0,0
+1779051091675,52,13 GET Профиль пользователя,200,,Пользователи Kanban 1-28,text,true,,459,587,50,50,http://localhost:8080/kanban/api/users/profile,52,0,0
+1779051091597,136,11 POST Создание доски,201,,Пользователи Kanban 1-43,text,true,,701,672,50,50,http://localhost:8080/kanban/api/boards/,136,0,0
+1779051091671,65,11 POST Создание доски,201,,Пользователи Kanban 1-24,text,true,,701,672,50,50,http://localhost:8080/kanban/api/boards/,65,0,0
+1779051091666,70,11 POST Создание доски,201,,Пользователи Kanban 1-45,text,true,,701,672,50,50,http://localhost:8080/kanban/api/boards/,70,0,0
+1779051091653,83,11 POST Создание доски,201,,Пользователи Kanban 1-13,text,true,,701,672,50,50,http://localhost:8080/kanban/api/boards/,83,0,0
+1779051091671,68,10 GET Список досок,200,,Пользователи Kanban 1-31,text,true,,695,581,50,50,http://localhost:8080/kanban/api/boards/,68,0,0
+1779051091678,63,13 GET Профиль пользователя,200,,Пользователи Kanban 1-32,text,true,,459,587,50,50,http://localhost:8080/kanban/api/users/profile,63,0,0
+1779051091648,93,11 POST Создание доски,201,,Пользователи Kanban 1-6,text,true,,697,669,50,50,http://localhost:8080/kanban/api/boards/,93,0,0
+1779051091677,65,11 POST Создание доски,201,,Пользователи Kanban 1-33,text,true,,701,672,50,50,http://localhost:8080/kanban/api/boards/,65,0,0
+1779051091703,40,10 GET Список досок,200,,Пользователи Kanban 1-1,text,true,,1036,579,50,50,http://localhost:8080/kanban/api/boards/,40,0,0
+1779051091677,66,10 GET Список досок,200,,Пользователи Kanban 1-8,text,true,,1036,579,50,50,http://localhost:8080/kanban/api/boards/,66,0,0
+1779051091694,50,13 GET Профиль пользователя,200,,Пользователи Kanban 1-44,text,true,,459,587,50,50,http://localhost:8080/kanban/api/users/profile,50,0,0
+1779051091689,57,13 GET Профиль пользователя,200,,Пользователи Kanban 1-23,text,true,,459,587,50,50,http://localhost:8080/kanban/api/users/profile,57,0,0
+1779051091682,64,13 GET Профиль пользователя,200,,Пользователи Kanban 1-29,text,true,,459,587,50,50,http://localhost:8080/kanban/api/users/profile,64,0,0
+1779051091689,57,12 GET Список групп,200,,Пользователи Kanban 1-12,text,true,,456,585,50,50,http://localhost:8080/kanban/api/groupteams/,57,0,0
+1779051091645,104,11 POST Создание доски,201,,Пользователи Kanban 1-19,text,true,,701,672,50,50,http://localhost:8080/kanban/api/boards/,104,0,0
+1779051091696,53,13 GET Профиль пользователя,200,,Пользователи Kanban 1-4,text,true,,457,585,50,50,http://localhost:8080/kanban/api/users/profile,53,0,0
+1779051091683,67,13 GET Профиль пользователя,200,,Пользователи Kanban 1-15,text,true,,459,587,50,50,http://localhost:8080/kanban/api/users/profile,67,0,0
+1779051091692,59,13 GET Профиль пользователя,200,,Пользователи Kanban 1-34,text,true,,459,587,50,50,http://localhost:8080/kanban/api/users/profile,59,0,0
+1779051091707,45,13 GET Профиль пользователя,200,,Пользователи Kanban 1-22,text,true,,459,587,50,50,http://localhost:8080/kanban/api/users/profile,45,0,0
+1779051091692,60,13 GET Профиль пользователя,200,,Пользователи Kanban 1-26,text,true,,459,587,50,50,http://localhost:8080/kanban/api/users/profile,60,0,0
+1779051091700,54,10 GET Список досок,200,,Пользователи Kanban 1-25,text,true,,695,581,50,50,http://localhost:8080/kanban/api/boards/,54,0,0
+1779051091685,71,11 POST Создание доски,201,,Пользователи Kanban 1-36,text,true,,701,672,50,50,http://localhost:8080/kanban/api/boards/,71,0,0
+1779051091677,79,11 POST Создание доски,201,,Пользователи Kanban 1-14,text,true,,699,672,50,50,http://localhost:8080/kanban/api/boards/,79,0,0
+1779051091745,15,10 GET Список досок,200,,Пользователи Kanban 1-44,text,true,,695,581,50,50,http://localhost:8080/kanban/api/boards/,15,0,0
+1779051091710,51,13 GET Профиль пользователя,200,,Пользователи Kanban 1-5,text,true,,457,585,50,50,http://localhost:8080/kanban/api/users/profile,50,0,0
+1779051091707,56,13 GET Профиль пользователя,200,,Пользователи Kanban 1-42,text,true,,459,587,50,50,http://localhost:8080/kanban/api/users/profile,56,0,0
+1779051091682,81,13 GET Профиль пользователя,200,,Пользователи Kanban 1-10,text,true,,459,587,50,50,http://localhost:8080/kanban/api/users/profile,81,0,0
+1779051091644,125,11 POST Создание доски,201,,Пользователи Kanban 1-16,text,true,,701,672,50,50,http://localhost:8080/kanban/api/boards/,125,0,0
+1779051091737,33,12 GET Список групп,200,,Пользователи Kanban 1-13,text,true,,456,585,50,50,http://localhost:8080/kanban/api/groupteams/,32,0,0
+1779051091689,82,12 GET Список групп,200,,Пользователи Kanban 1-30,text,true,,456,585,50,50,http://localhost:8080/kanban/api/groupteams/,82,0,0
+1779051091680,91,10 GET Список досок,200,,Пользователи Kanban 1-49,text,true,,344,581,50,50,http://localhost:8080/kanban/api/boards/,91,0,0
+1779051091687,86,11 POST Создание доски,201,,Пользователи Kanban 1-18,text,true,,701,672,50,50,http://localhost:8080/kanban/api/boards/,86,0,0
+1779051091668,105,11 POST Создание доски,201,,Пользователи Kanban 1-47,text,true,,701,672,50,50,http://localhost:8080/kanban/api/boards/,105,0,0
+1779051091701,72,13 GET Профиль пользователя,200,,Пользователи Kanban 1-40,text,true,,459,587,50,50,http://localhost:8080/kanban/api/users/profile,72,0,0
+1779051091687,88,10 GET Список досок,200,,Пользователи Kanban 1-7,text,true,,1036,579,50,50,http://localhost:8080/kanban/api/boards/,88,0,0
+1779051091710,65,10 GET Список досок,200,,Пользователи Kanban 1-11,text,true,,1044,581,50,50,http://localhost:8080/kanban/api/boards/,65,0,0
+1779051091747,30,10 GET Список досок,200,,Пользователи Kanban 1-29,text,true,,695,581,50,50,http://localhost:8080/kanban/api/boards/,30,0,0
+1779051091719,58,12 GET Список групп,200,,Пользователи Kanban 1-37,text,true,,456,585,50,50,http://localhost:8080/kanban/api/groupteams/,58,0,0
+1779051091747,33,13 GET Профиль пользователя,200,,Пользователи Kanban 1-12,text,true,,459,587,50,50,http://localhost:8080/kanban/api/users/profile,32,0,0
+1779051091613,168,10 GET Список досок,200,,Пользователи Kanban 1-17,text,true,,695,581,50,50,http://localhost:8080/kanban/api/boards/,168,0,0
+1779051091749,34,10 GET Список досок,200,,Пользователи Kanban 1-4,text,true,,1036,579,50,50,http://localhost:8080/kanban/api/boards/,34,0,0
+1779051091698,85,12 GET Список групп,200,,Пользователи Kanban 1-3,text,true,,455,583,50,50,http://localhost:8080/kanban/api/groupteams/,85,0,0
+1779051091752,32,10 GET Список досок,200,,Пользователи Kanban 1-34,text,true,,695,581,50,50,http://localhost:8080/kanban/api/boards/,32,0,0
+1779051091728,56,10 GET Список досок,200,,Пользователи Kanban 1-28,text,true,,695,581,50,50,http://localhost:8080/kanban/api/boards/,56,0,0
+1779051091734,53,12 GET Список групп,200,,Пользователи Kanban 1-43,text,true,,456,585,50,50,http://localhost:8080/kanban/api/groupteams/,53,0,0
+1779051091737,51,12 GET Список групп,200,,Пользователи Kanban 1-24,text,true,,456,585,50,50,http://localhost:8080/kanban/api/groupteams/,50,0,0
+1779051091725,64,10 GET Список досок,200,,Пользователи Kanban 1-9,text,true,,1037,579,50,50,http://localhost:8080/kanban/api/boards/,64,0,0
+1779051091741,50,12 GET Список групп,200,,Пользователи Kanban 1-6,text,true,,455,583,50,50,http://localhost:8080/kanban/api/groupteams/,50,0,0
+1779051091646,146,11 POST Создание доски,201,,Пользователи Kanban 1-41,text,true,,701,672,50,50,http://localhost:8080/kanban/api/boards/,146,0,0
+1779051091683,109,11 POST Создание доски,201,,Пользователи Kanban 1-46,text,true,,700,672,50,50,http://localhost:8080/kanban/api/boards/,109,0,0
+1779051091712,80,11 POST Создание доски,201,,Пользователи Kanban 1-50,text,true,,701,672,50,50,http://localhost:8080/kanban/api/boards/,80,0,0
+1779051091709,83,11 POST Создание доски,201,,Пользователи Kanban 1-27,text,true,,700,672,50,50,http://localhost:8080/kanban/api/boards/,83,0,0
+1779051091707,87,13 GET Профиль пользователя,200,,Пользователи Kanban 1-38,text,true,,459,587,50,50,http://localhost:8080/kanban/api/users/profile,87,0,0
+1779051091719,77,12 GET Список групп,200,,Пользователи Kanban 1-39,text,true,,456,585,50,50,http://localhost:8080/kanban/api/groupteams/,77,0,0
+1779051091770,26,13 GET Профиль пользователя,200,,Пользователи Kanban 1-13,text,true,,459,587,50,50,http://localhost:8080/kanban/api/users/profile,26,0,0
+1779051091763,34,10 GET Список досок,200,,Пользователи Kanban 1-42,text,true,,695,581,50,50,http://localhost:8080/kanban/api/boards/,34,0,0
+1779051091763,35,10 GET Список досок,200,,Пользователи Kanban 1-10,text,true,,1045,581,50,50,http://localhost:8080/kanban/api/boards/,35,0,0
+1779051091751,49,10 GET Список досок,200,,Пользователи Kanban 1-15,text,true,,1045,581,50,50,http://localhost:8080/kanban/api/boards/,49,0,0
+1779051091752,49,10 GET Список досок,200,,Пользователи Kanban 1-26,text,true,,695,581,50,50,http://localhost:8080/kanban/api/boards/,49,0,0
+1779051091769,34,12 GET Список групп,200,,Пользователи Kanban 1-16,text,true,,456,585,50,50,http://localhost:8080/kanban/api/groupteams/,34,0,0
+1779051091774,30,10 GET Список досок,200,,Пользователи Kanban 1-40,text,true,,695,581,50,50,http://localhost:8080/kanban/api/boards/,30,0,0
+1779051091737,68,12 GET Список групп,200,,Пользователи Kanban 1-45,text,true,,456,585,50,50,http://localhost:8080/kanban/api/groupteams/,68,0,0
+1779051091715,91,10 GET Список досок,200,,Пользователи Kanban 1-2,text,true,,1036,579,50,50,http://localhost:8080/kanban/api/boards/,91,0,0
+1779051091742,64,12 GET Список групп,200,,Пользователи Kanban 1-33,text,true,,456,585,50,50,http://localhost:8080/kanban/api/groupteams/,64,0,0
+1779051091794,14,10 GET Список досок,200,,Пользователи Kanban 1-38,text,true,,695,581,50,50,http://localhost:8080/kanban/api/boards/,14,0,0
+1779051091773,38,12 GET Список групп,200,,Пользователи Kanban 1-47,text,true,,456,585,50,50,http://localhost:8080/kanban/api/groupteams/,38,0,0
+1779051091687,125,11 POST Создание доски,201,,Пользователи Kanban 1-20,text,true,,701,672,50,50,http://localhost:8080/kanban/api/boards/,125,0,0
+1779051091749,66,12 GET Список групп,200,,Пользователи Kanban 1-19,text,true,,456,585,50,50,http://localhost:8080/kanban/api/groupteams/,66,0,0
+1779051091743,79,11 POST Создание доски,201,,Пользователи Kanban 1-1,text,true,,697,669,50,50,http://localhost:8080/kanban/api/boards/,79,0,0
+1779051091743,79,11 POST Создание доски,201,,Пользователи Kanban 1-8,text,true,,697,669,50,50,http://localhost:8080/kanban/api/boards/,79,0,0
+1779051091747,77,10 GET Список досок,200,,Пользователи Kanban 1-23,text,true,,695,581,50,50,http://localhost:8080/kanban/api/boards/,77,0,0
+1779051091741,83,10 GET Список досок,200,,Пользователи Kanban 1-32,text,true,,695,581,50,50,http://localhost:8080/kanban/api/boards/,83,0,0
+1779051091643,182,10 GET Список досок,200,,Пользователи Kanban 1-48,text,true,,344,581,50,50,http://localhost:8080/kanban/api/boards/,182,0,0
+1779051091791,35,13 GET Профиль пользователя,200,,Пользователи Kanban 1-6,text,true,,457,585,50,50,http://localhost:8080/kanban/api/users/profile,35,0,0
+1779051091755,72,11 POST Создание доски,201,,Пользователи Kanban 1-25,text,true,,701,672,50,50,http://localhost:8080/kanban/api/boards/,71,0,0
+1779051091793,37,12 GET Список групп,200,,Пользователи Kanban 1-50,text,true,,456,585,50,50,http://localhost:8080/kanban/api/groupteams/,37,0,0
+1779051091756,75,12 GET Список групп,200,,Пользователи Kanban 1-14,text,true,,456,585,50,50,http://localhost:8080/kanban/api/groupteams/,75,0,0
+1779051091793,41,12 GET Список групп,200,,Пользователи Kanban 1-41,text,true,,456,585,50,50,http://localhost:8080/kanban/api/groupteams/,41,0,0
+1779051091773,61,12 GET Список групп,200,,Пользователи Kanban 1-18,text,true,,456,585,50,50,http://localhost:8080/kanban/api/groupteams/,61,0,0
+1779051091797,38,10 GET Список досок,200,,Пользователи Kanban 1-13,text,true,,1045,581,50,50,http://localhost:8080/kanban/api/boards/,38,0,0
+1779051091826,11,10 GET Список досок,200,,Пользователи Kanban 1-6,text,true,,1036,579,50,50,http://localhost:8080/kanban/api/boards/,11,0,0
+1779051091778,61,13 GET Профиль пользователя,200,,Пользователи Kanban 1-37,text,true,,459,587,50,50,http://localhost:8080/kanban/api/users/profile,61,0,0
+1779051091740,99,11 POST Создание доски,201,,Пользователи Kanban 1-31,text,true,,701,672,50,50,http://localhost:8080/kanban/api/boards/,99,0,0
+1779051091761,80,10 GET Список досок,200,,Пользователи Kanban 1-5,text,true,,1382,579,50,50,http://localhost:8080/kanban/api/boards/,80,0,0
+1779051091807,36,13 GET Профиль пользователя,200,,Пользователи Kanban 1-33,text,true,,459,587,50,50,http://localhost:8080/kanban/api/users/profile,36,0,0
+1779051091782,63,11 POST Создание доски,201,,Пользователи Kanban 1-17,text,true,,701,672,50,50,http://localhost:8080/kanban/api/boards/,62,0,0
+1779051091721,124,11 POST Создание доски,201,,Пользователи Kanban 1-21,text,true,,699,672,50,50,http://localhost:8080/kanban/api/boards/,123,0,0
+1779051091772,73,11 POST Создание доски,201,,Пользователи Kanban 1-49,text,true,,701,672,50,50,http://localhost:8080/kanban/api/boards/,72,0,0
+1779051091760,90,11 POST Создание доски,201,,Пользователи Kanban 1-44,text,true,,701,672,50,50,http://localhost:8080/kanban/api/boards/,90,0,0
+1779051091775,75,11 POST Создание доски,201,,Пользователи Kanban 1-11,text,true,,701,672,50,50,http://localhost:8080/kanban/api/boards/,75,0,0
+1779051091721,129,11 POST Создание доски,201,,Пользователи Kanban 1-35,text,true,,701,672,50,50,http://localhost:8080/kanban/api/boards/,129,0,0
+1779051091788,64,13 GET Профиль пользователя,200,,Пользователи Kanban 1-43,text,true,,459,587,50,50,http://localhost:8080/kanban/api/users/profile,64,0,0
+1779051091752,100,10 GET Список досок,200,,Пользователи Kanban 1-22,text,true,,695,581,50,50,http://localhost:8080/kanban/api/boards/,100,0,0
+1779051091812,49,13 GET Профиль пользователя,200,,Пользователи Kanban 1-47,text,true,,459,587,50,50,http://localhost:8080/kanban/api/users/profile,48,0,0
+1779051091815,47,13 GET Профиль пользователя,200,,Пользователи Kanban 1-19,text,true,,459,587,50,50,http://localhost:8080/kanban/api/users/profile,47,0,0
+1779051091852,12,10 GET Список досок,200,,Пользователи Kanban 1-43,text,true,,695,581,50,50,http://localhost:8080/kanban/api/boards/,12,0,0
+1779051091771,97,13 GET Профиль пользователя,200,,Пользователи Kanban 1-30,text,true,,459,587,50,50,http://localhost:8080/kanban/api/users/profile,97,0,0
+1779051091825,46,11 POST Создание доски,201,,Пользователи Kanban 1-23,text,true,,701,672,50,50,http://localhost:8080/kanban/api/boards/,46,0,0
+1779051091775,101,11 POST Создание доски,201,,Пользователи Kanban 1-7,text,true,,697,669,50,50,http://localhost:8080/kanban/api/boards/,101,0,0
+1779051091799,77,11 POST Создание доски,201,,Пользователи Kanban 1-10,text,true,,701,672,50,50,http://localhost:8080/kanban/api/boards/,77,0,0
+1779051091780,100,10 GET Список досок,200,,Пользователи Kanban 1-12,text,true,,1045,581,50,50,http://localhost:8080/kanban/api/boards/,99,0,0
+1779051091756,124,12 GET Список групп,200,,Пользователи Kanban 1-36,text,true,,456,585,50,50,http://localhost:8080/kanban/api/groupteams/,124,0,0
+1779051091834,48,13 GET Профиль пользователя,200,,Пользователи Kanban 1-18,text,true,,459,587,50,50,http://localhost:8080/kanban/api/users/profile,48,0,0
+1779051091788,94,13 GET Профиль пользователя,200,,Пользователи Kanban 1-24,text,true,,459,587,50,50,http://localhost:8080/kanban/api/users/profile,94,0,0
+1779051091784,103,11 POST Создание доски,201,,Пользователи Kanban 1-34,text,true,,701,672,50,50,http://localhost:8080/kanban/api/boards/,103,0,0
+1779051091784,104,11 POST Создание доски,201,,Пользователи Kanban 1-28,text,true,,701,672,50,50,http://localhost:8080/kanban/api/boards/,104,0,0
+1779051091783,105,11 POST Создание доски,201,,Пользователи Kanban 1-4,text,true,,697,669,50,50,http://localhost:8080/kanban/api/boards/,105,0,0
+1779051091778,110,11 POST Создание доски,201,,Пользователи Kanban 1-29,text,true,,701,672,50,50,http://localhost:8080/kanban/api/boards/,110,0,0
+1779051091802,87,11 POST Создание доски,201,,Пользователи Kanban 1-26,text,true,,701,672,50,50,http://localhost:8080/kanban/api/boards/,86,0,0
+1779051091789,100,11 POST Создание доски,201,,Пользователи Kanban 1-9,text,true,,697,669,50,50,http://localhost:8080/kanban/api/boards/,100,0,0
+1779051091805,85,13 GET Профиль пользователя,200,,Пользователи Kanban 1-45,text,true,,459,587,50,50,http://localhost:8080/kanban/api/users/profile,85,0,0
+1779051091840,54,12 GET Список групп,200,,Пользователи Kanban 1-31,text,true,,456,585,50,50,http://localhost:8080/kanban/api/groupteams/,54,0,0
+1779051091880,16,13 GET Профиль пользователя,200,,Пользователи Kanban 1-36,text,true,,459,587,50,50,http://localhost:8080/kanban/api/users/profile,16,0,0
+1779051091882,17,10 GET Список досок,200,,Пользователи Kanban 1-24,text,true,,1045,581,50,50,http://localhost:8080/kanban/api/boards/,17,0,0
+1779051091839,60,10 GET Список досок,200,,Пользователи Kanban 1-37,text,true,,695,581,50,50,http://localhost:8080/kanban/api/boards/,60,0,0
+1779051091784,116,13 GET Профиль пользователя,200,,Пользователи Kanban 1-3,text,true,,457,585,50,50,http://localhost:8080/kanban/api/users/profile,116,0,0
+1779051091827,73,12 GET Список групп,200,,Пользователи Kanban 1-25,text,true,,456,585,50,50,http://localhost:8080/kanban/api/groupteams/,73,0,0
+1779051091796,106,13 GET Профиль пользователя,200,,Пользователи Kanban 1-39,text,true,,459,587,50,50,http://localhost:8080/kanban/api/users/profile,106,0,0
+1779051091834,68,13 GET Профиль пользователя,200,,Пользователи Kanban 1-41,text,true,,459,587,50,50,http://localhost:8080/kanban/api/users/profile,68,0,0
+1779051091823,79,12 GET Список групп,200,,Пользователи Kanban 1-8,text,true,,455,583,50,50,http://localhost:8080/kanban/api/groupteams/,79,0,0
+1779051091832,70,13 GET Профиль пользователя,200,,Пользователи Kanban 1-14,text,true,,459,587,50,50,http://localhost:8080/kanban/api/users/profile,70,0,0
+1779051091803,100,13 GET Профиль пользователя,200,,Пользователи Kanban 1-16,text,true,,459,587,50,50,http://localhost:8080/kanban/api/users/profile,100,0,0
+1779051091793,113,12 GET Список групп,200,,Пользователи Kanban 1-27,text,true,,456,585,50,50,http://localhost:8080/kanban/api/groupteams/,113,0,0
+1779051091813,93,12 GET Список групп,200,,Пользователи Kanban 1-20,text,true,,456,585,50,50,http://localhost:8080/kanban/api/groupteams/,93,0,0
+1779051091882,25,10 GET Список досок,200,,Пользователи Kanban 1-18,text,true,,1045,581,50,50,http://localhost:8080/kanban/api/boards/,25,0,0
+1779051091850,58,12 GET Список групп,200,,Пользователи Kanban 1-35,text,true,,456,585,50,50,http://localhost:8080/kanban/api/groupteams/,58,0,0
+1779051091793,117,12 GET Список групп,200,,Пользователи Kanban 1-46,text,true,,456,585,50,50,http://localhost:8080/kanban/api/groupteams/,117,0,0
+1779051091888,22,12 GET Список групп,200,,Пользователи Kanban 1-34,text,true,,456,585,50,50,http://localhost:8080/kanban/api/groupteams/,22,0,0
+1779051091826,86,11 POST Создание доски,201,,Пользователи Kanban 1-48,text,true,,701,672,50,50,http://localhost:8080/kanban/api/boards/,86,0,0
+1779051091889,24,12 GET Список групп,200,,Пользователи Kanban 1-29,text,true,,456,585,50,50,http://localhost:8080/kanban/api/groupteams/,24,0,0
+1779051091876,40,12 GET Список групп,200,,Пользователи Kanban 1-10,text,true,,456,585,50,50,http://localhost:8080/kanban/api/groupteams/,40,0,0
+1779051091868,48,10 GET Список досок,200,,Пользователи Kanban 1-30,text,true,,695,581,50,50,http://localhost:8080/kanban/api/boards/,48,0,0
+1779051091888,29,12 GET Список групп,200,,Пользователи Kanban 1-4,text,true,,455,583,50,50,http://localhost:8080/kanban/api/groupteams/,28,0,0
+1779051091850,67,12 GET Список групп,200,,Пользователи Kanban 1-44,text,true,,456,585,50,50,http://localhost:8080/kanban/api/groupteams/,67,0,0
+1779051091800,119,11 POST Создание доски,201,,Пользователи Kanban 1-15,text,true,,701,672,50,50,http://localhost:8080/kanban/api/boards/,116,0,0
+1779051091876,44,12 GET Список групп,200,,Пользователи Kanban 1-7,text,true,,455,583,50,50,http://localhost:8080/kanban/api/groupteams/,44,0,0
+1779051091900,21,10 GET Список досок,200,,Пользователи Kanban 1-3,text,true,,1382,579,50,50,http://localhost:8080/kanban/api/boards/,21,0,0
+1779051091850,73,12 GET Список групп,200,,Пользователи Kanban 1-11,text,true,,456,585,50,50,http://localhost:8080/kanban/api/groupteams/,73,0,0
+1779051091845,81,12 GET Список групп,200,,Пользователи Kanban 1-17,text,true,,456,585,50,50,http://localhost:8080/kanban/api/groupteams/,81,0,0
+1779051091845,81,12 GET Список групп,200,,Пользователи Kanban 1-21,text,true,,456,585,50,50,http://localhost:8080/kanban/api/groupteams/,81,0,0
+1779051091871,57,12 GET Список групп,200,,Пользователи Kanban 1-23,text,true,,456,585,50,50,http://localhost:8080/kanban/api/groupteams/,57,0,0
+1779051091889,39,12 GET Список групп,200,,Пользователи Kanban 1-9,text,true,,455,583,50,50,http://localhost:8080/kanban/api/groupteams/,39,0,0
+1779051091844,85,10 GET Список досок,200,,Пользователи Kanban 1-33,text,true,,695,581,50,50,http://localhost:8080/kanban/api/boards/,85,0,0
+1779051091894,36,13 GET Профиль пользователя,200,,Пользователи Kanban 1-31,text,true,,459,587,50,50,http://localhost:8080/kanban/api/users/profile,36,0,0
+1779051091902,30,10 GET Список досок,200,,Пользователи Kanban 1-14,text,true,,1045,581,50,50,http://localhost:8080/kanban/api/boards/,30,0,0
+1779051091862,72,10 GET Список досок,200,,Пользователи Kanban 1-19,text,true,,1045,581,50,50,http://localhost:8080/kanban/api/boards/,72,0,0
+1779051091861,75,10 GET Список досок,200,,Пользователи Kanban 1-47,text,true,,695,581,50,50,http://localhost:8080/kanban/api/boards/,75,0,0
+1779051091891,47,10 GET Список досок,200,,Пользователи Kanban 1-45,text,true,,695,581,50,50,http://localhost:8080/kanban/api/boards/,47,0,0
+1779051091908,33,13 GET Профиль пользователя,200,,Пользователи Kanban 1-35,text,true,,459,587,50,50,http://localhost:8080/kanban/api/users/profile,33,0,0
+1779051091837,108,11 POST Создание доски,201,,Пользователи Kanban 1-6,text,true,,697,669,50,50,http://localhost:8080/kanban/api/boards/,107,0,0
+1779051091804,141,11 POST Создание доски,201,,Пользователи Kanban 1-40,text,true,,701,672,50,50,http://localhost:8080/kanban/api/boards/,140,0,0
+1779051091919,29,12 GET Список групп,200,,Пользователи Kanban 1-15,text,true,,456,585,50,50,http://localhost:8080/kanban/api/groupteams/,29,0,0
+1779051091845,104,12 GET Список групп,200,,Пользователи Kanban 1-49,text,true,,456,585,50,50,http://localhost:8080/kanban/api/groupteams/,104,0,0
+1779051091888,62,12 GET Список групп,200,,Пользователи Kanban 1-28,text,true,,456,585,50,50,http://localhost:8080/kanban/api/groupteams/,62,0,0
+1779051091911,40,13 GET Профиль пользователя,200,,Пользователи Kanban 1-46,text,true,,459,587,50,50,http://localhost:8080/kanban/api/users/profile,40,0,0
+1779051091807,145,11 POST Создание доски,201,,Пользователи Kanban 1-2,text,true,,697,669,50,50,http://localhost:8080/kanban/api/boards/,145,0,0
+1779051091906,48,13 GET Профиль пользователя,200,,Пользователи Kanban 1-27,text,true,,459,587,50,50,http://localhost:8080/kanban/api/users/profile,48,0,0
+1779051091902,54,10 GET Список досок,200,,Пользователи Kanban 1-39,text,true,,695,581,50,50,http://localhost:8080/kanban/api/boards/,53,0,0
+1779051091825,137,11 POST Создание доски,201,,Пользователи Kanban 1-32,text,true,,701,672,50,50,http://localhost:8080/kanban/api/boards/,137,0,0
+1779051091797,165,11 POST Создание доски,201,,Пользователи Kanban 1-42,text,true,,701,672,50,50,http://localhost:8080/kanban/api/boards/,165,0,0
+1779051091880,86,11 POST Создание доски,201,,Пользователи Kanban 1-12,text,true,,702,673,50,50,http://localhost:8080/kanban/api/boards/,86,0,0
+1779051091841,125,11 POST Создание доски,201,,Пользователи Kanban 1-5,text,true,,698,670,50,50,http://localhost:8080/kanban/api/boards/,125,0,0
+1779051091852,114,11 POST Создание доски,201,,Пользователи Kanban 1-22,text,true,,702,673,50,50,http://localhost:8080/kanban/api/boards/,114,0,0
+1779051091902,66,10 GET Список досок,200,,Пользователи Kanban 1-41,text,true,,695,581,50,50,http://localhost:8080/kanban/api/boards/,65,0,0
+1779051091900,70,13 GET Профиль пользователя,200,,Пользователи Kanban 1-25,text,true,,459,587,50,50,http://localhost:8080/kanban/api/users/profile,70,0,0
+1779051091927,43,13 GET Профиль пользователя,200,,Пользователи Kanban 1-17,text,true,,459,587,50,50,http://localhost:8080/kanban/api/users/profile,43,0,0
+1779051091927,43,13 GET Профиль пользователя,200,,Пользователи Kanban 1-21,text,true,,459,587,50,50,http://localhost:8080/kanban/api/users/profile,43,0,0
+1779051091836,136,11 POST Создание доски,201,,Пользователи Kanban 1-13,text,true,,701,672,50,50,http://localhost:8080/kanban/api/boards/,136,0,0
+1779051091923,51,13 GET Профиль пользователя,200,,Пользователи Kanban 1-11,text,true,,459,587,50,50,http://localhost:8080/kanban/api/users/profile,51,0,0
+1779051091963,12,12 GET Список групп,200,,Пользователи Kanban 1-42,text,true,,456,585,50,50,http://localhost:8080/kanban/api/groupteams/,12,0,0
+1779051091967,9,12 GET Список групп,200,,Пользователи Kanban 1-22,text,true,,456,585,50,50,http://localhost:8080/kanban/api/groupteams/,9,0,0
+1779051091913,63,12 GET Список групп,200,,Пользователи Kanban 1-48,text,true,,456,585,50,50,http://localhost:8080/kanban/api/groupteams/,63,0,0
+1779051091906,70,13 GET Профиль пользователя,200,,Пользователи Kanban 1-20,text,true,,459,587,50,50,http://localhost:8080/kanban/api/users/profile,70,0,0
+1779051091889,87,12 GET Список групп,200,,Пользователи Kanban 1-26,text,true,,456,585,50,50,http://localhost:8080/kanban/api/groupteams/,87,0,0
+1779051091830,150,13 GET Профиль пользователя,200,,Пользователи Kanban 1-50,text,true,,459,587,50,50,http://localhost:8080/kanban/api/users/profile,150,0,0
+1779051091916,65,13 GET Профиль пользователя,200,,Пользователи Kanban 1-10,text,true,,459,587,50,50,http://localhost:8080/kanban/api/users/profile,65,0,0
+1779051091933,48,11 POST Создание доски,201,,Пользователи Kanban 1-14,text,true,,702,673,50,50,http://localhost:8080/kanban/api/boards/,48,0,0
+1779051091920,62,13 GET Профиль пользователя,200,,Пользователи Kanban 1-7,text,true,,457,585,50,50,http://localhost:8080/kanban/api/users/profile,62,0,0
+1779051091928,54,13 GET Профиль пользователя,200,,Пользователи Kanban 1-23,text,true,,459,587,50,50,http://localhost:8080/kanban/api/users/profile,54,0,0
+1779051091902,82,13 GET Профиль пользователя,200,,Пользователи Kanban 1-8,text,true,,457,585,50,50,http://localhost:8080/kanban/api/users/profile,82,0,0
+1779051091928,56,13 GET Профиль пользователя,200,,Пользователи Kanban 1-9,text,true,,457,585,50,50,http://localhost:8080/kanban/api/users/profile,56,0,0
+1779051091903,83,10 GET Список досок,200,,Пользователи Kanban 1-16,text,true,,1045,581,50,50,http://localhost:8080/kanban/api/boards/,83,0,0
+1779051091809,179,11 POST Создание доски,201,,Пользователи Kanban 1-38,text,true,,701,672,50,50,http://localhost:8080/kanban/api/boards/,179,0,0
+1779051091963,25,12 GET Список групп,200,,Пользователи Kanban 1-32,text,true,,456,585,50,50,http://localhost:8080/kanban/api/groupteams/,25,0,0
+1779051091899,89,11 POST Создание доски,201,,Пользователи Kanban 1-37,text,true,,702,673,50,50,http://localhost:8080/kanban/api/boards/,89,0,0
+1779051091966,24,12 GET Список групп,200,,Пользователи Kanban 1-5,text,true,,455,583,50,50,http://localhost:8080/kanban/api/groupteams/,24,0,0
+1779051091970,20,10 GET Список досок,200,,Пользователи Kanban 1-17,text,true,,1045,581,50,50,http://localhost:8080/kanban/api/boards/,20,0,0
+1779051091970,21,10 GET Список досок,200,,Пользователи Kanban 1-21,text,true,,1045,581,50,50,http://localhost:8080/kanban/api/boards/,21,0,0
+1779051091972,21,12 GET Список групп,200,,Пользователи Kanban 1-13,text,true,,456,585,50,50,http://localhost:8080/kanban/api/groupteams/,21,0,0
+1779051091823,171,12 GET Список групп,200,,Пользователи Kanban 1-1,text,true,,455,583,50,50,http://localhost:8080/kanban/api/groupteams/,171,0,0
+1779051091896,98,10 GET Список досок,200,,Пользователи Kanban 1-36,text,true,,695,581,50,50,http://localhost:8080/kanban/api/boards/,98,0,0
+1779051091945,50,12 GET Список групп,200,,Пользователи Kanban 1-6,text,true,,455,583,50,50,http://localhost:8080/kanban/api/groupteams/,50,0,0
+1779051091948,49,13 GET Профиль пользователя,200,,Пользователи Kanban 1-15,text,true,,459,587,50,50,http://localhost:8080/kanban/api/users/profile,49,0,0
+1779051091911,87,13 GET Профиль пользователя,200,,Пользователи Kanban 1-34,text,true,,459,587,50,50,http://localhost:8080/kanban/api/users/profile,87,0,0
+1779051091899,101,11 POST Создание доски,201,,Пользователи Kanban 1-24,text,true,,702,673,50,50,http://localhost:8080/kanban/api/boards/,101,0,0
+1779051091945,55,12 GET Список групп,200,,Пользователи Kanban 1-40,text,true,,456,585,50,50,http://localhost:8080/kanban/api/groupteams/,55,0,0
+1779051091970,31,10 GET Список досок,200,,Пользователи Kanban 1-25,text,true,,1045,581,50,50,http://localhost:8080/kanban/api/boards/,31,0,0
+1779051091988,16,13 GET Профиль пользователя,200,,Пользователи Kanban 1-32,text,true,,459,587,50,50,http://localhost:8080/kanban/api/users/profile,16,0,0
+1779051091918,87,13 GET Профиль пользователя,200,,Пользователи Kanban 1-44,text,true,,459,587,50,50,http://localhost:8080/kanban/api/users/profile,87,0,0
+1779051091949,56,13 GET Профиль пользователя,200,,Пользователи Kanban 1-49,text,true,,459,587,50,50,http://localhost:8080/kanban/api/users/profile,56,0,0
+1779051091951,56,10 GET Список досок,200,,Пользователи Kanban 1-46,text,true,,695,581,50,50,http://localhost:8080/kanban/api/boards/,56,0,0
+1779051091955,53,10 GET Список досок,200,,Пользователи Kanban 1-27,text,true,,1045,581,50,50,http://localhost:8080/kanban/api/boards/,53,0,0
+1779051091977,32,13 GET Профиль пользователя,200,,Пользователи Kanban 1-48,text,true,,459,587,50,50,http://localhost:8080/kanban/api/users/profile,32,0,0
+1779051091996,14,13 GET Профиль пользователя,200,,Пользователи Kanban 1-6,text,true,,457,585,50,50,http://localhost:8080/kanban/api/users/profile,14,0,0
+1779051091950,61,13 GET Профиль пользователя,200,,Пользователи Kanban 1-28,text,true,,459,587,50,50,http://localhost:8080/kanban/api/users/profile,61,0,0
+1779051091952,60,12 GET Список групп,200,,Пользователи Kanban 1-2,text,true,,455,583,50,50,http://localhost:8080/kanban/api/groupteams/,60,0,0
+1779051091941,72,10 GET Список досок,200,,Пользователи Kanban 1-35,text,true,,1045,581,50,50,http://localhost:8080/kanban/api/boards/,72,0,0
+1779051091981,32,10 GET Список досок,200,,Пользователи Kanban 1-50,text,true,,695,581,50,50,http://localhost:8080/kanban/api/boards/,32,0,0
+1779051091977,36,13 GET Профиль пользователя,200,,Пользователи Kanban 1-22,text,true,,459,587,50,50,http://localhost:8080/kanban/api/users/profile,36,0,0
+1779051091983,32,10 GET Список досок,200,,Пользователи Kanban 1-23,text,true,,1045,581,50,50,http://localhost:8080/kanban/api/boards/,32,0,0
+1779051091966,53,12 GET Список групп,200,,Пользователи Kanban 1-12,text,true,,456,585,50,50,http://localhost:8080/kanban/api/groupteams/,53,0,0
+1779051091994,25,13 GET Профиль пользователя,200,,Пользователи Kanban 1-13,text,true,,459,587,50,50,http://localhost:8080/kanban/api/users/profile,25,0,0
+1779051091864,158,11 POST Создание доски,201,,Пользователи Kanban 1-43,text,true,,702,673,50,50,http://localhost:8080/kanban/api/boards/,158,0,0
+1779051091981,46,12 GET Список групп,200,,Пользователи Kanban 1-14,text,true,,456,585,50,50,http://localhost:8080/kanban/api/groupteams/,46,0,0
+1779051091917,110,13 GET Профиль пользователя,200,,Пользователи Kanban 1-4,text,true,,457,585,50,50,http://localhost:8080/kanban/api/users/profile,110,0,0
+1779051091931,102,10 GET Список досок,200,,Пользователи Kanban 1-31,text,true,,1045,581,50,50,http://localhost:8080/kanban/api/boards/,98,0,0
+1779051091935,101,11 POST Создание доски,201,,Пользователи Kanban 1-19,text,true,,702,673,50,50,http://localhost:8080/kanban/api/boards/,101,0,0
+1779051091975,64,13 GET Профиль пользователя,200,,Пользователи Kanban 1-42,text,true,,459,587,50,50,http://localhost:8080/kanban/api/users/profile,64,0,0
+1779051091907,144,11 POST Создание доски,201,,Пользователи Kanban 1-18,text,true,,702,673,50,50,http://localhost:8080/kanban/api/boards/,143,0,0
+1779051091936,115,11 POST Создание доски,201,,Пользователи Kanban 1-47,text,true,,702,673,50,50,http://localhost:8080/kanban/api/boards/,114,0,0
+1779051091921,130,11 POST Создание доски,201,,Пользователи Kanban 1-3,text,true,,698,670,50,50,http://localhost:8080/kanban/api/boards/,129,0,0
+1779051091985,67,10 GET Список досок,200,,Пользователи Kanban 1-8,text,true,,1382,579,50,50,http://localhost:8080/kanban/api/boards/,67,0,0
+1779051091974,79,10 GET Список досок,200,,Пользователи Kanban 1-11,text,true,,1394,581,50,50,http://localhost:8080/kanban/api/boards/,79,0,0
+1779051091994,60,13 GET Профиль пользователя,200,,Пользователи Kanban 1-1,text,true,,457,585,50,50,http://localhost:8080/kanban/api/users/profile,60,0,0
+1779051091938,117,11 POST Создание доски,201,,Пользователи Kanban 1-45,text,true,,702,673,50,50,http://localhost:8080/kanban/api/boards/,117,0,0
+1779051091930,125,11 POST Создание доски,201,,Пользователи Kanban 1-33,text,true,,702,673,50,50,http://localhost:8080/kanban/api/boards/,125,0,0
+1779051091977,78,10 GET Список досок,200,,Пользователи Kanban 1-20,text,true,,1045,581,50,50,http://localhost:8080/kanban/api/boards/,78,0,0
+1779051091985,72,10 GET Список досок,200,,Пользователи Kanban 1-9,text,true,,1383,579,50,50,http://localhost:8080/kanban/api/boards/,72,0,0
+1779051092004,58,10 GET Список досок,200,,Пользователи Kanban 1-32,text,true,,1045,581,50,50,http://localhost:8080/kanban/api/boards/,58,0,0
+1779051091914,150,13 GET Профиль пользователя,200,,Пользователи Kanban 1-29,text,true,,459,587,50,50,http://localhost:8080/kanban/api/users/profile,150,0,0
+1779051092051,15,12 GET Список групп,200,,Пользователи Kanban 1-47,text,true,,456,585,50,50,http://localhost:8080/kanban/api/groupteams/,15,0,0
+1779051092051,15,12 GET Список групп,200,,Пользователи Kanban 1-18,text,true,,456,585,50,50,http://localhost:8080/kanban/api/groupteams/,15,0,0
+1779051091977,89,13 GET Профиль пользователя,200,,Пользователи Kanban 1-26,text,true,,459,587,50,50,http://localhost:8080/kanban/api/users/profile,89,0,0
+1779051091988,78,12 GET Список групп,200,,Пользователи Kanban 1-38,text,true,,456,585,50,50,http://localhost:8080/kanban/api/groupteams/,78,0,0
+1779051091983,84,10 GET Список досок,200,,Пользователи Kanban 1-7,text,true,,1382,579,50,50,http://localhost:8080/kanban/api/boards/,84,0,0
+1779051092000,68,12 GET Список групп,200,,Пользователи Kanban 1-24,text,true,,456,585,50,50,http://localhost:8080/kanban/api/groupteams/,68,0,0
+1779051092055,14,10 GET Список досок,200,,Пользователи Kanban 1-1,text,true,,1382,579,50,50,http://localhost:8080/kanban/api/boards/,14,0,0
+1779051092051,20,12 GET Список групп,200,,Пользователи Kanban 1-3,text,true,,455,583,50,50,http://localhost:8080/kanban/api/groupteams/,20,0,0
+1779051092055,17,12 GET Список групп,200,,Пользователи Kanban 1-45,text,true,,456,585,50,50,http://localhost:8080/kanban/api/groupteams/,17,0,0
+1779051091998,76,10 GET Список досок,200,,Пользователи Kanban 1-34,text,true,,1045,581,50,50,http://localhost:8080/kanban/api/boards/,76,0,0
+1779051091987,87,11 POST Создание доски,201,,Пользователи Kanban 1-16,text,true,,702,673,50,50,http://localhost:8080/kanban/api/boards/,87,0,0
+1779051091981,95,10 GET Список досок,200,,Пользователи Kanban 1-10,text,true,,1395,581,50,50,http://localhost:8080/kanban/api/boards/,95,0,0
+1779051091990,86,13 GET Профиль пользователя,200,,Пользователи Kanban 1-5,text,true,,457,585,50,50,http://localhost:8080/kanban/api/users/profile,86,0,0
+1779051092028,50,10 GET Список досок,200,,Пользователи Kanban 1-4,text,true,,1382,579,50,50,http://localhost:8080/kanban/api/boards/,50,0,0
+1779051091988,93,12 GET Список групп,200,,Пользователи Kanban 1-37,text,true,,456,585,50,50,http://localhost:8080/kanban/api/groupteams/,93,0,0
+1779051091917,165,11 POST Создание доски,201,,Пользователи Kanban 1-30,text,true,,702,673,50,50,http://localhost:8080/kanban/api/boards/,165,0,0
+1779051091956,126,11 POST Создание доски,201,,Пользователи Kanban 1-39,text,true,,702,673,50,50,http://localhost:8080/kanban/api/boards/,126,0,0
+1779051091991,91,11 POST Создание доски,201,,Пользователи Kanban 1-21,text,true,,702,673,50,50,http://localhost:8080/kanban/api/boards/,91,0,0
+1779051091968,114,11 POST Создание доски,201,,Пользователи Kanban 1-41,text,true,,702,673,50,50,http://localhost:8080/kanban/api/boards/,114,0,0
+1779051092005,79,10 GET Список досок,200,,Пользователи Kanban 1-44,text,true,,1045,581,50,50,http://localhost:8080/kanban/api/boards/,79,0,0
+1779051091998,87,10 GET Список досок,200,,Пользователи Kanban 1-15,text,true,,1395,581,50,50,http://localhost:8080/kanban/api/boards/,87,0,0
+1779051092020,66,10 GET Список досок,200,,Пользователи Kanban 1-13,text,true,,1395,581,50,50,http://localhost:8080/kanban/api/boards/,66,0,0
+1779051092006,81,10 GET Список досок,200,,Пользователи Kanban 1-49,text,true,,695,581,50,50,http://localhost:8080/kanban/api/boards/,81,0,0
+1779051092000,89,13 GET Профиль пользователя,200,,Пользователи Kanban 1-40,text,true,,459,587,50,50,http://localhost:8080/kanban/api/users/profile,89,0,0
+1779051092011,79,10 GET Список досок,200,,Пользователи Kanban 1-6,text,true,,1382,579,50,50,http://localhost:8080/kanban/api/boards/,79,0,0
+1779051092055,35,12 GET Список групп,200,,Пользователи Kanban 1-33,text,true,,456,585,50,50,http://localhost:8080/kanban/api/groupteams/,35,0,0
+1779051092065,29,10 GET Список досок,200,,Пользователи Kanban 1-29,text,true,,1045,581,50,50,http://localhost:8080/kanban/api/boards/,29,0,0
+1779051092069,28,13 GET Профиль пользователя,200,,Пользователи Kanban 1-24,text,true,,459,587,50,50,http://localhost:8080/kanban/api/users/profile,28,0,0
+1779051092066,32,13 GET Профиль пользователя,200,,Пользователи Kanban 1-47,text,true,,459,587,50,50,http://localhost:8080/kanban/api/users/profile,31,0,0
+1779051092071,28,13 GET Профиль пользователя,200,,Пользователи Kanban 1-3,text,true,,457,585,50,50,http://localhost:8080/kanban/api/users/profile,28,0,0
+1779051092073,29,13 GET Профиль пользователя,200,,Пользователи Kanban 1-45,text,true,,459,587,50,50,http://localhost:8080/kanban/api/users/profile,29,0,0
+1779051092009,95,10 GET Список досок,200,,Пользователи Kanban 1-48,text,true,,695,581,50,50,http://localhost:8080/kanban/api/boards/,95,0,0
+1779051092053,52,11 POST Создание доски,201,,Пользователи Kanban 1-11,text,true,,702,673,50,50,http://localhost:8080/kanban/api/boards/,52,0,0
+1779051092007,98,11 POST Создание доски,201,,Пользователи Kanban 1-46,text,true,,702,673,50,50,http://localhost:8080/kanban/api/boards/,98,0,0
+1779051092055,50,11 POST Создание доски,201,,Пользователи Kanban 1-20,text,true,,702,673,50,50,http://localhost:8080/kanban/api/boards/,50,0,0
+1779051092020,88,13 GET Профиль пользователя,200,,Пользователи Kanban 1-12,text,true,,459,587,50,50,http://localhost:8080/kanban/api/users/profile,88,0,0
+1779051092082,27,12 GET Список групп,200,,Пользователи Kanban 1-39,text,true,,456,585,50,50,http://localhost:8080/kanban/api/groupteams/,27,0,0
+1779051091994,115,11 POST Создание доски,201,,Пользователи Kanban 1-36,text,true,,702,673,50,50,http://localhost:8080/kanban/api/boards/,115,0,0
+1779051092069,40,11 POST Создание доски,201,,Пользователи Kanban 1-1,text,true,,698,670,50,50,http://localhost:8080/kanban/api/boards/,40,0,0
+1779051092014,98,10 GET Список досок,200,,Пользователи Kanban 1-22,text,true,,1046,581,50,50,http://localhost:8080/kanban/api/boards/,98,0,0
+1779051092082,31,12 GET Список групп,200,,Пользователи Kanban 1-21,text,true,,456,585,50,50,http://localhost:8080/kanban/api/groupteams/,31,0,0
+1779051092014,104,11 POST Создание доски,201,,Пользователи Kanban 1-50,text,true,,702,673,50,50,http://localhost:8080/kanban/api/boards/,104,0,0
+1779051091990,133,11 POST Создание доски,201,,Пользователи Kanban 1-17,text,true,,702,673,50,50,http://localhost:8080/kanban/api/boards/,133,0,0
+1779051092008,115,11 POST Создание доски,201,,Пользователи Kanban 1-27,text,true,,702,673,50,50,http://localhost:8080/kanban/api/boards/,115,0,0
+1779051092066,58,10 GET Список досок,200,,Пользователи Kanban 1-26,text,true,,1045,581,50,50,http://localhost:8080/kanban/api/boards/,58,0,0
+1779051092027,97,13 GET Профиль пользователя,200,,Пользователи Kanban 1-14,text,true,,459,587,50,50,http://localhost:8080/kanban/api/users/profile,97,0,0
+1779051092039,86,10 GET Список досок,200,,Пользователи Kanban 1-42,text,true,,1045,581,50,50,http://localhost:8080/kanban/api/boards/,86,0,0
+1779051092012,116,13 GET Профиль пользователя,200,,Пользователи Kanban 1-2,text,true,,457,585,50,50,http://localhost:8080/kanban/api/users/profile,116,0,0
+1779051092067,64,13 GET Профиль пользователя,200,,Пользователи Kanban 1-38,text,true,,459,587,50,50,http://localhost:8080/kanban/api/users/profile,64,0,0
+1779051092015,119,11 POST Создание доски,201,,Пользователи Kanban 1-23,text,true,,702,673,50,50,http://localhost:8080/kanban/api/boards/,118,0,0
+1779051092036,98,12 GET Список групп,200,,Пользователи Kanban 1-19,text,true,,456,585,50,50,http://localhost:8080/kanban/api/groupteams/,98,0,0
+1779051092011,124,10 GET Список досок,200,,Пользователи Kanban 1-28,text,true,,1045,581,50,50,http://localhost:8080/kanban/api/boards/,124,0,0
+1779051092075,62,12 GET Список групп,200,,Пользователи Kanban 1-16,text,true,,456,585,50,50,http://localhost:8080/kanban/api/groupteams/,62,0,0
+1779051092066,72,13 GET Профиль пользователя,200,,Пользователи Kanban 1-18,text,true,,459,587,50,50,http://localhost:8080/kanban/api/users/profile,72,0,0
+1779051092053,86,11 POST Создание доски,201,,Пользователи Kanban 1-8,text,true,,698,670,50,50,http://localhost:8080/kanban/api/boards/,86,0,0
+1779051092058,81,11 POST Создание доски,201,,Пользователи Kanban 1-9,text,true,,698,670,50,50,http://localhost:8080/kanban/api/boards/,81,0,0
+1779051092077,63,10 GET Список досок,200,,Пользователи Kanban 1-5,text,true,,1729,579,50,50,http://localhost:8080/kanban/api/boards/,63,0,0
+1779051092081,60,13 GET Профиль пользователя,200,,Пользователи Kanban 1-37,text,true,,459,587,50,50,http://localhost:8080/kanban/api/users/profile,60,0,0
+1779051092022,121,12 GET Список групп,200,,Пользователи Kanban 1-43,text,true,,456,585,50,50,http://localhost:8080/kanban/api/groupteams/,121,0,0
+1779051092082,62,12 GET Список групп,200,,Пользователи Kanban 1-30,text,true,,456,585,50,50,http://localhost:8080/kanban/api/groupteams/,62,0,0
+1779051092104,41,11 POST Создание доски,201,,Пользователи Kanban 1-48,text,true,,702,673,50,50,http://localhost:8080/kanban/api/boards/,41,0,0
+1779051092014,131,11 POST Создание доски,201,,Пользователи Kanban 1-35,text,true,,702,673,50,50,http://localhost:8080/kanban/api/boards/,131,0,0
+1779051092062,83,11 POST Создание доски,201,,Пользователи Kanban 1-32,text,true,,702,673,50,50,http://localhost:8080/kanban/api/boards/,83,0,0
+1779051092068,77,11 POST Создание доски,201,,Пользователи Kanban 1-7,text,true,,698,670,50,50,http://localhost:8080/kanban/api/boards/,77,0,0
+1779051092138,8,13 GET Профиль пользователя,200,,Пользователи Kanban 1-16,text,true,,459,587,50,50,http://localhost:8080/kanban/api/users/profile,8,0,0
+1779051092109,42,10 GET Список досок,200,,Пользователи Kanban 1-12,text,true,,1396,581,50,50,http://localhost:8080/kanban/api/boards/,42,0,0
+1779051092106,46,12 GET Список групп,200,,Пользователи Kanban 1-11,text,true,,456,585,50,50,http://localhost:8080/kanban/api/groupteams/,46,0,0
+1779051092090,62,13 GET Профиль пользователя,200,,Пользователи Kanban 1-33,text,true,,459,587,50,50,http://localhost:8080/kanban/api/users/profile,62,0,0
+1779051092082,70,12 GET Список групп,200,,Пользователи Kanban 1-41,text,true,,456,585,50,50,http://localhost:8080/kanban/api/groupteams/,70,0,0
+1779051092139,14,12 GET Список групп,200,,Пользователи Kanban 1-9,text,true,,455,583,50,50,http://localhost:8080/kanban/api/groupteams/,14,0,0
+1779051092142,11,10 GET Список досок,200,,Пользователи Kanban 1-37,text,true,,1046,581,50,50,http://localhost:8080/kanban/api/boards/,11,0,0
+1779051092033,120,11 POST Создание доски,201,,Пользователи Kanban 1-31,text,true,,702,673,50,50,http://localhost:8080/kanban/api/boards/,120,0,0
+1779051092097,59,10 GET Список досок,200,,Пользователи Kanban 1-24,text,true,,1396,581,50,50,http://localhost:8080/kanban/api/boards/,59,0,0
+1779051092134,22,13 GET Профиль пользователя,200,,Пользователи Kanban 1-19,text,true,,459,587,50,50,http://localhost:8080/kanban/api/users/profile,22,0,0
+1779051092098,59,10 GET Список досок,200,,Пользователи Kanban 1-47,text,true,,1046,581,50,50,http://localhost:8080/kanban/api/boards/,59,0,0
+1779051092100,59,10 GET Список досок,200,,Пользователи Kanban 1-3,text,true,,1729,579,50,50,http://localhost:8080/kanban/api/boards/,59,0,0
+1779051092146,13,12 GET Список групп,200,,Пользователи Kanban 1-32,text,true,,456,585,50,50,http://localhost:8080/kanban/api/groupteams/,13,0,0
+1779051092106,55,12 GET Список групп,200,,Пользователи Kanban 1-20,text,true,,456,585,50,50,http://localhost:8080/kanban/api/groupteams/,55,0,0
+1779051092090,74,10 GET Список досок,200,,Пользователи Kanban 1-40,text,true,,1045,581,50,50,http://localhost:8080/kanban/api/boards/,73,0,0
+1779051092123,43,12 GET Список групп,200,,Пользователи Kanban 1-17,text,true,,456,585,50,50,http://localhost:8080/kanban/api/groupteams/,43,0,0
+1779051092152,16,13 GET Профиль пользователя,200,,Пользователи Kanban 1-11,text,true,,459,587,50,50,http://localhost:8080/kanban/api/users/profile,16,0,0
+1779051092139,30,12 GET Список групп,200,,Пользователи Kanban 1-8,text,true,,455,583,50,50,http://localhost:8080/kanban/api/groupteams/,30,0,0
+1779051092125,44,10 GET Список досок,200,,Пользователи Kanban 1-14,text,true,,1396,581,50,50,http://localhost:8080/kanban/api/boards/,44,0,0
+1779051092123,51,12 GET Список групп,200,,Пользователи Kanban 1-27,text,true,,456,585,50,50,http://localhost:8080/kanban/api/groupteams/,51,0,0
+1779051092001,175,11 POST Создание доски,201,,Пользователи Kanban 1-25,text,true,,702,673,50,50,http://localhost:8080/kanban/api/boards/,175,0,0
+1779051092102,74,10 GET Список досок,200,,Пользователи Kanban 1-45,text,true,,1046,581,50,50,http://localhost:8080/kanban/api/boards/,74,0,0
+1779051092078,100,11 POST Создание доски,201,,Пользователи Kanban 1-4,text,true,,698,670,50,50,http://localhost:8080/kanban/api/boards/,100,0,0
+1779051092153,28,12 GET Список групп,200,,Пользователи Kanban 1-31,text,true,,456,585,50,50,http://localhost:8080/kanban/api/groupteams/,28,0,0
+1779051092152,30,10 GET Список досок,200,,Пользователи Kanban 1-33,text,true,,1046,581,50,50,http://localhost:8080/kanban/api/boards/,30,0,0
+1779051092146,38,10 GET Список досок,200,,Пользователи Kanban 1-16,text,true,,1396,581,50,50,http://localhost:8080/kanban/api/boards/,38,0,0
+1779051092174,12,13 GET Профиль пользователя,200,,Пользователи Kanban 1-27,text,true,,459,587,50,50,http://localhost:8080/kanban/api/users/profile,12,0,0
+1779051092110,79,12 GET Список групп,200,,Пользователи Kanban 1-36,text,true,,456,585,50,50,http://localhost:8080/kanban/api/groupteams/,79,0,0
+1779051092087,102,11 POST Создание доски,201,,Пользователи Kanban 1-49,text,true,,702,673,50,50,http://localhost:8080/kanban/api/boards/,102,0,0
+1779051092153,38,13 GET Профиль пользователя,200,,Пользователи Kanban 1-9,text,true,,457,585,50,50,http://localhost:8080/kanban/api/users/profile,38,0,0
+1779051092134,60,12 GET Список групп,200,,Пользователи Kanban 1-23,text,true,,456,585,50,50,http://localhost:8080/kanban/api/groupteams/,60,0,0
+1779051092084,110,11 POST Создание доски,201,,Пользователи Kanban 1-44,text,true,,702,673,50,50,http://localhost:8080/kanban/api/boards/,110,0,0
+1779051092090,104,11 POST Создание доски,201,,Пользователи Kanban 1-6,text,true,,698,670,50,50,http://localhost:8080/kanban/api/boards/,104,0,0
+1779051092135,60,11 POST Создание доски,201,,Пользователи Kanban 1-28,text,true,,702,673,50,50,http://localhost:8080/kanban/api/boards/,60,0,0
+1779051092086,109,11 POST Создание доски,201,,Пользователи Kanban 1-13,text,true,,702,673,50,50,http://localhost:8080/kanban/api/boards/,109,0,0
+1779051092144,53,13 GET Профиль пользователя,200,,Пользователи Kanban 1-43,text,true,,459,587,50,50,http://localhost:8080/kanban/api/users/profile,53,0,0
+1779051092145,53,12 GET Список групп,200,,Пользователи Kanban 1-35,text,true,,456,585,50,50,http://localhost:8080/kanban/api/groupteams/,53,0,0
+1779051092161,39,13 GET Профиль пользователя,200,,Пользователи Kanban 1-20,text,true,,459,587,50,50,http://localhost:8080/kanban/api/users/profile,39,0,0
+1779051092077,123,11 POST Создание доски,201,,Пользователи Kanban 1-10,text,true,,702,673,50,50,http://localhost:8080/kanban/api/boards/,123,0,0
+1779051092075,125,11 POST Создание доски,201,,Пользователи Kanban 1-34,text,true,,701,673,50,50,http://localhost:8080/kanban/api/boards/,125,0,0
+1779051092110,92,12 GET Список групп,200,,Пользователи Kanban 1-1,text,true,,455,583,50,50,http://localhost:8080/kanban/api/groupteams/,92,0,0
+1779051092195,9,13 GET Профиль пользователя,200,,Пользователи Kanban 1-23,text,true,,459,587,50,50,http://localhost:8080/kanban/api/users/profile,9,0,0
+1779051092198,8,13 GET Профиль пользователя,200,,Пользователи Kanban 1-35,text,true,,459,587,50,50,http://localhost:8080/kanban/api/users/profile,8,0,0
+1779051092169,38,13 GET Профиль пользователя,200,,Пользователи Kanban 1-8,text,true,,457,585,50,50,http://localhost:8080/kanban/api/users/profile,38,0,0
+1779051092113,95,13 GET Профиль пользователя,200,,Пользователи Kanban 1-21,text,true,,459,587,50,50,http://localhost:8080/kanban/api/users/profile,95,0,0
+1779051092146,63,12 GET Список групп,200,,Пользователи Kanban 1-7,text,true,,455,583,50,50,http://localhost:8080/kanban/api/groupteams/,63,0,0
+1779051092176,36,12 GET Список групп,200,,Пользователи Kanban 1-25,text,true,,456,585,50,50,http://localhost:8080/kanban/api/groupteams/,36,0,0
+1779051092145,70,12 GET Список групп,200,,Пользователи Kanban 1-48,text,true,,456,585,50,50,http://localhost:8080/kanban/api/groupteams/,70,0,0
+1779051092126,91,11 POST Создание доски,201,,Пользователи Kanban 1-42,text,true,,702,673,50,50,http://localhost:8080/kanban/api/boards/,91,0,0
+1779051092160,57,13 GET Профиль пользователя,200,,Пользователи Kanban 1-32,text,true,,459,587,50,50,http://localhost:8080/kanban/api/users/profile,57,0,0
+1779051092152,70,11 POST Создание доски,201,,Пользователи Kanban 1-12,text,true,,701,673,50,50,http://localhost:8080/kanban/api/boards/,70,0,0
+1779051092124,98,11 POST Создание доски,201,,Пользователи Kanban 1-26,text,true,,701,673,50,50,http://localhost:8080/kanban/api/boards/,98,0,0
+1779051092166,60,13 GET Профиль пользователя,200,,Пользователи Kanban 1-17,text,true,,459,587,50,50,http://localhost:8080/kanban/api/users/profile,60,0,0
+1779051092145,83,13 GET Профиль пользователя,200,,Пользователи Kanban 1-30,text,true,,459,587,50,50,http://localhost:8080/kanban/api/users/profile,83,0,0
+1779051092094,135,11 POST Создание доски,201,,Пользователи Kanban 1-29,text,true,,702,673,50,50,http://localhost:8080/kanban/api/boards/,135,0,0
+1779051092106,124,12 GET Список групп,200,,Пользователи Kanban 1-46,text,true,,456,585,50,50,http://localhost:8080/kanban/api/groupteams/,124,0,0
+1779051092086,149,11 POST Создание доски,201,,Пользователи Kanban 1-15,text,true,,702,673,50,50,http://localhost:8080/kanban/api/boards/,148,0,0
+1779051092195,40,12 GET Список групп,200,,Пользователи Kanban 1-6,text,true,,455,583,50,50,http://localhost:8080/kanban/api/groupteams/,40,0,0
+1779051092128,107,10 GET Список досок,200,,Пользователи Kanban 1-2,text,true,,1382,579,50,50,http://localhost:8080/kanban/api/boards/,107,0,0
+1779051092139,96,10 GET Список досок,200,,Пользователи Kanban 1-18,text,true,,1396,581,50,50,http://localhost:8080/kanban/api/boards/,96,0,0
+1779051092152,85,13 GET Профиль пользователя,200,,Пользователи Kanban 1-41,text,true,,459,587,50,50,http://localhost:8080/kanban/api/users/profile,85,0,0
+1779051092109,128,13 GET Профиль пользователя,200,,Пользователи Kanban 1-39,text,true,,459,587,50,50,http://localhost:8080/kanban/api/users/profile,128,0,0
+1779051092132,105,10 GET Список досок,200,,Пользователи Kanban 1-38,text,true,,1045,581,50,50,http://localhost:8080/kanban/api/boards/,105,0,0
+1779051092168,71,10 GET Список досок,200,,Пользователи Kanban 1-11,text,true,,1745,581,50,50,http://localhost:8080/kanban/api/boards/,71,0,0
+1779051092201,38,10 GET Список досок,200,,Пользователи Kanban 1-20,text,true,,1396,581,50,50,http://localhost:8080/kanban/api/boards/,38,0,0
+1779051092157,84,11 POST Создание доски,201,,Пользователи Kanban 1-47,text,true,,702,673,50,50,http://localhost:8080/kanban/api/boards/,84,0,0
+1779051092112,129,11 POST Создание доски,201,,Пользователи Kanban 1-22,text,true,,702,673,50,50,http://localhost:8080/kanban/api/boards/,129,0,0
+1779051092202,39,13 GET Профиль пользователя,200,,Пользователи Kanban 1-1,text,true,,457,585,50,50,http://localhost:8080/kanban/api/users/profile,39,0,0
+1779051092156,85,11 POST Создание доски,201,,Пользователи Kanban 1-24,text,true,,702,673,50,50,http://localhost:8080/kanban/api/boards/,85,0,0
+1779051092157,86,10 GET Список досок,200,,Пользователи Kanban 1-19,text,true,,1396,581,50,50,http://localhost:8080/kanban/api/boards/,86,0,0
+1779051092181,65,13 GET Профиль пользователя,200,,Пользователи Kanban 1-31,text,true,,459,587,50,50,http://localhost:8080/kanban/api/users/profile,65,0,0
+1779051092119,127,12 GET Список групп,200,,Пользователи Kanban 1-50,text,true,,456,585,50,50,http://localhost:8080/kanban/api/groupteams/,127,0,0
+1779051092187,59,10 GET Список досок,200,,Пользователи Kanban 1-27,text,true,,1396,581,50,50,http://localhost:8080/kanban/api/boards/,59,0,0
+1779051092215,31,13 GET Профиль пользователя,200,,Пользователи Kanban 1-48,text,true,,459,587,50,50,http://localhost:8080/kanban/api/users/profile,31,0,0
+1779051092209,38,10 GET Список досок,200,,Пользователи Kanban 1-21,text,true,,1396,581,50,50,http://localhost:8080/kanban/api/boards/,38,0,0
+1779051092192,59,10 GET Список досок,200,,Пользователи Kanban 1-9,text,true,,1730,579,50,50,http://localhost:8080/kanban/api/boards/,59,0,0
+1779051092190,61,12 GET Список групп,200,,Пользователи Kanban 1-49,text,true,,456,585,50,50,http://localhost:8080/kanban/api/groupteams/,61,0,0
+1779051092190,62,13 GET Профиль пользователя,200,,Пользователи Kanban 1-36,text,true,,459,587,50,50,http://localhost:8080/kanban/api/users/profile,62,0,0
+1779051092197,55,10 GET Список досок,200,,Пользователи Kanban 1-43,text,true,,1046,581,50,50,http://localhost:8080/kanban/api/boards/,55,0,0
+1779051092223,31,12 GET Список групп,200,,Пользователи Kanban 1-12,text,true,,456,585,50,50,http://localhost:8080/kanban/api/groupteams/,31,0,0
+1779051092153,101,11 POST Создание доски,201,,Пользователи Kanban 1-37,text,true,,702,673,50,50,http://localhost:8080/kanban/api/boards/,101,0,0
+1779051092229,29,12 GET Список групп,200,,Пользователи Kanban 1-29,text,true,,456,585,50,50,http://localhost:8080/kanban/api/groupteams/,29,0,0
+1779051092201,57,12 GET Список групп,200,,Пользователи Kanban 1-34,text,true,,456,585,50,50,http://localhost:8080/kanban/api/groupteams/,57,0,0
+1779051092205,57,10 GET Список досок,200,,Пользователи Kanban 1-23,text,true,,1396,581,50,50,http://localhost:8080/kanban/api/boards/,57,0,0
+1779051092201,61,12 GET Список групп,200,,Пользователи Kanban 1-10,text,true,,456,585,50,50,http://localhost:8080/kanban/api/groupteams/,61,0,0
+1779051092179,86,12 GET Список групп,200,,Пользователи Kanban 1-4,text,true,,455,583,50,50,http://localhost:8080/kanban/api/groupteams/,86,0,0
+1779051092140,125,11 POST Создание доски,201,,Пользователи Kanban 1-5,text,true,,698,670,50,50,http://localhost:8080/kanban/api/boards/,125,0,0
+1779051092231,35,13 GET Профиль пользователя,200,,Пользователи Kanban 1-46,text,true,,459,587,50,50,http://localhost:8080/kanban/api/users/profile,35,0,0
+1779051092159,108,11 POST Создание доски,201,,Пользователи Kanban 1-3,text,true,,698,670,50,50,http://localhost:8080/kanban/api/boards/,108,0,0
+1779051092212,55,13 GET Профиль пользователя,200,,Пользователи Kanban 1-25,text,true,,459,587,50,50,http://localhost:8080/kanban/api/users/profile,55,0,0
+1779051092209,61,13 GET Профиль пользователя,200,,Пользователи Kanban 1-7,text,true,,457,585,50,50,http://localhost:8080/kanban/api/users/profile,61,0,0
+1779051092195,76,12 GET Список групп,200,,Пользователи Kanban 1-13,text,true,,456,585,50,50,http://localhost:8080/kanban/api/groupteams/,76,0,0
+1779051092218,58,10 GET Список досок,200,,Пользователи Kanban 1-32,text,true,,1396,581,50,50,http://localhost:8080/kanban/api/boards/,58,0,0
+1779051092195,85,12 GET Список групп,200,,Пользователи Kanban 1-28,text,true,,456,585,50,50,http://localhost:8080/kanban/api/groupteams/,85,0,0
+1779051092227,54,10 GET Список досок,200,,Пользователи Kanban 1-17,text,true,,1396,581,50,50,http://localhost:8080/kanban/api/boards/,54,0,0
+1779051092235,50,12 GET Список групп,200,,Пользователи Kanban 1-15,text,true,,456,585,50,50,http://localhost:8080/kanban/api/groupteams/,50,0,0
+1779051092241,50,12 GET Список групп,200,,Пользователи Kanban 1-22,text,true,,456,585,50,50,http://localhost:8080/kanban/api/groupteams/,50,0,0
+1779051092170,123,11 POST Создание доски,201,,Пользователи Kanban 1-14,text,true,,702,673,50,50,http://localhost:8080/kanban/api/boards/,123,0,0
+1779051092241,57,12 GET Список групп,200,,Пользователи Kanban 1-47,text,true,,456,585,50,50,http://localhost:8080/kanban/api/groupteams/,57,0,0
+1779051092195,108,12 GET Список групп,200,,Пользователи Kanban 1-44,text,true,,456,585,50,50,http://localhost:8080/kanban/api/groupteams/,108,0,0
+1779051092268,37,10 GET Список досок,200,,Пользователи Kanban 1-25,text,true,,1396,581,50,50,http://localhost:8080/kanban/api/boards/,37,0,0
+1779051092184,123,11 POST Создание доски,201,,Пользователи Kanban 1-16,text,true,,701,673,50,50,http://localhost:8080/kanban/api/boards/,123,0,0
+1779051092244,69,11 POST Создание доски,201,,Пользователи Kanban 1-19,text,true,,702,673,50,50,http://localhost:8080/kanban/api/boards/,69,0,0
+1779051092176,137,11 POST Создание доски,201,,Пользователи Kanban 1-45,text,true,,702,673,50,50,http://localhost:8080/kanban/api/boards/,137,0,0
+1779051092239,74,11 POST Создание доски,201,,Пользователи Kanban 1-20,text,true,,702,673,50,50,http://localhost:8080/kanban/api/boards/,74,0,0
+1779051092165,148,11 POST Создание доски,201,,Пользователи Kanban 1-40,text,true,,702,673,50,50,http://localhost:8080/kanban/api/boards/,148,0,0
+1779051092237,76,11 POST Создание доски,201,,Пользователи Kanban 1-38,text,true,,702,673,50,50,http://localhost:8080/kanban/api/boards/,76,0,0
+1779051092183,130,11 POST Создание доски,201,,Пользователи Kanban 1-33,text,true,,702,673,50,50,http://localhost:8080/kanban/api/boards/,130,0,0
+1779051092254,61,13 GET Профиль пользователя,200,,Пользователи Kanban 1-12,text,true,,459,587,50,50,http://localhost:8080/kanban/api/users/profile,61,0,0
+1779051092235,81,13 GET Профиль пользователя,200,,Пользователи Kanban 1-6,text,true,,457,585,50,50,http://localhost:8080/kanban/api/users/profile,81,0,0
+1779051092217,100,12 GET Список групп,200,,Пользователи Kanban 1-42,text,true,,456,585,50,50,http://localhost:8080/kanban/api/groupteams/,100,0,0
+1779051092251,66,13 GET Профиль пользователя,200,,Пользователи Kanban 1-49,text,true,,459,587,50,50,http://localhost:8080/kanban/api/users/profile,66,0,0
+1779051092237,82,10 GET Список досок,200,,Пользователи Kanban 1-39,text,true,,1046,581,50,50,http://localhost:8080/kanban/api/boards/,81,0,0
+1779051092246,73,13 GET Профиль пользователя,200,,Пользователи Kanban 1-50,text,true,,459,587,50,50,http://localhost:8080/kanban/api/users/profile,73,0,0
+1779051092246,74,10 GET Список досок,200,,Пользователи Kanban 1-31,text,true,,1396,581,50,50,http://localhost:8080/kanban/api/boards/,74,0,0
+1779051092271,50,13 GET Профиль пользователя,200,,Пользователи Kanban 1-13,text,true,,459,587,50,50,http://localhost:8080/kanban/api/users/profile,50,0,0
+1779051092313,10,12 GET Список групп,200,,Пользователи Kanban 1-20,text,true,,456,585,50,50,http://localhost:8080/kanban/api/groupteams/,10,0,0
+1779051092253,70,10 GET Список досок,200,,Пользователи Kanban 1-36,text,true,,1046,581,50,50,http://localhost:8080/kanban/api/boards/,70,0,0
+1779051092286,37,13 GET Профиль пользователя,200,,Пользователи Kanban 1-15,text,true,,459,587,50,50,http://localhost:8080/kanban/api/users/profile,37,0,0
+1779051092259,67,13 GET Профиль пользователя,200,,Пользователи Kanban 1-34,text,true,,459,587,50,50,http://localhost:8080/kanban/api/users/profile,67,0,0
+1779051092247,80,10 GET Список досок,200,,Пользователи Kanban 1-48,text,true,,1046,581,50,50,http://localhost:8080/kanban/api/boards/,80,0,0
+1779051092267,62,12 GET Список групп,200,,Пользователи Kanban 1-3,text,true,,455,583,50,50,http://localhost:8080/kanban/api/groupteams/,62,0,0
+1779051092265,64,13 GET Профиль пользователя,200,,Пользователи Kanban 1-4,text,true,,457,585,50,50,http://localhost:8080/kanban/api/users/profile,64,0,0
+1779051092259,72,13 GET Профиль пользователя,200,,Пользователи Kanban 1-29,text,true,,459,587,50,50,http://localhost:8080/kanban/api/users/profile,71,0,0
+1779051092294,38,12 GET Список групп,200,,Пользователи Kanban 1-14,text,true,,456,585,50,50,http://localhost:8080/kanban/api/groupteams/,38,0,0
+1779051092254,78,12 GET Список групп,200,,Пользователи Kanban 1-37,text,true,,456,585,50,50,http://localhost:8080/kanban/api/groupteams/,78,0,0
+1779051092280,53,13 GET Профиль пользователя,200,,Пользователи Kanban 1-28,text,true,,459,587,50,50,http://localhost:8080/kanban/api/users/profile,53,0,0
+1779051092308,29,12 GET Список групп,200,,Пользователи Kanban 1-16,text,true,,456,585,50,50,http://localhost:8080/kanban/api/groupteams/,29,0,0
+1779051092223,116,12 GET Список групп,200,,Пользователи Kanban 1-26,text,true,,456,585,50,50,http://localhost:8080/kanban/api/groupteams/,116,0,0
+1779051092239,100,11 POST Создание доски,201,,Пользователи Kanban 1-11,text,true,,702,673,50,50,http://localhost:8080/kanban/api/boards/,100,0,0
+1779051092251,88,11 POST Создание доски,201,,Пользователи Kanban 1-9,text,true,,698,670,50,50,http://localhost:8080/kanban/api/boards/,88,0,0
+1779051092271,69,10 GET Список досок,200,,Пользователи Kanban 1-7,text,true,,1729,579,50,50,http://localhost:8080/kanban/api/boards/,69,0,0
+1779051092207,134,10 GET Список досок,200,,Пользователи Kanban 1-8,text,true,,1729,579,50,50,http://localhost:8080/kanban/api/boards/,134,0,0
+1779051092241,102,12 GET Список групп,200,,Пользователи Kanban 1-24,text,true,,456,585,50,50,http://localhost:8080/kanban/api/groupteams/,102,0,0
+1779051092315,29,10 GET Список досок,200,,Пользователи Kanban 1-12,text,true,,1747,581,50,50,http://localhost:8080/kanban/api/boards/,29,0,0
+1779051092313,31,12 GET Список групп,200,,Пользователи Kanban 1-40,text,true,,456,585,50,50,http://localhost:8080/kanban/api/groupteams/,31,0,0
+1779051092321,25,10 GET Список досок,200,,Пользователи Kanban 1-13,text,true,,1746,581,50,50,http://localhost:8080/kanban/api/boards/,25,0,0
+1779051092228,120,10 GET Список досок,200,,Пользователи Kanban 1-30,text,true,,1046,581,50,50,http://localhost:8080/kanban/api/boards/,118,0,0
+1779051092265,83,12 GET Список групп,200,,Пользователи Kanban 1-5,text,true,,455,583,50,50,http://localhost:8080/kanban/api/groupteams/,83,0,0
+1779051092207,142,10 GET Список досок,200,,Пользователи Kanban 1-35,text,true,,1396,581,50,50,http://localhost:8080/kanban/api/boards/,142,0,0
+1779051092291,59,13 GET Профиль пользователя,200,,Пользователи Kanban 1-22,text,true,,459,587,50,50,http://localhost:8080/kanban/api/users/profile,59,0,0
+1779051092235,117,11 POST Создание доски,201,,Пользователи Kanban 1-18,text,true,,702,673,50,50,http://localhost:8080/kanban/api/boards/,117,0,0
+1779051092235,117,11 POST Создание доски,201,,Пользователи Kanban 1-2,text,true,,698,670,50,50,http://localhost:8080/kanban/api/boards/,117,0,0
+1779051092299,54,13 GET Профиль пользователя,200,,Пользователи Kanban 1-47,text,true,,459,587,50,50,http://localhost:8080/kanban/api/users/profile,54,0,0
+1779051092317,37,13 GET Профиль пользователя,200,,Пользователи Kanban 1-42,text,true,,459,587,50,50,http://localhost:8080/kanban/api/users/profile,37,0,0
+1779051092253,103,11 POST Создание доски,201,,Пользователи Kanban 1-43,text,true,,702,673,50,50,http://localhost:8080/kanban/api/boards/,103,0,0
+1779051092281,75,11 POST Создание доски,201,,Пользователи Kanban 1-17,text,true,,702,673,50,50,http://localhost:8080/kanban/api/boards/,75,0,0
+1779051092313,46,12 GET Список групп,200,,Пользователи Kanban 1-33,text,true,,456,585,50,50,http://localhost:8080/kanban/api/groupteams/,46,0,0
+1779051092237,123,10 GET Список досок,200,,Пользователи Kanban 1-41,text,true,,1046,581,50,50,http://localhost:8080/kanban/api/boards/,123,0,0
+1779051092313,47,12 GET Список групп,200,,Пользователи Kanban 1-45,text,true,,456,585,50,50,http://localhost:8080/kanban/api/groupteams/,47,0,0
+1779051092313,48,12 GET Список групп,200,,Пользователи Kanban 1-19,text,true,,456,585,50,50,http://localhost:8080/kanban/api/groupteams/,48,0,0
+1779051092334,27,10 GET Список досок,200,,Пользователи Kanban 1-28,text,true,,1396,581,50,50,http://localhost:8080/kanban/api/boards/,27,0,0
+1779051092266,96,10 GET Список досок,200,,Пользователи Kanban 1-46,text,true,,1046,581,50,50,http://localhost:8080/kanban/api/boards/,95,0,0
+1779051092246,118,11 POST Создание доски,201,,Пользователи Kanban 1-27,text,true,,702,673,50,50,http://localhost:8080/kanban/api/boards/,118,0,0
+1779051092317,47,10 GET Список досок,200,,Пользователи Kanban 1-49,text,true,,1046,581,50,50,http://localhost:8080/kanban/api/boards/,47,0,0
+1779051092317,47,10 GET Список досок,200,,Пользователи Kanban 1-6,text,true,,1729,579,50,50,http://localhost:8080/kanban/api/boards/,47,0,0
+1779051092320,45,10 GET Список досок,200,,Пользователи Kanban 1-50,text,true,,1046,581,50,50,http://localhost:8080/kanban/api/boards/,45,0,0
+1779051092324,42,13 GET Профиль пользователя,200,,Пользователи Kanban 1-20,text,true,,459,587,50,50,http://localhost:8080/kanban/api/users/profile,42,0,0
+1779051092324,46,10 GET Список досок,200,,Пользователи Kanban 1-15,text,true,,1746,581,50,50,http://localhost:8080/kanban/api/boards/,46,0,0
+1779051092326,44,10 GET Список досок,200,,Пользователи Kanban 1-34,text,true,,1396,581,50,50,http://localhost:8080/kanban/api/boards/,44,0,0
+1779051092329,43,13 GET Профиль пользователя,200,,Пользователи Kanban 1-3,text,true,,457,585,50,50,http://localhost:8080/kanban/api/users/profile,43,0,0
+1779051092276,98,11 POST Создание доски,201,,Пользователи Kanban 1-32,text,true,,702,673,50,50,http://localhost:8080/kanban/api/boards/,98,0,0
+1779051092331,48,10 GET Список досок,200,,Пользователи Kanban 1-29,text,true,,1396,581,49,49,http://localhost:8080/kanban/api/boards/,48,0,0
+1779051092332,49,13 GET Профиль пользователя,200,,Пользователи Kanban 1-14,text,true,,459,587,49,49,http://localhost:8080/kanban/api/users/profile,49,0,0
+1779051092248,134,11 POST Создание доски,201,,Пользователи Kanban 1-21,text,true,,702,673,49,49,http://localhost:8080/kanban/api/boards/,134,0,0
+1779051092332,52,13 GET Профиль пользователя,200,,Пользователи Kanban 1-37,text,true,,459,587,49,49,http://localhost:8080/kanban/api/users/profile,52,0,0
+1779051092351,33,10 GET Список досок,200,,Пользователи Kanban 1-22,text,true,,1397,581,49,49,http://localhost:8080/kanban/api/boards/,33,0,0
+1779051092354,31,10 GET Список досок,200,,Пользователи Kanban 1-42,text,true,,1396,581,49,49,http://localhost:8080/kanban/api/boards/,31,0,0
+1779051092359,27,13 GET Профиль пользователя,200,,Пользователи Kanban 1-33,text,true,,459,587,49,49,http://localhost:8080/kanban/api/users/profile,27,0,0
+1779051092329,58,10 GET Список досок,200,,Пользователи Kanban 1-4,text,true,,1729,579,49,49,http://localhost:8080/kanban/api/boards/,58,0,0
+1779051092356,34,12 GET Список групп,200,,Пользователи Kanban 1-17,text,true,,456,585,49,49,http://localhost:8080/kanban/api/groupteams/,34,0,0
+1779051092319,74,11 POST Создание доски,201,,Пользователи Kanban 1-39,text,true,,702,673,49,49,http://localhost:8080/kanban/api/boards/,74,0,0
+1779051092262,131,11 POST Создание доски,201,,Пользователи Kanban 1-23,text,true,,700,673,49,49,http://localhost:8080/kanban/api/boards/,131,0,0
+1779051092340,56,12 GET Список групп,200,,Пользователи Kanban 1-9,text,true,,455,583,49,49,http://localhost:8080/kanban/api/groupteams/,56,0,0
+1779051092303,95,13 GET Профиль пользователя,200,,Пользователи Kanban 1-44,text,true,,459,587,49,49,http://localhost:8080/kanban/api/users/profile,95,0,0
+1779051092305,94,11 POST Создание доски,201,,Пользователи Kanban 1-25,text,true,,700,673,49,49,http://localhost:8080/kanban/api/boards/,93,0,0
+1779051092241,160,10 GET Список досок,200,,Пользователи Kanban 1-1,text,true,,1729,579,49,49,http://localhost:8080/kanban/api/boards/,160,0,0
+1779051092352,52,12 GET Список групп,200,,Пользователи Kanban 1-2,text,true,,455,583,49,49,http://localhost:8080/kanban/api/groupteams/,52,0,0
+1779051092324,81,11 POST Создание доски,201,,Пользователи Kanban 1-36,text,true,,702,673,49,49,http://localhost:8080/kanban/api/boards/,81,0,0
+1779051092321,84,11 POST Создание доски,201,,Пользователи Kanban 1-31,text,true,,702,673,49,49,http://localhost:8080/kanban/api/boards/,84,0,0
+1779051092337,69,13 GET Профиль пользователя,200,,Пользователи Kanban 1-16,text,true,,459,587,49,49,http://localhost:8080/kanban/api/users/profile,69,0,0
+1779051092356,52,12 GET Список групп,200,,Пользователи Kanban 1-43,text,true,,456,585,49,49,http://localhost:8080/kanban/api/groupteams/,52,0,0
+1779051092352,56,12 GET Список групп,200,,Пользователи Kanban 1-18,text,true,,456,585,49,49,http://localhost:8080/kanban/api/groupteams/,56,0,0
+1779051092343,66,13 GET Профиль пользователя,200,,Пользователи Kanban 1-24,text,true,,459,587,49,49,http://localhost:8080/kanban/api/users/profile,66,0,0
+1779051092327,83,11 POST Создание доски,201,,Пользователи Kanban 1-48,text,true,,702,673,49,49,http://localhost:8080/kanban/api/boards/,83,0,0
+1779051092342,68,11 POST Создание доски,201,,Пользователи Kanban 1-8,text,true,,698,670,49,49,http://localhost:8080/kanban/api/boards/,68,0,0
+1779051092344,66,11 POST Создание доски,201,,Пользователи Kanban 1-12,text,true,,702,673,49,49,http://localhost:8080/kanban/api/boards/,66,0,0
+1779051092349,62,13 GET Профиль пользователя,200,,Пользователи Kanban 1-5,text,true,,457,585,49,49,http://localhost:8080/kanban/api/users/profile,62,0,0
+1779051092404,8,13 GET Профиль пользователя,200,,Пользователи Kanban 1-2,text,true,,457,585,48,48,http://localhost:8080/kanban/api/users/profile,8,0,0
+1779051092367,45,10 GET Список досок,200,,Пользователи Kanban 1-20,text,true,,1747,581,48,48,http://localhost:8080/kanban/api/boards/,45,0,0
+1779051092339,74,13 GET Профиль пользователя,200,,Пользователи Kanban 1-26,text,true,,459,587,48,48,http://localhost:8080/kanban/api/users/profile,74,0,0
+1779051092407,8,10 GET Список досок,200,,Пользователи Kanban 1-16,text,true,,1747,581,48,48,http://localhost:8080/kanban/api/boards/,8,0,0
+1779051092263,153,13 GET Профиль пользователя,200,,Пользователи Kanban 1-10,text,true,,459,587,48,48,http://localhost:8080/kanban/api/users/profile,153,0,0
+1779051092409,12,10 GET Список досок,200,,Пользователи Kanban 1-24,text,true,,1747,581,48,48,http://localhost:8080/kanban/api/boards/,12,0,0
+1779051092362,59,13 GET Профиль пользователя,200,,Пользователи Kanban 1-19,text,true,,459,587,48,48,http://localhost:8080/kanban/api/users/profile,59,0,0
+1779051092364,60,12 GET Список групп,200,,Пользователи Kanban 1-27,text,true,,456,585,48,48,http://localhost:8080/kanban/api/groupteams/,60,0,0
+1779051092410,14,12 GET Список групп,200,,Пользователи Kanban 1-12,text,true,,456,585,48,48,http://localhost:8080/kanban/api/groupteams/,14,0,0
+1779051092394,33,12 GET Список групп,200,,Пользователи Kanban 1-39,text,true,,456,585,48,48,http://localhost:8080/kanban/api/groupteams/,33,0,0
+1779051092362,69,11 POST Создание доски,201,,Пользователи Kanban 1-28,text,true,,702,673,48,48,http://localhost:8080/kanban/api/boards/,68,0,0
+1779051092362,69,11 POST Создание доски,201,,Пользователи Kanban 1-46,text,true,,702,673,48,48,http://localhost:8080/kanban/api/boards/,68,0,0
+1779051092346,85,11 POST Создание доски,201,,Пользователи Kanban 1-13,text,true,,702,673,48,48,http://localhost:8080/kanban/api/boards/,84,0,0
+1779051092374,57,12 GET Список групп,200,,Пользователи Kanban 1-32,text,true,,456,585,48,48,http://localhost:8080/kanban/api/groupteams/,57,0,0
+1779051092353,79,10 GET Список досок,200,,Пользователи Kanban 1-47,text,true,,1397,581,48,48,http://localhost:8080/kanban/api/boards/,79,0,0
+1779051092405,28,12 GET Список групп,200,,Пользователи Kanban 1-36,text,true,,456,585,48,48,http://localhost:8080/kanban/api/groupteams/,28,0,0
+1779051092360,74,13 GET Профиль пользователя,200,,Пользователи Kanban 1-45,text,true,,459,587,48,48,http://localhost:8080/kanban/api/users/profile,74,0,0
+1779051092345,89,13 GET Профиль пользователя,200,,Пользователи Kanban 1-40,text,true,,459,587,48,48,http://localhost:8080/kanban/api/users/profile,89,0,0
+1779051092340,96,11 POST Создание доски,201,,Пользователи Kanban 1-7,text,true,,698,670,48,48,http://localhost:8080/kanban/api/boards/,96,0,0
+1779051092408,28,13 GET Профиль пользователя,200,,Пользователи Kanban 1-18,text,true,,459,587,48,48,http://localhost:8080/kanban/api/users/profile,28,0,0
+1779051092410,29,12 GET Список групп,200,,Пользователи Kanban 1-48,text,true,,456,585,48,48,http://localhost:8080/kanban/api/groupteams/,29,0,0
+1779051092382,58,12 GET Список групп,200,,Пользователи Kanban 1-21,text,true,,456,585,48,48,http://localhost:8080/kanban/api/groupteams/,58,0,0
+1779051092313,128,12 GET Список групп,200,,Пользователи Kanban 1-38,text,true,,456,585,48,48,http://localhost:8080/kanban/api/groupteams/,128,0,0
+1779051092385,57,10 GET Список досок,200,,Пользователи Kanban 1-37,text,true,,1397,581,48,48,http://localhost:8080/kanban/api/boards/,57,0,0
+1779051092408,35,13 GET Профиль пользователя,200,,Пользователи Kanban 1-43,text,true,,459,587,48,48,http://localhost:8080/kanban/api/users/profile,34,0,0
+1779051092390,53,13 GET Профиль пользователя,200,,Пользователи Kanban 1-17,text,true,,459,587,48,48,http://localhost:8080/kanban/api/users/profile,53,0,0
+1779051092397,49,13 GET Профиль пользователя,200,,Пользователи Kanban 1-9,text,true,,457,585,48,48,http://localhost:8080/kanban/api/users/profile,49,0,0
+1779051092394,55,12 GET Список групп,200,,Пользователи Kanban 1-23,text,true,,456,585,47,47,http://localhost:8080/kanban/api/groupteams/,55,0,0
+1779051092340,111,12 GET Список групп,200,,Пользователи Kanban 1-11,text,true,,456,585,47,47,http://localhost:8080/kanban/api/groupteams/,111,0,0
+1779051092364,93,11 POST Создание доски,201,,Пользователи Kanban 1-6,text,true,,698,670,47,47,http://localhost:8080/kanban/api/boards/,93,0,0
+1779051092366,91,11 POST Создание доски,201,,Пользователи Kanban 1-50,text,true,,701,673,47,47,http://localhost:8080/kanban/api/boards/,91,0,0
+1779051092371,86,11 POST Создание доски,201,,Пользователи Kanban 1-34,text,true,,702,673,47,47,http://localhost:8080/kanban/api/boards/,86,0,0
+1779051092348,109,11 POST Создание доски,201,,Пользователи Kanban 1-30,text,true,,701,673,47,47,http://localhost:8080/kanban/api/boards/,109,0,0
+1779051092364,94,11 POST Создание доски,201,,Пользователи Kanban 1-49,text,true,,702,673,47,47,http://localhost:8080/kanban/api/boards/,94,0,0
+1779051092413,46,10 GET Список досок,200,,Пользователи Kanban 1-26,text,true,,1396,581,47,47,http://localhost:8080/kanban/api/boards/,46,0,0
+1779051092405,57,12 GET Список групп,200,,Пользователи Kanban 1-31,text,true,,456,585,47,47,http://localhost:8080/kanban/api/groupteams/,57,0,0
+1779051092424,39,13 GET Профиль пользователя,200,,Пользователи Kanban 1-12,text,true,,459,587,47,47,http://localhost:8080/kanban/api/users/profile,39,0,0
+1779051092349,116,11 POST Создание доски,201,,Пользователи Kanban 1-35,text,true,,702,673,46,46,http://localhost:8080/kanban/api/boards/,116,0,0
+1779051092410,56,12 GET Список групп,200,,Пользователи Kanban 1-8,text,true,,455,583,46,46,http://localhost:8080/kanban/api/groupteams/,56,0,0
+1779051092382,86,10 GET Список досок,200,,Пользователи Kanban 1-14,text,true,,1747,581,46,46,http://localhost:8080/kanban/api/boards/,86,0,0
+1779051092399,71,12 GET Список групп,200,,Пользователи Kanban 1-25,text,true,,456,585,46,46,http://localhost:8080/kanban/api/groupteams/,71,0,0
+1779051092413,58,10 GET Список досок,200,,Пользователи Kanban 1-2,text,true,,1729,579,46,46,http://localhost:8080/kanban/api/boards/,58,0,0
+1779051092434,37,10 GET Список досок,200,,Пользователи Kanban 1-45,text,true,,1397,581,46,46,http://localhost:8080/kanban/api/boards/,37,0,0
+1779051092417,57,10 GET Список досок,200,,Пользователи Kanban 1-10,text,true,,1746,581,46,46,http://localhost:8080/kanban/api/boards/,56,0,0
+1779051092385,91,11 POST Создание доски,201,,Пользователи Kanban 1-22,text,true,,702,673,46,46,http://localhost:8080/kanban/api/boards/,91,0,0
+1779051092388,89,11 POST Создание доски,201,,Пользователи Kanban 1-4,text,true,,698,670,46,46,http://localhost:8080/kanban/api/boards/,89,0,0
+1779051092370,107,11 POST Создание доски,201,,Пользователи Kanban 1-15,text,true,,702,673,46,46,http://localhost:8080/kanban/api/boards/,107,0,0
+1779051092421,57,10 GET Список досок,200,,Пользователи Kanban 1-19,text,true,,1747,581,46,46,http://localhost:8080/kanban/api/boards/,57,0,0
+1779051092424,57,13 GET Профиль пользователя,200,,Пользователи Kanban 1-27,text,true,,459,587,46,46,http://localhost:8080/kanban/api/users/profile,57,0,0
+1779051092386,97,10 GET Список досок,200,,Пользователи Kanban 1-33,text,true,,1397,581,46,46,http://localhost:8080/kanban/api/boards/,97,0,0
+1779051092428,56,13 GET Профиль пользователя,200,,Пользователи Kanban 1-39,text,true,,459,587,46,46,http://localhost:8080/kanban/api/users/profile,56,0,0
+1779051092431,55,12 GET Список групп,200,,Пользователи Kanban 1-13,text,true,,456,585,46,46,http://localhost:8080/kanban/api/groupteams/,55,0,0
+1779051092431,55,12 GET Список групп,200,,Пользователи Kanban 1-46,text,true,,456,585,46,46,http://localhost:8080/kanban/api/groupteams/,55,0,0
+1779051092434,53,10 GET Список досок,200,,Пользователи Kanban 1-40,text,true,,1396,581,46,46,http://localhost:8080/kanban/api/boards/,53,0,0
+1779051092436,51,10 GET Список досок,200,,Пользователи Kanban 1-18,text,true,,1747,581,46,46,http://localhost:8080/kanban/api/boards/,51,0,0
+1779051092431,61,13 GET Профиль пользователя,200,,Пользователи Kanban 1-32,text,true,,459,587,46,46,http://localhost:8080/kanban/api/users/profile,61,0,0
+1779051092436,57,12 GET Список групп,200,,Пользователи Kanban 1-7,text,true,,455,583,46,46,http://localhost:8080/kanban/api/groupteams/,57,0,0
+1779051092386,107,11 POST Создание доски,201,,Пользователи Kanban 1-42,text,true,,702,673,46,46,http://localhost:8080/kanban/api/boards/,107,0,0
+1779051092440,55,13 GET Профиль пользователя,200,,Пользователи Kanban 1-21,text,true,,459,587,46,46,http://localhost:8080/kanban/api/users/profile,55,0,0
+1779051092467,29,13 GET Профиль пользователя,200,,Пользователи Kanban 1-8,text,true,,457,585,46,46,http://localhost:8080/kanban/api/users/profile,29,0,0
+1779051092398,99,10 GET Список досок,200,,Пользователи Kanban 1-44,text,true,,1396,581,45,45,http://localhost:8080/kanban/api/boards/,99,0,0
+1779051092441,57,13 GET Профиль пользователя,200,,Пользователи Kanban 1-38,text,true,,459,587,45,45,http://localhost:8080/kanban/api/users/profile,57,0,0
+1779051092444,54,10 GET Список досок,200,,Пользователи Kanban 1-17,text,true,,1747,581,45,45,http://localhost:8080/kanban/api/boards/,54,0,0
+1779051092470,30,13 GET Профиль пользователя,200,,Пользователи Kanban 1-25,text,true,,459,587,45,45,http://localhost:8080/kanban/api/users/profile,30,0,0
+1779051092452,50,13 GET Профиль пользователя,200,,Пользователи Kanban 1-11,text,true,,459,587,45,45,http://localhost:8080/kanban/api/users/profile,50,0,0
+1779051092449,53,13 GET Профиль пользователя,200,,Пользователи Kanban 1-23,text,true,,459,587,45,45,http://localhost:8080/kanban/api/users/profile,53,0,0
+1779051092379,124,11 POST Создание доски,201,,Пользователи Kanban 1-29,text,true,,702,673,45,45,http://localhost:8080/kanban/api/boards/,124,0,0
+1779051092432,71,11 POST Создание доски,201,,Пользователи Kanban 1-47,text,true,,702,673,45,45,http://localhost:8080/kanban/api/boards/,71,0,0
+1779051092360,143,11 POST Создание доски,201,,Пользователи Kanban 1-41,text,true,,702,673,45,45,http://localhost:8080/kanban/api/boards/,143,0,0
+1779051092421,82,11 POST Создание доски,201,,Пользователи Kanban 1-24,text,true,,702,673,45,45,http://localhost:8080/kanban/api/boards/,82,0,0
+1779051092477,29,12 GET Список групп,200,,Пользователи Kanban 1-22,text,true,,456,585,44,44,http://localhost:8080/kanban/api/groupteams/,29,0,0
+1779051092458,48,12 GET Список групп,200,,Пользователи Kanban 1-34,text,true,,456,585,44,44,http://localhost:8080/kanban/api/groupteams/,48,0,0
+1779051092458,48,12 GET Список групп,200,,Пользователи Kanban 1-49,text,true,,456,585,44,44,http://localhost:8080/kanban/api/groupteams/,48,0,0
+1779051092458,48,12 GET Список групп,200,,Пользователи Kanban 1-6,text,true,,455,583,44,44,http://localhost:8080/kanban/api/groupteams/,48,0,0
+1779051092458,48,12 GET Список групп,200,,Пользователи Kanban 1-30,text,true,,456,585,44,44,http://localhost:8080/kanban/api/groupteams/,48,0,0
+1779051092431,77,12 GET Список групп,200,,Пользователи Kanban 1-28,text,true,,456,585,44,44,http://localhost:8080/kanban/api/groupteams/,77,0,0
+1779051092462,47,13 GET Профиль пользователя,200,,Пользователи Kanban 1-31,text,true,,459,587,44,44,http://localhost:8080/kanban/api/users/profile,47,0,0
+1779051092440,69,13 GET Профиль пользователя,200,,Пользователи Kanban 1-48,text,true,,459,587,44,44,http://localhost:8080/kanban/api/users/profile,69,0,0
+1779051092484,25,10 GET Список досок,200,,Пользователи Kanban 1-39,text,true,,1397,581,44,44,http://localhost:8080/kanban/api/boards/,25,0,0
+1779051092415,96,11 POST Создание доски,201,,Пользователи Kanban 1-16,text,true,,702,673,44,44,http://localhost:8080/kanban/api/boards/,96,0,0
+1779051092477,38,12 GET Список групп,200,,Пользователи Kanban 1-4,text,true,,455,583,44,44,http://localhost:8080/kanban/api/groupteams/,38,0,0
+1779051092477,40,12 GET Список групп,200,,Пользователи Kanban 1-15,text,true,,456,585,44,44,http://localhost:8080/kanban/api/groupteams/,40,0,0
+1779051092465,56,12 GET Список групп,200,,Пользователи Kanban 1-35,text,true,,456,585,44,44,http://localhost:8080/kanban/api/groupteams/,55,0,0
+1779051092458,63,12 GET Список групп,200,,Пользователи Kanban 1-50,text,true,,456,585,44,44,http://localhost:8080/kanban/api/groupteams/,63,0,0
+1779051092486,38,13 GET Профиль пользователя,200,,Пользователи Kanban 1-13,text,true,,459,587,44,44,http://localhost:8080/kanban/api/users/profile,38,0,0
+1779051092486,41,13 GET Профиль пользователя,200,,Пользователи Kanban 1-46,text,true,,459,587,43,43,http://localhost:8080/kanban/api/users/profile,41,0,0
+1779051092493,37,13 GET Профиль пользователя,200,,Пользователи Kanban 1-7,text,true,,457,585,43,43,http://localhost:8080/kanban/api/users/profile,37,0,0
+1779051092482,49,10 GET Список досок,200,,Пользователи Kanban 1-27,text,true,,1747,581,42,42,http://localhost:8080/kanban/api/boards/,49,0,0
+1779051092492,41,10 GET Список досок,200,,Пользователи Kanban 1-32,text,true,,1747,581,42,42,http://localhost:8080/kanban/api/boards/,41,0,0
+1779051092503,34,12 GET Список групп,200,,Пользователи Kanban 1-47,text,true,,456,585,42,42,http://localhost:8080/kanban/api/groupteams/,34,0,0
+1779051092401,140,11 POST Создание доски,201,,Пользователи Kanban 1-1,text,true,,698,670,42,42,http://localhost:8080/kanban/api/boards/,140,0,0
+1779051092509,33,10 GET Список досок,200,,Пользователи Kanban 1-48,text,true,,1397,581,42,42,http://localhost:8080/kanban/api/boards/,33,0,0
+1779051092442,101,11 POST Создание доски,201,,Пользователи Kanban 1-37,text,true,,702,673,42,42,http://localhost:8080/kanban/api/boards/,101,0,0
+1779051092413,130,11 POST Создание доски,201,,Пользователи Kanban 1-20,text,true,,702,673,42,42,http://localhost:8080/kanban/api/boards/,130,0,0
+1779051092538,9,13 GET Профиль пользователя,200,,Пользователи Kanban 1-47,text,true,,459,587,42,42,http://localhost:8080/kanban/api/users/profile,9,0,0
+1779051092494,57,12 GET Список групп,200,,Пользователи Kanban 1-42,text,true,,456,585,42,42,http://localhost:8080/kanban/api/groupteams/,57,0,0
+1779051092503,52,12 GET Список групп,200,,Пользователи Kanban 1-41,text,true,,456,585,42,42,http://localhost:8080/kanban/api/groupteams/,52,0,0
+1779051092506,51,13 GET Профиль пользователя,200,,Пользователи Kanban 1-6,text,true,,457,585,42,42,http://localhost:8080/kanban/api/users/profile,51,0,0
+1779051092471,86,11 POST Создание доски,201,,Пользователи Kanban 1-2,text,true,,698,670,42,42,http://localhost:8080/kanban/api/boards/,86,0,0
+1779051092498,60,10 GET Список досок,200,,Пользователи Kanban 1-38,text,true,,1396,581,41,41,http://localhost:8080/kanban/api/boards/,60,0,0
+1779051092506,53,13 GET Профиль пользователя,200,,Пользователи Kanban 1-30,text,true,,459,587,41,41,http://localhost:8080/kanban/api/users/profile,53,0,0
+1779051092488,72,11 POST Создание доски,201,,Пользователи Kanban 1-18,text,true,,702,673,41,41,http://localhost:8080/kanban/api/boards/,72,0,0
+1779051092474,86,11 POST Создание доски,201,,Пользователи Kanban 1-10,text,true,,702,673,41,41,http://localhost:8080/kanban/api/boards/,86,0,0
+1779051092459,101,11 POST Создание доски,201,,Пользователи Kanban 1-26,text,true,,702,673,41,41,http://localhost:8080/kanban/api/boards/,101,0,0
+1779051092468,93,11 POST Создание доски,201,,Пользователи Kanban 1-14,text,true,,702,673,41,41,http://localhost:8080/kanban/api/boards/,93,0,0
+1779051092487,75,11 POST Создание доски,201,,Пользователи Kanban 1-40,text,true,,701,673,41,41,http://localhost:8080/kanban/api/boards/,74,0,0
+1779051092506,56,13 GET Профиль пользователя,200,,Пользователи Kanban 1-34,text,true,,459,587,41,41,http://localhost:8080/kanban/api/users/profile,56,0,0
+1779051092434,131,13 GET Профиль пользователя,200,,Пользователи Kanban 1-36,text,true,,459,587,41,41,http://localhost:8080/kanban/api/users/profile,130,0,0
+1779051092509,56,10 GET Список досок,200,,Пользователи Kanban 1-31,text,true,,1747,581,41,41,http://localhost:8080/kanban/api/boards/,56,0,0
+1779051092443,122,10 GET Список досок,200,,Пользователи Kanban 1-43,text,true,,1397,581,41,41,http://localhost:8080/kanban/api/boards/,122,0,0
+1779051092495,70,10 GET Список досок,200,,Пользователи Kanban 1-21,text,true,,1747,581,41,41,http://localhost:8080/kanban/api/boards/,70,0,0
+1779051092512,54,12 GET Список групп,200,,Пользователи Kanban 1-16,text,true,,456,585,41,41,http://localhost:8080/kanban/api/groupteams/,54,0,0
+1779051092508,59,13 GET Профиль пользователя,200,,Пользователи Kanban 1-28,text,true,,459,587,41,41,http://localhost:8080/kanban/api/users/profile,59,0,0
+1779051092559,8,10 GET Список досок,200,,Пользователи Kanban 1-30,text,true,,1397,581,41,41,http://localhost:8080/kanban/api/boards/,8,0,0
+1779051092506,63,13 GET Профиль пользователя,200,,Пользователи Kanban 1-22,text,true,,459,587,41,41,http://localhost:8080/kanban/api/users/profile,63,0,0
+1779051092506,63,13 GET Профиль пользователя,200,,Пользователи Kanban 1-49,text,true,,459,587,41,41,http://localhost:8080/kanban/api/users/profile,63,0,0
+1779051092521,50,13 GET Профиль пользователя,200,,Пользователи Kanban 1-35,text,true,,459,587,41,41,http://localhost:8080/kanban/api/users/profile,50,0,0
+1779051092521,50,13 GET Профиль пользователя,200,,Пользователи Kanban 1-50,text,true,,459,587,41,41,http://localhost:8080/kanban/api/users/profile,50,0,0
+1779051092541,30,12 GET Список групп,200,,Пользователи Kanban 1-1,text,true,,455,583,41,41,http://localhost:8080/kanban/api/groupteams/,30,0,0
+1779051092518,54,13 GET Профиль пользователя,200,,Пользователи Kanban 1-15,text,true,,459,587,41,41,http://localhost:8080/kanban/api/users/profile,54,0,0
+1779051092500,72,10 GET Список досок,200,,Пользователи Kanban 1-25,text,true,,1747,581,41,41,http://localhost:8080/kanban/api/boards/,72,0,0
+1779051092503,71,10 GET Список досок,200,,Пользователи Kanban 1-23,text,true,,1747,581,40,40,http://localhost:8080/kanban/api/boards/,71,0,0
+1779051092503,74,12 GET Список групп,200,,Пользователи Kanban 1-29,text,true,,456,585,40,40,http://localhost:8080/kanban/api/groupteams/,74,0,0
+1779051092503,75,12 GET Список групп,200,,Пользователи Kanban 1-24,text,true,,456,585,40,40,http://localhost:8080/kanban/api/groupteams/,75,0,0
+1779051092562,18,10 GET Список досок,200,,Пользователи Kanban 1-34,text,true,,1747,581,40,40,http://localhost:8080/kanban/api/boards/,18,0,0
+1779051092562,21,12 GET Список групп,200,,Пользователи Kanban 1-40,text,true,,456,585,40,40,http://localhost:8080/kanban/api/groupteams/,20,0,0
+1779051092555,30,13 GET Профиль пользователя,200,,Пользователи Kanban 1-41,text,true,,459,587,40,40,http://localhost:8080/kanban/api/users/profile,30,0,0
+1779051092561,26,12 GET Список групп,200,,Пользователи Kanban 1-26,text,true,,456,585,40,40,http://localhost:8080/kanban/api/groupteams/,26,0,0
+1779051092515,73,13 GET Профиль пользователя,200,,Пользователи Kanban 1-4,text,true,,457,585,40,40,http://localhost:8080/kanban/api/users/profile,73,0,0
+1779051092497,91,11 POST Создание доски,201,,Пользователи Kanban 1-44,text,true,,702,673,40,40,http://localhost:8080/kanban/api/boards/,91,0,0
+1779051092560,30,12 GET Список групп,200,,Пользователи Kanban 1-10,text,true,,456,585,39,39,http://localhost:8080/kanban/api/groupteams/,30,0,0
+1779051092572,18,13 GET Профиль пользователя,200,,Пользователи Kanban 1-1,text,true,,457,585,39,39,http://localhost:8080/kanban/api/users/profile,18,0,0
+1779051092544,47,12 GET Список групп,200,,Пользователи Kanban 1-20,text,true,,456,585,38,38,http://localhost:8080/kanban/api/groupteams/,47,0,0
+1779051092565,27,10 GET Список досок,200,,Пользователи Kanban 1-36,text,true,,1397,581,38,38,http://localhost:8080/kanban/api/boards/,27,0,0
+1779051092547,47,10 GET Список досок,200,,Пользователи Kanban 1-47,text,true,,1748,581,38,38,http://localhost:8080/kanban/api/boards/,47,0,0
+1779051092484,111,11 POST Создание доски,201,,Пользователи Kanban 1-33,text,true,,702,673,38,38,http://localhost:8080/kanban/api/boards/,111,0,0
+1779051092498,98,11 POST Создание доски,201,,Пользователи Kanban 1-17,text,true,,702,673,38,38,http://localhost:8080/kanban/api/boards/,98,0,0
+1779051092557,40,12 GET Список групп,200,,Пользователи Kanban 1-2,text,true,,455,583,38,38,http://localhost:8080/kanban/api/groupteams/,39,0,0
+1779051092566,31,13 GET Профиль пользователя,200,,Пользователи Kanban 1-16,text,true,,459,587,38,38,http://localhost:8080/kanban/api/users/profile,31,0,0
+1779051092527,72,10 GET Список досок,200,,Пользователи Kanban 1-46,text,true,,1397,581,37,37,http://localhost:8080/kanban/api/boards/,72,0,0
+1779051092569,30,10 GET Список досок,200,,Пользователи Kanban 1-49,text,true,,1397,581,37,37,http://localhost:8080/kanban/api/boards/,30,0,0
+1779051092560,41,12 GET Список групп,200,,Пользователи Kanban 1-18,text,true,,456,585,37,37,http://localhost:8080/kanban/api/groupteams/,41,0,0
+1779051092567,36,10 GET Список досок,200,,Пользователи Kanban 1-28,text,true,,1747,581,37,37,http://localhost:8080/kanban/api/boards/,35,0,0
+1779051092551,53,13 GET Профиль пользователя,200,,Пользователи Kanban 1-42,text,true,,459,587,37,37,http://localhost:8080/kanban/api/users/profile,52,0,0
+1779051092572,32,10 GET Список досок,200,,Пользователи Kanban 1-50,text,true,,1397,581,37,37,http://localhost:8080/kanban/api/boards/,32,0,0
+1779051092591,21,13 GET Профиль пользователя,200,,Пользователи Kanban 1-20,text,true,,459,587,37,37,http://localhost:8080/kanban/api/users/profile,20,0,0
+1779051092586,29,10 GET Список досок,200,,Пользователи Kanban 1-41,text,true,,1397,581,36,36,http://localhost:8080/kanban/api/boards/,29,0,0
+1779051092587,31,13 GET Профиль пользователя,200,,Пользователи Kanban 1-26,text,true,,459,587,36,36,http://localhost:8080/kanban/api/users/profile,30,0,0
+1779051092577,43,13 GET Профиль пользователя,200,,Пользователи Kanban 1-29,text,true,,459,587,36,36,http://localhost:8080/kanban/api/users/profile,43,0,0
+1779051092559,62,11 POST Создание доски,201,,Пользователи Kanban 1-38,text,true,,702,673,36,36,http://localhost:8080/kanban/api/boards/,62,0,0
+1779051092562,62,12 GET Список групп,200,,Пользователи Kanban 1-14,text,true,,456,585,36,36,http://localhost:8080/kanban/api/groupteams/,62,0,0
+1779051092565,61,11 POST Создание доски,201,,Пользователи Kanban 1-43,text,true,,702,673,36,36,http://localhost:8080/kanban/api/boards/,61,0,0
+1779051092542,84,11 POST Создание доски,201,,Пользователи Kanban 1-48,text,true,,702,673,36,36,http://localhost:8080/kanban/api/boards/,84,0,0
+1779051092509,117,11 POST Создание доски,201,,Пользователи Kanban 1-39,text,true,,702,673,36,36,http://localhost:8080/kanban/api/boards/,117,0,0
+1779051092565,61,11 POST Создание доски,201,,Пользователи Kanban 1-21,text,true,,702,673,36,36,http://localhost:8080/kanban/api/boards/,61,0,0
+1779051092578,56,13 GET Профиль пользователя,200,,Пользователи Kanban 1-24,text,true,,459,587,36,36,http://localhost:8080/kanban/api/users/profile,56,0,0
+1779051092601,33,13 GET Профиль пользователя,200,,Пользователи Kanban 1-18,text,true,,459,587,36,36,http://localhost:8080/kanban/api/users/profile,33,0,0
+1779051092571,73,10 GET Список досок,200,,Пользователи Kanban 1-35,text,true,,1747,581,34,34,http://localhost:8080/kanban/api/boards/,67,0,0
+1779051092597,48,13 GET Профиль пользователя,200,,Пользователи Kanban 1-2,text,true,,457,585,34,34,http://localhost:8080/kanban/api/users/profile,48,0,0
+1779051092596,54,12 GET Список групп,200,,Пользователи Kanban 1-17,text,true,,456,585,33,33,http://localhost:8080/kanban/api/groupteams/,54,0,0
+1779051092478,175,11 POST Создание доски,201,,Пользователи Kanban 1-19,text,true,,702,673,33,33,http://localhost:8080/kanban/api/boards/,175,0,0
+1779051092593,60,11 POST Создание доски,201,,Пользователи Kanban 1-36,text,true,,702,673,33,33,http://localhost:8080/kanban/api/boards/,60,0,0
+1779051092567,86,11 POST Создание доски,201,,Пользователи Kanban 1-30,text,true,,702,673,33,33,http://localhost:8080/kanban/api/boards/,86,0,0
+1779051092532,121,11 POST Создание доски,201,,Пользователи Kanban 1-27,text,true,,702,673,33,33,http://localhost:8080/kanban/api/boards/,121,0,0
+1779051092583,71,13 GET Профиль пользователя,200,,Пользователи Kanban 1-40,text,true,,459,587,33,33,http://localhost:8080/kanban/api/users/profile,71,0,0
+1779051092590,65,13 GET Профиль пользователя,200,,Пользователи Kanban 1-10,text,true,,459,587,33,33,http://localhost:8080/kanban/api/users/profile,65,0,0
+1779051092624,32,13 GET Профиль пользователя,200,,Пользователи Kanban 1-14,text,true,,459,587,32,32,http://localhost:8080/kanban/api/users/profile,32,0,0
+1779051092544,115,12 GET Список групп,200,,Пользователи Kanban 1-37,text,true,,456,585,31,31,http://localhost:8080/kanban/api/groupteams/,115,0,0
+1779051092653,9,12 GET Список групп,200,,Пользователи Kanban 1-19,text,true,,456,585,31,31,http://localhost:8080/kanban/api/groupteams/,9,0,0
+1779051092650,13,13 GET Профиль пользователя,200,,Пользователи Kanban 1-17,text,true,,459,587,31,31,http://localhost:8080/kanban/api/users/profile,13,0,0
+1779051092604,60,10 GET Список досок,200,,Пользователи Kanban 1-42,text,true,,1747,581,30,30,http://localhost:8080/kanban/api/boards/,60,0,0
+1779051092569,97,10 GET Список досок,200,,Пользователи Kanban 1-22,text,true,,1748,581,30,30,http://localhost:8080/kanban/api/boards/,97,0,0
+1779051092574,97,11 POST Создание доски,201,,Пользователи Kanban 1-23,text,true,,702,673,30,30,http://localhost:8080/kanban/api/boards/,97,0,0
+1779051092600,84,11 POST Создание доски,201,,Пользователи Kanban 1-46,text,true,,702,673,30,30,http://localhost:8080/kanban/api/boards/,84,0,0
+1779051092581,103,11 POST Создание доски,201,,Пользователи Kanban 1-34,text,true,,702,673,30,30,http://localhost:8080/kanban/api/boards/,103,0,0
+1779051092600,87,11 POST Создание доски,201,,Пользователи Kanban 1-49,text,true,,702,673,30,30,http://localhost:8080/kanban/api/boards/,87,0,0
+1779051092534,153,11 POST Создание доски,201,,Пользователи Kanban 1-32,text,true,,702,673,30,30,http://localhost:8080/kanban/api/boards/,153,0,0
+1779051092603,84,11 POST Создание доски,201,,Пользователи Kanban 1-28,text,true,,702,673,30,30,http://localhost:8080/kanban/api/boards/,84,0,0
+1779051092653,35,12 GET Список групп,200,,Пользователи Kanban 1-30,text,true,,456,585,30,30,http://localhost:8080/kanban/api/groupteams/,35,0,0
+1779051092627,63,12 GET Список групп,200,,Пользователи Kanban 1-39,text,true,,456,585,30,30,http://localhost:8080/kanban/api/groupteams/,63,0,0
+1779051092626,65,12 GET Список групп,200,,Пользователи Kanban 1-43,text,true,,456,585,30,30,http://localhost:8080/kanban/api/groupteams/,65,0,0
+1779051092620,72,10 GET Список досок,200,,Пользователи Kanban 1-29,text,true,,1747,581,30,30,http://localhost:8080/kanban/api/boards/,72,0,0
+1779051092653,39,12 GET Список групп,200,,Пользователи Kanban 1-36,text,true,,456,585,30,30,http://localhost:8080/kanban/api/groupteams/,39,0,0
+1779051092621,71,12 GET Список групп,200,,Пользователи Kanban 1-38,text,true,,456,585,30,30,http://localhost:8080/kanban/api/groupteams/,71,0,0
+1779051092595,98,11 POST Создание доски,201,,Пользователи Kanban 1-47,text,true,,702,673,30,30,http://localhost:8080/kanban/api/boards/,98,0,0
+1779051092565,128,11 POST Создание доски,201,,Пользователи Kanban 1-31,text,true,,702,673,30,30,http://localhost:8080/kanban/api/boards/,128,0,0
+1779051092618,75,10 GET Список досок,200,,Пользователи Kanban 1-26,text,true,,1747,581,30,30,http://localhost:8080/kanban/api/boards/,75,0,0
+1779051092687,7,12 GET Список групп,200,,Пользователи Kanban 1-32,text,true,,456,585,30,30,http://localhost:8080/kanban/api/groupteams/,7,0,0
+1779051092687,7,12 GET Список групп,200,,Пользователи Kanban 1-49,text,true,,456,585,30,30,http://localhost:8080/kanban/api/groupteams/,7,0,0
+1779051092588,109,12 GET Список групп,200,,Пользователи Kanban 1-44,text,true,,456,585,30,30,http://localhost:8080/kanban/api/groupteams/,109,0,0
+1779051092627,71,12 GET Список групп,200,,Пользователи Kanban 1-21,text,true,,456,585,30,30,http://localhost:8080/kanban/api/groupteams/,71,0,0
+1779051092687,15,12 GET Список групп,200,,Пользователи Kanban 1-28,text,true,,456,585,30,30,http://localhost:8080/kanban/api/groupteams/,15,0,0
+1779051092684,18,12 GET Список групп,200,,Пользователи Kanban 1-46,text,true,,456,585,30,30,http://localhost:8080/kanban/api/groupteams/,18,0,0
+1779051092659,44,13 GET Профиль пользователя,200,,Пользователи Kanban 1-37,text,true,,459,587,30,30,http://localhost:8080/kanban/api/users/profile,44,0,0
+1779051092692,12,13 GET Профиль пользователя,200,,Пользователи Kanban 1-36,text,true,,459,587,30,30,http://localhost:8080/kanban/api/users/profile,12,0,0
+1779051092663,43,13 GET Профиль пользователя,200,,Пользователи Kanban 1-19,text,true,,459,587,30,30,http://localhost:8080/kanban/api/users/profile,43,0,0
+1779051092595,113,12 GET Список групп,200,,Пользователи Kanban 1-33,text,true,,456,585,29,29,http://localhost:8080/kanban/api/groupteams/,111,0,0
+1779051092645,63,11 POST Создание доски,201,,Пользователи Kanban 1-35,text,true,,702,673,29,29,http://localhost:8080/kanban/api/boards/,63,0,0
+1779051092690,18,13 GET Профиль пользователя,200,,Пользователи Kanban 1-39,text,true,,459,587,29,29,http://localhost:8080/kanban/api/users/profile,18,0,0
+1779051092604,106,11 POST Создание доски,201,,Пользователи Kanban 1-50,text,true,,702,673,29,29,http://localhost:8080/kanban/api/boards/,104,0,0
+1779051092653,57,12 GET Список групп,200,,Пользователи Kanban 1-27,text,true,,456,585,29,29,http://localhost:8080/kanban/api/groupteams/,57,0,0
+1779051092691,19,13 GET Профиль пользователя,200,,Пользователи Kanban 1-43,text,true,,459,587,29,29,http://localhost:8080/kanban/api/users/profile,19,0,0
+1779051092693,19,12 GET Список групп,200,,Пользователи Kanban 1-47,text,true,,456,585,29,29,http://localhost:8080/kanban/api/groupteams/,19,0,0
+1779051092694,18,13 GET Профиль пользователя,200,,Пользователи Kanban 1-49,text,true,,459,587,29,29,http://localhost:8080/kanban/api/users/profile,18,0,0
+1779051092697,17,13 GET Профиль пользователя,200,,Пользователи Kanban 1-44,text,true,,459,587,29,29,http://localhost:8080/kanban/api/users/profile,17,0,0
+1779051092693,21,12 GET Список групп,200,,Пользователи Kanban 1-31,text,true,,456,585,29,29,http://localhost:8080/kanban/api/groupteams/,21,0,0
+1779051092671,44,12 GET Список групп,200,,Пользователи Kanban 1-23,text,true,,456,585,29,29,http://localhost:8080/kanban/api/groupteams/,44,0,0
+1779051092684,31,12 GET Список групп,200,,Пользователи Kanban 1-34,text,true,,456,585,29,29,http://localhost:8080/kanban/api/groupteams/,31,0,0
+1779051092572,145,11 POST Создание доски,201,,Пользователи Kanban 1-25,text,true,,702,673,29,29,http://localhost:8080/kanban/api/boards/,144,0,0
+1779051092626,91,12 GET Список групп,200,,Пользователи Kanban 1-48,text,true,,456,585,29,29,http://localhost:8080/kanban/api/groupteams/,91,0,0
+1779051092689,28,13 GET Профиль пользователя,200,,Пользователи Kanban 1-30,text,true,,459,587,29,29,http://localhost:8080/kanban/api/users/profile,28,0,0
+1779051092702,18,13 GET Профиль пользователя,200,,Пользователи Kanban 1-46,text,true,,459,587,29,29,http://localhost:8080/kanban/api/users/profile,17,0,0
+1779051092692,29,13 GET Профиль пользователя,200,,Пользователи Kanban 1-38,text,true,,459,587,29,29,http://localhost:8080/kanban/api/users/profile,27,0,0
+1779051092694,28,13 GET Профиль пользователя,200,,Пользователи Kanban 1-32,text,true,,459,587,29,29,http://localhost:8080/kanban/api/users/profile,25,0,0
+1779051092704,19,10 GET Список досок,200,,Пользователи Kanban 1-37,text,true,,1748,581,28,28,http://localhost:8080/kanban/api/boards/,19,0,0
+1779051092708,15,13 GET Профиль пользователя,200,,Пользователи Kanban 1-33,text,true,,459,587,28,28,http://localhost:8080/kanban/api/users/profile,15,0,0
+1779051092708,15,12 GET Список групп,200,,Пользователи Kanban 1-35,text,true,,456,585,28,28,http://localhost:8080/kanban/api/groupteams/,15,0,0
+1779051092654,72,10 GET Список досок,200,,Пользователи Kanban 1-40,text,true,,1747,581,28,28,http://localhost:8080/kanban/api/boards/,71,0,0
+1779051092717,10,12 GET Список групп,200,,Пользователи Kanban 1-25,text,true,,456,585,28,28,http://localhost:8080/kanban/api/groupteams/,10,0,0
+1779051092704,24,10 GET Список досок,200,,Пользователи Kanban 1-36,text,true,,1748,581,28,28,http://localhost:8080/kanban/api/boards/,24,0,0
+1779051092711,18,10 GET Список досок,200,,Пользователи Kanban 1-43,text,true,,1748,581,28,28,http://localhost:8080/kanban/api/boards/,18,0,0
+1779051092710,19,13 GET Профиль пользователя,200,,Пользователи Kanban 1-27,text,true,,459,587,28,28,http://localhost:8080/kanban/api/users/profile,19,0,0
+1779051092715,15,13 GET Профиль пользователя,200,,Пользователи Kanban 1-34,text,true,,459,587,27,27,http://localhost:8080/kanban/api/users/profile,15,0,0
+1779051092698,33,13 GET Профиль пользователя,200,,Пользователи Kanban 1-21,text,true,,459,587,26,26,http://localhost:8080/kanban/api/users/profile,33,0,0
+1779051092702,29,13 GET Профиль пользователя,200,,Пользователи Kanban 1-28,text,true,,459,587,26,26,http://localhost:8080/kanban/api/users/profile,29,0,0
+1779051092709,23,10 GET Список досок,200,,Пользователи Kanban 1-39,text,true,,1748,581,24,24,http://localhost:8080/kanban/api/boards/,23,0,0
+1779051092714,18,10 GET Список досок,200,,Пользователи Kanban 1-44,text,true,,1747,581,24,24,http://localhost:8080/kanban/api/boards/,18,0,0
+1779051092715,17,13 GET Профиль пользователя,200,,Пользователи Kanban 1-23,text,true,,459,587,24,24,http://localhost:8080/kanban/api/users/profile,17,0,0
+1779051092712,20,13 GET Профиль пользователя,200,,Пользователи Kanban 1-47,text,true,,459,587,24,24,http://localhost:8080/kanban/api/users/profile,19,0,0
+1779051092718,19,10 GET Список досок,200,,Пользователи Kanban 1-30,text,true,,1748,581,22,22,http://localhost:8080/kanban/api/boards/,19,0,0
+1779051092710,27,12 GET Список групп,200,,Пользователи Kanban 1-50,text,true,,456,585,22,22,http://localhost:8080/kanban/api/groupteams/,26,0,0
+1779051092721,18,10 GET Список досок,200,,Пользователи Kanban 1-46,text,true,,1748,581,22,22,http://localhost:8080/kanban/api/boards/,18,0,0
+1779051092717,22,13 GET Профиль пользователя,200,,Пользователи Kanban 1-48,text,true,,459,587,22,22,http://localhost:8080/kanban/api/users/profile,22,0,0
+1779051092714,25,13 GET Профиль пользователя,200,,Пользователи Kanban 1-31,text,true,,459,587,22,22,http://localhost:8080/kanban/api/users/profile,25,0,0
+1779051092722,18,10 GET Список досок,200,,Пользователи Kanban 1-38,text,true,,1747,581,21,21,http://localhost:8080/kanban/api/boards/,18,0,0
+1779051092723,17,13 GET Профиль пользователя,200,,Пользователи Kanban 1-35,text,true,,459,587,21,21,http://localhost:8080/kanban/api/users/profile,17,0,0
+1779051092712,29,10 GET Список досок,200,,Пользователи Kanban 1-49,text,true,,1748,581,21,21,http://localhost:8080/kanban/api/boards/,29,0,0
+1779051092727,15,13 GET Профиль пользователя,200,,Пользователи Kanban 1-25,text,true,,459,587,20,20,http://localhost:8080/kanban/api/users/profile,15,0,0
+1779051092664,78,11 POST Создание доски,201,,Пользователи Kanban 1-42,text,true,,701,673,20,20,http://localhost:8080/kanban/api/boards/,78,0,0
+1779051092615,127,11 POST Создание доски,201,,Пользователи Kanban 1-41,text,true,,702,673,20,20,http://localhost:8080/kanban/api/boards/,127,0,0
+1779051092723,22,10 GET Список досок,200,,Пользователи Kanban 1-33,text,true,,1748,581,19,19,http://localhost:8080/kanban/api/boards/,22,0,0
+1779051092667,86,11 POST Создание доски,201,,Пользователи Kanban 1-22,text,true,,702,673,19,19,http://localhost:8080/kanban/api/boards/,86,0,0
+1779051092471,282,11 POST Создание доски,201,,Пользователи Kanban 1-45,text,true,,702,673,19,19,http://localhost:8080/kanban/api/boards/,282,0,0
+1779051092693,60,11 POST Создание доски,201,,Пользователи Kanban 1-26,text,true,,702,673,19,19,http://localhost:8080/kanban/api/boards/,60,0,0
+1779051092743,13,12 GET Список групп,200,,Пользователи Kanban 1-42,text,true,,456,585,19,19,http://localhost:8080/kanban/api/groupteams/,13,0,0
+1779051092743,15,12 GET Список групп,200,,Пользователи Kanban 1-41,text,true,,456,585,19,19,http://localhost:8080/kanban/api/groupteams/,15,0,0
+1779051092738,23,13 GET Профиль пользователя,200,,Пользователи Kanban 1-50,text,true,,459,587,19,19,http://localhost:8080/kanban/api/users/profile,23,0,0
+1779051092692,69,11 POST Создание доски,201,,Пользователи Kanban 1-29,text,true,,701,673,19,19,http://localhost:8080/kanban/api/boards/,69,0,0
+1779051092729,40,11 POST Создание доски,201,,Пользователи Kanban 1-43,text,true,,701,673,19,19,http://localhost:8080/kanban/api/boards/,40,0,0
+1779051092723,46,11 POST Создание доски,201,,Пользователи Kanban 1-37,text,true,,702,673,19,19,http://localhost:8080/kanban/api/boards/,46,0,0
+1779051092726,44,11 POST Создание доски,201,,Пользователи Kanban 1-40,text,true,,701,673,19,19,http://localhost:8080/kanban/api/boards/,43,0,0
+1779051092739,33,10 GET Список досок,200,,Пользователи Kanban 1-48,text,true,,1748,581,19,19,http://localhost:8080/kanban/api/boards/,33,0,0
+1779051092732,44,11 POST Создание доски,201,,Пользователи Kanban 1-44,text,true,,702,673,19,19,http://localhost:8080/kanban/api/boards/,44,0,0
+1779051092756,20,13 GET Профиль пользователя,200,,Пользователи Kanban 1-42,text,true,,459,587,19,19,http://localhost:8080/kanban/api/users/profile,20,0,0
+1779051092732,44,11 POST Создание доски,201,,Пользователи Kanban 1-39,text,true,,702,673,19,19,http://localhost:8080/kanban/api/boards/,44,0,0
+1779051092761,17,10 GET Список досок,200,,Пользователи Kanban 1-50,text,true,,1748,581,18,18,http://localhost:8080/kanban/api/boards/,17,0,0
+1779051092753,25,12 GET Список групп,200,,Пользователи Kanban 1-45,text,true,,456,585,18,18,http://localhost:8080/kanban/api/groupteams/,25,0,0
+1779051092753,26,12 GET Список групп,200,,Пользователи Kanban 1-26,text,true,,456,585,18,18,http://localhost:8080/kanban/api/groupteams/,26,0,0
+1779051092753,26,12 GET Список групп,200,,Пользователи Kanban 1-22,text,true,,456,585,18,18,http://localhost:8080/kanban/api/groupteams/,26,0,0
+1779051092759,20,13 GET Профиль пользователя,200,,Пользователи Kanban 1-41,text,true,,459,587,18,18,http://localhost:8080/kanban/api/users/profile,20,0,0
+1779051092770,11,12 GET Список групп,200,,Пользователи Kanban 1-43,text,true,,456,585,18,18,http://localhost:8080/kanban/api/groupteams/,11,0,0
+1779051092770,11,12 GET Список групп,200,,Пользователи Kanban 1-37,text,true,,456,585,18,18,http://localhost:8080/kanban/api/groupteams/,11,0,0
+1779051092762,19,12 GET Список групп,200,,Пользователи Kanban 1-29,text,true,,456,585,18,18,http://localhost:8080/kanban/api/groupteams/,19,0,0
+1779051092741,43,11 POST Создание доски,201,,Пользователи Kanban 1-38,text,true,,702,673,18,18,http://localhost:8080/kanban/api/boards/,43,0,0
+1779051092728,56,11 POST Создание доски,201,,Пользователи Kanban 1-36,text,true,,702,673,18,18,http://localhost:8080/kanban/api/boards/,56,0,0
+1779051092739,45,11 POST Создание доски,201,,Пользователи Kanban 1-46,text,true,,702,673,18,18,http://localhost:8080/kanban/api/boards/,45,0,0
+1779051092779,10,13 GET Профиль пользователя,200,,Пользователи Kanban 1-26,text,true,,459,587,18,18,http://localhost:8080/kanban/api/users/profile,10,0,0
+1779051092776,14,12 GET Список групп,200,,Пользователи Kanban 1-44,text,true,,456,585,17,17,http://localhost:8080/kanban/api/groupteams/,14,0,0
+1779051092776,17,12 GET Список групп,200,,Пользователи Kanban 1-39,text,true,,456,585,17,17,http://localhost:8080/kanban/api/groupteams/,17,0,0
+1779051092782,13,13 GET Профиль пользователя,200,,Пользователи Kanban 1-43,text,true,,459,587,17,17,http://localhost:8080/kanban/api/users/profile,13,0,0
+1779051092780,15,10 GET Список досок,200,,Пользователи Kanban 1-41,text,true,,1748,581,17,17,http://localhost:8080/kanban/api/boards/,15,0,0
+1779051092782,17,13 GET Профиль пользователя,200,,Пользователи Kanban 1-29,text,true,,459,587,16,16,http://localhost:8080/kanban/api/users/profile,17,0,0
+1779051092778,21,13 GET Профиль пользователя,200,,Пользователи Kanban 1-45,text,true,,459,587,16,16,http://localhost:8080/kanban/api/users/profile,21,0,0
+1779051092770,29,12 GET Список групп,200,,Пользователи Kanban 1-40,text,true,,456,585,16,16,http://localhost:8080/kanban/api/groupteams/,29,0,0
+1779051092741,58,11 POST Создание доски,201,,Пользователи Kanban 1-49,text,true,,702,673,16,16,http://localhost:8080/kanban/api/boards/,58,0,0
+1779051092738,62,11 POST Создание доски,201,,Пользователи Kanban 1-30,text,true,,702,673,15,15,http://localhost:8080/kanban/api/boards/,62,0,0
+1779051092779,25,13 GET Профиль пользователя,200,,Пользователи Kanban 1-22,text,true,,459,587,15,15,http://localhost:8080/kanban/api/users/profile,24,0,0
+1779051092785,19,12 GET Список групп,200,,Пользователи Kanban 1-46,text,true,,456,585,15,15,http://localhost:8080/kanban/api/groupteams/,18,0,0
+1779051092782,24,13 GET Профиль пользователя,200,,Пользователи Kanban 1-37,text,true,,459,587,14,14,http://localhost:8080/kanban/api/users/profile,24,0,0
+1779051092784,23,12 GET Список групп,200,,Пользователи Kanban 1-38,text,true,,456,585,14,14,http://localhost:8080/kanban/api/groupteams/,23,0,0
+1779051092784,23,12 GET Список групп,200,,Пользователи Kanban 1-36,text,true,,456,585,14,14,http://localhost:8080/kanban/api/groupteams/,23,0,0
+1779051092790,17,13 GET Профиль пользователя,200,,Пользователи Kanban 1-44,text,true,,459,587,14,14,http://localhost:8080/kanban/api/users/profile,16,0,0
+1779051092794,13,13 GET Профиль пользователя,200,,Пользователи Kanban 1-39,text,true,,459,587,14,14,http://localhost:8080/kanban/api/users/profile,12,0,0
+1779051092800,12,12 GET Список групп,200,,Пользователи Kanban 1-49,text,true,,456,585,11,11,http://localhost:8080/kanban/api/groupteams/,12,0,0
+1779051092800,12,12 GET Список групп,200,,Пользователи Kanban 1-30,text,true,,456,585,11,11,http://localhost:8080/kanban/api/groupteams/,12,0,0
+1779051092800,12,13 GET Профиль пользователя,200,,Пользователи Kanban 1-40,text,true,,459,587,11,11,http://localhost:8080/kanban/api/users/profile,12,0,0
+1779051092800,12,10 GET Список досок,200,,Пользователи Kanban 1-45,text,true,,1748,581,11,11,http://localhost:8080/kanban/api/boards/,12,0,0
+1779051092804,9,13 GET Профиль пользователя,200,,Пользователи Kanban 1-46,text,true,,459,587,10,10,http://localhost:8080/kanban/api/users/profile,9,0,0
+1779051092807,8,13 GET Профиль пользователя,200,,Пользователи Kanban 1-36,text,true,,459,587,9,9,http://localhost:8080/kanban/api/users/profile,7,0,0
+1779051092745,73,11 POST Создание доски,201,,Пользователи Kanban 1-33,text,true,,701,673,8,8,http://localhost:8080/kanban/api/boards/,73,0,0
+1779051092813,7,13 GET Профиль пользователя,200,,Пользователи Kanban 1-30,text,true,,459,587,8,8,http://localhost:8080/kanban/api/users/profile,7,0,0
+1779051092812,8,13 GET Профиль пользователя,200,,Пользователи Kanban 1-49,text,true,,459,587,8,8,http://localhost:8080/kanban/api/users/profile,8,0,0
+1779051092807,13,13 GET Профиль пользователя,200,,Пользователи Kanban 1-38,text,true,,459,587,8,8,http://localhost:8080/kanban/api/users/profile,13,0,0
+1779051092778,44,11 POST Создание доски,201,,Пользователи Kanban 1-50,text,true,,701,673,5,5,http://localhost:8080/kanban/api/boards/,44,0,0
+1779051092818,8,12 GET Список групп,200,,Пользователи Kanban 1-33,text,true,,456,585,5,5,http://localhost:8080/kanban/api/groupteams/,8,0,0
+1779051092772,58,11 POST Создание доски,201,,Пользователи Kanban 1-48,text,true,,702,673,5,5,http://localhost:8080/kanban/api/boards/,57,0,0
+1779051092823,7,12 GET Список групп,200,,Пользователи Kanban 1-50,text,true,,456,585,5,5,http://localhost:8080/kanban/api/groupteams/,6,0,0
+1779051092827,6,13 GET Профиль пользователя,200,,Пользователи Kanban 1-33,text,true,,459,587,5,5,http://localhost:8080/kanban/api/users/profile,5,0,0
+1779051092830,5,13 GET Профиль пользователя,200,,Пользователи Kanban 1-50,text,true,,459,587,4,4,http://localhost:8080/kanban/api/users/profile,5,0,0
+1779051092830,6,12 GET Список групп,200,,Пользователи Kanban 1-48,text,true,,456,585,4,4,http://localhost:8080/kanban/api/groupteams/,6,0,0
+1779051092795,41,11 POST Создание доски,201,,Пользователи Kanban 1-41,text,true,,702,673,3,3,http://localhost:8080/kanban/api/boards/,41,0,0
+1779051092836,6,13 GET Профиль пользователя,200,,Пользователи Kanban 1-48,text,true,,459,587,3,3,http://localhost:8080/kanban/api/users/profile,6,0,0
+1779051092813,29,11 POST Создание доски,201,,Пользователи Kanban 1-45,text,true,,702,673,3,3,http://localhost:8080/kanban/api/boards/,29,0,0
+1779051092836,6,12 GET Список групп,200,,Пользователи Kanban 1-41,text,true,,456,585,3,3,http://localhost:8080/kanban/api/groupteams/,6,0,0
+1779051092842,7,13 GET Профиль пользователя,200,,Пользователи Kanban 1-41,text,true,,459,587,2,2,http://localhost:8080/kanban/api/users/profile,7,0,0
+1779051092842,8,12 GET Список групп,200,,Пользователи Kanban 1-45,text,true,,456,585,1,1,http://localhost:8080/kanban/api/groupteams/,8,0,0
+1779051092850,5,13 GET Профиль пользователя,200,,Пользователи Kanban 1-45,text,true,,459,587,1,1,http://localhost:8080/kanban/api/users/profile,5,0,0
