@@ -1,0 +1,15 @@
+.claude/
+
+# Uploaded files
+src/Backend/uploads/
+
+# OS / editor cache
+.DS_Store
+Thumbs.db
+*.log
+
+# IntelliJ IDEA
+.idea/
+*.iws
+*.iml
+*.ipr

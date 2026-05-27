@@ -1,0 +1,628 @@
+databaseChangeLog:
+  - changeSet:
+      id: 1772828487289-1
+      author: parom
+      objectQuotingStrategy: QUOTE_ONLY_RESERVED_WORDS
+      changes:
+        - createTable:
+            columns:
+              - column:
+                  autoIncrement: true
+                  constraints:
+                    nullable: false
+                    primaryKey: true
+                    primaryKeyName: pk_attachments
+                  name: id
+                  type: INT
+              - column:
+                  constraints:
+                    nullable: false
+                  name: task_id
+                  type: INT
+              - column:
+                  constraints:
+                    nullable: false
+                  name: user_id
+                  type: INT
+              - column:
+                  constraints:
+                    nullable: false
+                  name: file_name
+                  type: VARCHAR(255)
+              - column:
+                  constraints:
+                    nullable: false
+                  name: storage_key
+                  type: TEXT
+              - column:
+                  name: uploaded_at
+                  type: DATETIME
+            tableName: attachments
+  - changeSet:
+      id: 1772828487289-2
+      author: parom
+      objectQuotingStrategy: QUOTE_ONLY_RESERVED_WORDS
+      changes:
+        - createTable:
+            columns:
+              - column:
+                  constraints:
+                    nullable: false
+                    primaryKey: true
+                    primaryKeyName: pk_board_users
+                  name: board_id
+                  type: INT
+              - column:
+                  constraints:
+                    nullable: false
+                    primaryKey: true
+                    primaryKeyName: pk_board_users
+                  name: user_id
+                  type: INT
+            tableName: board_users
+  - changeSet:
+      id: 1772828487289-3
+      author: parom
+      objectQuotingStrategy: QUOTE_ONLY_RESERVED_WORDS
+      changes:
+        - createTable:
+            columns:
+              - column:
+                  autoIncrement: true
+                  constraints:
+                    nullable: false
+                    primaryKey: true
+                    primaryKeyName: pk_boards
+                  name: id
+                  type: INT
+              - column:
+                  constraints:
+                    nullable: false
+                  name: group_id
+                  type: INT
+              - column:
+                  constraints:
+                    nullable: false
+                  name: title
+                  type: VARCHAR(255)
+              - column:
+                  name: description
+                  type: TEXT
+              - column:
+                  name: created_by
+                  type: INT
+              - column:
+                  name: created_at
+                  type: DATETIME
+            tableName: boards
+  - changeSet:
+      id: 1772828487289-4
+      author: parom
+      objectQuotingStrategy: QUOTE_ONLY_RESERVED_WORDS
+      changes:
+        - createTable:
+            columns:
+              - column:
+                  autoIncrement: true
+                  constraints:
+                    nullable: false
+                    primaryKey: true
+                    primaryKeyName: pk_columns
+                  name: id
+                  type: INT
+              - column:
+                  constraints:
+                    nullable: false
+                  name: board_id
+                  type: INT
+              - column:
+                  constraints:
+                    nullable: false
+                  name: title
+                  type: VARCHAR(255)
+              - column:
+                  constraints:
+                    nullable: false
+                  name: position
+                  type: BIGINT
+              - column:
+                  name: created_at
+                  type: DATETIME
+            tableName: columns
+  - changeSet:
+      id: 1772828487289-5
+      author: parom
+      objectQuotingStrategy: QUOTE_ONLY_RESERVED_WORDS
+      changes:
+        - createTable:
+            columns:
+              - column:
+                  autoIncrement: true
+                  constraints:
+                    nullable: false
+                    primaryKey: true
+                    primaryKeyName: pk_comments
+                  name: id
+                  type: INT
+              - column:
+                  constraints:
+                    nullable: false
+                  name: task_id
+                  type: INT
+              - column:
+                  constraints:
+                    nullable: false
+                  name: user_id
+                  type: INT
+              - column:
+                  constraints:
+                    nullable: false
+                  name: text
+                  type: TEXT
+              - column:
+                  name: created_at
+                  type: DATETIME
+              - column:
+                  name: updated_at
+                  type: DATETIME
+            tableName: comments
+  - changeSet:
+      id: 1772828487289-6
+      author: parom
+      objectQuotingStrategy: QUOTE_ONLY_RESERVED_WORDS
+      changes:
+        - createTable:
+            columns:
+              - column:
+                  name: role
+                  type: VARCHAR(255)
+              - column:
+                  name: joined_at
+                  type: DATETIME
+              - column:
+                  constraints:
+                    nullable: false
+                    primaryKey: true
+                    primaryKeyName: pk_group_members
+                  name: group_id
+                  type: INT
+              - column:
+                  constraints:
+                    nullable: false
+                    primaryKey: true
+                    primaryKeyName: pk_group_members
+                  name: user_id
+                  type: INT
+            tableName: group_members
+  - changeSet:
+      id: 1772828487289-7
+      author: parom
+      objectQuotingStrategy: QUOTE_ONLY_RESERVED_WORDS
+      changes:
+        - createTable:
+            columns:
+              - column:
+                  autoIncrement: true
+                  constraints:
+                    nullable: false
+                    primaryKey: true
+                    primaryKeyName: pk_groups_team
+                  name: id
+                  type: INT
+              - column:
+                  constraints:
+                    nullable: false
+                  name: name
+                  type: VARCHAR(255)
+              - column:
+                  name: description
+                  type: VARCHAR(255)
+              - column:
+                  name: created_at
+                  type: DATETIME
+            tableName: groups_team
+  - changeSet:
+      id: 1772828487289-8
+      author: parom
+      objectQuotingStrategy: QUOTE_ONLY_RESERVED_WORDS
+      changes:
+        - createTable:
+            columns:
+              - column:
+                  autoIncrement: true
+                  constraints:
+                    nullable: false
+                    primaryKey: true
+                    primaryKeyName: pk_invitations
+                  name: id
+                  type: INT
+              - column:
+                  constraints:
+                    nullable: false
+                  name: group_id
+                  type: INT
+              - column:
+                  constraints:
+                    nullable: false
+                  name: email
+                  type: VARCHAR(255)
+              - column:
+                  constraints:
+                    nullable: false
+                  name: invite_token
+                  type: VARCHAR(255)
+              - column:
+                  name: created_by
+                  type: INT
+              - column:
+                  constraints:
+                    nullable: false
+                  name: created_at
+                  type: DATETIME
+              - column:
+                  constraints:
+                    nullable: false
+                  name: expires_at
+                  type: DATETIME
+              - column:
+                  name: used
+                  type: BOOLEAN
+            tableName: invitations
+  - changeSet:
+      id: 1772828487289-9
+      author: parom
+      objectQuotingStrategy: QUOTE_ONLY_RESERVED_WORDS
+      changes:
+        - createTable:
+            columns:
+              - column:
+                  autoIncrement: true
+                  constraints:
+                    nullable: false
+                    primaryKey: true
+                    primaryKeyName: pk_task_history
+                  name: id
+                  type: INT
+              - column:
+                  constraints:
+                    nullable: false
+                  name: task_id
+                  type: INT
+              - column:
+                  constraints:
+                    nullable: false
+                  name: user_id
+                  type: INT
+              - column:
+                  constraints:
+                    nullable: false
+                  name: action_type
+                  type: VARCHAR(255)
+              - column:
+                  name: changed_attribute
+                  type: VARCHAR(255)
+              - column:
+                  name: old_value
+                  type: TEXT
+              - column:
+                  name: new_value
+                  type: TEXT
+              - column:
+                  name: changed_at
+                  type: DATETIME
+            tableName: task_history
+  - changeSet:
+      id: 1772828487289-10
+      author: parom
+      objectQuotingStrategy: QUOTE_ONLY_RESERVED_WORDS
+      changes:
+        - createTable:
+            columns:
+              - column:
+                  autoIncrement: true
+                  constraints:
+                    nullable: false
+                    primaryKey: true
+                    primaryKeyName: pk_tasks
+                  name: id
+                  type: INT
+              - column:
+                  constraints:
+                    nullable: false
+                  name: column_id
+                  type: INT
+              - column:
+                  constraints:
+                    nullable: false
+                  name: title
+                  type: VARCHAR(255)
+              - column:
+                  name: description
+                  type: TEXT
+              - column:
+                  name: assignee_id
+                  type: INT
+              - column:
+                  constraints:
+                    nullable: false
+                  name: position
+                  type: BIGINT
+              - column:
+                  name: deadline
+                  type: DATETIME
+              - column:
+                  name: priority
+                  type: VARCHAR(255)
+              - column:
+                  name: status
+                  type: VARCHAR(255)
+              - column:
+                  name: created_at
+                  type: DATETIME
+            tableName: tasks
+  - changeSet:
+      id: 1772828487289-11
+      author: parom
+      objectQuotingStrategy: QUOTE_ONLY_RESERVED_WORDS
+      changes:
+        - createTable:
+            columns:
+              - column:
+                  autoIncrement: true
+                  constraints:
+                    nullable: false
+                    primaryKey: true
+                    primaryKeyName: pk_users
+                  name: id
+                  type: INT
+              - column:
+                  constraints:
+                    nullable: false
+                  name: email
+                  type: VARCHAR(255)
+              - column:
+                  constraints:
+                    nullable: false
+                  name: name
+                  type: VARCHAR(255)
+              - column:
+                  constraints:
+                    nullable: false
+                  name: password_hash
+                  type: VARCHAR(255)
+              - column:
+                  name: avatar_url
+                  type: VARCHAR(255)
+              - column:
+                  name: created_at
+                  type: DATETIME
+            tableName: users
+  - changeSet:
+      id: 1772828487289-12
+      author: parom
+      objectQuotingStrategy: QUOTE_ONLY_RESERVED_WORDS
+      changes:
+        - addUniqueConstraint:
+            columnNames: email
+            constraintName: uc_users_email
+            tableName: users
+  - changeSet:
+      id: 1772828487289-13
+      author: parom
+      objectQuotingStrategy: QUOTE_ONLY_RESERVED_WORDS
+      changes:
+        - addForeignKeyConstraint:
+            baseColumnNames: task_id
+            baseTableName: attachments
+            constraintName: FK_ATTACHMENTS_ON_TASK
+            referencedColumnNames: id
+            referencedTableName: tasks
+  - changeSet:
+      id: 1772828487289-14
+      author: parom
+      objectQuotingStrategy: QUOTE_ONLY_RESERVED_WORDS
+      changes:
+        - addForeignKeyConstraint:
+            baseColumnNames: user_id
+            baseTableName: attachments
+            constraintName: FK_ATTACHMENTS_ON_USER
+            referencedColumnNames: id
+            referencedTableName: users
+  - changeSet:
+      id: 1772828487289-15
+      author: parom
+      objectQuotingStrategy: QUOTE_ONLY_RESERVED_WORDS
+      changes:
+        - addForeignKeyConstraint:
+            baseColumnNames: created_by
+            baseTableName: boards
+            constraintName: FK_BOARDS_ON_CREATED_BY
+            referencedColumnNames: id
+            referencedTableName: users
+  - changeSet:
+      id: 1772828487289-16
+      author: parom
+      objectQuotingStrategy: QUOTE_ONLY_RESERVED_WORDS
+      changes:
+        - addForeignKeyConstraint:
+            baseColumnNames: group_id
+            baseTableName: boards
+            constraintName: FK_BOARDS_ON_GROUP
+            referencedColumnNames: id
+            referencedTableName: groups_team
+  - changeSet:
+      id: 1772828487289-17
+      author: parom
+      objectQuotingStrategy: QUOTE_ONLY_RESERVED_WORDS
+      changes:
+        - addForeignKeyConstraint:
+            baseColumnNames: board_id
+            baseTableName: board_users
+            constraintName: FK_BOARD_USERS_ON_BOARD
+            referencedColumnNames: id
+            referencedTableName: boards
+  - changeSet:
+      id: 1772828487289-18
+      author: parom
+      objectQuotingStrategy: QUOTE_ONLY_RESERVED_WORDS
+      changes:
+        - addForeignKeyConstraint:
+            baseColumnNames: user_id
+            baseTableName: board_users
+            constraintName: FK_BOARD_USERS_ON_USER
+            referencedColumnNames: id
+            referencedTableName: users
+  - changeSet:
+      id: 1772828487289-19
+      author: parom
+      objectQuotingStrategy: QUOTE_ONLY_RESERVED_WORDS
+      changes:
+        - addForeignKeyConstraint:
+            baseColumnNames: board_id
+            baseTableName: columns
+            constraintName: FK_COLUMNS_ON_BOARD
+            referencedColumnNames: id
+            referencedTableName: boards
+  - changeSet:
+      id: 1772828487289-20
+      author: parom
+      objectQuotingStrategy: QUOTE_ONLY_RESERVED_WORDS
+      changes:
+        - addForeignKeyConstraint:
+            baseColumnNames: task_id
+            baseTableName: comments
+            constraintName: FK_COMMENTS_ON_TASK
+            referencedColumnNames: id
+            referencedTableName: tasks
+  - changeSet:
+      id: 1772828487289-21
+      author: parom
+      objectQuotingStrategy: QUOTE_ONLY_RESERVED_WORDS
+      changes:
+        - addForeignKeyConstraint:
+            baseColumnNames: user_id
+            baseTableName: comments
+            constraintName: FK_COMMENTS_ON_USER
+            referencedColumnNames: id
+            referencedTableName: users
+  - changeSet:
+      id: 1772828487289-22
+      author: parom
+      objectQuotingStrategy: QUOTE_ONLY_RESERVED_WORDS
+      changes:
+        - addForeignKeyConstraint:
+            baseColumnNames: group_id
+            baseTableName: group_members
+            constraintName: FK_GROUP_MEMBERS_ON_GROUP
+            referencedColumnNames: id
+            referencedTableName: groups_team
+  - changeSet:
+      id: 1772828487289-23
+      author: parom
+      objectQuotingStrategy: QUOTE_ONLY_RESERVED_WORDS
+      changes:
+        - addForeignKeyConstraint:
+            baseColumnNames: user_id
+            baseTableName: group_members
+            constraintName: FK_GROUP_MEMBERS_ON_USER
+            referencedColumnNames: id
+            referencedTableName: users
+  - changeSet:
+      id: 1772828487289-24
+      author: parom
+      objectQuotingStrategy: QUOTE_ONLY_RESERVED_WORDS
+      changes:
+        - addForeignKeyConstraint:
+            baseColumnNames: created_by
+            baseTableName: invitations
+            constraintName: FK_INVITATIONS_ON_CREATED_BY
+            referencedColumnNames: id
+            referencedTableName: users
+  - changeSet:
+      id: 1772828487289-25
+      author: parom
+      objectQuotingStrategy: QUOTE_ONLY_RESERVED_WORDS
+      changes:
+        - addForeignKeyConstraint:
+            baseColumnNames: group_id
+            baseTableName: invitations
+            constraintName: FK_INVITATIONS_ON_GROUP
+            referencedColumnNames: id
+            referencedTableName: groups_team
+  - changeSet:
+      id: 1772828487289-26
+      author: parom
+      objectQuotingStrategy: QUOTE_ONLY_RESERVED_WORDS
+      changes:
+        - addForeignKeyConstraint:
+            baseColumnNames: assignee_id
+            baseTableName: tasks
+            constraintName: FK_TASKS_ON_ASSIGNEE
+            referencedColumnNames: id
+            referencedTableName: users
+  - changeSet:
+      id: 1772828487289-27
+      author: parom
+      objectQuotingStrategy: QUOTE_ONLY_RESERVED_WORDS
+      changes:
+        - addForeignKeyConstraint:
+            baseColumnNames: column_id
+            baseTableName: tasks
+            constraintName: FK_TASKS_ON_COLUMN
+            referencedColumnNames: id
+            referencedTableName: columns
+  - changeSet:
+      id: 1772828487289-28
+      author: parom
+      objectQuotingStrategy: QUOTE_ONLY_RESERVED_WORDS
+      changes:
+        - addForeignKeyConstraint:
+            baseColumnNames: task_id
+            baseTableName: task_history
+            constraintName: FK_TASK_HISTORY_ON_TASK
+            referencedColumnNames: id
+            referencedTableName: tasks
+  - changeSet:
+      id: 1772828487289-29
+      author: parom
+      objectQuotingStrategy: QUOTE_ONLY_RESERVED_WORDS
+      changes:
+        - addForeignKeyConstraint:
+            baseColumnNames: user_id
+            baseTableName: task_history
+            constraintName: FK_TASK_HISTORY_ON_USER
+            referencedColumnNames: id
+            referencedTableName: users
+
+  - changeSet:
+      id: 1772828487289-30
+      author: parom
+      changes:
+        # 1. Удаляем старую колонку used
+        - dropColumn:
+            columnName: used
+            tableName: invitations
+        # 2. Добавляем новые колонки из Entity
+        - addColumn:
+            tableName: invitations
+            columns:
+              - column:
+                  name: type
+                  type: VARCHAR(50)
+                  constraints:
+                    nullable: false
+              - column:
+                  name: status
+                  type: VARCHAR(50)
+                  constraints:
+                    nullable: false
+        # 3. Разрешаем email быть null (для ссылок)
+        - dropNotNullConstraint:
+            columnName: email
+            tableName: invitations
+            columnDataType: VARCHAR(255)
+        # 4. Делаем токен уникальным
+        - addUniqueConstraint:
+            columnNames: invite_token
+            constraintName: uc_invitations_token
+            tableName: invitations
